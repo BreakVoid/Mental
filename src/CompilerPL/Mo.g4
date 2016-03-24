@@ -60,8 +60,6 @@ for_stmt : 'for' '(' expr ';' expr ';' stmt ')' stmt ;
 
 while_stmt : 'while' '(' expr ')' stmt ;
 
-assign_stmt : lvalue '=' expr ';' ;
-
 expr_stmt : expr ';' ;
 
 jump_stmt : 'return' expr ';'
@@ -69,7 +67,11 @@ jump_stmt : 'return' expr ';'
           | 'continue' ';'
           ;
 
-lvalue : ID;
+left_value : ID
+           | ID '.' ID
+           | ID '[' expr ']';
+
+constant : INT | STRING | 'true' | 'false' | 'null' ;
 
 expr : '(' expr ')'
      | expr '[' expr ']'
@@ -86,14 +88,10 @@ expr : '(' expr ')'
      | expr '|' expr
      | expr '&&' expr
      | expr '||' expr
-     | expr ('='<assoc=left>) expr
+     | left_value '=' expr
      | func_call
      | ID
-     | INT
-     | STRING
-     | 'true'
-     | 'false'
-     | 'null'
+     | constant
      ;
 
 func_call : ID '(' paramters_list ')' ;

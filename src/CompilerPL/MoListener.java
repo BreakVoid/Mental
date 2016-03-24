@@ -168,16 +168,6 @@ public interface MoListener extends ParseTreeListener {
 	 */
 	void exitWhile_stmt(MoParser.While_stmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#assign_stmt}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssign_stmt(MoParser.Assign_stmtContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MoParser#assign_stmt}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssign_stmt(MoParser.Assign_stmtContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link MoParser#expr_stmt}.
 	 * @param ctx the parse tree
 	 */
@@ -198,15 +188,25 @@ public interface MoListener extends ParseTreeListener {
 	 */
 	void exitJump_stmt(MoParser.Jump_stmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#lvalue}.
+	 * Enter a parse tree produced by {@link MoParser#left_value}.
 	 * @param ctx the parse tree
 	 */
-	void enterLvalue(MoParser.LvalueContext ctx);
+	void enterLeft_value(MoParser.Left_valueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#lvalue}.
+	 * Exit a parse tree produced by {@link MoParser#left_value}.
 	 * @param ctx the parse tree
 	 */
-	void exitLvalue(MoParser.LvalueContext ctx);
+	void exitLeft_value(MoParser.Left_valueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MoParser#constant}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstant(MoParser.ConstantContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MoParser#constant}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstant(MoParser.ConstantContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MoParser#expr}.
 	 * @param ctx the parse tree

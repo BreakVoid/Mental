@@ -208,18 +208,6 @@ public class MoBaseListener implements MoListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssign_stmt(MoParser.Assign_stmtContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAssign_stmt(MoParser.Assign_stmtContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterExpr_stmt(MoParser.Expr_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -244,13 +232,25 @@ public class MoBaseListener implements MoListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLvalue(MoParser.LvalueContext ctx) { }
+	@Override public void enterLeft_value(MoParser.Left_valueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLvalue(MoParser.LvalueContext ctx) { }
+	@Override public void exitLeft_value(MoParser.Left_valueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConstant(MoParser.ConstantContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConstant(MoParser.ConstantContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
