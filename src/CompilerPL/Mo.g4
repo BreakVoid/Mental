@@ -12,44 +12,44 @@ fragment ESC : '\\' (["\\/bfnrt] | UNICODE) ;
 fragment UNICODE : 'u' HEX HEX HEX HEX ;
 fragment HEX : [0-9a-fA-F] ;
 
-type : 'int'
-     | 'string'
-     | ID
-     ;
+ori_type : 'int'
+         | 'string'
+         | ID
+         ;
 
-prog : decl prog
-     | def prog
-     |
-     ;
+type : type '[' ']' | ori_type ;
+
+prog : (decl | def)* ;
 
 decl : class_decl
      | var_decl
      | func_decl
      ;
 
-var_decl : type ID (',' ID)* ';'
-         | type ID '=' expr ';'
-         ;
+var_decl : type ID (',' ID)* ';' ;
 
-class_decl : 'class' ID '{' var_decl* '}' ';' ;
+class_decl : 'class' ID? '{' var_decl* '}' ';' ;
 
 func_decl : (type | 'void') ID '(' paramters_list ')' ';' ;
 
 paramters_list : (type ID) (',' type ID)*
+               |
                ;
 
-def : func_def ;
+def : func_def | var_def;
+
+var_def : type ID '=' expr (',' ID ('=' expr)? )* ';';
 
 func_def : (type | 'void') ID '(' paramters_list ')' compound_stmt ;
 
-compound_stmt : '{' stmt+ '}' ;
+compound_stmt : '{' stmt* '}' ;
 
 stmt : compound_stmt
      | if_stmt
      | for_stmt
      | while_stmt
-     | assign_stmt
      | expr_stmt
+     | jump_stmt
      ;
 
 if_stmt : 'if' '(' expr ')' stmt
@@ -64,10 +64,36 @@ assign_stmt : lvalue '=' expr ';' ;
 
 expr_stmt : expr ';' ;
 
+jump_stmt : 'return' expr ';'
+          | 'break' ';'
+          | 'continue' ';'
+          ;
+
 lvalue : ID;
 
-expr : expr ('&&'|'||') expr
+expr : '(' expr ')'
+     | expr '[' expr ']'
+     | expr '.' expr
+     | expr ('++'|'--')
+     | ('-'|'~'|'!'|'++'|'--'|'+'|'&') expr
+     | expr ('*'|'/'|'%') expr
      | expr ('+'|'-') expr
-     | expr ('*'|'/') expr
-     | ID | INT | STRING
+     | expr ('<<'|'>>') expr
+     | expr ('<='|'>='|'<'|'>') expr
+     | expr ('=='|'!=') expr
+     | expr '&' expr
+     | expr '^' expr
+     | expr '|' expr
+     | expr '&&' expr
+     | expr '||' expr
+     | expr ('='<assoc=left>) expr
+     | func_call
+     | ID
+     | INT
+     | STRING
+     | 'true'
+     | 'false'
+     | 'null'
      ;
+
+func_call : ID '(' paramters_list ')' ;

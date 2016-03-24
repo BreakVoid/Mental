@@ -16,6 +16,18 @@ public class MoBaseListener implements MoListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterOri_type(MoParser.Ori_typeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOri_type(MoParser.Ori_typeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterType(MoParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -107,6 +119,18 @@ public class MoBaseListener implements MoListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDef(MoParser.DefContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVar_def(MoParser.Var_defContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVar_def(MoParser.Var_defContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -208,6 +232,18 @@ public class MoBaseListener implements MoListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterJump_stmt(MoParser.Jump_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJump_stmt(MoParser.Jump_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterLvalue(MoParser.LvalueContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -227,6 +263,18 @@ public class MoBaseListener implements MoListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExpr(MoParser.ExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunc_call(MoParser.Func_callContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunc_call(MoParser.Func_callContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -8,6 +8,16 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface MoListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link MoParser#ori_type}.
+	 * @param ctx the parse tree
+	 */
+	void enterOri_type(MoParser.Ori_typeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MoParser#ori_type}.
+	 * @param ctx the parse tree
+	 */
+	void exitOri_type(MoParser.Ori_typeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MoParser#type}.
 	 * @param ctx the parse tree
 	 */
@@ -87,6 +97,16 @@ public interface MoListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDef(MoParser.DefContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MoParser#var_def}.
+	 * @param ctx the parse tree
+	 */
+	void enterVar_def(MoParser.Var_defContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MoParser#var_def}.
+	 * @param ctx the parse tree
+	 */
+	void exitVar_def(MoParser.Var_defContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MoParser#func_def}.
 	 * @param ctx the parse tree
@@ -168,6 +188,16 @@ public interface MoListener extends ParseTreeListener {
 	 */
 	void exitExpr_stmt(MoParser.Expr_stmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MoParser#jump_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterJump_stmt(MoParser.Jump_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MoParser#jump_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitJump_stmt(MoParser.Jump_stmtContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MoParser#lvalue}.
 	 * @param ctx the parse tree
 	 */
@@ -187,4 +217,14 @@ public interface MoListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpr(MoParser.ExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MoParser#func_call}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunc_call(MoParser.Func_callContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MoParser#func_call}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunc_call(MoParser.Func_callContext ctx);
 }
