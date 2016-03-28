@@ -1,5 +1,5 @@
-// Generated from /Users/Songyu/Projects/mo-compiler/src/CompilerPL/Mo.g4 by ANTLR 4.5.1
-package CompilerPL;
+// Generated from /Users/Songyu/Projects/Mental/src/MentalParser/Mental.g4 by ANTLR 4.5.1
+package MentalParser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class MoParser extends Parser {
+public class MentalParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -94,7 +94,7 @@ public class MoParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Mo.g4"; }
+	public String getGrammarFileName() { return "Mental.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -105,27 +105,27 @@ public class MoParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public MoParser(TokenStream input) {
+	public MentalParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class OriginalTypeContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(MoParser.ID, 0); }
+		public TerminalNode ID() { return getToken(MentalParser.ID, 0); }
 		public OriginalTypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_originalType; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterOriginalType(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterOriginalType(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitOriginalType(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitOriginalType(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitOriginalType(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitOriginalType(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -167,15 +167,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_type; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterType(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterType(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitType(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitType(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitType(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitType(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -224,9 +224,9 @@ public class MoParser extends Parser {
 		public TypeContext type(int i) {
 			return getRuleContext(TypeContext.class,i);
 		}
-		public List<TerminalNode> ID() { return getTokens(MoParser.ID); }
+		public List<TerminalNode> ID() { return getTokens(MentalParser.ID); }
 		public TerminalNode ID(int i) {
-			return getToken(MoParser.ID, i);
+			return getToken(MentalParser.ID, i);
 		}
 		public ParamtersListContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -234,15 +234,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_paramtersList; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterParamtersList(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterParamtersList(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitParamtersList(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitParamtersList(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitParamtersList(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitParamtersList(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -310,15 +310,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_program; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterProgram(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterProgram(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitProgram(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitProgram(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitProgram(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitProgram(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -381,15 +381,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_declaration; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterDeclaration(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterDeclaration(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitDeclaration(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitDeclaration(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitDeclaration(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitDeclaration(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -433,7 +433,7 @@ public class MoParser extends Parser {
 	}
 
 	public static class ClassDeclarationContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(MoParser.ID, 0); }
+		public TerminalNode ID() { return getToken(MentalParser.ID, 0); }
 		public List<VariableDefinitionContext> variableDefinition() {
 			return getRuleContexts(VariableDefinitionContext.class);
 		}
@@ -446,15 +446,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_classDeclaration; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterClassDeclaration(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterClassDeclaration(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitClassDeclaration(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitClassDeclaration(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitClassDeclaration(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitClassDeclaration(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -509,7 +509,7 @@ public class MoParser extends Parser {
 	}
 
 	public static class FunctionDeclarationContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(MoParser.ID, 0); }
+		public TerminalNode ID() { return getToken(MentalParser.ID, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
@@ -522,15 +522,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_functionDeclaration; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterFunctionDeclaration(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterFunctionDeclaration(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitFunctionDeclaration(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitFunctionDeclaration(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitFunctionDeclaration(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitFunctionDeclaration(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -604,15 +604,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_definition; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterDefinition(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterDefinition(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitDefinition(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitDefinition(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitDefinition(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitDefinition(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -654,9 +654,9 @@ public class MoParser extends Parser {
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
-		public List<TerminalNode> ID() { return getTokens(MoParser.ID); }
+		public List<TerminalNode> ID() { return getTokens(MentalParser.ID); }
 		public TerminalNode ID(int i) {
-			return getToken(MoParser.ID, i);
+			return getToken(MentalParser.ID, i);
 		}
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
@@ -670,15 +670,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_variableDefinition; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterVariableDefinition(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterVariableDefinition(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitVariableDefinition(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitVariableDefinition(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitVariableDefinition(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitVariableDefinition(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -748,7 +748,7 @@ public class MoParser extends Parser {
 	}
 
 	public static class FunctionDefinitionContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(MoParser.ID, 0); }
+		public TerminalNode ID() { return getToken(MentalParser.ID, 0); }
 		public CompoundStatementContext compoundStatement() {
 			return getRuleContext(CompoundStatementContext.class,0);
 		}
@@ -764,15 +764,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_functionDefinition; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterFunctionDefinition(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterFunctionDefinition(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitFunctionDefinition(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitFunctionDefinition(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitFunctionDefinition(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitFunctionDefinition(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -846,15 +846,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_compoundStatement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterCompoundStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterCompoundStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitCompoundStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitCompoundStatement(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCompoundStatement(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitCompoundStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -946,15 +946,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_statement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitStatement(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitStatement(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1086,15 +1086,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_callPrint; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterCallPrint(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterCallPrint(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitCallPrint(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitCallPrint(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCallPrint(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitCallPrint(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1138,15 +1138,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_callPrintln; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterCallPrintln(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterCallPrintln(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitCallPrintln(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitCallPrintln(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCallPrintln(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitCallPrintln(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1187,15 +1187,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_callGetString; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterCallGetString(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterCallGetString(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitCallGetString(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitCallGetString(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCallGetString(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitCallGetString(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1234,15 +1234,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_callGetInt; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterCallGetInt(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterCallGetInt(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitCallGetInt(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitCallGetInt(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCallGetInt(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitCallGetInt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1284,15 +1284,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_callToString; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterCallToString(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterCallToString(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitCallToString(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitCallToString(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCallToString(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitCallToString(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1331,15 +1331,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_emptyStatement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterEmptyStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterEmptyStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitEmptyStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitEmptyStatement(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitEmptyStatement(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitEmptyStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1378,15 +1378,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_ifStatement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterIfStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterIfStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitIfStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitIfStatement(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitIfStatement(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitIfStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1436,15 +1436,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_ifElseStatement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterIfElseStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterIfElseStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitIfElseStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitIfElseStatement(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitIfElseStatement(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitIfElseStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1498,15 +1498,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_forStatement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterForStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterForStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitForStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitForStatement(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitForStatement(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitForStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1583,15 +1583,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_whileStatement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterWhileStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterWhileStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitWhileStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitWhileStatement(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitWhileStatement(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitWhileStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1635,15 +1635,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_jumpStatement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterJumpStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterJumpStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitJumpStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitJumpStatement(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitJumpStatement(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitJumpStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1708,15 +1708,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_expressionStatement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterExpressionStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterExpressionStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitExpressionStatement(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitExpressionStatement(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitExpressionStatement(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitExpressionStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1745,9 +1745,9 @@ public class MoParser extends Parser {
 	}
 
 	public static class LeftValueContext extends ParserRuleContext {
-		public List<TerminalNode> ID() { return getTokens(MoParser.ID); }
+		public List<TerminalNode> ID() { return getTokens(MentalParser.ID); }
 		public TerminalNode ID(int i) {
-			return getToken(MoParser.ID, i);
+			return getToken(MentalParser.ID, i);
 		}
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
@@ -1761,15 +1761,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_leftValue; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterLeftValue(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterLeftValue(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitLeftValue(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitLeftValue(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitLeftValue(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitLeftValue(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1865,15 +1865,15 @@ public class MoParser extends Parser {
 		public LOGICAL_OR_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterLOGICAL_OR_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterLOGICAL_OR_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitLOGICAL_OR_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitLOGICAL_OR_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitLOGICAL_OR_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitLOGICAL_OR_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1887,15 +1887,15 @@ public class MoParser extends Parser {
 		public ASSIGN_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterASSIGN_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterASSIGN_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitASSIGN_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitASSIGN_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitASSIGN_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitASSIGN_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1909,15 +1909,15 @@ public class MoParser extends Parser {
 		public BIT_XOR_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterBIT_XOR_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterBIT_XOR_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitBIT_XOR_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitBIT_XOR_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitBIT_XOR_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitBIT_XOR_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1928,15 +1928,15 @@ public class MoParser extends Parser {
 		public LOGICAL_NOT_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterLOGICAL_NOT_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterLOGICAL_NOT_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitLOGICAL_NOT_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitLOGICAL_NOT_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitLOGICAL_NOT_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitLOGICAL_NOT_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1947,15 +1947,15 @@ public class MoParser extends Parser {
 		public REFERENCE_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterREFERENCE_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterREFERENCE_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitREFERENCE_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitREFERENCE_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitREFERENCE_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitREFERENCE_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1969,53 +1969,53 @@ public class MoParser extends Parser {
 		public MEMBER_ACCESS_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterMEMBER_ACCESS_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterMEMBER_ACCESS_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitMEMBER_ACCESS_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitMEMBER_ACCESS_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitMEMBER_ACCESS_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitMEMBER_ACCESS_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class FUNCTION_CALLContext extends ExpressionContext {
-		public TerminalNode ID() { return getToken(MoParser.ID, 0); }
+		public TerminalNode ID() { return getToken(MentalParser.ID, 0); }
 		public ExpressionListContext expressionList() {
 			return getRuleContext(ExpressionListContext.class,0);
 		}
 		public FUNCTION_CALLContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterFUNCTION_CALL(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterFUNCTION_CALL(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitFUNCTION_CALL(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitFUNCTION_CALL(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitFUNCTION_CALL(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitFUNCTION_CALL(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class CONSTANTContext extends ExpressionContext {
-		public TerminalNode INT() { return getToken(MoParser.INT, 0); }
-		public TerminalNode STRING() { return getToken(MoParser.STRING, 0); }
+		public TerminalNode INT() { return getToken(MentalParser.INT, 0); }
+		public TerminalNode STRING() { return getToken(MentalParser.STRING, 0); }
 		public CONSTANTContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterCONSTANT(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterCONSTANT(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitCONSTANT(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitCONSTANT(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCONSTANT(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitCONSTANT(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2029,15 +2029,15 @@ public class MoParser extends Parser {
 		public ADDITIVE_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterADDITIVE_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterADDITIVE_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitADDITIVE_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitADDITIVE_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitADDITIVE_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitADDITIVE_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2051,15 +2051,15 @@ public class MoParser extends Parser {
 		public BIT_OR_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterBIT_OR_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterBIT_OR_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitBIT_OR_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitBIT_OR_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitBIT_OR_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitBIT_OR_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2076,15 +2076,15 @@ public class MoParser extends Parser {
 		public CREATION_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterCREATION_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterCREATION_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitCREATION_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitCREATION_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCREATION_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitCREATION_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2098,15 +2098,15 @@ public class MoParser extends Parser {
 		public LOGICAL_AND_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterLOGICAL_AND_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterLOGICAL_AND_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitLOGICAL_AND_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitLOGICAL_AND_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitLOGICAL_AND_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitLOGICAL_AND_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2117,15 +2117,15 @@ public class MoParser extends Parser {
 		public BIT_NOT_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterBIT_NOT_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterBIT_NOT_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitBIT_NOT_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitBIT_NOT_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitBIT_NOT_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitBIT_NOT_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2139,15 +2139,15 @@ public class MoParser extends Parser {
 		public BIT_SHIFT_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterBIT_SHIFT_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterBIT_SHIFT_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitBIT_SHIFT_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitBIT_SHIFT_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitBIT_SHIFT_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitBIT_SHIFT_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2158,15 +2158,15 @@ public class MoParser extends Parser {
 		public PREFIX_INC_DEC_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterPREFIX_INC_DEC_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterPREFIX_INC_DEC_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitPREFIX_INC_DEC_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitPREFIX_INC_DEC_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitPREFIX_INC_DEC_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitPREFIX_INC_DEC_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2180,15 +2180,15 @@ public class MoParser extends Parser {
 		public ARRAY_SUBSCRIPTING_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterARRAY_SUBSCRIPTING_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterARRAY_SUBSCRIPTING_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitARRAY_SUBSCRIPTING_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitARRAY_SUBSCRIPTING_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitARRAY_SUBSCRIPTING_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitARRAY_SUBSCRIPTING_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2202,15 +2202,15 @@ public class MoParser extends Parser {
 		public RELATION_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterRELATION_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterRELATION_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitRELATION_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitRELATION_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitRELATION_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitRELATION_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2224,15 +2224,15 @@ public class MoParser extends Parser {
 		public EQUALITY_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterEQUALITY_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterEQUALITY_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitEQUALITY_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitEQUALITY_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitEQUALITY_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitEQUALITY_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2243,15 +2243,15 @@ public class MoParser extends Parser {
 		public SUBGROUP_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterSUBGROUP_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterSUBGROUP_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitSUBGROUP_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitSUBGROUP_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitSUBGROUP_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitSUBGROUP_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2265,32 +2265,32 @@ public class MoParser extends Parser {
 		public BIT_AND_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterBIT_AND_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterBIT_AND_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitBIT_AND_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitBIT_AND_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitBIT_AND_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitBIT_AND_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class IDENTIFIERContext extends ExpressionContext {
-		public TerminalNode ID() { return getToken(MoParser.ID, 0); }
+		public TerminalNode ID() { return getToken(MentalParser.ID, 0); }
 		public IDENTIFIERContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterIDENTIFIER(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterIDENTIFIER(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitIDENTIFIER(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitIDENTIFIER(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitIDENTIFIER(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitIDENTIFIER(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2301,15 +2301,15 @@ public class MoParser extends Parser {
 		public SUFFIX_INC_DEC_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterSUFFIX_INC_DEC_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterSUFFIX_INC_DEC_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitSUFFIX_INC_DEC_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitSUFFIX_INC_DEC_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitSUFFIX_INC_DEC_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitSUFFIX_INC_DEC_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2320,15 +2320,15 @@ public class MoParser extends Parser {
 		public UNRAY_PLUS_MINUS_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterUNRAY_PLUS_MINUS_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterUNRAY_PLUS_MINUS_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitUNRAY_PLUS_MINUS_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitUNRAY_PLUS_MINUS_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitUNRAY_PLUS_MINUS_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitUNRAY_PLUS_MINUS_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2342,15 +2342,15 @@ public class MoParser extends Parser {
 		public MULTIPLY_DIVIDE_EXPRESSIONContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterMULTIPLY_DIVIDE_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterMULTIPLY_DIVIDE_EXPRESSION(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitMULTIPLY_DIVIDE_EXPRESSION(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitMULTIPLY_DIVIDE_EXPRESSION(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitMULTIPLY_DIVIDE_EXPRESSION(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitMULTIPLY_DIVIDE_EXPRESSION(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2802,15 +2802,15 @@ public class MoParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_expressionList; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).enterExpressionList(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).enterExpressionList(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MoListener ) ((MoListener)listener).exitExpressionList(this);
+			if ( listener instanceof MentalListener ) ((MentalListener)listener).exitExpressionList(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitExpressionList(this);
+			if ( visitor instanceof MentalVisitor ) return ((MentalVisitor<? extends T>)visitor).visitExpressionList(this);
 			else return visitor.visitChildren(this);
 		}
 	}

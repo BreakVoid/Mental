@@ -1,4 +1,4 @@
-grammar Mo;
+grammar Mental;
 COMMENT
     : '//' ~[\r\n]* '\r'? ('\n'|EOF) -> skip
     ;
