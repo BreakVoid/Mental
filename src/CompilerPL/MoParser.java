@@ -123,6 +123,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitOriginalType(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitOriginalType(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final OriginalTypeContext originalType() throws RecognitionException {
@@ -167,6 +172,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitType(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitType(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -229,6 +239,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitParamtersList(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitParamtersList(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -301,6 +316,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitProgram(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitProgram(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ProgramContext program() throws RecognitionException {
@@ -367,6 +387,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitDeclaration(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitDeclaration(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final DeclarationContext declaration() throws RecognitionException {
@@ -426,6 +451,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitClassDeclaration(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitClassDeclaration(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -497,6 +527,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitFunctionDeclaration(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitFunctionDeclaration(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -575,6 +610,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitDefinition(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitDefinition(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final DefinitionContext definition() throws RecognitionException {
@@ -635,6 +675,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitVariableDefinition(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitVariableDefinition(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -725,6 +770,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitFunctionDefinition(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitFunctionDefinition(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FunctionDefinitionContext functionDefinition() throws RecognitionException {
@@ -801,6 +851,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitCompoundStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCompoundStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -896,6 +951,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1032,6 +1092,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitCallPrint(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCallPrint(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final CallPrintContext callPrint() throws RecognitionException {
@@ -1079,6 +1144,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitCallPrintln(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCallPrintln(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final CallPrintlnContext callPrintln() throws RecognitionException {
@@ -1123,6 +1193,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitCallGetString(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCallGetString(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final CallGetStringContext callGetString() throws RecognitionException {
@@ -1164,6 +1239,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitCallGetInt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCallGetInt(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1210,6 +1290,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitCallToString(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCallToString(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final CallToStringContext callToString() throws RecognitionException {
@@ -1252,6 +1337,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitEmptyStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitEmptyStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final EmptyStatementContext emptyStatement() throws RecognitionException {
@@ -1293,6 +1383,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitIfStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitIfStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1346,6 +1441,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitIfElseStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitIfElseStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1403,6 +1503,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitForStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitForStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1484,6 +1589,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitWhileStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitWhileStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final WhileStatementContext whileStatement() throws RecognitionException {
@@ -1530,6 +1640,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitJumpStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitJumpStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1599,6 +1714,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitExpressionStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitExpressionStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ExpressionStatementContext expressionStatement() throws RecognitionException {
@@ -1646,6 +1766,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitLeftValue(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitLeftValue(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1746,6 +1871,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitLOGICAL_OR_EXPRESSION(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitLOGICAL_OR_EXPRESSION(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class ASSIGN_EXPRESSIONContext extends ExpressionContext {
 		public List<ExpressionContext> expression() {
@@ -1762,6 +1892,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitASSIGN_EXPRESSION(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitASSIGN_EXPRESSION(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class BIT_XOR_EXPRESSIONContext extends ExpressionContext {
@@ -1780,6 +1915,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitBIT_XOR_EXPRESSION(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitBIT_XOR_EXPRESSION(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class LOGICAL_NOT_EXPRESSIONContext extends ExpressionContext {
 		public ExpressionContext expression() {
@@ -1794,6 +1934,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitLOGICAL_NOT_EXPRESSION(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitLOGICAL_NOT_EXPRESSION(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class REFERENCE_EXPRESSIONContext extends ExpressionContext {
 		public ExpressionContext expression() {
@@ -1807,6 +1952,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitREFERENCE_EXPRESSION(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitREFERENCE_EXPRESSION(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class MEMBER_ACCESS_EXPRESSIONContext extends ExpressionContext {
@@ -1825,6 +1975,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitMEMBER_ACCESS_EXPRESSION(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitMEMBER_ACCESS_EXPRESSION(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class FUNCTION_CALLContext extends ExpressionContext {
 		public TerminalNode ID() { return getToken(MoParser.ID, 0); }
@@ -1840,6 +1995,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitFUNCTION_CALL(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitFUNCTION_CALL(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class CONSTANTContext extends ExpressionContext {
 		public TerminalNode INT() { return getToken(MoParser.INT, 0); }
@@ -1852,6 +2012,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitCONSTANT(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCONSTANT(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class ADDITIVE_EXPRESSIONContext extends ExpressionContext {
@@ -1870,6 +2035,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitADDITIVE_EXPRESSION(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitADDITIVE_EXPRESSION(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class BIT_OR_EXPRESSIONContext extends ExpressionContext {
 		public List<ExpressionContext> expression() {
@@ -1886,6 +2056,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitBIT_OR_EXPRESSION(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitBIT_OR_EXPRESSION(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class CREATION_EXPRESSIONContext extends ExpressionContext {
@@ -1907,6 +2082,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitCREATION_EXPRESSION(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitCREATION_EXPRESSION(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class LOGICAL_AND_EXPRESSIONContext extends ExpressionContext {
 		public List<ExpressionContext> expression() {
@@ -1924,6 +2104,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitLOGICAL_AND_EXPRESSION(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitLOGICAL_AND_EXPRESSION(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class BIT_NOT_EXPRESSIONContext extends ExpressionContext {
 		public ExpressionContext expression() {
@@ -1937,6 +2122,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitBIT_NOT_EXPRESSION(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitBIT_NOT_EXPRESSION(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class BIT_SHIFT_EXPRESSIONContext extends ExpressionContext {
@@ -1955,6 +2145,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitBIT_SHIFT_EXPRESSION(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitBIT_SHIFT_EXPRESSION(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class PREFIX_INC_DEC_EXPRESSIONContext extends ExpressionContext {
 		public LeftValueContext leftValue() {
@@ -1968,6 +2163,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitPREFIX_INC_DEC_EXPRESSION(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitPREFIX_INC_DEC_EXPRESSION(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class ARRAY_SUBSCRIPTING_EXPRESSIONContext extends ExpressionContext {
@@ -1986,6 +2186,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitARRAY_SUBSCRIPTING_EXPRESSION(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitARRAY_SUBSCRIPTING_EXPRESSION(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class RELATION_EXPRESSIONContext extends ExpressionContext {
 		public List<ExpressionContext> expression() {
@@ -2002,6 +2207,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitRELATION_EXPRESSION(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitRELATION_EXPRESSION(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class EQUALITY_EXPRESSIONContext extends ExpressionContext {
@@ -2020,6 +2230,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitEQUALITY_EXPRESSION(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitEQUALITY_EXPRESSION(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class SUBGROUP_EXPRESSIONContext extends ExpressionContext {
 		public ExpressionContext expression() {
@@ -2033,6 +2248,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitSUBGROUP_EXPRESSION(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitSUBGROUP_EXPRESSION(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class BIT_AND_EXPRESSIONContext extends ExpressionContext {
@@ -2051,6 +2271,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitBIT_AND_EXPRESSION(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitBIT_AND_EXPRESSION(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class IDENTIFIERContext extends ExpressionContext {
 		public TerminalNode ID() { return getToken(MoParser.ID, 0); }
@@ -2062,6 +2287,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitIDENTIFIER(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitIDENTIFIER(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class SUFFIX_INC_DEC_EXPRESSIONContext extends ExpressionContext {
@@ -2077,6 +2307,11 @@ public class MoParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitSUFFIX_INC_DEC_EXPRESSION(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitSUFFIX_INC_DEC_EXPRESSION(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class UNRAY_PLUS_MINUS_EXPRESSIONContext extends ExpressionContext {
 		public ExpressionContext expression() {
@@ -2090,6 +2325,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitUNRAY_PLUS_MINUS_EXPRESSION(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitUNRAY_PLUS_MINUS_EXPRESSION(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class MULTIPLY_DIVIDE_EXPRESSIONContext extends ExpressionContext {
@@ -2107,6 +2347,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitMULTIPLY_DIVIDE_EXPRESSION(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitMULTIPLY_DIVIDE_EXPRESSION(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2562,6 +2807,11 @@ public class MoParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MoListener ) ((MoListener)listener).exitExpressionList(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MoVisitor ) return ((MoVisitor<? extends T>)visitor).visitExpressionList(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
