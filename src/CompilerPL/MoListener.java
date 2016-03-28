@@ -8,15 +8,15 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface MoListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link MoParser#ori_type}.
+	 * Enter a parse tree produced by {@link MoParser#originalType}.
 	 * @param ctx the parse tree
 	 */
-	void enterOri_type(MoParser.Ori_typeContext ctx);
+	void enterOriginalType(MoParser.OriginalTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#ori_type}.
+	 * Exit a parse tree produced by {@link MoParser#originalType}.
 	 * @param ctx the parse tree
 	 */
-	void exitOri_type(MoParser.Ori_typeContext ctx);
+	void exitOriginalType(MoParser.OriginalTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MoParser#type}.
 	 * @param ctx the parse tree
@@ -28,203 +28,531 @@ public interface MoListener extends ParseTreeListener {
 	 */
 	void exitType(MoParser.TypeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#prog}.
+	 * Enter a parse tree produced by {@link MoParser#paramtersList}.
 	 * @param ctx the parse tree
 	 */
-	void enterProg(MoParser.ProgContext ctx);
+	void enterParamtersList(MoParser.ParamtersListContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#prog}.
+	 * Exit a parse tree produced by {@link MoParser#paramtersList}.
 	 * @param ctx the parse tree
 	 */
-	void exitProg(MoParser.ProgContext ctx);
+	void exitParamtersList(MoParser.ParamtersListContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#decl}.
+	 * Enter a parse tree produced by {@link MoParser#program}.
 	 * @param ctx the parse tree
 	 */
-	void enterDecl(MoParser.DeclContext ctx);
+	void enterProgram(MoParser.ProgramContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#decl}.
+	 * Exit a parse tree produced by {@link MoParser#program}.
 	 * @param ctx the parse tree
 	 */
-	void exitDecl(MoParser.DeclContext ctx);
+	void exitProgram(MoParser.ProgramContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#var_decl}.
+	 * Enter a parse tree produced by {@link MoParser#declaration}.
 	 * @param ctx the parse tree
 	 */
-	void enterVar_decl(MoParser.Var_declContext ctx);
+	void enterDeclaration(MoParser.DeclarationContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#var_decl}.
+	 * Exit a parse tree produced by {@link MoParser#declaration}.
 	 * @param ctx the parse tree
 	 */
-	void exitVar_decl(MoParser.Var_declContext ctx);
+	void exitDeclaration(MoParser.DeclarationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#class_decl}.
+	 * Enter a parse tree produced by {@link MoParser#classDeclaration}.
 	 * @param ctx the parse tree
 	 */
-	void enterClass_decl(MoParser.Class_declContext ctx);
+	void enterClassDeclaration(MoParser.ClassDeclarationContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#class_decl}.
+	 * Exit a parse tree produced by {@link MoParser#classDeclaration}.
 	 * @param ctx the parse tree
 	 */
-	void exitClass_decl(MoParser.Class_declContext ctx);
+	void exitClassDeclaration(MoParser.ClassDeclarationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#func_decl}.
+	 * Enter a parse tree produced by {@link MoParser#functionDeclaration}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunc_decl(MoParser.Func_declContext ctx);
+	void enterFunctionDeclaration(MoParser.FunctionDeclarationContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#func_decl}.
+	 * Exit a parse tree produced by {@link MoParser#functionDeclaration}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunc_decl(MoParser.Func_declContext ctx);
+	void exitFunctionDeclaration(MoParser.FunctionDeclarationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#paramters_list}.
+	 * Enter a parse tree produced by {@link MoParser#definition}.
 	 * @param ctx the parse tree
 	 */
-	void enterParamters_list(MoParser.Paramters_listContext ctx);
+	void enterDefinition(MoParser.DefinitionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#paramters_list}.
+	 * Exit a parse tree produced by {@link MoParser#definition}.
 	 * @param ctx the parse tree
 	 */
-	void exitParamters_list(MoParser.Paramters_listContext ctx);
+	void exitDefinition(MoParser.DefinitionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#def}.
+	 * Enter a parse tree produced by {@link MoParser#variableDefinition}.
 	 * @param ctx the parse tree
 	 */
-	void enterDef(MoParser.DefContext ctx);
+	void enterVariableDefinition(MoParser.VariableDefinitionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#def}.
+	 * Exit a parse tree produced by {@link MoParser#variableDefinition}.
 	 * @param ctx the parse tree
 	 */
-	void exitDef(MoParser.DefContext ctx);
+	void exitVariableDefinition(MoParser.VariableDefinitionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#var_def}.
+	 * Enter a parse tree produced by {@link MoParser#functionDefinition}.
 	 * @param ctx the parse tree
 	 */
-	void enterVar_def(MoParser.Var_defContext ctx);
+	void enterFunctionDefinition(MoParser.FunctionDefinitionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#var_def}.
+	 * Exit a parse tree produced by {@link MoParser#functionDefinition}.
 	 * @param ctx the parse tree
 	 */
-	void exitVar_def(MoParser.Var_defContext ctx);
+	void exitFunctionDefinition(MoParser.FunctionDefinitionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#func_def}.
+	 * Enter a parse tree produced by {@link MoParser#compoundStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunc_def(MoParser.Func_defContext ctx);
+	void enterCompoundStatement(MoParser.CompoundStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#func_def}.
+	 * Exit a parse tree produced by {@link MoParser#compoundStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunc_def(MoParser.Func_defContext ctx);
+	void exitCompoundStatement(MoParser.CompoundStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#compound_stmt}.
+	 * Enter a parse tree produced by {@link MoParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void enterCompound_stmt(MoParser.Compound_stmtContext ctx);
+	void enterStatement(MoParser.StatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#compound_stmt}.
+	 * Exit a parse tree produced by {@link MoParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void exitCompound_stmt(MoParser.Compound_stmtContext ctx);
+	void exitStatement(MoParser.StatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#stmt}.
+	 * Enter a parse tree produced by {@link MoParser#callPrint}.
 	 * @param ctx the parse tree
 	 */
-	void enterStmt(MoParser.StmtContext ctx);
+	void enterCallPrint(MoParser.CallPrintContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#stmt}.
+	 * Exit a parse tree produced by {@link MoParser#callPrint}.
 	 * @param ctx the parse tree
 	 */
-	void exitStmt(MoParser.StmtContext ctx);
+	void exitCallPrint(MoParser.CallPrintContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#if_stmt}.
+	 * Enter a parse tree produced by {@link MoParser#callPrintln}.
 	 * @param ctx the parse tree
 	 */
-	void enterIf_stmt(MoParser.If_stmtContext ctx);
+	void enterCallPrintln(MoParser.CallPrintlnContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#if_stmt}.
+	 * Exit a parse tree produced by {@link MoParser#callPrintln}.
 	 * @param ctx the parse tree
 	 */
-	void exitIf_stmt(MoParser.If_stmtContext ctx);
+	void exitCallPrintln(MoParser.CallPrintlnContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#for_stmt}.
+	 * Enter a parse tree produced by {@link MoParser#callGetString}.
 	 * @param ctx the parse tree
 	 */
-	void enterFor_stmt(MoParser.For_stmtContext ctx);
+	void enterCallGetString(MoParser.CallGetStringContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#for_stmt}.
+	 * Exit a parse tree produced by {@link MoParser#callGetString}.
 	 * @param ctx the parse tree
 	 */
-	void exitFor_stmt(MoParser.For_stmtContext ctx);
+	void exitCallGetString(MoParser.CallGetStringContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#while_stmt}.
+	 * Enter a parse tree produced by {@link MoParser#callGetInt}.
 	 * @param ctx the parse tree
 	 */
-	void enterWhile_stmt(MoParser.While_stmtContext ctx);
+	void enterCallGetInt(MoParser.CallGetIntContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#while_stmt}.
+	 * Exit a parse tree produced by {@link MoParser#callGetInt}.
 	 * @param ctx the parse tree
 	 */
-	void exitWhile_stmt(MoParser.While_stmtContext ctx);
+	void exitCallGetInt(MoParser.CallGetIntContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#expr_stmt}.
+	 * Enter a parse tree produced by {@link MoParser#callToString}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr_stmt(MoParser.Expr_stmtContext ctx);
+	void enterCallToString(MoParser.CallToStringContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#expr_stmt}.
+	 * Exit a parse tree produced by {@link MoParser#callToString}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr_stmt(MoParser.Expr_stmtContext ctx);
+	void exitCallToString(MoParser.CallToStringContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#jump_stmt}.
+	 * Enter a parse tree produced by {@link MoParser#emptyStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterJump_stmt(MoParser.Jump_stmtContext ctx);
+	void enterEmptyStatement(MoParser.EmptyStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#jump_stmt}.
+	 * Exit a parse tree produced by {@link MoParser#emptyStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitJump_stmt(MoParser.Jump_stmtContext ctx);
+	void exitEmptyStatement(MoParser.EmptyStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#left_value}.
+	 * Enter a parse tree produced by {@link MoParser#ifStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterLeft_value(MoParser.Left_valueContext ctx);
+	void enterIfStatement(MoParser.IfStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#left_value}.
+	 * Exit a parse tree produced by {@link MoParser#ifStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitLeft_value(MoParser.Left_valueContext ctx);
+	void exitIfStatement(MoParser.IfStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#constant}.
+	 * Enter a parse tree produced by {@link MoParser#ifElseStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterConstant(MoParser.ConstantContext ctx);
+	void enterIfElseStatement(MoParser.IfElseStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#constant}.
+	 * Exit a parse tree produced by {@link MoParser#ifElseStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitConstant(MoParser.ConstantContext ctx);
+	void exitIfElseStatement(MoParser.IfElseStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#expr}.
+	 * Enter a parse tree produced by {@link MoParser#forStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr(MoParser.ExprContext ctx);
+	void enterForStatement(MoParser.ForStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#expr}.
+	 * Exit a parse tree produced by {@link MoParser#forStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr(MoParser.ExprContext ctx);
+	void exitForStatement(MoParser.ForStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MoParser#func_call}.
+	 * Enter a parse tree produced by {@link MoParser#whileStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunc_call(MoParser.Func_callContext ctx);
+	void enterWhileStatement(MoParser.WhileStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MoParser#func_call}.
+	 * Exit a parse tree produced by {@link MoParser#whileStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunc_call(MoParser.Func_callContext ctx);
+	void exitWhileStatement(MoParser.WhileStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MoParser#jumpStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterJumpStatement(MoParser.JumpStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MoParser#jumpStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitJumpStatement(MoParser.JumpStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MoParser#expressionStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressionStatement(MoParser.ExpressionStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MoParser#expressionStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressionStatement(MoParser.ExpressionStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MoParser#leftValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeftValue(MoParser.LeftValueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MoParser#leftValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeftValue(MoParser.LeftValueContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LOGICAL_OR_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLOGICAL_OR_EXPRESSION(MoParser.LOGICAL_OR_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LOGICAL_OR_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLOGICAL_OR_EXPRESSION(MoParser.LOGICAL_OR_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ASSIGN_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterASSIGN_EXPRESSION(MoParser.ASSIGN_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ASSIGN_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitASSIGN_EXPRESSION(MoParser.ASSIGN_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BIT_XOR_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBIT_XOR_EXPRESSION(MoParser.BIT_XOR_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BIT_XOR_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBIT_XOR_EXPRESSION(MoParser.BIT_XOR_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LOGICAL_NOT_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLOGICAL_NOT_EXPRESSION(MoParser.LOGICAL_NOT_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LOGICAL_NOT_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLOGICAL_NOT_EXPRESSION(MoParser.LOGICAL_NOT_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code REFERENCE_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterREFERENCE_EXPRESSION(MoParser.REFERENCE_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code REFERENCE_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitREFERENCE_EXPRESSION(MoParser.REFERENCE_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MEMBER_ACCESS_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMEMBER_ACCESS_EXPRESSION(MoParser.MEMBER_ACCESS_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MEMBER_ACCESS_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMEMBER_ACCESS_EXPRESSION(MoParser.MEMBER_ACCESS_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code FUNCTION_CALL}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFUNCTION_CALL(MoParser.FUNCTION_CALLContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FUNCTION_CALL}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFUNCTION_CALL(MoParser.FUNCTION_CALLContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CONSTANT}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterCONSTANT(MoParser.CONSTANTContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CONSTANT}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitCONSTANT(MoParser.CONSTANTContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ADDITIVE_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterADDITIVE_EXPRESSION(MoParser.ADDITIVE_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ADDITIVE_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitADDITIVE_EXPRESSION(MoParser.ADDITIVE_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BIT_OR_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBIT_OR_EXPRESSION(MoParser.BIT_OR_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BIT_OR_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBIT_OR_EXPRESSION(MoParser.BIT_OR_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CREATION_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterCREATION_EXPRESSION(MoParser.CREATION_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CREATION_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitCREATION_EXPRESSION(MoParser.CREATION_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LOGICAL_AND_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLOGICAL_AND_EXPRESSION(MoParser.LOGICAL_AND_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LOGICAL_AND_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLOGICAL_AND_EXPRESSION(MoParser.LOGICAL_AND_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BIT_NOT_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBIT_NOT_EXPRESSION(MoParser.BIT_NOT_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BIT_NOT_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBIT_NOT_EXPRESSION(MoParser.BIT_NOT_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BIT_SHIFT_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBIT_SHIFT_EXPRESSION(MoParser.BIT_SHIFT_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BIT_SHIFT_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBIT_SHIFT_EXPRESSION(MoParser.BIT_SHIFT_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PREFIX_INC_DEC_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPREFIX_INC_DEC_EXPRESSION(MoParser.PREFIX_INC_DEC_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PREFIX_INC_DEC_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPREFIX_INC_DEC_EXPRESSION(MoParser.PREFIX_INC_DEC_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ARRAY_SUBSCRIPTING_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterARRAY_SUBSCRIPTING_EXPRESSION(MoParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ARRAY_SUBSCRIPTING_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitARRAY_SUBSCRIPTING_EXPRESSION(MoParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code RELATION_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterRELATION_EXPRESSION(MoParser.RELATION_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code RELATION_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitRELATION_EXPRESSION(MoParser.RELATION_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code EQUALITY_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterEQUALITY_EXPRESSION(MoParser.EQUALITY_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code EQUALITY_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitEQUALITY_EXPRESSION(MoParser.EQUALITY_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SUBGROUP_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSUBGROUP_EXPRESSION(MoParser.SUBGROUP_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SUBGROUP_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSUBGROUP_EXPRESSION(MoParser.SUBGROUP_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BIT_AND_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBIT_AND_EXPRESSION(MoParser.BIT_AND_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BIT_AND_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBIT_AND_EXPRESSION(MoParser.BIT_AND_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IDENTIFIER}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIDENTIFIER(MoParser.IDENTIFIERContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IDENTIFIER}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIDENTIFIER(MoParser.IDENTIFIERContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SUFFIX_INC_DEC_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSUFFIX_INC_DEC_EXPRESSION(MoParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SUFFIX_INC_DEC_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSUFFIX_INC_DEC_EXPRESSION(MoParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code UNRAY_PLUS_MINUS_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterUNRAY_PLUS_MINUS_EXPRESSION(MoParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code UNRAY_PLUS_MINUS_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitUNRAY_PLUS_MINUS_EXPRESSION(MoParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MULTIPLY_DIVIDE_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMULTIPLY_DIVIDE_EXPRESSION(MoParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MULTIPLY_DIVIDE_EXPRESSION}
+	 * labeled alternative in {@link MoParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMULTIPLY_DIVIDE_EXPRESSION(MoParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MoParser#expressionList}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressionList(MoParser.ExpressionListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MoParser#expressionList}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressionList(MoParser.ExpressionListContext ctx);
 }

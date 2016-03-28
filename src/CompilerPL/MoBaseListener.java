@@ -16,13 +16,13 @@ public class MoBaseListener implements MoListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOri_type(MoParser.Ori_typeContext ctx) { }
+	@Override public void enterOriginalType(MoParser.OriginalTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOri_type(MoParser.Ori_typeContext ctx) { }
+	@Override public void exitOriginalType(MoParser.OriginalTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -40,241 +40,577 @@ public class MoBaseListener implements MoListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProg(MoParser.ProgContext ctx) { }
+	@Override public void enterParamtersList(MoParser.ParamtersListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProg(MoParser.ProgContext ctx) { }
+	@Override public void exitParamtersList(MoParser.ParamtersListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDecl(MoParser.DeclContext ctx) { }
+	@Override public void enterProgram(MoParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDecl(MoParser.DeclContext ctx) { }
+	@Override public void exitProgram(MoParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_decl(MoParser.Var_declContext ctx) { }
+	@Override public void enterDeclaration(MoParser.DeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_decl(MoParser.Var_declContext ctx) { }
+	@Override public void exitDeclaration(MoParser.DeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterClass_decl(MoParser.Class_declContext ctx) { }
+	@Override public void enterClassDeclaration(MoParser.ClassDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitClass_decl(MoParser.Class_declContext ctx) { }
+	@Override public void exitClassDeclaration(MoParser.ClassDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunc_decl(MoParser.Func_declContext ctx) { }
+	@Override public void enterFunctionDeclaration(MoParser.FunctionDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunc_decl(MoParser.Func_declContext ctx) { }
+	@Override public void exitFunctionDeclaration(MoParser.FunctionDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParamters_list(MoParser.Paramters_listContext ctx) { }
+	@Override public void enterDefinition(MoParser.DefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParamters_list(MoParser.Paramters_listContext ctx) { }
+	@Override public void exitDefinition(MoParser.DefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDef(MoParser.DefContext ctx) { }
+	@Override public void enterVariableDefinition(MoParser.VariableDefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDef(MoParser.DefContext ctx) { }
+	@Override public void exitVariableDefinition(MoParser.VariableDefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_def(MoParser.Var_defContext ctx) { }
+	@Override public void enterFunctionDefinition(MoParser.FunctionDefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar_def(MoParser.Var_defContext ctx) { }
+	@Override public void exitFunctionDefinition(MoParser.FunctionDefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunc_def(MoParser.Func_defContext ctx) { }
+	@Override public void enterCompoundStatement(MoParser.CompoundStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunc_def(MoParser.Func_defContext ctx) { }
+	@Override public void exitCompoundStatement(MoParser.CompoundStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCompound_stmt(MoParser.Compound_stmtContext ctx) { }
+	@Override public void enterStatement(MoParser.StatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCompound_stmt(MoParser.Compound_stmtContext ctx) { }
+	@Override public void exitStatement(MoParser.StatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStmt(MoParser.StmtContext ctx) { }
+	@Override public void enterCallPrint(MoParser.CallPrintContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStmt(MoParser.StmtContext ctx) { }
+	@Override public void exitCallPrint(MoParser.CallPrintContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIf_stmt(MoParser.If_stmtContext ctx) { }
+	@Override public void enterCallPrintln(MoParser.CallPrintlnContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIf_stmt(MoParser.If_stmtContext ctx) { }
+	@Override public void exitCallPrintln(MoParser.CallPrintlnContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFor_stmt(MoParser.For_stmtContext ctx) { }
+	@Override public void enterCallGetString(MoParser.CallGetStringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFor_stmt(MoParser.For_stmtContext ctx) { }
+	@Override public void exitCallGetString(MoParser.CallGetStringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWhile_stmt(MoParser.While_stmtContext ctx) { }
+	@Override public void enterCallGetInt(MoParser.CallGetIntContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitWhile_stmt(MoParser.While_stmtContext ctx) { }
+	@Override public void exitCallGetInt(MoParser.CallGetIntContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr_stmt(MoParser.Expr_stmtContext ctx) { }
+	@Override public void enterCallToString(MoParser.CallToStringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpr_stmt(MoParser.Expr_stmtContext ctx) { }
+	@Override public void exitCallToString(MoParser.CallToStringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJump_stmt(MoParser.Jump_stmtContext ctx) { }
+	@Override public void enterEmptyStatement(MoParser.EmptyStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJump_stmt(MoParser.Jump_stmtContext ctx) { }
+	@Override public void exitEmptyStatement(MoParser.EmptyStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLeft_value(MoParser.Left_valueContext ctx) { }
+	@Override public void enterIfStatement(MoParser.IfStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLeft_value(MoParser.Left_valueContext ctx) { }
+	@Override public void exitIfStatement(MoParser.IfStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterConstant(MoParser.ConstantContext ctx) { }
+	@Override public void enterIfElseStatement(MoParser.IfElseStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitConstant(MoParser.ConstantContext ctx) { }
+	@Override public void exitIfElseStatement(MoParser.IfElseStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr(MoParser.ExprContext ctx) { }
+	@Override public void enterForStatement(MoParser.ForStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpr(MoParser.ExprContext ctx) { }
+	@Override public void exitForStatement(MoParser.ForStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunc_call(MoParser.Func_callContext ctx) { }
+	@Override public void enterWhileStatement(MoParser.WhileStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunc_call(MoParser.Func_callContext ctx) { }
+	@Override public void exitWhileStatement(MoParser.WhileStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJumpStatement(MoParser.JumpStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJumpStatement(MoParser.JumpStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpressionStatement(MoParser.ExpressionStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressionStatement(MoParser.ExpressionStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLeftValue(MoParser.LeftValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLeftValue(MoParser.LeftValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLOGICAL_OR_EXPRESSION(MoParser.LOGICAL_OR_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLOGICAL_OR_EXPRESSION(MoParser.LOGICAL_OR_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterASSIGN_EXPRESSION(MoParser.ASSIGN_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitASSIGN_EXPRESSION(MoParser.ASSIGN_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBIT_XOR_EXPRESSION(MoParser.BIT_XOR_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBIT_XOR_EXPRESSION(MoParser.BIT_XOR_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLOGICAL_NOT_EXPRESSION(MoParser.LOGICAL_NOT_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLOGICAL_NOT_EXPRESSION(MoParser.LOGICAL_NOT_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterREFERENCE_EXPRESSION(MoParser.REFERENCE_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitREFERENCE_EXPRESSION(MoParser.REFERENCE_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMEMBER_ACCESS_EXPRESSION(MoParser.MEMBER_ACCESS_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMEMBER_ACCESS_EXPRESSION(MoParser.MEMBER_ACCESS_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFUNCTION_CALL(MoParser.FUNCTION_CALLContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFUNCTION_CALL(MoParser.FUNCTION_CALLContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCONSTANT(MoParser.CONSTANTContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCONSTANT(MoParser.CONSTANTContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterADDITIVE_EXPRESSION(MoParser.ADDITIVE_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitADDITIVE_EXPRESSION(MoParser.ADDITIVE_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBIT_OR_EXPRESSION(MoParser.BIT_OR_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBIT_OR_EXPRESSION(MoParser.BIT_OR_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCREATION_EXPRESSION(MoParser.CREATION_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCREATION_EXPRESSION(MoParser.CREATION_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLOGICAL_AND_EXPRESSION(MoParser.LOGICAL_AND_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLOGICAL_AND_EXPRESSION(MoParser.LOGICAL_AND_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBIT_NOT_EXPRESSION(MoParser.BIT_NOT_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBIT_NOT_EXPRESSION(MoParser.BIT_NOT_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBIT_SHIFT_EXPRESSION(MoParser.BIT_SHIFT_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBIT_SHIFT_EXPRESSION(MoParser.BIT_SHIFT_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPREFIX_INC_DEC_EXPRESSION(MoParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPREFIX_INC_DEC_EXPRESSION(MoParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterARRAY_SUBSCRIPTING_EXPRESSION(MoParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitARRAY_SUBSCRIPTING_EXPRESSION(MoParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRELATION_EXPRESSION(MoParser.RELATION_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRELATION_EXPRESSION(MoParser.RELATION_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEQUALITY_EXPRESSION(MoParser.EQUALITY_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEQUALITY_EXPRESSION(MoParser.EQUALITY_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSUBGROUP_EXPRESSION(MoParser.SUBGROUP_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSUBGROUP_EXPRESSION(MoParser.SUBGROUP_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBIT_AND_EXPRESSION(MoParser.BIT_AND_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBIT_AND_EXPRESSION(MoParser.BIT_AND_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIDENTIFIER(MoParser.IDENTIFIERContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIDENTIFIER(MoParser.IDENTIFIERContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSUFFIX_INC_DEC_EXPRESSION(MoParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSUFFIX_INC_DEC_EXPRESSION(MoParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUNRAY_PLUS_MINUS_EXPRESSION(MoParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUNRAY_PLUS_MINUS_EXPRESSION(MoParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMULTIPLY_DIVIDE_EXPRESSION(MoParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMULTIPLY_DIVIDE_EXPRESSION(MoParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpressionList(MoParser.ExpressionListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressionList(MoParser.ExpressionListContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
