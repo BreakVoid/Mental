@@ -18,6 +18,16 @@ public interface MentalListener extends ParseTreeListener {
 	 */
 	void exitOriginalType(MentalParser.OriginalTypeContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MentalParser#array}.
+	 * @param ctx the parse tree
+	 */
+	void enterArray(MentalParser.ArrayContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MentalParser#array}.
+	 * @param ctx the parse tree
+	 */
+	void exitArray(MentalParser.ArrayContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MentalParser#type}.
 	 * @param ctx the parse tree
 	 */
@@ -248,40 +258,6 @@ public interface MentalListener extends ParseTreeListener {
 	 */
 	void exitExpressionStatement(MentalParser.ExpressionStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MentalParser#leftValue}.
-	 * @param ctx the parse tree
-	 */
-	void enterLeftValue(MentalParser.LeftValueContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MentalParser#leftValue}.
-	 * @param ctx the parse tree
-	 */
-	void exitLeftValue(MentalParser.LeftValueContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code LOGICAL_OR_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code LOGICAL_OR_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ASSIGN_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ASSIGN_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code BIT_XOR_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
@@ -305,18 +281,6 @@ public interface MentalListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLOGICAL_NOT_EXPRESSION(MentalParser.LOGICAL_NOT_EXPRESSIONContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code REFERENCE_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code REFERENCE_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code MEMBER_ACCESS_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
@@ -342,18 +306,6 @@ public interface MentalListener extends ParseTreeListener {
 	 */
 	void exitFUNCTION_CALL(MentalParser.FUNCTION_CALLContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code CONSTANT}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterCONSTANT(MentalParser.CONSTANTContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code CONSTANT}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitCONSTANT(MentalParser.CONSTANTContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ADDITIVE_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
@@ -365,18 +317,6 @@ public interface MentalListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitADDITIVE_EXPRESSION(MentalParser.ADDITIVE_EXPRESSIONContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code BIT_OR_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code BIT_OR_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code CREATION_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
@@ -390,18 +330,6 @@ public interface MentalListener extends ParseTreeListener {
 	 */
 	void exitCREATION_EXPRESSION(MentalParser.CREATION_EXPRESSIONContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code LOGICAL_AND_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code LOGICAL_AND_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code BIT_NOT_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
@@ -413,6 +341,162 @@ public interface MentalListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBIT_NOT_EXPRESSION(MentalParser.BIT_NOT_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code RELATION_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterRELATION_EXPRESSION(MentalParser.RELATION_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code RELATION_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitRELATION_EXPRESSION(MentalParser.RELATION_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code EQUALITY_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterEQUALITY_EXPRESSION(MentalParser.EQUALITY_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code EQUALITY_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitEQUALITY_EXPRESSION(MentalParser.EQUALITY_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code INT_LITERAL}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterINT_LITERAL(MentalParser.INT_LITERALContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code INT_LITERAL}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitINT_LITERAL(MentalParser.INT_LITERALContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IDENTIFIER}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIDENTIFIER(MentalParser.IDENTIFIERContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IDENTIFIER}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIDENTIFIER(MentalParser.IDENTIFIERContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SUFFIX_INC_DEC_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SUFFIX_INC_DEC_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MULTIPLY_DIVIDE_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MULTIPLY_DIVIDE_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LOGICAL_OR_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LOGICAL_OR_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ASSIGN_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ASSIGN_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code REFERENCE_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code REFERENCE_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NULL}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNULL(MentalParser.NULLContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NULL}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNULL(MentalParser.NULLContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code TRUE}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterTRUE(MentalParser.TRUEContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code TRUE}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitTRUE(MentalParser.TRUEContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BIT_OR_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BIT_OR_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LOGICAL_AND_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LOGICAL_AND_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code BIT_SHIFT_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
@@ -450,30 +534,6 @@ public interface MentalListener extends ParseTreeListener {
 	 */
 	void exitARRAY_SUBSCRIPTING_EXPRESSION(MentalParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code RELATION_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterRELATION_EXPRESSION(MentalParser.RELATION_EXPRESSIONContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code RELATION_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitRELATION_EXPRESSION(MentalParser.RELATION_EXPRESSIONContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code EQUALITY_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterEQUALITY_EXPRESSION(MentalParser.EQUALITY_EXPRESSIONContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code EQUALITY_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitEQUALITY_EXPRESSION(MentalParser.EQUALITY_EXPRESSIONContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code SUBGROUP_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
@@ -498,29 +558,29 @@ public interface MentalListener extends ParseTreeListener {
 	 */
 	void exitBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code IDENTIFIER}
+	 * Enter a parse tree produced by the {@code STRING_LITERAL}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterIDENTIFIER(MentalParser.IDENTIFIERContext ctx);
+	void enterSTRING_LITERAL(MentalParser.STRING_LITERALContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code IDENTIFIER}
+	 * Exit a parse tree produced by the {@code STRING_LITERAL}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitIDENTIFIER(MentalParser.IDENTIFIERContext ctx);
+	void exitSTRING_LITERAL(MentalParser.STRING_LITERALContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code SUFFIX_INC_DEC_EXPRESSION}
+	 * Enter a parse tree produced by the {@code FALSE}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx);
+	void enterFALSE(MentalParser.FALSEContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code SUFFIX_INC_DEC_EXPRESSION}
+	 * Exit a parse tree produced by the {@code FALSE}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx);
+	void exitFALSE(MentalParser.FALSEContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code UNRAY_PLUS_MINUS_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
@@ -533,18 +593,6 @@ public interface MentalListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code MULTIPLY_DIVIDE_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code MULTIPLY_DIVIDE_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MentalParser#expressionList}.
 	 * @param ctx the parse tree

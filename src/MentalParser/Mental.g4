@@ -1,216 +1,323 @@
 grammar Mental;
 COMMENT
-    : '//' ~[\r\n]* '\r'? ('\n'|EOF) -> skip
-    ;
+	: '//' ~[\r\n]* '\r'? ('\n'|EOF) -> skip
+	;
 
 WS
-    : [ \t\n\r]+ -> skip
-    ;
+	: [ \t\n\r]+ -> skip
+	;
 
 INT
-    : [0-9]+
-    ;
+	: DIGIT+
+	;
 
-ID
-    : [a-zA-z_][a-zA-z0-9_]*
-    ;
+Identifier
+	: Identifiernondigit ( Identifiernondigit| DIGIT )*
+	;
+fragment
+Hexquad
+	: HEX HEX HEX HEX
+	;
+fragment
+Universalcharactername
+	: '\\u' Hexquad
+	| '\\U' Hexquad Hexquad
+	;
+fragment
+Identifiernondigit
+	: NONDIGIT
+	| Universalcharactername
+	;
+
+fragment
+NONDIGIT
+	: [a-zA-Z_]
+	;
+
+fragment DIGIT
+	: [0-9]
+	;
+
 STRING
-    : '"' (ESC | .)*? '"'
-    ;
+	: '"' (ESC | .)*? '"'
+	;
 fragment ESC
-    : '\\' (["\\/bfnrt] | UNICODE)
-    ;
+	: '\\' (["\\/bfnrt] | UNICODE)
+	;
 fragment UNICODE
-    : 'u' HEX HEX HEX HEX
-    ;
+	: 'u' HEX HEX HEX HEX
+	;
 fragment HEX
-    : [0-9a-fA-F]
-    ;
+	: [0-9a-fA-F]
+	;
 
 originalType
-    : 'int'
-    | 'string'
-    | ID
+	: 'int'
+	| 'string'
+	| Identifier
+	;
+
+array
+    : originalType '[' ']'
+    | array '[' ']'
     ;
 
 type
-    : originalType
-    | originalType '[' ']'
-    ;
+	: originalType
+	| array
+	;
 
 paramtersList
-    : (type ID) (',' type ID)*
-    ;
+	: (type Identifier) (',' type Identifier)*
+	;
 
 program
-    : (declaration | definition)*
-    ;
+	: (declaration | definition)*
+	;
 
 declaration
-    : classDeclaration
-    | functionDeclaration
-    ;
+	: classDeclaration
+	| functionDeclaration
+	;
 
 classDeclaration
-    : 'class' ID? '{' variableDefinition* '}'
-    ;
+	: 'class' Identifier? '{' variableDefinition* '}'
+	;
 
 functionDeclaration
-    : (type | 'void') ID '(' paramtersList? ')' ';'
-    ;
+	: (type | 'void') Identifier '(' paramtersList? ')' ';'
+	;
 
 definition
-    : variableDefinition
-    | functionDefinition
-    ;
+	: variableDefinition
+	| functionDefinition
+	;
 
 variableDefinition
-    : type ID ('=' expression)? (',' ID ('=' expression)?)* ';'
-    ;
+	: type Identifier ('=' expression)? (',' Identifier ('=' expression)?)* ';'
+	;
 
 functionDefinition
-    : (type | 'void') ID '(' paramtersList? ')' compoundStatement
-    ;
+	: (type | 'void') Identifier '(' paramtersList? ')' compoundStatement
+	;
 
 compoundStatement
-    : '{' statement* '}'
-    ;
+	: '{' statement* '}'
+	;
 
 statement
-    : compoundStatement
-    | ifStatement
-    | ifElseStatement
-    | forStatement
-    | whileStatement
-    | expressionStatement
-    | jumpStatement
-    | emptyStatement
-    | variableDefinition
-    | callPrint
-    | callPrintln
-    | callGetString
-    | callGetInt
-    | callToString
-    ;
+	: compoundStatement
+	| ifStatement
+	| ifElseStatement
+	| forStatement
+	| whileStatement
+	| expressionStatement
+	| jumpStatement
+	| emptyStatement
+	| variableDefinition
+	| callPrint
+	| callPrintln
+	| callGetString
+	| callGetInt
+	| callToString
+	;
 
 callPrint
-    : 'print' '(' expression ')' ';'
-    ;
+	: 'print' '(' expression ')' ';'
+	;
 
 callPrintln
-    : 'println' '(' expression ')' ';'
-    ;
+	: 'println' '(' expression ')' ';'
+	;
 
 callGetString
-    : 'getString' '(' ')' ';'
-    ;
+	: 'getString' '(' ')' ';'
+	;
 
 callGetInt
-    : 'getInt' '(' ')' ';'
-    ;
+	: 'getInt' '(' ')' ';'
+	;
 
 callToString
-    : 'toString' '(' expression ')'
-    ;
+	: 'toString' '(' expression ')'
+	;
 
 emptyStatement
-    : ';'
-    ;
+	: ';'
+	;
 
 ifStatement
-    : 'if' '(' expression ')' statement
-    ;
+	: 'if' '(' expression ')' statement
+	;
 
 ifElseStatement
-    : 'if' '(' expression ')' statement 'else' statement
-    ;
+	: 'if' '(' expression ')' statement 'else' statement
+	;
 
 forStatement
-    : 'for' '(' expression? ';' expression? ';' expression? ')' statement
-    ;
+	: 'for' '(' expression? ';' expression? ';' expression? ')' statement
+	;
 
 whileStatement
-    : 'while' '(' expression ')' statement
-    ;
+	: 'while' '(' expression ')' statement
+	;
 
 jumpStatement
-    : 'return' expression ';'
-    | 'continue' ';'
-    | 'break' ';'
-    ;
+	: 'return' expression ';'
+	| 'continue' ';'
+	| 'break' ';'
+	;
 
 expressionStatement
-    : expression ';'
-    ;
-
-leftValue
-    : ID
-    | ID '.' ID
-    | ID '[' expression ']'
-    | | ('++'|'--') leftValue
-    ;
+	: expression ';'
+	;
 
 expression
-    : 'new' type ('[' expression ']')*
-    #CREATION_EXPRESSION
-    | '(' expression ')'
-    #SUBGROUP_EXPRESSION
-    | expression '[' expression ']'
-    #ARRAY_SUBSCRIPTING_EXPRESSION
-    | expression '.' expression
-    #MEMBER_ACCESS_EXPRESSION
-    | expression ('++' | '--')
-    #SUFFIX_INC_DEC_EXPRESSION
-    | ('++'|'--') leftValue
-    #PREFIX_INC_DEC_EXPRESSION
-    | ('+'|'-') expression
-    #UNRAY_PLUS_MINUS_EXPRESSION
-    | '~' expression
-    #BIT_NOT_EXPRESSION
-    | '!' expression
-    #LOGICAL_NOT_EXPRESSION
-    | '&' expression
-    #REFERENCE_EXPRESSION
-    | expression ('*'|'/'|'%') expression
-    #MULTIPLY_DIVIDE_EXPRESSION
-    | expression ('+'|'-')  expression
-    #ADDITIVE_EXPRESSION
-    | expression ('<<'|'>>') expression
-    #BIT_SHIFT_EXPRESSION
-    | expression ('<='|'>='|'<'|'>') expression
-    #RELATION_EXPRESSION
-    | expression ('=='|'!=') expression
-    #EQUALITY_EXPRESSION
-    | expression '&' expression
-    #BIT_AND_EXPRESSION
-    | expression '^' expression
-    #BIT_XOR_EXPRESSION
-    | expression '|' expression
-    #BIT_OR_EXPRESSION
-    | expression '&&' expression
-    #LOGICAL_AND_EXPRESSION
-    | expression '||' expression
-    #LOGICAL_OR_EXPRESSION
-    | <assoc=right> expression '=' expression
-    #ASSIGN_EXPRESSION
-    | ID '(' expressionList? ')'
-    #FUNCTION_CALL
-    | ID
-    #IDENTIFIER
-    | INT
-    #CONSTANT
-    | STRING
-    #CONSTANT
-    | 'true'
-    #CONSTANT
-    | 'false'
-    #CONSTANT
-    | 'null'
-    #CONSTANT
-    ;
+	: 'new' originalType ('[' expression ']')*
+	#CREATION_EXPRESSION
+	| 'new' Identifier ('('expressionList')')*
+	#CREATION_EXPRESSION
+	| '(' expression ')'
+	#SUBGROUP_EXPRESSION
+	| expression '[' expression ']'
+	#ARRAY_SUBSCRIPTING_EXPRESSION
+	| expression op='.' expression
+	#MEMBER_ACCESS_EXPRESSION
+	| expression op=('++' | '--')
+	#SUFFIX_INC_DEC_EXPRESSION
+	| op=('++'|'--') expression
+	#PREFIX_INC_DEC_EXPRESSION
+	| op=('+'|'-') expression
+	#UNRAY_PLUS_MINUS_EXPRESSION
+	| op='~' expression
+	#BIT_NOT_EXPRESSION
+	| op='!' expression
+	#LOGICAL_NOT_EXPRESSION
+	| op='&' expression
+	#REFERENCE_EXPRESSION
+	| expression op=('*'|'/'|'%') expression
+	#MULTIPLY_DIVIDE_EXPRESSION
+	| expression op=('+'|'-')  expression
+	#ADDITIVE_EXPRESSION
+	| expression op=('<<'|'>>') expression
+	#BIT_SHIFT_EXPRESSION
+	| expression op=('<='|'>='|'<'|'>') expression
+	#RELATION_EXPRESSION
+	| expression op=('=='|'!=') expression
+	#EQUALITY_EXPRESSION
+	| expression op='&' expression
+	#BIT_AND_EXPRESSION
+	| expression op='^' expression
+	#BIT_XOR_EXPRESSION
+	| expression op='|' expression
+	#BIT_OR_EXPRESSION
+	| expression op='&&' expression
+	#LOGICAL_AND_EXPRESSION
+	| expression op='||' expression
+	#LOGICAL_OR_EXPRESSION
+	| <assoc=right> expression op='=' expression
+	#ASSIGN_EXPRESSION
+	| Identifier '(' expressionList? ')'
+	#FUNCTION_CALL
+	| Identifier
+	#IDENTIFIER
+	| INT
+	#INT_LITERAL
+	| STRING
+	#STRING_LITERAL
+	| 'true'
+	#TRUE
+	| 'false'
+	#FALSE
+	| 'null'
+	#NULL
+	;
 
 expressionList
-    : expression (',' expression)*
+	: expression (',' expression)*
+	;
+
+PLUS
+	: '+' 
+	;
+MINUS
+	: '-' 
+	;
+MUL
+	: '*' 
+	;
+DIV
+	: '/' 
+	;
+MOD
+	: '%'
+	;
+INC
+	: '++' 
+	;
+DEC
+	: '--' 
+	;
+BIT_NOT
+	: '~' 
+	;
+LOGICAL_NOT
+	: '!' 
+	;
+BIT_AND
+	: '&' 
+	;
+BIT_XOR
+	: '^' 
+	;
+BIT_OR
+	: '|'
+	;
+LOGICAL_AND
+	: '&&'
+	;
+LOGICAL_OR
+	: '||'
+	;
+ASSIGN
+	: '='
+	;
+EQUAL
+	: '=='
+	;
+INEQUAL
+	: '!='
+	;
+LESS
+	: '<'
+	;
+GREATER
+	: '>'
+	;
+LESS_EQUAL
+	: '<='
+	;
+GREATER_EQUAL
+	: '>='
+	;
+LEFT_SHIFT
+	: '<<'
+	;
+RIGHT_SHIFT
+	: '>>'
+	;
+PERIOD
+	: '.'
+	;
+COMMA
+	: ','
+	;
+LBRACKET
+    : '['
+    ;
+RBRACKET
+    : ']'
     ;
 
 
+	

@@ -17,6 +17,12 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOriginalType(MentalParser.OriginalTypeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MentalParser#array}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArray(MentalParser.ArrayContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MentalParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -155,26 +161,6 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpressionStatement(MentalParser.ExpressionStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MentalParser#leftValue}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLeftValue(MentalParser.LeftValueContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code LOGICAL_OR_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ASSIGN_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code BIT_XOR_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
@@ -188,13 +174,6 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLOGICAL_NOT_EXPRESSION(MentalParser.LOGICAL_NOT_EXPRESSIONContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code REFERENCE_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code MEMBER_ACCESS_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
@@ -210,26 +189,12 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFUNCTION_CALL(MentalParser.FUNCTION_CALLContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code CONSTANT}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCONSTANT(MentalParser.CONSTANTContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code ADDITIVE_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitADDITIVE_EXPRESSION(MentalParser.ADDITIVE_EXPRESSIONContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code BIT_OR_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code CREATION_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
@@ -238,19 +203,103 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCREATION_EXPRESSION(MentalParser.CREATION_EXPRESSIONContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code LOGICAL_AND_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code BIT_NOT_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBIT_NOT_EXPRESSION(MentalParser.BIT_NOT_EXPRESSIONContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code RELATION_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRELATION_EXPRESSION(MentalParser.RELATION_EXPRESSIONContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code EQUALITY_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEQUALITY_EXPRESSION(MentalParser.EQUALITY_EXPRESSIONContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code INT_LITERAL}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitINT_LITERAL(MentalParser.INT_LITERALContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IDENTIFIER}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIDENTIFIER(MentalParser.IDENTIFIERContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code SUFFIX_INC_DEC_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MULTIPLY_DIVIDE_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code LOGICAL_OR_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ASSIGN_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code REFERENCE_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NULL}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNULL(MentalParser.NULLContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code TRUE}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTRUE(MentalParser.TRUEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BIT_OR_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code LOGICAL_AND_EXPRESSION}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code BIT_SHIFT_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
@@ -273,20 +322,6 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitARRAY_SUBSCRIPTING_EXPRESSION(MentalParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code RELATION_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRELATION_EXPRESSION(MentalParser.RELATION_EXPRESSIONContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code EQUALITY_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEQUALITY_EXPRESSION(MentalParser.EQUALITY_EXPRESSIONContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code SUBGROUP_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
@@ -301,19 +336,19 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code IDENTIFIER}
+	 * Visit a parse tree produced by the {@code STRING_LITERAL}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIDENTIFIER(MentalParser.IDENTIFIERContext ctx);
+	T visitSTRING_LITERAL(MentalParser.STRING_LITERALContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code SUFFIX_INC_DEC_EXPRESSION}
+	 * Visit a parse tree produced by the {@code FALSE}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx);
+	T visitFALSE(MentalParser.FALSEContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code UNRAY_PLUS_MINUS_EXPRESSION}
 	 * labeled alternative in {@link MentalParser#expression}.
@@ -321,13 +356,6 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code MULTIPLY_DIVIDE_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MentalParser#expressionList}.
 	 * @param ctx the parse tree
