@@ -1,8 +1,11 @@
 package MentalAST;
 
-import MentalParser.MentalBaseListener;
+import MentalAST.ASTBaseNode;
 import MentalParser.MentalParser;
+import MentalParser.MentalBaseListener;
+import MentalSymbols.SymbolTable;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -10,22 +13,41 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import java.util.HashMap;
 
 /**
- * Created by Songyu on 16/3/29.
+ * This class provides an empty implementation of {@link MentalBaseListener},
+ * which can be extended to create a listener which only needs to handle a subset
+ * of the available methods.
  */
 public class BuildTreeListener extends MentalBaseListener {
-	public HashMap<ParseTree, ASTBaseNode> tree;
+	public HashMap<ParserRuleContext, ASTBaseNode> tree;
+	public SymbolTable symbolTable;
+	public BuildTreeListener() {
+		this.tree = new HashMap<>();
+		this.symbolTable = new SymbolTable();
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOriginalType(MentalParser.OriginalTypeContext ctx) { }
+	@Override public void enterClassName(MentalParser.ClassNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOriginalType(MentalParser.OriginalTypeContext ctx) { }
+	@Override public void exitClassName(MentalParser.ClassNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeName(MentalParser.TypeNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeName(MentalParser.TypeNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

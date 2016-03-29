@@ -1,4 +1,7 @@
-int main() {
-    int[][][] a = new int [3][3][3];
-    return 0;
+class AClass {
+    int a, b;
+    int c;
+    AClass d;
+    AClass[][][] e;
+    bool[][] f;
 }

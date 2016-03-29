@@ -5,6 +5,8 @@ package MentalCore;
  */
 
 import MentalParser.*;
+import MentalSymbols.SymbolType;
+import MentalType.MentalClass;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -32,6 +34,7 @@ public class Main {
         MentalParser parser = new MentalParser(tokens);
         ParseTreeWalker walker = new ParseTreeWalker();
         PrintListener listener = new PrintListener();
-        walker.walk(listener, parser.program());
+        walker.walk(listener, parser.classDeclaration());
+        System.out.println(((MentalClass)(((SymbolType)listener.symbolTable.table.get("AClass")).type)).classComponents);
     }
 }

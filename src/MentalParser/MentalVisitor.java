@@ -35,6 +35,12 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitType(MentalParser.TypeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MentalParser#parameter}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameter(MentalParser.ParameterContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MentalParser#paramtersList}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

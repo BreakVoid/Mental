@@ -48,6 +48,16 @@ public interface MentalListener extends ParseTreeListener {
 	 */
 	void exitType(MentalParser.TypeContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MentalParser#parameter}.
+	 * @param ctx the parse tree
+	 */
+	void enterParameter(MentalParser.ParameterContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MentalParser#parameter}.
+	 * @param ctx the parse tree
+	 */
+	void exitParameter(MentalParser.ParameterContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MentalParser#paramtersList}.
 	 * @param ctx the parse tree
 	 */

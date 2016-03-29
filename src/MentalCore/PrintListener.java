@@ -3,6 +3,8 @@ package MentalCore;
 import MentalAST.ASTBaseNode;
 import MentalParser.MentalParser;
 import MentalParser.MentalBaseListener;
+import MentalSymbols.SymbolTable;
+import MentalSymbols.SymbolType;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -16,20 +18,35 @@ import java.util.HashMap;
 
 public class PrintListener extends MentalBaseListener {
 	public HashMap<ParseTree, ASTBaseNode> tree;
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterOriginalType(MentalParser.OriginalTypeContext ctx) {
-		System.out.println(ctx.getText());
+	public SymbolTable symbolTable;
+	public PrintListener() {
+		symbolTable = new SymbolTable();
+		tree = new HashMap<>();
 	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOriginalType(MentalParser.OriginalTypeContext ctx) { }
+	@Override public void enterClassName(MentalParser.ClassNameContext ctx) { System.out.println(ctx.getText()); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitClassName(MentalParser.ClassNameContext ctx) {  }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeName(MentalParser.TypeNameContext ctx) { System.out.println(ctx.getText()); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeName(MentalParser.TypeNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -114,7 +131,11 @@ public class PrintListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitClassDeclaration(MentalParser.ClassDeclarationContext ctx) { }
+	@Override public void exitClassDeclaration(MentalParser.ClassDeclarationContext ctx) {
+		if (ctx.className() != null) {
+			this.symbolTable.add(ctx.className().getText(), new SymbolType(symbolTable, ctx));
+		}
+	}
 	/**
 	 * {@inheritDoc}
 	 *

@@ -58,6 +58,7 @@ className
 typeName
 	: 'int'
 	| 'string'
+	| 'bool'
 	| className
 	;
 
@@ -71,8 +72,12 @@ type
 	| array
 	;
 
+parameter
+    : type Identifier
+    ;
+
 paramtersList
-	: (type Identifier) (',' type Identifier)*
+	: parameter (',' parameter)*
 	;
 
 program
@@ -102,7 +107,7 @@ variableDefinition
 	;
 
 functionDefinition
-	: (type | 'void') Identifier '(' paramtersList? ')' compoundStatement
+	: (type | 'void') functionName=Identifier '(' paramtersList? ')' compoundStatement
 	;
 
 compoundStatement
@@ -219,7 +224,7 @@ expression
 	#LOGICAL_OR_EXPRESSION
 	| <assoc=right> expression op='=' expression
 	#ASSIGN_EXPRESSION
-	| Identifier '(' expressionList? ')'
+	| functionName=Identifier '(' expressionList? ')'
 	#FUNCTION_CALL
 	| Identifier
 	#IDENTIFIER
