@@ -51,19 +51,23 @@ fragment HEX
 	: [0-9a-fA-F]
 	;
 
-originalType
+className
+    : Identifier
+    ;
+
+typeName
 	: 'int'
 	| 'string'
-	| Identifier
+	| className
 	;
 
 array
-    : originalType '[' ']'
+    : typeName '[' ']'
     | array '[' ']'
     ;
 
 type
-	: originalType
+	: typeName
 	| array
 	;
 
@@ -81,7 +85,7 @@ declaration
 	;
 
 classDeclaration
-	: 'class' Identifier? '{' variableDefinition* '}'
+	: 'class' name=className? '{' variableDefinition* '}'
 	;
 
 functionDeclaration
@@ -147,19 +151,19 @@ emptyStatement
 	;
 
 ifStatement
-	: 'if' '(' expression ')' statement
+	: 'if' '(' expression ')' thenStatement=statement
 	;
 
 ifElseStatement
-	: 'if' '(' expression ')' statement 'else' statement
+	: 'if' '(' expression ')' thenStatement=statement 'else' elseStatment=statement
 	;
 
 forStatement
-	: 'for' '(' expression? ';' expression? ';' expression? ')' statement
+	: 'for' '(' start=expression? ';' cond=expression? ';' loop=expression? ')' statement
 	;
 
 whileStatement
-	: 'while' '(' expression ')' statement
+	: 'while' '(' cond=expression ')' statement
 	;
 
 jumpStatement
@@ -173,9 +177,7 @@ expressionStatement
 	;
 
 expression
-	: 'new' originalType ('[' expression ']')*
-	#CREATION_EXPRESSION
-	| 'new' Identifier ('('expressionList')')*
+	: 'new' typeName ('[' expression ']')*
 	#CREATION_EXPRESSION
 	| '(' expression ')'
 	#SUBGROUP_EXPRESSION

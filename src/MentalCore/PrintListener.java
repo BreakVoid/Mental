@@ -1,46 +1,43 @@
-// Generated from /Users/Songyu/Projects/Mental/src/MentalParser/Mental.g4 by ANTLR 4.5.1
-package MentalParser;
+package MentalCore;
 
+import MentalAST.ASTBaseNode;
+import MentalParser.MentalParser;
+import MentalParser.MentalBaseListener;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import java.util.HashMap;
+
 /**
- * This class provides an empty implementation of {@link MentalListener},
- * which can be extended to create a listener which only needs to handle a subset
- * of the available methods.
+ * Created by Songyu on 16/3/29.
  */
-public class MentalBaseListener implements MentalListener {
+
+public class PrintListener extends MentalBaseListener {
+	public HashMap<ParseTree, ASTBaseNode> tree;
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterClassName(MentalParser.ClassNameContext ctx) { }
+	@Override public void enterOriginalType(MentalParser.OriginalTypeContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitClassName(MentalParser.ClassNameContext ctx) { }
+	@Override public void exitOriginalType(MentalParser.OriginalTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypeName(MentalParser.TypeNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTypeName(MentalParser.TypeNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArray(MentalParser.ArrayContext ctx) { }
+	@Override public void enterArray(MentalParser.ArrayContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -52,7 +49,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterType(MentalParser.TypeContext ctx) { }
+	@Override public void enterType(MentalParser.TypeContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -64,19 +63,24 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParamtersList(MentalParser.ParamtersListContext ctx) { }
+	@Override public void enterParamtersList(MentalParser.ParamtersListContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParamtersList(MentalParser.ParamtersListContext ctx) { }
+	@Override public void exitParamtersList(MentalParser.ParamtersListContext ctx) {
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProgram(MentalParser.ProgramContext ctx) { }
+	@Override public void enterProgram(MentalParser.ProgramContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -88,7 +92,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaration(MentalParser.DeclarationContext ctx) { }
+	@Override public void enterDeclaration(MentalParser.DeclarationContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -100,7 +106,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterClassDeclaration(MentalParser.ClassDeclarationContext ctx) { }
+	@Override public void enterClassDeclaration(MentalParser.ClassDeclarationContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -112,7 +120,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunctionDeclaration(MentalParser.FunctionDeclarationContext ctx) { }
+	@Override public void enterFunctionDeclaration(MentalParser.FunctionDeclarationContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -124,7 +134,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDefinition(MentalParser.DefinitionContext ctx) { }
+	@Override public void enterDefinition(MentalParser.DefinitionContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -136,7 +148,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVariableDefinition(MentalParser.VariableDefinitionContext ctx) { }
+	@Override public void enterVariableDefinition(MentalParser.VariableDefinitionContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -148,7 +162,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) { }
+	@Override public void enterFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -160,7 +176,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCompoundStatement(MentalParser.CompoundStatementContext ctx) { }
+	@Override public void enterCompoundStatement(MentalParser.CompoundStatementContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -172,7 +190,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStatement(MentalParser.StatementContext ctx) { }
+	@Override public void enterStatement(MentalParser.StatementContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -184,7 +204,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCallPrint(MentalParser.CallPrintContext ctx) { }
+	@Override public void enterCallPrint(MentalParser.CallPrintContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -196,7 +218,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCallPrintln(MentalParser.CallPrintlnContext ctx) { }
+	@Override public void enterCallPrintln(MentalParser.CallPrintlnContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -208,7 +232,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCallGetString(MentalParser.CallGetStringContext ctx) { }
+	@Override public void enterCallGetString(MentalParser.CallGetStringContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -220,7 +246,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCallGetInt(MentalParser.CallGetIntContext ctx) { }
+	@Override public void enterCallGetInt(MentalParser.CallGetIntContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -232,7 +260,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCallToString(MentalParser.CallToStringContext ctx) { }
+	@Override public void enterCallToString(MentalParser.CallToStringContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -244,7 +274,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEmptyStatement(MentalParser.EmptyStatementContext ctx) { }
+	@Override public void enterEmptyStatement(MentalParser.EmptyStatementContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -256,7 +288,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIfStatement(MentalParser.IfStatementContext ctx) { }
+	@Override public void enterIfStatement(MentalParser.IfStatementContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -268,7 +302,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIfElseStatement(MentalParser.IfElseStatementContext ctx) { }
+	@Override public void enterIfElseStatement(MentalParser.IfElseStatementContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -280,7 +316,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterForStatement(MentalParser.ForStatementContext ctx) { }
+	@Override public void enterForStatement(MentalParser.ForStatementContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -292,7 +330,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWhileStatement(MentalParser.WhileStatementContext ctx) { }
+	@Override public void enterWhileStatement(MentalParser.WhileStatementContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -304,7 +344,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJumpStatement(MentalParser.JumpStatementContext ctx) { }
+	@Override public void enterJumpStatement(MentalParser.JumpStatementContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -316,7 +358,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressionStatement(MentalParser.ExpressionStatementContext ctx) { }
+	@Override public void enterExpressionStatement(MentalParser.ExpressionStatementContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -328,7 +372,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBIT_XOR_EXPRESSION(MentalParser.BIT_XOR_EXPRESSIONContext ctx) { }
+	@Override public void enterBIT_XOR_EXPRESSION(MentalParser.BIT_XOR_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -340,7 +386,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLOGICAL_NOT_EXPRESSION(MentalParser.LOGICAL_NOT_EXPRESSIONContext ctx) { }
+	@Override public void enterLOGICAL_NOT_EXPRESSION(MentalParser.LOGICAL_NOT_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -352,7 +400,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMEMBER_ACCESS_EXPRESSION(MentalParser.MEMBER_ACCESS_EXPRESSIONContext ctx) { }
+	@Override public void enterMEMBER_ACCESS_EXPRESSION(MentalParser.MEMBER_ACCESS_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -364,7 +414,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFUNCTION_CALL(MentalParser.FUNCTION_CALLContext ctx) { }
+	@Override public void enterFUNCTION_CALL(MentalParser.FUNCTION_CALLContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -376,7 +428,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterADDITIVE_EXPRESSION(MentalParser.ADDITIVE_EXPRESSIONContext ctx) { }
+	@Override public void enterADDITIVE_EXPRESSION(MentalParser.ADDITIVE_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -388,7 +442,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCREATION_EXPRESSION(MentalParser.CREATION_EXPRESSIONContext ctx) { }
+	@Override public void enterCREATION_EXPRESSION(MentalParser.CREATION_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -400,7 +456,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBIT_NOT_EXPRESSION(MentalParser.BIT_NOT_EXPRESSIONContext ctx) { }
+	@Override public void enterBIT_NOT_EXPRESSION(MentalParser.BIT_NOT_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -412,7 +470,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRELATION_EXPRESSION(MentalParser.RELATION_EXPRESSIONContext ctx) { }
+	@Override public void enterRELATION_EXPRESSION(MentalParser.RELATION_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -424,7 +484,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEQUALITY_EXPRESSION(MentalParser.EQUALITY_EXPRESSIONContext ctx) { }
+	@Override public void enterEQUALITY_EXPRESSION(MentalParser.EQUALITY_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -436,7 +498,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterINT_LITERAL(MentalParser.INT_LITERALContext ctx) { }
+	@Override public void enterINT_LITERAL(MentalParser.INT_LITERALContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -448,7 +512,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIDENTIFIER(MentalParser.IDENTIFIERContext ctx) { }
+	@Override public void enterIDENTIFIER(MentalParser.IDENTIFIERContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -460,7 +526,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) { }
+	@Override public void enterSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -472,7 +540,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx) { }
+	@Override public void enterMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -484,7 +554,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx) { }
+	@Override public void enterLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -496,7 +568,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx) { }
+	@Override public void enterASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -508,7 +582,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx) { }
+	@Override public void enterREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -520,7 +596,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNULL(MentalParser.NULLContext ctx) { }
+	@Override public void enterNULL(MentalParser.NULLContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -532,7 +610,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTRUE(MentalParser.TRUEContext ctx) { }
+	@Override public void enterTRUE(MentalParser.TRUEContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -544,7 +624,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx) { }
+	@Override public void enterBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -556,7 +638,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx) { }
+	@Override public void enterLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -568,7 +652,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBIT_SHIFT_EXPRESSION(MentalParser.BIT_SHIFT_EXPRESSIONContext ctx) { }
+	@Override public void enterBIT_SHIFT_EXPRESSION(MentalParser.BIT_SHIFT_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -580,7 +666,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPREFIX_INC_DEC_EXPRESSION(MentalParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) { }
+	@Override public void enterPREFIX_INC_DEC_EXPRESSION(MentalParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -592,7 +680,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterARRAY_SUBSCRIPTING_EXPRESSION(MentalParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx) { }
+	@Override public void enterARRAY_SUBSCRIPTING_EXPRESSION(MentalParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -604,7 +694,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSUBGROUP_EXPRESSION(MentalParser.SUBGROUP_EXPRESSIONContext ctx) { }
+	@Override public void enterSUBGROUP_EXPRESSION(MentalParser.SUBGROUP_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -616,7 +708,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx) { }
+	@Override public void enterBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -628,7 +722,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSTRING_LITERAL(MentalParser.STRING_LITERALContext ctx) { }
+	@Override public void enterSTRING_LITERAL(MentalParser.STRING_LITERALContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -640,7 +736,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFALSE(MentalParser.FALSEContext ctx) { }
+	@Override public void enterFALSE(MentalParser.FALSEContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -652,7 +750,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) { }
+	@Override public void enterUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -664,7 +764,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressionList(MentalParser.ExpressionListContext ctx) { }
+	@Override public void enterExpressionList(MentalParser.ExpressionListContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -677,7 +779,9 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEveryRule(ParserRuleContext ctx) { }
+	@Override public void enterEveryRule(ParserRuleContext ctx) {
+		System.out.println(ctx.getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -689,7 +793,8 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void visitTerminal(TerminalNode node) { }
+	@Override public void visitTerminal(TerminalNode node) {
+	}
 	/**
 	 * {@inheritDoc}
 	 *

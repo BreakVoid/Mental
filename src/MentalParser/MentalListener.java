@@ -8,15 +8,25 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface MentalListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link MentalParser#originalType}.
+	 * Enter a parse tree produced by {@link MentalParser#className}.
 	 * @param ctx the parse tree
 	 */
-	void enterOriginalType(MentalParser.OriginalTypeContext ctx);
+	void enterClassName(MentalParser.ClassNameContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MentalParser#originalType}.
+	 * Exit a parse tree produced by {@link MentalParser#className}.
 	 * @param ctx the parse tree
 	 */
-	void exitOriginalType(MentalParser.OriginalTypeContext ctx);
+	void exitClassName(MentalParser.ClassNameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MentalParser#typeName}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeName(MentalParser.TypeNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MentalParser#typeName}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeName(MentalParser.TypeNameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MentalParser#array}.
 	 * @param ctx the parse tree

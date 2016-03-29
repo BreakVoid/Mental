@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c35b8dae-0f88-4d1d-8daa-c07a46c2e329" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/ASTDeclaration.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/ASTOriginalType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/ASTStatement.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/ASTType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalCore/Main.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/CompilerAST/ASTBase.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/CompilerAST/ASTDeclaration.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/CompilerAST/ASTStatement.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalCore/PrintListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" afterPath="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalCore/Main.java" afterPath="$PROJECT_DIR$/src/MentalCore/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/Mental.g4" afterPath="$PROJECT_DIR$/src/MentalParser/Mental.g4" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/Mental.tokens" afterPath="$PROJECT_DIR$/src/MentalParser/Mental.tokens" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java" />
@@ -44,31 +39,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ASTStatement.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTStatement.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Mental.tokens" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalParser/Mental.tokens">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MentalCore/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="530">
-              <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
+            <state relative-caret-position="465">
+              <caret line="31" column="55" selection-start-line="31" selection-start-column="55" selection-end-line="31" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -99,9 +74,99 @@
       <file leaf-file-name="MentalBaseListener.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="25" column="7" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
+            <state relative-caret-position="240">
+              <caret line="18" column="56" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BuildTreeListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="492">
+              <caret line="682" column="33" selection-start-line="682" selection-start-column="33" selection-end-line="682" selection-end-column="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ASTBaseNode.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MentalParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1605">
+              <caret line="116" column="41" selection-start-line="116" selection-start-column="41" selection-end-line="116" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PrintListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalCore/PrintListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#642#643#0" expanded="true" />
+                <element signature="e#682#683#0" expanded="true" />
+                <element signature="e#999#1000#0" expanded="true" />
+                <element signature="e#1039#1040#0" expanded="true" />
+                <element signature="e#1340#1341#0" expanded="true" />
+                <element signature="e#1380#1381#0" expanded="true" />
+                <element signature="e#1697#1698#0" expanded="true" />
+                <element signature="e#1737#1738#0" expanded="true" />
+                <element signature="e#2061#2062#0" expanded="true" />
+                <element signature="e#2101#2102#0" expanded="true" />
+                <element signature="e#2420#2421#0" expanded="true" />
+                <element signature="e#2460#2461#0" expanded="true" />
+                <element signature="e#3571#3572#0" expanded="true" />
+                <element signature="e#3611#3612#0" expanded="true" />
+                <element signature="e#5113#5114#0" expanded="true" />
+                <element signature="e#5153#5154#0" expanded="true" />
+                <element signature="e#5472#5473#0" expanded="true" />
+                <element signature="e#5512#5513#0" expanded="true" />
+                <element signature="e#5835#5836#0" expanded="true" />
+                <element signature="e#5875#5876#0" expanded="true" />
+                <element signature="e#6206#6207#0" expanded="true" />
+                <element signature="e#6246#6247#0" expanded="true" />
+                <element signature="e#6575#6576#0" expanded="true" />
+                <element signature="e#6615#6616#0" expanded="true" />
+                <element signature="e#6942#6943#0" expanded="true" />
+                <element signature="e#6982#6983#0" expanded="true" />
+                <element signature="e#7690#7691#0" expanded="true" />
+                <element signature="e#7730#7731#0" expanded="true" />
+                <element signature="e#8442#8443#0" expanded="true" />
+                <element signature="e#8482#8483#0" expanded="true" />
+                <element signature="e#9194#9195#0" expanded="true" />
+                <element signature="e#9234#9235#0" expanded="true" />
+                <element signature="e#11193#11194#0" expanded="true" />
+                <element signature="e#11233#11234#0" expanded="true" />
+                <element signature="e#13555#13556#0" expanded="true" />
+                <element signature="e#13595#13596#0" expanded="true" />
+                <element signature="e#13920#13921#0" expanded="true" />
+                <element signature="e#13960#13961#0" expanded="true" />
+                <element signature="e#16322#16323#0" expanded="true" />
+                <element signature="e#16362#16363#0" expanded="true" />
+                <element signature="e#16661#16662#0" expanded="true" />
+                <element signature="e#16701#16702#0" expanded="true" />
+                <element signature="e#20242#20243#0" expanded="true" />
+                <element signature="e#20282#20283#0" expanded="true" />
+                <element signature="e#21392#21393#0" expanded="true" />
+                <element signature="e#21432#21433#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -109,28 +174,18 @@
       <file leaf-file-name="MentalListener.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="49" selection-start-line="13" selection-start-column="49" selection-end-line="13" selection-end-column="49" />
+            <state relative-caret-position="270">
+              <caret line="18" column="56" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="basic_test.mt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/basic_test.mt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Mental.g4" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Mental.g4" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/MentalParser/Mental.g4">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2655">
-              <caret line="177" column="46" selection-start-line="177" selection-start-column="46" selection-end-line="177" selection-end-column="46" />
+            <state relative-caret-position="270">
+              <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -172,7 +227,6 @@
         <option value="$PROJECT_DIR$/src/MentalParser/MentalListener.java" />
         <option value="$PROJECT_DIR$/src/MentalParser/MentalLexer.tokens" />
         <option value="$PROJECT_DIR$/src/MentalParser/MentalBaseVisitor.java" />
-        <option value="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/ASTType.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/ASTOriginalType.java" />
         <option value="$PROJECT_DIR$/src/MentalParser/MentalVisitor.java" />
@@ -180,8 +234,13 @@
         <option value="$PROJECT_DIR$/src/MentalParser/Mental.tokens" />
         <option value="$PROJECT_DIR$/src/MentalAST/BuildTreeVisitor.java" />
         <option value="$PROJECT_DIR$/basic_test.mt" />
-        <option value="$PROJECT_DIR$/src/MentalParser/Mental.g4" />
+        <option value="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" />
+        <option value="$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java" />
+        <option value="$PROJECT_DIR$/src/MentalCore/PrintListener.java" />
+        <option value="/usr/local/Cellar/antlr/4.5.2/antlr-4.5.2-complete.jar!/org/antlr/v4/runtime/tree/ParseTreeWalker.class" />
+        <option value="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" />
         <option value="$PROJECT_DIR$/src/MentalCore/Main.java" />
+        <option value="$PROJECT_DIR$/src/MentalParser/Mental.g4" />
       </list>
     </option>
   </component>
@@ -242,6 +301,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
@@ -318,7 +378,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -334,7 +393,7 @@
     <property name="$PROJECT_DIR$/src/MentalParser/Mental.g4::/output-dir" value="$PROJECT_DIR$/src/" />
     <property name="$PROJECT_DIR$/src/MentalParser/Mental.g4::/gen-listener" value="true" />
     <property name="$PROJECT_DIR$/src/MentalParser/Mental.g4::/gen-visitor" value="true" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RunManager" selected="Application.Main">
@@ -342,7 +401,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="MentalCore.Main" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="basic_test.mt" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -770,11 +829,14 @@
       <workItem from="1459154376776" duration="1302000" />
       <workItem from="1459157094046" duration="11358000" />
       <workItem from="1459215716078" duration="39000" />
+      <workItem from="1459238076400" duration="1184000" />
+      <workItem from="1459241591363" duration="1482000" />
+      <workItem from="1459243585535" duration="892000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23371000" />
+    <option name="totallyTimeSpent" value="26929000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -782,8 +844,7 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3260274" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32465753" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32892805" sideWeight="0.503231" order="7" side_tool="true" content_ui="tabs" />
@@ -795,7 +856,7 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2584814" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47945204" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.47945204" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -805,6 +866,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329235" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -832,10 +894,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/MentalParser/MoListener.java" />
-    <entry file="file://$PROJECT_DIR$/src/MentalParser/MoParser.java" />
-    <entry file="file://$PROJECT_DIR$/src/CompilerCore/CompilerCore.java" />
-    <entry file="file://$PROJECT_DIR$/src/MentalParser/Mo.g4" />
     <entry file="file://$PROJECT_DIR$/src/MentalParser/MoBaseListener.java" />
     <entry file="file://$PROJECT_DIR$/src/MentalParser/MoListener.java" />
     <entry file="file://$PROJECT_DIR$/src/MentalParser/MoParser.java" />
@@ -859,7 +917,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -892,13 +949,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -936,7 +986,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -944,7 +993,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -962,28 +1010,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/basic_test.mt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="jar:///usr/local/Cellar/antlr/4.5.2/antlr-4.5.2-complete.jar!/org/antlr/v4/runtime/ParserRuleContext.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="6" column="64" selection-start-line="6" selection-start-column="64" selection-end-line="6" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1144">
-          <caret line="382" column="44" selection-start-line="382" selection-start-column="44" selection-end-line="382" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalCore/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -991,6 +1028,93 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/local/Cellar/antlr/4.5.2/antlr-4.5.2-complete.jar!/org/antlr/v4/runtime/tree/ParseTreeListener.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1605">
+          <caret line="116" column="41" selection-start-line="116" selection-start-column="41" selection-end-line="116" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="56" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalCore/PrintListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#642#643#0" expanded="true" />
+            <element signature="e#682#683#0" expanded="true" />
+            <element signature="e#999#1000#0" expanded="true" />
+            <element signature="e#1039#1040#0" expanded="true" />
+            <element signature="e#1340#1341#0" expanded="true" />
+            <element signature="e#1380#1381#0" expanded="true" />
+            <element signature="e#1697#1698#0" expanded="true" />
+            <element signature="e#1737#1738#0" expanded="true" />
+            <element signature="e#2061#2062#0" expanded="true" />
+            <element signature="e#2101#2102#0" expanded="true" />
+            <element signature="e#2420#2421#0" expanded="true" />
+            <element signature="e#2460#2461#0" expanded="true" />
+            <element signature="e#3571#3572#0" expanded="true" />
+            <element signature="e#3611#3612#0" expanded="true" />
+            <element signature="e#5113#5114#0" expanded="true" />
+            <element signature="e#5153#5154#0" expanded="true" />
+            <element signature="e#5472#5473#0" expanded="true" />
+            <element signature="e#5512#5513#0" expanded="true" />
+            <element signature="e#5835#5836#0" expanded="true" />
+            <element signature="e#5875#5876#0" expanded="true" />
+            <element signature="e#6206#6207#0" expanded="true" />
+            <element signature="e#6246#6247#0" expanded="true" />
+            <element signature="e#6575#6576#0" expanded="true" />
+            <element signature="e#6615#6616#0" expanded="true" />
+            <element signature="e#6942#6943#0" expanded="true" />
+            <element signature="e#6982#6983#0" expanded="true" />
+            <element signature="e#7690#7691#0" expanded="true" />
+            <element signature="e#7730#7731#0" expanded="true" />
+            <element signature="e#8442#8443#0" expanded="true" />
+            <element signature="e#8482#8483#0" expanded="true" />
+            <element signature="e#9194#9195#0" expanded="true" />
+            <element signature="e#9234#9235#0" expanded="true" />
+            <element signature="e#11193#11194#0" expanded="true" />
+            <element signature="e#11233#11234#0" expanded="true" />
+            <element signature="e#13555#13556#0" expanded="true" />
+            <element signature="e#13595#13596#0" expanded="true" />
+            <element signature="e#13920#13921#0" expanded="true" />
+            <element signature="e#13960#13961#0" expanded="true" />
+            <element signature="e#16322#16323#0" expanded="true" />
+            <element signature="e#16362#16363#0" expanded="true" />
+            <element signature="e#16661#16662#0" expanded="true" />
+            <element signature="e#16701#16702#0" expanded="true" />
+            <element signature="e#20242#20243#0" expanded="true" />
+            <element signature="e#20282#20283#0" expanded="true" />
+            <element signature="e#21392#21393#0" expanded="true" />
+            <element signature="e#21432#21433#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="18" column="56" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
           <folding />
         </state>
       </provider>
@@ -1003,37 +1127,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java">
+    <entry file="jar:///usr/local/Cellar/antlr/4.5.2/antlr-4.5.2-complete.jar!/org/antlr/v4/runtime/tree/ParseTreeWalker.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="25" column="7" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
+        <state relative-caret-position="255">
+          <caret line="31" column="32" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalListener.java">
+    <entry file="file://$PROJECT_DIR$/src/MentalCore/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="49" selection-start-line="13" selection-start-column="49" selection-end-line="13" selection-end-column="49" />
-          <folding />
+        <state relative-caret-position="465">
+          <caret line="31" column="55" selection-start-line="31" selection-start-column="55" selection-end-line="31" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/basic_test.mt">
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
+        <state relative-caret-position="492">
+          <caret line="682" column="33" selection-start-line="682" selection-start-column="33" selection-end-line="682" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MentalParser/Mental.g4">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2655">
-          <caret line="177" column="46" selection-start-line="177" selection-start-column="46" selection-end-line="177" selection-end-column="46" />
+        <state relative-caret-position="270">
+          <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

@@ -11,11 +11,17 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link MentalParser#originalType}.
+	 * Visit a parse tree produced by {@link MentalParser#className}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOriginalType(MentalParser.OriginalTypeContext ctx);
+	T visitClassName(MentalParser.ClassNameContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MentalParser#typeName}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypeName(MentalParser.TypeNameContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MentalParser#array}.
 	 * @param ctx the parse tree

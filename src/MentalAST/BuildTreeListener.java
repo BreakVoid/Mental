@@ -1,40 +1,31 @@
-// Generated from /Users/Songyu/Projects/Mental/src/MentalParser/Mental.g4 by ANTLR 4.5.1
-package MentalParser;
+package MentalAST;
 
+import MentalParser.MentalBaseListener;
+import MentalParser.MentalParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import java.util.HashMap;
+
 /**
- * This class provides an empty implementation of {@link MentalListener},
- * which can be extended to create a listener which only needs to handle a subset
- * of the available methods.
+ * Created by Songyu on 16/3/29.
  */
-public class MentalBaseListener implements MentalListener {
+public class BuildTreeListener extends MentalBaseListener {
+	public HashMap<ParseTree, ASTBaseNode> tree;
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterClassName(MentalParser.ClassNameContext ctx) { }
+	@Override public void enterOriginalType(MentalParser.OriginalTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitClassName(MentalParser.ClassNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTypeName(MentalParser.TypeNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTypeName(MentalParser.TypeNameContext ctx) { }
+	@Override public void exitOriginalType(MentalParser.OriginalTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
