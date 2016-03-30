@@ -103,7 +103,9 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProgram(MentalParser.ProgramContext ctx) { }
+	@Override public void enterProgram(MentalParser.ProgramContext ctx) {
+        this.tree.put(ctx, new ASTProgram());
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -115,13 +117,18 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaration(MentalParser.DeclarationContext ctx) { }
+	@Override public void enterDeclaration(MentalParser.DeclarationContext ctx) {
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclaration(MentalParser.DeclarationContext ctx) { }
+	@Override public void exitDeclaration(MentalParser.DeclarationContext ctx) {
+        if (ctx.classDeclaration() != null) {
+            this.tree.put(ctx, tree.get(ctx.classDeclaration()));
+        }
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -131,6 +138,9 @@ public class BuildTreeListener extends MentalBaseListener {
 		if (ctx.className() != null) {
 			this.curSymbolTable.add(ctx.className().getText(), new SymbolType(curSymbolTable, ctx));
 		}
+        ASTClassDeclaration classDeclaration = new ASTClassDeclaration();
+        classDeclaration.classDetail = (SymbolType) this.curSymbolTable.getSymbol(ctx.className().getText());
+        this.tree.put(ctx, classDeclaration);
 		this.beginScope();
 	}
 	/**
@@ -164,8 +174,32 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDefinition(MentalParser.DefinitionContext ctx) { }
-	/**
+	@Override public void exitDefinition(MentalParser.DefinitionContext ctx) {
+        if (ctx.functionDefinition() != null) {
+            this.tree.put(ctx, this.tree.get(ctx.functionDefinition()));
+        } else if (ctx.variableDefinition() != null) {
+            this.tree.put(ctx, this.tree.get(ctx.variableDefinition()));
+        }
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void enterSingleVariable(MentalParser.SingleVariableContext ctx) {
+        // TODO
+        ASTSingleVariableDeclaration singleVariableDeclaration = new ASTSingleVariableDeclaration();
+        singleVariableDeclaration.variable = new ASTVariable();
+        singleVariableDeclaration.variable.variableName = ctx.Identifier().getText();
+        singleVariableDeclaration.initializeExpression = new ASTExpression();
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void exitSingleVariable(MentalParser.SingleVariableContext ctx) { }
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
