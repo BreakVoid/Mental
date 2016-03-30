@@ -12,7 +12,7 @@ public class ASTExpression extends ASTBaseNode {
     }
     @Override
     public String toString() {
-        return "AST<expression>";
+        return "<expression>";
     }
     public boolean equals(Object other) {
         return other != null && other instanceof ASTExpression && this.returnType.equals(((ASTExpression) other).returnType);

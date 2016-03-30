@@ -6,7 +6,7 @@ package MentalAST;
 public class ASTDeclaration extends ASTBaseNode {
     @Override
     public String toString() {
-        return "AST declaration node";
+        return "<declaration>";
     }
     @Override
     public boolean equals(Object other) {

@@ -7,7 +7,7 @@ public class ASTStatement extends ASTBaseNode {
     public ASTStatement() { }
     @Override
     public String toString() {
-        return "AST<statement>";
+        return "<statement>";
     }
     @Override
     public boolean equals(Object other) {

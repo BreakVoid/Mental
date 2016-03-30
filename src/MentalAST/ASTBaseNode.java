@@ -9,7 +9,7 @@ public class ASTBaseNode {
     public ASTBaseNode() { }
     @Override
     public String toString() {
-        return "AST<BASE NODE>";
+        return "<BASE NODE>";
     }
     @Override
     public boolean equals(Object other) {

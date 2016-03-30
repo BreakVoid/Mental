@@ -12,7 +12,7 @@ public class ASTClassDeclaration extends ASTDeclaration {
     }
     @Override
     public String toString() {
-        return "AST<class>" + this.classDetail.type.toString();
+        return "<class>" + this.classDetail.type.toString();
     }
     @Override
     public boolean equals(Object other) {

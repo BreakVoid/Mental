@@ -15,9 +15,9 @@ public class ASTVariableDeclaration extends ASTBaseNode {
     }
     @Override
     public String toString() {
-        String ret = "AST<variables>{";
+        String ret = "<variables>{";
         for (Iterator<SymbolVariable> it = variables.iterator(); it.hasNext(); ) {
-            ret += it.next().toString();
+            ret += it.next().toString() + ',';
         }
         ret += "}";
         return ret;

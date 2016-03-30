@@ -7,12 +7,14 @@ import MentalSymbols.SymbolFunction;
  */
 public class ASTFunctionDefinition extends ASTDeclaration {
     public SymbolFunction function;
+    public ASTComponentStatement functionBody;
     public ASTFunctionDefinition() {
         this.function = null;
+        this.functionBody = null;
     }
     @Override
     public String toString() {
-        return "AST" + this.function.toString();
+        return this.function.toString() + ":" + this.functionBody.toString();
     }
     @Override
     public boolean equals(Object other) {

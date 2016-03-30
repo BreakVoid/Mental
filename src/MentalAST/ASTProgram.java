@@ -12,7 +12,7 @@ public class ASTProgram extends ASTBaseNode {
     }
     @Override
     public String toString() {
-        return "AST<program>";
+        return "<program>";
     }
     @Override
     public boolean equals(Object other) {
