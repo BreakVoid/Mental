@@ -10,7 +10,9 @@ import java.util.HashMap;
  */
 public class SymbolTable {
     public HashMap<String, SymbolBase> table;
+    public int stackLayer;
     public SymbolTable() {
+        this.stackLayer = 0;
         this.table = new HashMap<>();
         this.table.put("int", new SymbolType(MentalType.mentalInt));
         this.table.put("string", new SymbolType(MentalType.mentalString));
@@ -18,6 +20,7 @@ public class SymbolTable {
         this.table.put("void", new SymbolType(MentalType.mentalVoid));
     }
     public SymbolTable(SymbolTable other) {
+        this.stackLayer = other.stackLayer;
         this.table = new HashMap<>(other.table);
     }
     public void add(String id, SymbolBase symbol) {

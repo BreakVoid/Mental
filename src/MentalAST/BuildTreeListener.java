@@ -3,7 +3,7 @@ package MentalAST;
 import MentalAST.ASTBaseNode;
 import MentalParser.MentalParser;
 import MentalParser.MentalBaseListener;
-import MentalSymbols.SymbolTable;
+import MentalSymbols.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -11,6 +11,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  * This class provides an empty implementation of {@link MentalBaseListener},
@@ -19,10 +21,22 @@ import java.util.HashMap;
  */
 public class BuildTreeListener extends MentalBaseListener {
 	public HashMap<ParserRuleContext, ASTBaseNode> tree;
-	public SymbolTable symbolTable;
+	public SymbolTable curSymbolTable;
+	public LinkedList<SymbolTable> symbolTableList;
 	public BuildTreeListener() {
 		this.tree = new HashMap<>();
-		this.symbolTable = new SymbolTable();
+		this.symbolTableList = new LinkedList<>();
+		this.symbolTableList.add(new SymbolTable());
+		this.curSymbolTable = this.symbolTableList.getLast();
+	}
+	public void beginScope() {
+		this.symbolTableList.add(new SymbolTable(curSymbolTable));
+		this.curSymbolTable = this.symbolTableList.getLast();
+		this.curSymbolTable.stackLayer++;
+	}
+	public void endScope() {
+		this.symbolTableList.removeLast();
+		this.curSymbolTable = this.symbolTableList.getLast();
 	}
 	/**
 	 * {@inheritDoc}
@@ -113,7 +127,12 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterClassDeclaration(MentalParser.ClassDeclarationContext ctx) { }
+	@Override public void enterClassDeclaration(MentalParser.ClassDeclarationContext ctx) {
+		if (ctx.className() != null) {
+			this.curSymbolTable.add(ctx.className().getText(), new SymbolType(curSymbolTable, ctx));
+		}
+		this.beginScope();
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -149,7 +168,13 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVariableDefinition(MentalParser.VariableDefinitionContext ctx) { }
+	@Override public void enterVariableDefinition(MentalParser.VariableDefinitionContext ctx) {
+		SymbolVariableList variableList = new SymbolVariableList(this.curSymbolTable, ctx);
+		for (ListIterator<SymbolVariable> it = variableList.variables.listIterator(); it.hasNext(); ) {
+			SymbolVariable var = it.next();
+			curSymbolTable.table.put(var.variableName, var);
+		}
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -161,7 +186,9 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) { }
+	@Override public void enterFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) {
+		this.curSymbolTable.add(ctx.functionName.getText(), new SymbolFunction(this.curSymbolTable, ctx));
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -173,13 +200,17 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCompoundStatement(MentalParser.CompoundStatementContext ctx) { }
+	@Override public void enterCompoundStatement(MentalParser.CompoundStatementContext ctx) {
+		this.beginScope();
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCompoundStatement(MentalParser.CompoundStatementContext ctx) { }
+	@Override public void exitCompoundStatement(MentalParser.CompoundStatementContext ctx) {
+		this.endScope();
+	}
 	/**
 	 * {@inheritDoc}
 	 *

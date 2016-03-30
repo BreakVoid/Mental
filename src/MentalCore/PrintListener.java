@@ -3,26 +3,39 @@ package MentalCore;
 import MentalAST.ASTBaseNode;
 import MentalParser.MentalParser;
 import MentalParser.MentalBaseListener;
-import MentalSymbols.SymbolFunction;
-import MentalSymbols.SymbolTable;
-import MentalSymbols.SymbolType;
+import MentalSymbols.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  * Created by Songyu on 16/3/29.
  */
 
 public class PrintListener extends MentalBaseListener {
-	public HashMap<ParseTree, ASTBaseNode> tree;
-	public SymbolTable symbolTable;
+	public HashMap<ParserRuleContext, ASTBaseNode> tree;
+	public SymbolTable curSymbolTable;
+	public LinkedList<SymbolTable> symbolTableList;
 	public PrintListener() {
-		symbolTable = new SymbolTable();
-		tree = new HashMap<>();
+		this.tree = new HashMap<>();
+		this.symbolTableList = new LinkedList<>();
+		this.symbolTableList.add(new SymbolTable());
+		this.curSymbolTable = this.symbolTableList.getLast();
+	}
+	public void beginScope() {
+		this.symbolTableList.add(new SymbolTable(curSymbolTable));
+		this.curSymbolTable = this.symbolTableList.getLast();
+		this.curSymbolTable.stackLayer++;
+	}
+	public void endScope() {
+		this.symbolTableList.removeLast();
+		this.curSymbolTable = this.symbolTableList.getLast();
 	}
 	/**
 	 * {@inheritDoc}
@@ -125,7 +138,10 @@ public class PrintListener extends MentalBaseListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterClassDeclaration(MentalParser.ClassDeclarationContext ctx) {
-		
+        if (ctx.className() != null) {
+            this.curSymbolTable.add(ctx.className().getText(), new SymbolType(curSymbolTable, ctx));
+        }
+		this.beginScope();
 	}
 	/**
 	 * {@inheritDoc}
@@ -133,9 +149,7 @@ public class PrintListener extends MentalBaseListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitClassDeclaration(MentalParser.ClassDeclarationContext ctx) {
-		if (ctx.className() != null) {
-			this.symbolTable.add(ctx.className().getText(), new SymbolType(symbolTable, ctx));
-		}
+		this.endScope();
 	}
 	/**
 	 * {@inheritDoc}
@@ -171,21 +185,27 @@ public class PrintListener extends MentalBaseListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterVariableDefinition(MentalParser.VariableDefinitionContext ctx) {
-		
+		SymbolVariableList variableList = new SymbolVariableList(this.curSymbolTable, ctx);
+        for (ListIterator<SymbolVariable> it = variableList.variables.listIterator(); it.hasNext(); ) {
+            SymbolVariable var = it.next();
+            curSymbolTable.table.put(var.variableName, var);
+        }
 	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVariableDefinition(MentalParser.VariableDefinitionContext ctx) { }
+	@Override public void exitVariableDefinition(MentalParser.VariableDefinitionContext ctx) {
+
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) {
-		
+        this.curSymbolTable.add(ctx.functionName.getText(), new SymbolFunction(this.curSymbolTable, ctx));
 	}
 	/**
 	 * {@inheritDoc}
@@ -193,7 +213,7 @@ public class PrintListener extends MentalBaseListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) {
-		symbolTable.add(ctx.functionName.getText(), new SymbolFunction(symbolTable, ctx));
+
 	}
 	/**
 	 * {@inheritDoc}

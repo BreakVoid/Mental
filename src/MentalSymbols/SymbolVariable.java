@@ -1,5 +1,6 @@
 package MentalSymbols;
 
+import MentalParser.MentalParser;
 import MentalType.MentalType;
 
 /**
@@ -9,10 +10,30 @@ public class SymbolVariable extends SymbolBase {
     public String variableName;
     public MentalType variableType;
     public SymbolVariable() {
-        variableName = null;
-        variableType = null;
+        this.variableName = null;
+        this.variableType = null;
+        this.stackLayer = 0;
     }
-    @Override public String toString() {
-        return variableName + '[' + variableType.toString() + ']';
+    public SymbolVariable(SymbolTable scope, MentalType type, String name) {
+        this.stackLayer = scope.stackLayer;
+        this.variableType = type;
+        this.variableName = name;
+    }
+    @Override
+    public String toString() {
+        return "<variable>" + variableName + '[' + variableType.toString() + ']';
+    }
+    @Override
+    public boolean equals(SymbolBase other) {
+        if (other != null) {
+            if (other instanceof SymbolVariable) {
+                if (this.variableName.equals(((SymbolVariable) other).variableName)) {
+                    if (this.variableType.equals(((SymbolVariable) other).variableType)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

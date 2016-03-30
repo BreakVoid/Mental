@@ -29,6 +29,7 @@ public class SymbolFunction extends SymbolBase {
     }
     // Constructor a function symbol from a given scope and FunctionDefinitionContext.
     public SymbolFunction(SymbolTable scope, MentalParser.FunctionDefinitionContext funcDefCtx) {
+        this.stackLayer = scope.stackLayer;
         // Set the name of the function.
         parameterName = new ArrayList<>();
         parameterType = new ArrayList<>();
@@ -82,7 +83,7 @@ public class SymbolFunction extends SymbolBase {
     }
     @Override
     public String toString() {
-        String ret = this.returnType.toString() + " " + this.functionName + '(';
+        String ret = "<function>" + this.returnType.toString() + " " + this.functionName + '(';
         if (parameterName.size() > 0) {
             for (int i = 0, count = parameterName.size() - 1; i < count; ++i) {
                 ret += parameterType.get(i).toString() + ',';

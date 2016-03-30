@@ -21,6 +21,7 @@ public class SymbolType extends SymbolBase {
         this.type = other.type;
     }
     public SymbolType(SymbolTable scope, MentalParser.ClassDeclarationContext classDeclCtx) {
+        this.stackLayer = scope.stackLayer;
         HashMap<String, MentalType> classComponents = new HashMap<String, MentalType>();
         this.type = new MentalClass(classComponents);
         // Get className
@@ -67,7 +68,7 @@ public class SymbolType extends SymbolBase {
     }
     @Override
     public String toString() {
-        return this.type.toString();
+        return "<type>" + this.type.toString();
     }
     @Override
     public boolean equals(SymbolBase other) {

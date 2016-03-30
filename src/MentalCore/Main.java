@@ -43,11 +43,11 @@ public class Main {
         ParseTreeWalker walker = new ParseTreeWalker();
         PrintListener listener = new PrintListener();
         walker.walk(listener, parser.program());
-        for (Map.Entry<String, SymbolBase> entry : listener.symbolTable.table.entrySet()) {
+        for (Map.Entry<String, SymbolBase> entry : listener.curSymbolTable.table.entrySet()) {
             System.out.println(entry.getValue());
         }
         System.out.println();
-        SymbolTable st = new SymbolTable(listener.symbolTable);
+        SymbolTable st = new SymbolTable(listener.curSymbolTable);
         SymbolFunction sf = new SymbolFunction();
         sf.functionName = "toString";
         sf.returnType = MentalType.mentalString;
@@ -56,7 +56,7 @@ public class Main {
             System.out.println(entry.getValue());
         }
         System.out.println();
-        for (Map.Entry<String, SymbolBase> entry : listener.symbolTable.table.entrySet()) {
+        for (Map.Entry<String, SymbolBase> entry : listener.curSymbolTable.table.entrySet()) {
             System.out.println(entry.getValue());
         }
         System.out.println();
