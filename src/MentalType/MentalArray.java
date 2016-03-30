@@ -1,6 +1,7 @@
 package MentalType;
 
 import MentalParser.MentalParser;
+import MentalSymbols.SymbolTable;
 
 /**
  * Created by Songyu on 16/3/29.
@@ -24,14 +25,14 @@ public class MentalArray extends MentalType {
         this.arrayDim = typeCtx.array().size();
         this.typeName = typeCtx.typeName().getText();
         if (this.typeName.equals("int")) {
-            this.arrayType = mentalInt;
+            this.arrayType = SymbolTable.mentalInt;
         } else if (this.typeName.equals("bool")) {
-            this.arrayType = mentalBool;
+            this.arrayType = SymbolTable.mentalBool;
         } else if (this.typeName.equals("string")) {
-            this.arrayType = mentalString;
+            this.arrayType = SymbolTable.mentalString;
         } else {
             this.typeName = typeCtx.typeName().getText();
-            this.arrayType = mentalUnknownType;
+            this.arrayType = SymbolTable.mentalUnknownType;
         }
     }
     @Override
@@ -43,7 +44,7 @@ public class MentalArray extends MentalType {
         return ret;
     }
     @Override
-    public boolean equals(MentalType other) {
+    public boolean equals(Object other) {
         if (other != null) {
             if (other instanceof MentalArray) {
                 if (this.arrayType.equals(((MentalArray) other).arrayType)) {

@@ -9,7 +9,7 @@ public class MentalString extends MentalType {
         return "string";
     }
     @Override
-    public boolean equals(MentalType other) {
+    public boolean equals(Object other) {
         return other != null && other instanceof MentalString;
     }
 }

@@ -8,7 +8,7 @@ public class MentalBool extends MentalType {
         return "bool";
     }
     @Override
-    public boolean equals(MentalType other) {
+    public boolean equals(Object other) {
         return other != null && other instanceof MentalBool;
     }
 }

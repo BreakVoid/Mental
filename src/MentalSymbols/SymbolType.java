@@ -31,8 +31,10 @@ public class SymbolType extends SymbolBase {
             // for each variable definition
             // get each definition
             MentalParser.VariableDefinitionContext varDefCtx = classDeclCtx.variableDefinition(i);
+
             // try to get base type from scope
             SymbolBase baseType = scope.table.get(varDefCtx.type().typeName().getText());
+
             // if baseType is not a type then halt
             if (!(varDefCtx.type().typeName().getText().equals(classDeclCtx.className().getText()))) {
                 if (baseType == null || !(baseType instanceof SymbolType)) {
@@ -40,10 +42,13 @@ public class SymbolType extends SymbolBase {
                     System.exit(-1);
                 }
             }
+
             MentalType type;
             if (varDefCtx.type().array().size() != 0) {
                 // if the type is an array.
+
                 type = new MentalArray(varDefCtx.type());
+
                 // find the base type of the array.
                 if (varDefCtx.type().typeName().getText().equals(classDeclCtx.className().getText())) {
                     // if it is a type of itself.
@@ -59,6 +64,7 @@ public class SymbolType extends SymbolBase {
                     type = ((SymbolType) baseType).type;
                 }
             }
+
             // Process each variable with the type.
             for (int j = 0, idCount = varDefCtx.singleVariable().size(); j < idCount; ++j) {
                 String id = varDefCtx.singleVariable(j).Identifier().getText();
@@ -71,7 +77,7 @@ public class SymbolType extends SymbolBase {
         return "<type>" + this.type.toString();
     }
     @Override
-    public boolean equals(SymbolBase other) {
+    public boolean equals(Object other) {
         if (other != null) {
             if (other instanceof SymbolType) {
                 if (this.type.equals(((SymbolType) other).type)) {

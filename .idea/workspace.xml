@@ -2,17 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c35b8dae-0f88-4d1d-8daa-c07a46c2e329" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalSymbols/SymbolVariableList.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/ASTClassDeclaration.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/ASTFunctionDefinition.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/ASTProgram.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/ASTVariableDeclaration.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/basic_test.mt" afterPath="$PROJECT_DIR$/basic_test.mt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" afterPath="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" afterPath="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/ASTDeclaration.java" afterPath="$PROJECT_DIR$/src/MentalAST/ASTDeclaration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/ASTExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/ASTExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/ASTStatement.java" afterPath="$PROJECT_DIR$/src/MentalAST/ASTStatement.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalCore/Main.java" afterPath="$PROJECT_DIR$/src/MentalCore/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalCore/PrintListener.java" afterPath="$PROJECT_DIR$/src/MentalCore/PrintListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalSymbols/SymbolBase.java" afterPath="$PROJECT_DIR$/src/MentalSymbols/SymbolBase.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalSymbols/SymbolFunction.java" afterPath="$PROJECT_DIR$/src/MentalSymbols/SymbolFunction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalSymbols/SymbolTable.java" afterPath="$PROJECT_DIR$/src/MentalSymbols/SymbolTable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalSymbols/SymbolType.java" afterPath="$PROJECT_DIR$/src/MentalSymbols/SymbolType.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalSymbols/SymbolVariable.java" afterPath="$PROJECT_DIR$/src/MentalSymbols/SymbolVariable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalSymbols/SymbolVariableList.java" afterPath="$PROJECT_DIR$/src/MentalSymbols/SymbolVariableList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalType/MentalArray.java" afterPath="$PROJECT_DIR$/src/MentalType/MentalArray.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalType/MentalBool.java" afterPath="$PROJECT_DIR$/src/MentalType/MentalBool.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalType/MentalClass.java" afterPath="$PROJECT_DIR$/src/MentalType/MentalClass.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalType/MentalInt.java" afterPath="$PROJECT_DIR$/src/MentalType/MentalInt.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalType/MentalString.java" afterPath="$PROJECT_DIR$/src/MentalType/MentalString.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalType/MentalType.java" afterPath="$PROJECT_DIR$/src/MentalType/MentalType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalType/MentalUnknownType.java" afterPath="$PROJECT_DIR$/src/MentalType/MentalUnknownType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalType/MentalVoid.java" afterPath="$PROJECT_DIR$/src/MentalType/MentalVoid.java" />
     </list>
     <ignored path="mo-compiler.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,65 +48,87 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SymbolFunction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolFunction.java">
+      <file leaf-file-name="ASTBaseNode.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="85" column="36" selection-start-line="85" selection-start-column="36" selection-end-line="85" selection-end-column="36" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="basic_test.mt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/basic_test.mt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+            <state relative-caret-position="120">
+              <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SymbolVariable.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolVariable.java">
+      <file leaf-file-name="Mental.g4" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalParser/Mental.g4">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
+            <state relative-caret-position="210">
+              <caret line="98" column="24" selection-start-line="98" selection-start-column="24" selection-end-line="98" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ASTFunctionDefinition.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTFunctionDefinition.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#618#619#0" expanded="true" />
-                <element signature="e#706#707#0" expanded="true" />
+                <element signature="e#230#231#0" expanded="true" />
+                <element signature="e#266#267#0" expanded="true" />
+                <element signature="e#311#312#0" expanded="true" />
+                <element signature="e#366#367#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SymbolVariableList.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolVariableList.java">
+      <file leaf-file-name="ASTVariableDeclaration.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTVariableDeclaration.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+            <state relative-caret-position="255">
+              <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#306#307#0" expanded="true" />
-                <element signature="e#352#353#0" expanded="true" />
+                <element signature="e#287#288#0" expanded="true" />
+                <element signature="e#324#325#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrintListener.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalCore/PrintListener.java">
+      <file leaf-file-name="ASTClassDeclaration.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTClassDeclaration.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="191" column="9" selection-start-line="187" selection-start-column="8" selection-end-line="191" selection-end-column="9" />
+            <state relative-caret-position="210">
+              <caret line="14" column="40" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
+              <folding>
+                <element signature="e#221#222#0" expanded="true" />
+                <element signature="e#260#261#0" expanded="true" />
+                <element signature="e#305#306#0" expanded="true" />
+                <element signature="e#375#376#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ASTExpression.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTExpression.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="17" column="125" selection-start-line="17" selection-start-column="125" selection-end-line="17" selection-end-column="125" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BuildTreeListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-345">
+              <caret line="136" column="19" selection-start-line="136" selection-start-column="19" selection-end-line="136" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3965#3966#0" expanded="true" />
-                <element signature="e#3987#3988#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -102,8 +137,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MentalCore/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
+            <state relative-caret-position="147">
+              <caret line="34" column="78" selection-start-line="34" selection-start-column="63" selection-end-line="34" selection-end-column="78" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -111,54 +146,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Mental.g4" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalParser/Mental.g4">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="165" column="5" selection-start-line="165" selection-start-column="5" selection-end-line="165" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SymbolTable.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolTable.java">
+      <file leaf-file-name="ASTStatement.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTStatement.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
-              <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
+              <caret line="13" column="62" selection-start-line="13" selection-start-column="62" selection-end-line="13" selection-end-column="62" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#182#183#0" expanded="true" />
+                <element signature="e#221#222#0" expanded="true" />
+                <element signature="e#277#278#0" expanded="true" />
+                <element signature="e#346#347#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BuildTreeListener.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java">
+      <file leaf-file-name="ASTProgram.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTProgram.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="175" column="9" selection-start-line="175" selection-start-column="9" selection-end-line="175" selection-end-column="9" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#6051#6052#0" expanded="true" />
-                <element signature="e#6075#6076#0" expanded="true" />
-                <element signature="e#6249#6250#0" expanded="true" />
-                <element signature="e#6271#6272#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SymbolType.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="70" column="21" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2915#2916#0" expanded="true" />
-                <element signature="e#2969#2970#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="150">
+              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -183,7 +191,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/company/Main.java" />
         <option value="$PROJECT_DIR$/src/Mo/Mo.g4" />
         <option value="$PROJECT_DIR$/src/CompilerPL/MoParser.java" />
         <option value="$PROJECT_DIR$/src/CompilerPL/MoListener.java" />
@@ -192,7 +199,6 @@
         <option value="$PROJECT_DIR$/src/CompilerAST/ASTDeclaration.java" />
         <option value="$PROJECT_DIR$/src/CompilerAST/ASTStatement.java" />
         <option value="$PROJECT_DIR$/src/MentalParser/Mo.g4" />
-        <option value="$PROJECT_DIR$/src/MentalAST/ASTStatement.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/MentalASTStatement.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/basic_test.mt" />
@@ -204,31 +210,38 @@
         <option value="$PROJECT_DIR$/src/MentalAST/BuildTreeVisitor.java" />
         <option value="$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java" />
         <option value="/usr/local/Cellar/antlr/4.5.2/antlr-4.5.2-complete.jar!/org/antlr/v4/runtime/tree/ParseTreeWalker.class" />
-        <option value="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" />
         <option value="$PROJECT_DIR$/src/MentalType/MentalTypeBase.java" />
         <option value="$PROJECT_DIR$/src/MentalParser/MentalVisitor.java" />
         <option value="$PROJECT_DIR$/src/MentalParser/MentalListener.java" />
         <option value="$PROJECT_DIR$/src/MentalParser/MentalLexer.java" />
-        <option value="$PROJECT_DIR$/src/MentalType/MentalType.java" />
-        <option value="$PROJECT_DIR$/src/MentalType/MentalBool.java" />
-        <option value="$PROJECT_DIR$/src/MentalType/MentalInt.java" />
-        <option value="$PROJECT_DIR$/src/MentalType/MentalString.java" />
-        <option value="$PROJECT_DIR$/src/MentalType/MentalUnknownType.java" />
-        <option value="$PROJECT_DIR$/src/MentalType/MentalVoid.java" />
-        <option value="$PROJECT_DIR$/src/MentalType/MentalClass.java" />
         <option value="$PROJECT_DIR$/src/MentalParser/Mental.g4" />
         <option value="$PROJECT_DIR$/src/MentalParser/MentalParser.java" />
-        <option value="$PROJECT_DIR$/src/MentalType/MentalArray.java" />
-        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolBase.java" />
-        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolTable.java" />
-        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolVariableList.java" />
-        <option value="$PROJECT_DIR$/src/MentalCore/Main.java" />
         <option value="$PROJECT_DIR$/src/MentalCore/PrintListener.java" />
-        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolVariable.java" />
-        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolType.java" />
-        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolFunction.java" />
         <option value="$PROJECT_DIR$/basic_test.mt" />
         <option value="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" />
+        <option value="$PROJECT_DIR$/src/MentalType/MentalVoid.java" />
+        <option value="$PROJECT_DIR$/src/MentalType/MentalUnknownType.java" />
+        <option value="$PROJECT_DIR$/src/MentalType/MentalString.java" />
+        <option value="$PROJECT_DIR$/src/MentalType/MentalInt.java" />
+        <option value="$PROJECT_DIR$/src/MentalType/MentalClass.java" />
+        <option value="$PROJECT_DIR$/src/MentalType/MentalBool.java" />
+        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolVariable.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/ASTDeclaration.java" />
+        <option value="$PROJECT_DIR$/src/MentalType/MentalType.java" />
+        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolTable.java" />
+        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolVariableList.java" />
+        <option value="$PROJECT_DIR$/src/MentalType/MentalArray.java" />
+        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolBase.java" />
+        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolType.java" />
+        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolFunction.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/ASTProgram.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/ASTStatement.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/ASTExpression.java" />
+        <option value="$PROJECT_DIR$/src/MentalCore/Main.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/ASTFunctionDefinition.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/ASTClassDeclaration.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/ASTVariableDeclaration.java" />
       </list>
     </option>
   </component>
@@ -289,9 +302,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -865,12 +878,13 @@
       <workItem from="1459243585535" duration="892000" />
       <workItem from="1459246828003" duration="14226000" />
       <workItem from="1459302352689" duration="6943000" />
-      <workItem from="1459318591433" duration="2517000" />
+      <workItem from="1459318591433" duration="3310000" />
+      <workItem from="1459331735123" duration="2690000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50615000" />
+    <option name="totallyTimeSpent" value="54098000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -883,7 +897,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.49676898" order="6" side_tool="false" content_ui="tabs" />
@@ -894,11 +908,11 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47808218" sideWeight="0.5129241" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2584814" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2584814" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47808218" sideWeight="0.48707592" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -937,10 +951,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/MentalParser/Mo.tokens" />
-    <entry file="file://$PROJECT_DIR$/src/MentalParser/Mo.g4" />
-    <entry file="file://$PROJECT_DIR$/src/Main.java" />
-    <entry file="file://$PROJECT_DIR$/out/production/Mental/MentalAST/MentalASTBaseNode.class" />
     <entry file="file://$PROJECT_DIR$/src/basic_test.mt" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_71.jdk/Contents/Home/src.zip!/java/io/FileInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -957,25 +967,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTOriginalType.java" />
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTDeclaration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MentalAST/BuildTreeVisitor.java" />
     <entry file="file://$PROJECT_DIR$/src/MentalParser/Mental.tokens">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTStatement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1014,21 +1010,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTType.java" />
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/local/Cellar/antlr/4.5.2/antlr-4.5.2-complete.jar!/org/antlr/v4/runtime/tree/ParseTree.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1083,34 +1065,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalUnknownType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalString.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalInt.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalBool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3">
@@ -1119,33 +1073,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#610#611#0" expanded="true" />
-            <element signature="e#646#647#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_71.jdk/Contents/Home/src.zip!/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="417" column="0" selection-start-line="417" selection-start-column="0" selection-end-line="417" selection-end-column="0" />
           <folding>
-            <element signature="e#15459#15460#0" expanded="true" />
+            <element signature="e#15459#15460#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalVoid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1157,63 +1091,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="68" selection-start-line="16" selection-start-column="68" selection-end-line="16" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalArray.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="46" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-          <folding>
-            <element signature="e#142#143#0" expanded="true" />
-            <element signature="e#172#173#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalParser/Mental.g4">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="165" column="5" selection-start-line="165" selection-start-column="5" selection-end-line="165" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolVariableList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#306#307#0" expanded="true" />
-            <element signature="e#352#353#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_71.jdk/Contents/Home/src.zip!/java/util/Iterator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -1222,55 +1099,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalCore/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolVariable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#618#619#0" expanded="true" />
-            <element signature="e#706#707#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="70" column="21" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2915#2916#0" expanded="true" />
-            <element signature="e#2969#2970#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolFunction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="85" column="36" selection-start-line="85" selection-start-column="36" selection-end-line="85" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/basic_test.mt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1286,16 +1118,239 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java">
+    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalUnknownType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="175" column="9" selection-start-line="175" selection-start-column="9" selection-end-line="175" selection-end-column="9" />
+        <state relative-caret-position="135">
+          <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalVoid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalString.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalInt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="27" column="32" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalBool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#6051#6052#0" expanded="true" />
-            <element signature="e#6075#6076#0" expanded="true" />
-            <element signature="e#6249#6250#0" expanded="true" />
-            <element signature="e#6271#6272#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalType/MentalArray.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="40" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolVariableList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="29" column="65" selection-start-line="29" selection-start-column="65" selection-end-line="29" selection-end-column="65" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolVariable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="900">
+          <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="31" column="46" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolFunction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1245">
+          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding>
+            <element signature="e#217#218#0" expanded="true" />
+            <element signature="e#252#253#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTDeclaration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+          <folding>
+            <element signature="e#255#256#0" expanded="true" />
+            <element signature="e#326#327#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalParser/Mental.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="98" column="24" selection-start-line="98" selection-start-column="24" selection-end-line="98" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-345">
+          <caret line="136" column="19" selection-start-line="136" selection-start-column="19" selection-end-line="136" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalCore/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="34" column="78" selection-start-line="34" selection-start-column="63" selection-end-line="34" selection-end-column="78" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTProgram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="17" column="125" selection-start-line="17" selection-start-column="125" selection-end-line="17" selection-end-column="125" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTFunctionDefinition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+          <folding>
+            <element signature="e#230#231#0" expanded="true" />
+            <element signature="e#266#267#0" expanded="true" />
+            <element signature="e#311#312#0" expanded="true" />
+            <element signature="e#366#367#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTClassDeclaration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="40" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
+          <folding>
+            <element signature="e#221#222#0" expanded="true" />
+            <element signature="e#260#261#0" expanded="true" />
+            <element signature="e#305#306#0" expanded="true" />
+            <element signature="e#375#376#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTVariableDeclaration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#287#288#0" expanded="true" />
+            <element signature="e#324#325#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/ASTStatement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="62" selection-start-line="13" selection-start-column="62" selection-end-line="13" selection-end-column="62" />
+          <folding>
+            <element signature="e#182#183#0" expanded="true" />
+            <element signature="e#221#222#0" expanded="true" />
+            <element signature="e#277#278#0" expanded="true" />
+            <element signature="e#346#347#0" expanded="true" />
           </folding>
         </state>
       </provider>

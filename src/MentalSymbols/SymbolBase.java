@@ -8,10 +8,12 @@ public class SymbolBase {
     public SymbolBase() {
         stackLayer = 0;
     }
+    @Override
     public String toString() {
         return "SymbolBase";
     }
-    public boolean equals(SymbolBase other) {
+    @Override
+    public boolean equals(Object other) {
         return other != null && other instanceof SymbolBase;
     }
 }

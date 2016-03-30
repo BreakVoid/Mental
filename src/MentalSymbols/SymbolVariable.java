@@ -24,7 +24,7 @@ public class SymbolVariable extends SymbolBase {
         return "<variable>" + variableName + '[' + variableType.toString() + ']';
     }
     @Override
-    public boolean equals(SymbolBase other) {
+    public boolean equals(Object other) {
         if (other != null) {
             if (other instanceof SymbolVariable) {
                 if (this.variableName.equals(((SymbolVariable) other).variableName)) {

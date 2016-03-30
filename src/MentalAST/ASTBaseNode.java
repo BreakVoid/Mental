@@ -5,6 +5,14 @@ import java.util.List;
 /**
  * Created by Songyu on 16/3/28.
  */
-public abstract class ASTBaseNode {
-    public List<ASTBaseNode> child;
+public class ASTBaseNode {
+    public ASTBaseNode() { }
+    @Override
+    public String toString() {
+        return "AST<BASE NODE>";
+    }
+    @Override
+    public boolean equals(Object other) {
+        return other != null && other instanceof ASTBaseNode;
+    }
 }

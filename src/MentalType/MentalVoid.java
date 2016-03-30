@@ -9,7 +9,7 @@ public class MentalVoid extends MentalType {
         return "void";
     }
     @Override
-    public boolean equals(MentalType other) {
+    public boolean equals(Object other) {
         return other != null && other instanceof MentalVoid;
     }
 }

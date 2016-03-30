@@ -29,9 +29,6 @@ import java.util.Map;
 import static MentalParser.MentalParser.*;
 
 public class Main {
-    public static void action(String a, SymbolBase b) {
-
-    }
     public static void main(String[] args) {
         TokenStream tokens = null;
         try {
@@ -50,7 +47,7 @@ public class Main {
         SymbolTable st = new SymbolTable(listener.curSymbolTable);
         SymbolFunction sf = new SymbolFunction();
         sf.functionName = "toString";
-        sf.returnType = MentalType.mentalString;
+        sf.returnType = SymbolTable.mentalString;
         st.add("toString", new SymbolFunction(sf));
         for (Map.Entry<String, SymbolBase> entry : st.table.entrySet()) {
             System.out.println(entry.getValue());

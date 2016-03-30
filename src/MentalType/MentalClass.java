@@ -25,7 +25,7 @@ public class MentalClass extends MentalType {
         return this.className;
     }
     @Override
-    public boolean equals(MentalType other) {
+    public boolean equals(Object other) {
         if (other != null) {
             if (other instanceof MentalClass) {
                 if (this.className.equals(((MentalClass) other).className)) {

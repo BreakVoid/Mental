@@ -9,7 +9,7 @@ import java.util.LinkedList;
 /**
  * Created by Songyu on 16/3/30.
  */
-public class SymbolVariableList {
+public class SymbolVariableList extends Object {
     public LinkedList<SymbolVariable> variables;
     public SymbolVariableList() {
         variables = new LinkedList<>();
@@ -27,7 +27,7 @@ public class SymbolVariableList {
         if (varDefCtx.type().array().size() != 0) {
             // type is array.
             type = new MentalArray(varDefCtx.type());
-            if (((MentalArray) type).arrayType.equals(MentalType.mentalUnknownType)) {
+            if (((MentalArray) type).arrayType.equals(SymbolTable.mentalUnknownType)) {
                 ((MentalArray) type).arrayType = ((SymbolType) baseType).type;
             }
         } else {
