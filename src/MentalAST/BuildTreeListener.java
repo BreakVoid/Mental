@@ -77,13 +77,13 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParamtersList(MentalParser.ParamtersListContext ctx) { }
+	@Override public void enterParametersList(MentalParser.ParametersListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParamtersList(MentalParser.ParamtersListContext ctx) { }
+	@Override public void exitParametersList(MentalParser.ParametersListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

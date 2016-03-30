@@ -17,6 +17,9 @@ public class SymbolTable {
         this.table.put("bool", new SymbolType(MentalType.mentalBool));
         this.table.put("void", new SymbolType(MentalType.mentalVoid));
     }
+    public SymbolTable(SymbolTable other) {
+        this.table = new HashMap<>(other.table);
+    }
     public void add(String id, SymbolBase symbol) {
         this.table.put(id, symbol);
     }

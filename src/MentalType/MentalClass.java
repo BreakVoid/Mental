@@ -12,13 +12,19 @@ public class MentalClass extends MentalType {
         this.classComponents = new HashMap<>();
         this.className = "";
     }
+    public MentalClass(MentalClass other) {
+        this.className = other.className;
+        this.classComponents = new HashMap<>(other.classComponents);
+    }
     public MentalClass(HashMap<String, MentalType> types) {
         this.classComponents = types;
         this.className = "";
     }
+    @Override
     public String toString() {
         return this.className;
     }
+    @Override
     public boolean equals(MentalType other) {
         if (other != null) {
             if (other instanceof MentalClass) {

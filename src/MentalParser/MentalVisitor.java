@@ -41,11 +41,11 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParameter(MentalParser.ParameterContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MentalParser#paramtersList}.
+	 * Visit a parse tree produced by {@link MentalParser#parametersList}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParamtersList(MentalParser.ParamtersListContext ctx);
+	T visitParametersList(MentalParser.ParametersListContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MentalParser#program}.
 	 * @param ctx the parse tree
@@ -76,6 +76,12 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDefinition(MentalParser.DefinitionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MentalParser#singleVariable}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSingleVariable(MentalParser.SingleVariableContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MentalParser#variableDefinition}.
 	 * @param ctx the parse tree
@@ -347,6 +353,13 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code INTERNAL_FUNCTION_CALL}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitINTERNAL_FUNCTION_CALL(MentalParser.INTERNAL_FUNCTION_CALLContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code STRING_LITERAL}
 	 * labeled alternative in {@link MentalParser#expression}.

@@ -8,4 +8,7 @@ public class SymbolBase {
     public String toString() {
         return "SymbolBase";
     }
+    public boolean equals(SymbolBase other) {
+        return other != null && other instanceof SymbolBase;
+    }
 }

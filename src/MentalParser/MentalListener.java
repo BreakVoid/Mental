@@ -58,15 +58,15 @@ public interface MentalListener extends ParseTreeListener {
 	 */
 	void exitParameter(MentalParser.ParameterContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MentalParser#paramtersList}.
+	 * Enter a parse tree produced by {@link MentalParser#parametersList}.
 	 * @param ctx the parse tree
 	 */
-	void enterParamtersList(MentalParser.ParamtersListContext ctx);
+	void enterParametersList(MentalParser.ParametersListContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MentalParser#paramtersList}.
+	 * Exit a parse tree produced by {@link MentalParser#parametersList}.
 	 * @param ctx the parse tree
 	 */
-	void exitParamtersList(MentalParser.ParamtersListContext ctx);
+	void exitParametersList(MentalParser.ParametersListContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MentalParser#program}.
 	 * @param ctx the parse tree
@@ -117,6 +117,16 @@ public interface MentalListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDefinition(MentalParser.DefinitionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MentalParser#singleVariable}.
+	 * @param ctx the parse tree
+	 */
+	void enterSingleVariable(MentalParser.SingleVariableContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MentalParser#singleVariable}.
+	 * @param ctx the parse tree
+	 */
+	void exitSingleVariable(MentalParser.SingleVariableContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MentalParser#variableDefinition}.
 	 * @param ctx the parse tree
@@ -577,6 +587,18 @@ public interface MentalListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code INTERNAL_FUNCTION_CALL}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterINTERNAL_FUNCTION_CALL(MentalParser.INTERNAL_FUNCTION_CALLContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code INTERNAL_FUNCTION_CALL}
+	 * labeled alternative in {@link MentalParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitINTERNAL_FUNCTION_CALL(MentalParser.INTERNAL_FUNCTION_CALLContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code STRING_LITERAL}
 	 * labeled alternative in {@link MentalParser#expression}.

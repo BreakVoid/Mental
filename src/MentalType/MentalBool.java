@@ -7,6 +7,7 @@ public class MentalBool extends MentalType {
     public String toString() {
         return "bool";
     }
+    @Override
     public boolean equals(MentalType other) {
         return other != null && other instanceof MentalBool;
     }

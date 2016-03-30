@@ -63,20 +63,18 @@ typeName
 	;
 
 array
-    : typeName '[' ']'
-    | array '[' ']'
+    : '[' ']'
     ;
 
 type
-	: typeName
-	| array
+	: typeName array*
 	;
 
 parameter
     : type Identifier
     ;
 
-paramtersList
+parametersList
 	: parameter (',' parameter)*
 	;
 
@@ -94,7 +92,7 @@ classDeclaration
 	;
 
 functionDeclaration
-	: (type | 'void') Identifier '(' paramtersList? ')' ';'
+	: (type | 'void') Identifier '(' parametersList? ')' ';'
 	;
 
 definition
@@ -102,12 +100,16 @@ definition
 	| functionDefinition
 	;
 
+singleVariable
+    : Identifier ('=' expression)?
+    ;
+
 variableDefinition
-	: type Identifier ('=' expression)? (',' Identifier ('=' expression)?)* ';'
+	: type singleVariable (',' singleVariable)* ';'
 	;
 
 functionDefinition
-	: (type | 'void') functionName=Identifier '(' paramtersList? ')' compoundStatement
+	: (type | 'void') functionName=Identifier '(' parametersList? ')' compoundStatement
 	;
 
 compoundStatement
@@ -126,9 +128,9 @@ statement
 	| variableDefinition
 	| callPrint
 	| callPrintln
-	| callGetString
-	| callGetInt
-	| callToString
+	| callGetString ';'
+	| callGetInt ';'
+	| callToString ';'
 	;
 
 callPrint
@@ -140,11 +142,11 @@ callPrintln
 	;
 
 callGetString
-	: 'getString' '(' ')' ';'
+	: 'getString' '(' ')'
 	;
 
 callGetInt
-	: 'getInt' '(' ')' ';'
+	: 'getInt' '(' ')'
 	;
 
 callToString
@@ -226,6 +228,8 @@ expression
 	#ASSIGN_EXPRESSION
 	| functionName=Identifier '(' expressionList? ')'
 	#FUNCTION_CALL
+	| (callGetInt | callGetString | callToString)
+	#INTERNAL_FUNCTION_CALL
 	| Identifier
 	#IDENTIFIER
 	| INT

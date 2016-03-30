@@ -17,59 +17,68 @@ public class SymbolType extends SymbolBase {
     public SymbolType(MentalType type) {
         this.type = type;
     }
+    public SymbolType(SymbolType other) {
+        this.type = other.type;
+    }
     public SymbolType(SymbolTable scope, MentalParser.ClassDeclarationContext classDeclCtx) {
         HashMap<String, MentalType> classComponents = new HashMap<String, MentalType>();
         this.type = new MentalClass(classComponents);
+        // Get className
         ((MentalClass)this.type).className = classDeclCtx.className().getText();
+        // Process class components
         for (int i = 0, varCount = classDeclCtx.variableDefinition().size(); i < varCount; ++i) {
+            // for each variable definition
+            // get each definition
             MentalParser.VariableDefinitionContext varDefCtx = classDeclCtx.variableDefinition(i);
-            if (varDefCtx.type().typeName() != null) {
-                SymbolBase base = scope.table.get(varDefCtx.type().typeName().getText());
-                if ((base != null && base instanceof SymbolType) ||
-                        (varDefCtx.type().typeName().getText().equals(classDeclCtx.className().getText()))) {
-                    MentalType type;
-                    if (base != null && base instanceof SymbolType) {
-                        type = ((SymbolType) base).type;
-                    } else {
-                        type = this.type;
-                    }
-                    for (int j = 0, idCount = varDefCtx.Identifier().size(); j < idCount; ++j) {
-                        String id = varDefCtx.Identifier(j).getText();
-                        classComponents.put(id, type);
-                    }
-                } else {
+            // try to get base type from scope
+            SymbolBase baseType = scope.table.get(varDefCtx.type().typeName().getText());
+            // if baseType is not a type then halt
+            if (!(varDefCtx.type().typeName().getText().equals(classDeclCtx.className().getText()))) {
+                if (baseType == null || !(baseType instanceof SymbolType)) {
                     System.out.println("fatal: declarate a variable with bad type.");
                     System.exit(-1);
                 }
+            }
+            MentalType type;
+            if (varDefCtx.type().array().size() != 0) {
+                // if the type is an array.
+                type = new MentalArray(varDefCtx.type());
+                // find the base type of the array.
+                if (varDefCtx.type().typeName().getText().equals(classDeclCtx.className().getText())) {
+                    // if it is a type of itself.
+                    ((MentalArray) type).arrayType = this.type;
+                } else {
+                    ((MentalArray) type).arrayType = ((SymbolType) baseType).type;
+                }
             } else {
-                MentalArray type = new MentalArray(varDefCtx.type().array());
-                if (type.arrayType == MentalType.mentalUnknownType) {
-                    MentalParser.ArrayContext arrCtx = varDefCtx.type().array();
-                    while (arrCtx.typeName() == null) {
-                        arrCtx = arrCtx.array();
-                    }
-                    SymbolBase base = scope.table.get(arrCtx.typeName().getText());
-                    if ((base != null && base instanceof SymbolType) ||
-                            (arrCtx.typeName().getText().equals(classDeclCtx.className().getText()))) {
-                        if (base != null && base instanceof SymbolType) {
-                            type.arrayType = ((SymbolType) base).type;
-                        } else {
-                            type.arrayType = this.type;
-                        }
-                    } else {
-                        System.out.println("fatal: declarate a variable with bad type.");
-                        System.exit(-1);
-                    }
+                if (varDefCtx.type().typeName().getText().equals(classDeclCtx.className().getText())) {
+                    // the type is itself.
+                    type = this.type;
+                } else {
+                    type = ((SymbolType) baseType).type;
                 }
-                for (int j = 0, idCount = varDefCtx.Identifier().size(); j < idCount; ++j) {
-                    String id = varDefCtx.Identifier(j).getText();
-                    classComponents.put(id, type);
-                }
+            }
+            // Process each variable with the type.
+            for (int j = 0, idCount = varDefCtx.singleVariable().size(); j < idCount; ++j) {
+                String id = varDefCtx.singleVariable(j).Identifier().getText();
+                classComponents.put(id, type);
             }
         }
     }
-    public MentalType getType() {
-        return this.type;
+    @Override
+    public String toString() {
+        return this.type.toString();
+    }
+    @Override
+    public boolean equals(SymbolBase other) {
+        if (other != null) {
+            if (other instanceof SymbolType) {
+                if (this.type.equals(((SymbolType) other).type)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 

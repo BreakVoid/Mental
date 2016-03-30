@@ -8,27 +8,33 @@ import MentalParser.MentalParser;
 public class MentalArray extends MentalType {
     public int arrayDim;
     public MentalType arrayType;
+    public String typeName;
     public MentalArray() {
         this.arrayDim = 0;
         this.arrayType = null;
+        this.typeName = null;
     }
-    public MentalArray(MentalParser.ArrayContext arrCtx) {
+    public MentalArray(MentalArray other) {
+        this.arrayType = other.arrayType;
+        this.arrayDim = other.arrayDim;
+        this.typeName = other.typeName;
+    }
+    public MentalArray(MentalParser.TypeContext typeCtx) {
         this.arrayType = null;
-        this.arrayDim = 1;
-        while (arrCtx.typeName() == null) {
-            arrCtx = arrCtx.array();
-            ++this.arrayDim;
-        }
-        if (arrCtx.typeName().getText().equals("int")) {
+        this.arrayDim = typeCtx.array().size();
+        this.typeName = typeCtx.typeName().getText();
+        if (this.typeName.equals("int")) {
             this.arrayType = mentalInt;
-        } else if (arrCtx.typeName().getText().equals("bool")) {
+        } else if (this.typeName.equals("bool")) {
             this.arrayType = mentalBool;
-        } else if (arrCtx.typeName().getText().equals("string")) {
+        } else if (this.typeName.equals("string")) {
             this.arrayType = mentalString;
         } else {
+            this.typeName = typeCtx.typeName().getText();
             this.arrayType = mentalUnknownType;
         }
     }
+    @Override
     public String toString() {
         String ret = this.arrayType.toString();
         for (int i = 0; i < this.arrayDim; ++i) {
@@ -36,6 +42,7 @@ public class MentalArray extends MentalType {
         }
         return ret;
     }
+    @Override
     public boolean equals(MentalType other) {
         if (other != null) {
             if (other instanceof MentalArray) {

@@ -76,13 +76,13 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParamtersList(MentalParser.ParamtersListContext ctx) { }
+	@Override public void enterParametersList(MentalParser.ParametersListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParamtersList(MentalParser.ParamtersListContext ctx) { }
+	@Override public void exitParametersList(MentalParser.ParametersListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -143,6 +143,18 @@ public class MentalBaseListener implements MentalListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDefinition(MentalParser.DefinitionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSingleVariable(MentalParser.SingleVariableContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSingleVariable(MentalParser.SingleVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -635,6 +647,18 @@ public class MentalBaseListener implements MentalListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterINTERNAL_FUNCTION_CALL(MentalParser.INTERNAL_FUNCTION_CALLContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitINTERNAL_FUNCTION_CALL(MentalParser.INTERNAL_FUNCTION_CALLContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
