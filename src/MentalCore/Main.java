@@ -4,6 +4,7 @@ package MentalCore;
  * Created by Songyu on 16/3/28.
  */
 
+import MentalAST.BuildTreeListener;
 import MentalParser.*;
 import MentalSymbols.SymbolBase;
 import MentalSymbols.SymbolFunction;
@@ -38,22 +39,9 @@ public class Main {
         }
         MentalParser parser = new MentalParser(tokens);
         ParseTreeWalker walker = new ParseTreeWalker();
-        PrintListener listener = new PrintListener();
+        BuildTreeListener listener = new BuildTreeListener();
         walker.walk(listener, parser.program());
-        for (Map.Entry<String, SymbolBase> entry : listener.curSymbolTable.table.entrySet()) {
-            System.out.println(entry.getValue());
-        }
-        System.out.println();
-        SymbolTable st = new SymbolTable(listener.curSymbolTable);
-        SymbolFunction sf = new SymbolFunction();
-        sf.functionName = "toString";
-        sf.returnType = SymbolTable.mentalString;
-        st.add("toString", new SymbolFunction(sf));
-        for (Map.Entry<String, SymbolBase> entry : st.table.entrySet()) {
-            System.out.println(entry.getValue());
-        }
-        System.out.println();
-        for (Map.Entry<String, SymbolBase> entry : listener.curSymbolTable.table.entrySet()) {
+        for (Map.Entry<String, SymbolBase> entry : listener.curSymbolTable.getTable().entrySet()) {
             System.out.println(entry.getValue());
         }
         System.out.println();

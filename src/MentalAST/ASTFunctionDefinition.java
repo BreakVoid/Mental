@@ -18,6 +18,16 @@ public class ASTFunctionDefinition extends ASTDeclaration {
     }
     @Override
     public boolean equals(Object other) {
-        return other != null && other instanceof ASTFunctionDefinition && this.function.equals(((ASTFunctionDefinition) other).function);
+        if (this == other) {
+            return true;
+        }
+        if (other != null) {
+            if (other instanceof ASTFunctionDefinition) {
+                if (this.function.equals(((ASTFunctionDefinition) other).function)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

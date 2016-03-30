@@ -18,9 +18,9 @@ public class SymbolVariableList extends Object {
         variables = new LinkedList<>();
         // Get the type
         // find the type from current scope
-        SymbolBase baseType = scope.table.get(varDefCtx.type().typeName().getText());
+        SymbolBase baseType = scope.getSymbol(varDefCtx.type().typeName().getText());
         if (baseType == null || !(baseType instanceof SymbolType)) {
-            System.out.println("fatal: no such a type " + varDefCtx.type().typeName().getText());
+            System.err.println("fatal: no such a type " + varDefCtx.type().typeName().getText());
             System.exit(-1);
         }
         MentalType type;

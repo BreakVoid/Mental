@@ -16,6 +16,9 @@ public class ASTForStatement {
     }
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
         if (other != null) {
             if (other instanceof ASTForStatement) {
                 if (this.start.equals(((ASTForStatement) other).start)) {

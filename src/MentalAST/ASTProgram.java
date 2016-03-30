@@ -16,6 +16,9 @@ public class ASTProgram extends ASTBaseNode {
     }
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
         if (other != null) {
             if (other instanceof ASTProgram) {
                 if (this.declarations.equals(((ASTProgram) other).declarations)) {

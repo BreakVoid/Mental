@@ -39,9 +39,9 @@ public class SymbolFunction extends SymbolBase {
         if (funcDefCtx.type() == null) {
             this.returnType = SymbolTable.mentalVoid;
         } else {
-            SymbolBase baseType = scope.table.get(funcDefCtx.type().typeName().getText());
+            SymbolBase baseType = scope.getSymbol(funcDefCtx.type().typeName().getText());
             if (baseType == null || !(baseType instanceof SymbolType)) {
-                    System.out.println("fatal: no such a type " + funcDefCtx.type().typeName().getText());
+                    System.err.println("fatal: no such a type " + funcDefCtx.type().typeName().getText());
                     System.exit(-1);
             }
             if (funcDefCtx.type().array().size() != 0) {
@@ -68,9 +68,9 @@ public class SymbolFunction extends SymbolBase {
             String name = parameterCtx.Identifier().getText();
 
             // Process the type of a single variable.
-            SymbolBase baseType = scope.table.get(typeCtx.typeName().getText());
+            SymbolBase baseType = scope.getSymbol(typeCtx.typeName().getText());
             if (baseType == null || !(baseType instanceof SymbolType)) {
-                System.out.println("fatal: no such a type " + funcDefCtx.type().typeName().getText());
+                System.err.println("fatal: no such a type " + funcDefCtx.type().typeName().getText());
                 System.exit(-1);
             }
             if (typeCtx.array().size() != 0) {
@@ -101,6 +101,9 @@ public class SymbolFunction extends SymbolBase {
     }
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
         if (other != null) {
             if (other instanceof SymbolFunction) {
                 if (this.functionName.equals(((SymbolFunction) other).functionName)) {

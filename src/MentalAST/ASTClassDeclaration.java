@@ -16,6 +16,9 @@ public class ASTClassDeclaration extends ASTDeclaration {
     }
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
         if (other != null) {
             if (other instanceof ASTClassDeclaration) {
                 if (this.classDetail.equals(((ASTClassDeclaration) other).classDetail)) {

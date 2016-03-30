@@ -21,6 +21,9 @@ public class ASTComponentStatement extends ASTStatement {
     }
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
         if (other != null) {
             if (other instanceof ASTComponentStatement) {
                 if (this.statements.equals(((ASTComponentStatement) other).statements)) {

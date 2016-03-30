@@ -33,12 +33,12 @@ public class SymbolType extends SymbolBase {
             MentalParser.VariableDefinitionContext varDefCtx = classDeclCtx.variableDefinition(i);
 
             // try to get base type from scope
-            SymbolBase baseType = scope.table.get(varDefCtx.type().typeName().getText());
+            SymbolBase baseType = scope.getSymbol(varDefCtx.type().typeName().getText());
 
             // if baseType is not a type then halt
             if (!(varDefCtx.type().typeName().getText().equals(classDeclCtx.className().getText()))) {
                 if (baseType == null || !(baseType instanceof SymbolType)) {
-                    System.out.println("fatal: declarate a variable with bad type.");
+                    System.err.println("fatal: declarate a variable with bad type.");
                     System.exit(-1);
                 }
             }
@@ -68,7 +68,13 @@ public class SymbolType extends SymbolBase {
             // Process each variable with the type.
             for (int j = 0, idCount = varDefCtx.singleVariable().size(); j < idCount; ++j) {
                 String id = varDefCtx.singleVariable(j).Identifier().getText();
-                classComponents.put(id, type);
+                if (classComponents.get(id) == null) {
+                    classComponents.put(id, type);
+                } else {
+                    // exit if redefinition occurs.
+                    System.err.println("fatal: redefine a member " + id + " in class " + ((MentalClass) this.type).className);
+                    System.exit(-1);
+                }
             }
         }
     }
@@ -78,6 +84,9 @@ public class SymbolType extends SymbolBase {
     }
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
         if (other != null) {
             if (other instanceof SymbolType) {
                 if (this.type.equals(((SymbolType) other).type)) {

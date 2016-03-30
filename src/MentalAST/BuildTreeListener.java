@@ -138,7 +138,9 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitClassDeclaration(MentalParser.ClassDeclarationContext ctx) { }
+	@Override public void exitClassDeclaration(MentalParser.ClassDeclarationContext ctx) {
+		this.endScope();
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -170,9 +172,8 @@ public class BuildTreeListener extends MentalBaseListener {
 	 */
 	@Override public void enterVariableDefinition(MentalParser.VariableDefinitionContext ctx) {
 		SymbolVariableList variableList = new SymbolVariableList(this.curSymbolTable, ctx);
-		for (ListIterator<SymbolVariable> it = variableList.variables.listIterator(); it.hasNext(); ) {
-			SymbolVariable var = it.next();
-			curSymbolTable.table.put(var.variableName, var);
+		for (SymbolVariable var : variableList.variables) {
+			this.curSymbolTable.add(var.variableName, var);
 		}
 	}
 	/**

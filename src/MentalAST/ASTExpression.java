@@ -15,6 +15,16 @@ public class ASTExpression extends ASTBaseNode {
         return "<expression>";
     }
     public boolean equals(Object other) {
-        return other != null && other instanceof ASTExpression && this.returnType.equals(((ASTExpression) other).returnType);
+        if (this == other) {
+            return true;
+        }
+        if (other != null) {
+            if (other instanceof ASTExpression) {
+                if (this.returnType.equals(((ASTExpression) other).returnType)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

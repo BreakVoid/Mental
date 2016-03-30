@@ -45,6 +45,9 @@ public class MentalArray extends MentalType {
     }
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
         if (other != null) {
             if (other instanceof MentalArray) {
                 if (this.arrayType.equals(((MentalArray) other).arrayType)) {
