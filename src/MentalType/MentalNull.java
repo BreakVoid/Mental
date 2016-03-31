@@ -1,17 +1,17 @@
 package MentalType;
 
 /**
- * Created by Songyu on 16/3/29.
+ * Created by Songyu on 16/3/31.
  */
-public class MentalString extends MentalType {
+public class MentalNull extends MentalType {
     @Override
     public String toString() {
-        return "string";
+        return "null-pointer";
     }
     @Override
     public boolean equals(Object other) {
         if (other != null) {
-            if (other instanceof MentalString || other instanceof MentalNull) {
+            if (other instanceof MentalNull || other instanceof MentalArray || other instanceof MentalClass) {
                 return true;
             }
         }

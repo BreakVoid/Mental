@@ -9,5 +9,5 @@ class AClass {
 int a,b,c=12233;
 
 int main() {
-    
+
 }

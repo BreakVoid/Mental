@@ -5,6 +5,7 @@ import MentalType.MentalInt;
 import MentalType.MentalString;
 import MentalType.MentalVoid;
 import MentalType.MentalBool;
+import MentalType.MentalNull;
 import MentalType.MentalUnknownType;
 
 import sun.jvm.hotspot.debugger.cdbg.Sym;
@@ -19,6 +20,7 @@ public class SymbolTable {
     public static MentalString mentalString = new MentalString();
     public static MentalBool mentalBool = new MentalBool();
     public static MentalVoid mentalVoid = new MentalVoid();
+    public static MentalNull mentalNull = new MentalNull();
     public static MentalUnknownType mentalUnknownType = new MentalUnknownType();
 
     private HashMap<String, SymbolBase> table;

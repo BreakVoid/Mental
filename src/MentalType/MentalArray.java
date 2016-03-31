@@ -49,6 +49,9 @@ public class MentalArray extends MentalType {
             return true;
         }
         if (other != null) {
+            if (other instanceof MentalNull) {
+                return true;
+            }
             if (other instanceof MentalArray) {
                 if (this.arrayType.equals(((MentalArray) other).arrayType)) {
                     if (this.arrayDim == ((MentalArray) other).arrayDim) {

@@ -30,6 +30,9 @@ public class MentalClass extends MentalType {
             return true;
         }
         if (other != null) {
+            if (other instanceof MentalNull) {
+                return true;
+            }
             if (other instanceof MentalClass) {
                 if (this.className.equals(((MentalClass) other).className)) {
                     if (this.classComponents.equals(((MentalClass) other).classComponents)) {

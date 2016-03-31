@@ -8,12 +8,21 @@ import MentalType.MentalType;
 public class AstExpression extends AstBaseNode {
     public MentalType returnType;
     public AstExpression() {
-        returnType = null;
+        this.returnType = new MentalType();
+    }
+    @Override
+    public String toPrintString() {
+        return this.toPrintString(0);
+    }
+    @Override
+    public String toPrintString(int indent) {
+        return addIndent(indent) + "<expression>:" + returnType.toString();
     }
     @Override
     public String toString() {
         return "<expression>";
     }
+    @Override
     public boolean equals(Object other) {
         if (this == other) {
             return true;
