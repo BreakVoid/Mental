@@ -184,13 +184,13 @@ expressionStatement
 	;
 
 expression
-	: 'new' typeName ('[' expression ']')*
+	: '(' expression ')'
+    #SUBGROUP_EXPRESSION
+	|'new' typeName ('[' expression ']')*
 	#CREATION_EXPRESSION
-	| '(' expression ')'
-	#SUBGROUP_EXPRESSION
 	| expression '[' expression ']'
 	#ARRAY_SUBSCRIPTING_EXPRESSION
-	| expression op='.' expression
+	| expression op='.' Identifier
 	#MEMBER_ACCESS_EXPRESSION
 	| expression op=('++' | '--')
 	#SUFFIX_INC_DEC_EXPRESSION

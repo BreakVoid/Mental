@@ -23,7 +23,7 @@ public class AstClassDeclaration extends AstDeclaration {
         String ret = addIndent(indent) + "<begin>class:" + classBody.className + '\n';
 
         for (Map.Entry<String, MentalType> entry : classBody.classComponents.entrySet()) {
-            ret += addIndent(indent + 1) + entry.getKey() + ":" + entry.getValue().toString() + '\n';
+            ret += addIndent(indent + 1) + "[" + entry.getKey() + "@" + entry.getValue().toString() + "]\n";
         }
         ret += addIndent(indent) + "<end>class";
         return ret;
