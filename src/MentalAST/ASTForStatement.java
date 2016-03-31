@@ -4,8 +4,8 @@ package MentalAST;
  * Created by Songyu on 16/3/30.
  */
 public class ASTForStatement {
-    public ASTExpression start, cond, loop;
-    public ASTStatement loopBody;
+    public AstExpression start, cond, loop;
+    public AstStatement loopBody;
     public ASTForStatement() {
         this.start = this.cond = this.loop = null;
         this.loopBody = null;

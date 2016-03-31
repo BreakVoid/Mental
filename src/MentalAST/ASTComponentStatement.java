@@ -6,10 +6,26 @@ import java.util.List;
 /**
  * Created by Songyu on 16/3/30.
  */
-public class ASTComponentStatement extends ASTStatement {
-    public List<ASTBaseNode> statements;
-    public ASTComponentStatement() {
-        this.statements = null;
+public class AstComponentStatement extends AstStatement {
+    public List<AstBaseNode> statements;
+    public AstComponentStatement() {
+        this.statements = new LinkedList<>();
+    }
+    @Override
+    public String toPrintString() {
+        return this.toPrintString(0);
+    }
+    @Override
+    public String toPrintString(int indent) {
+        String ret = "";
+        if (this.statements.size() == 0) {
+            ret += addIndent(indent) + "<empty component statement>";
+        } else {
+            for (AstBaseNode statement : this.statements) {
+                ret += statement.toPrintString(indent);
+            }
+        }
+        return ret;
     }
     @Override
     public String toString() {
@@ -25,8 +41,8 @@ public class ASTComponentStatement extends ASTStatement {
             return true;
         }
         if (other != null) {
-            if (other instanceof ASTComponentStatement) {
-                if (this.statements.equals(((ASTComponentStatement) other).statements)) {
+            if (other instanceof AstComponentStatement) {
+                if (this.statements.equals(((AstComponentStatement) other).statements)) {
                     return true;
                 }
             }

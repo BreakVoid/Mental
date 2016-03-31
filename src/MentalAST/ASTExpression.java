@@ -5,9 +5,9 @@ import MentalType.MentalType;
 /**
  * Created by Songyu on 16/3/29.
  */
-public class ASTExpression extends ASTBaseNode {
+public class AstExpression extends AstBaseNode {
     public MentalType returnType;
-    public ASTExpression() {
+    public AstExpression() {
         returnType = null;
     }
     @Override
@@ -19,8 +19,8 @@ public class ASTExpression extends ASTBaseNode {
             return true;
         }
         if (other != null) {
-            if (other instanceof ASTExpression) {
-                if (this.returnType.equals(((ASTExpression) other).returnType)) {
+            if (other instanceof AstExpression) {
+                if (this.returnType.equals(((AstExpression) other).returnType)) {
                     return true;
                 }
             }

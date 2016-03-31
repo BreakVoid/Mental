@@ -10,6 +10,7 @@ import java.util.LinkedList;
  * Created by Songyu on 16/3/30.
  */
 public class SymbolVariableList extends Object {
+    public MentalType variableType;
     public LinkedList<SymbolVariable> variables;
     public SymbolVariableList() {
         variables = new LinkedList<>();
@@ -33,6 +34,7 @@ public class SymbolVariableList extends Object {
         } else {
             type = ((SymbolType) baseType).type;
         }
+        this.variableType = type;
         for (int j = 0, idCount = varDefCtx.singleVariable().size(); j < idCount; ++j) {
             String id = varDefCtx.singleVariable(j).Identifier().getText();
             this.variables.add(new SymbolVariable(scope, type, id));

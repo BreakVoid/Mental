@@ -55,36 +55,38 @@ public class SymbolFunction extends SymbolBase {
         }
 
         // Process the parameters of the function.
-        for (int i = 0, limit = funcDefCtx.parametersList().parameter().size(); i < limit; ++i) {
-            // for each parameter
+        if (funcDefCtx.parametersList() != null) {
+            for (int i = 0, limit = funcDefCtx.parametersList().parameter().size(); i < limit; ++i) {
+                // for each parameter
 
-            MentalParser.ParameterContext parameterCtx = funcDefCtx.parametersList().parameter(i);
+                MentalParser.ParameterContext parameterCtx = funcDefCtx.parametersList().parameter(i);
 
-            // Get TypeContext
-            MentalParser.TypeContext typeCtx = parameterCtx.type();
-            MentalType type = null;
+                // Get TypeContext
+                MentalParser.TypeContext typeCtx = parameterCtx.type();
+                MentalType type = null;
 
-            // Get the name of parameter.
-            String name = parameterCtx.Identifier().getText();
+                // Get the name of parameter.
+                String name = parameterCtx.Identifier().getText();
 
-            // Process the type of a single variable.
-            SymbolBase baseType = scope.getSymbol(typeCtx.typeName().getText());
-            if (baseType == null || !(baseType instanceof SymbolType)) {
-                System.err.println("fatal: no such a type " + funcDefCtx.type().typeName().getText());
-                System.exit(-1);
-            }
-            if (typeCtx.array().size() != 0) {
-                type = new MentalArray(typeCtx);
-                if (((MentalArray) type).arrayType.equals(SymbolTable.mentalUnknownType)) {
-                    ((MentalArray) type).arrayType = ((SymbolType) baseType).type;
+                // Process the type of a single variable.
+                SymbolBase baseType = scope.getSymbol(typeCtx.typeName().getText());
+                if (baseType == null || !(baseType instanceof SymbolType)) {
+                    System.err.println("fatal: no such a type " + funcDefCtx.type().typeName().getText());
+                    System.exit(-1);
                 }
-            } else {
-                type = ((SymbolType) baseType).type;
-            }
+                if (typeCtx.array().size() != 0) {
+                    type = new MentalArray(typeCtx);
+                    if (((MentalArray) type).arrayType.equals(SymbolTable.mentalUnknownType)) {
+                        ((MentalArray) type).arrayType = ((SymbolType) baseType).type;
+                    }
+                } else {
+                    type = ((SymbolType) baseType).type;
+                }
 
-            // Get the type and name put to list.
-            parameterName.add(name);
-            parameterType.add(type);
+                // Get the type and name put to list.
+                parameterName.add(name);
+                parameterType.add(type);
+            }
         }
     }
     @Override

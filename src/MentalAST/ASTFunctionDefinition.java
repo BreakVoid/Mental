@@ -5,12 +5,24 @@ import MentalSymbols.SymbolFunction;
 /**
  * Created by Songyu on 16/3/30.
  */
-public class ASTFunctionDefinition extends ASTDeclaration {
+public class AstFunctionDefinition extends AstDeclaration {
     public SymbolFunction functionHead;
-    public ASTComponentStatement functionBody;
-    public ASTFunctionDefinition() {
-        this.functionHead = null;
-        this.functionBody = null;
+    public AstComponentStatement functionBody;
+    public AstFunctionDefinition() {
+        this.functionHead = new SymbolFunction();
+        this.functionBody = new AstComponentStatement();
+    }
+    @Override
+    public String toPrintString() {
+        return this.toPrintString(0);
+    }
+    @Override
+    public String toPrintString(int indent) {
+        String ret = addIndent(indent) + "<begin>function\n";
+        ret += addIndent(indent + 1) + "<format>" + this.functionHead.toString().substring(10) + '\n';
+        ret += this.functionBody.toPrintString(indent + 1) + '\n';
+        ret += addIndent(indent) + "<end>function";
+        return ret;
     }
     @Override
     public String toString() {
@@ -25,8 +37,8 @@ public class ASTFunctionDefinition extends ASTDeclaration {
             return true;
         }
         if (other != null) {
-            if (other instanceof ASTFunctionDefinition) {
-                if (this.functionHead.equals(((ASTFunctionDefinition) other).functionHead)) {
+            if (other instanceof AstFunctionDefinition) {
+                if (this.functionHead.equals(((AstFunctionDefinition) other).functionHead)) {
                     return true;
                 }
             }

@@ -39,11 +39,12 @@ public class Main {
         }
         MentalParser parser = new MentalParser(tokens);
         ParseTreeWalker walker = new ParseTreeWalker();
+        MentalParser.ProgramContext programContext = parser.program();
         BuildTreeListener listener = new BuildTreeListener();
-        walker.walk(listener, parser.program());
+        walker.walk(listener, programContext);
         for (Map.Entry<String, SymbolBase> entry : listener.curSymbolTable.getTable().entrySet()) {
             System.out.println(entry.getValue());
         }
-        System.out.println();
+        System.out.println(listener.tree.get(programContext).toPrintString());
     }
 }

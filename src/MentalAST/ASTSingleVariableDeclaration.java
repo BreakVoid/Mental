@@ -1,14 +1,30 @@
 package MentalAST;
 
+import MentalParser.MentalParser;
+import MentalType.MentalType;
+
 /**
  * Created by Songyu on 16/3/30.
  */
-public class ASTSingleVariableDeclaration extends ASTDeclaration {
-    public ASTVariable variable;
-    public ASTExpression initializeExpression;
-    public ASTSingleVariableDeclaration() {
+public class AstSingleVariableDeclaration extends AstDeclaration {
+    public AstVariable variable;
+    public AstExpression initializeExpression;
+    public AstSingleVariableDeclaration() {
         this.variable = null;
         this.initializeExpression = null;
+    }
+    public AstSingleVariableDeclaration(MentalType type, MentalParser.SingleVariableContext ctx) {
+        this.variable = new AstVariable();
+    }
+    @Override
+    public String toPrintString() {
+        return this.toPrintString(0);
+    }
+    @Override
+    public String toPrintString(int indent) {
+        String ret = "";
+        ret += addIndent(indent) + "<variable>" + variable.toString();
+        return ret;
     }
     @Override
     public String toString() {
@@ -29,9 +45,9 @@ public class ASTSingleVariableDeclaration extends ASTDeclaration {
             return true;
         }
         if (other != null) {
-            if (other instanceof ASTSingleVariableDeclaration) {
-                if (this.variable.equals(((ASTSingleVariableDeclaration) other).variable)) {
-                    if (this.initializeExpression.equals(((ASTSingleVariableDeclaration) other).initializeExpression)) {
+            if (other instanceof AstSingleVariableDeclaration) {
+                if (this.variable.equals(((AstSingleVariableDeclaration) other).variable)) {
+                    if (this.initializeExpression.equals(((AstSingleVariableDeclaration) other).initializeExpression)) {
                         return true;
                     }
                 }

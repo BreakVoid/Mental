@@ -5,16 +5,25 @@ import MentalType.MentalType;
 /**
  * Created by Songyu on 16/3/30.
  */
-public class ASTVariable extends ASTBaseNode {
+public class AstVariable extends AstBaseNode {
     public String variableName;
     public MentalType variableType;
-    public ASTVariable() {
+    public AstVariable() {
         this.variableName = null;
         this.variableType = null;
     }
     @Override
+    public String toPrintString() {
+        return this.toPrintString(0);
+    }
+    @Override
+    public String toPrintString(int indent) {
+        String ret = "";
+        return ret;
+    }
+    @Override
     public String toString() {
-        return this.variableName + "[" + this.variableType.toString() + "]";
+        return "[" + this.variableName + "@" + this.variableType.toString() + "]";
     }
     @Override
     public boolean equals(Object other) {
@@ -22,9 +31,9 @@ public class ASTVariable extends ASTBaseNode {
             return true;
         }
         if (other != null) {
-            if (other instanceof ASTVariable) {
-                if (this.variableName.equals(((ASTVariable) other).variableName)) {
-                    if (this.variableType.equals(((ASTVariable) other).variableType)) {
+            if (other instanceof AstVariable) {
+                if (this.variableName.equals(((AstVariable) other).variableName)) {
+                    if (this.variableType.equals(((AstVariable) other).variableType)) {
                         return true;
                     }
                 }

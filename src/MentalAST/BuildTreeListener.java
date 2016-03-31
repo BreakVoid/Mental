@@ -1,18 +1,16 @@
 package MentalAST;
 
-import MentalAST.ASTBaseNode;
 import MentalParser.MentalParser;
 import MentalParser.MentalBaseListener;
 import MentalSymbols.*;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.List;
 
 /**
  * This class provides an empty implementation of {@link MentalBaseListener},
@@ -20,7 +18,7 @@ import java.util.ListIterator;
  * of the available methods.
  */
 public class BuildTreeListener extends MentalBaseListener {
-	public HashMap<ParserRuleContext, ASTBaseNode> tree;
+	public HashMap<ParseTree, AstBaseNode> tree;
 	public SymbolTable curSymbolTable;
 	public LinkedList<SymbolTable> symbolTableList;
 	public BuildTreeListener() {
@@ -104,14 +102,21 @@ public class BuildTreeListener extends MentalBaseListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterProgram(MentalParser.ProgramContext ctx) {
-        this.tree.put(ctx, new ASTProgram());
+        this.tree.put(ctx, new AstProgram());
     }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProgram(MentalParser.ProgramContext ctx) { }
+	@Override public void exitProgram(MentalParser.ProgramContext ctx) {
+		AstProgram node = (AstProgram) tree.get(ctx);
+		List<AstBaseNode> child = node.declarations;
+		for (int i = 0, count = ctx.getChildCount(); i < count; ++i) {
+            System.out.println(tree.get(ctx.getChild(i)));
+			child.add(tree.get(ctx.getChild(i)));
+		}
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -138,10 +143,9 @@ public class BuildTreeListener extends MentalBaseListener {
 		if (ctx.className() != null) {
 			this.curSymbolTable.add(ctx.className().getText(), new SymbolType(curSymbolTable, ctx));
 		}
-        ASTClassDeclaration classDeclaration = new ASTClassDeclaration();
+        AstClassDeclaration classDeclaration = new AstClassDeclaration();
         classDeclaration.classDetail = (SymbolType) this.curSymbolTable.getSymbol(ctx.className().getText());
         this.tree.put(ctx, classDeclaration);
-		this.beginScope();
 	}
 	/**
 	 * {@inheritDoc}
@@ -149,7 +153,6 @@ public class BuildTreeListener extends MentalBaseListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitClassDeclaration(MentalParser.ClassDeclarationContext ctx) {
-		this.endScope();
 	}
 	/**
 	 * {@inheritDoc}
@@ -188,34 +191,78 @@ public class BuildTreeListener extends MentalBaseListener {
      */
     @Override public void enterSingleVariable(MentalParser.SingleVariableContext ctx) {
         // TODO
-        ASTSingleVariableDeclaration singleVariableDeclaration = new ASTSingleVariableDeclaration();
-        singleVariableDeclaration.variable = new ASTVariable();
+        AstSingleVariableDeclaration singleVariableDeclaration = new AstSingleVariableDeclaration();
+        this.tree.put(ctx, singleVariableDeclaration);
+        AstVariableDeclaration variableDeclaration = null;
+        if (ctx.parent != null && ctx.parent.parent instanceof MentalParser.ClassDeclarationContext) {
+            return ;
+        }
+        if (ctx.parent instanceof MentalParser.VariableDefinitionContext) {
+            variableDeclaration = (AstVariableDeclaration) this.tree.get(ctx.parent);
+        } else {
+            System.err.println("unknown exception.");
+            System.exit(-1);
+        }
+        singleVariableDeclaration.variable = new AstVariable();
         singleVariableDeclaration.variable.variableName = ctx.Identifier().getText();
-        singleVariableDeclaration.initializeExpression = new ASTExpression();
+        singleVariableDeclaration.variable.variableType = variableDeclaration.variableType;
     }
     /**
      * {@inheritDoc}
      *
      * <p>The default implementation does nothing.</p>
      */
-    @Override public void exitSingleVariable(MentalParser.SingleVariableContext ctx) { }
+    @Override public void exitSingleVariable(MentalParser.SingleVariableContext ctx) {
+        if (ctx.parent != null && ctx.parent.parent instanceof MentalParser.ClassDeclarationContext) {
+            return ;
+        }
+        AstSingleVariableDeclaration singleVariableDeclaration = (AstSingleVariableDeclaration) this.tree.get(ctx);
+        if (ctx.expression() != null) {
+            singleVariableDeclaration.initializeExpression = (AstExpression) this.tree.get(ctx.expression());
+        }
+        if (singleVariableDeclaration.initializeExpression == null) {
+            return;
+        }
+        if (!singleVariableDeclaration.variable.variableType.equals(singleVariableDeclaration.initializeExpression.returnType)) {
+            System.err.println("fatal: The types of variable and initial value are different.\n\t"
+                    + "<var>" + singleVariableDeclaration.variable.variableType.toString()
+                    + "<initial value>" + singleVariableDeclaration.initializeExpression.returnType
+            );
+            System.exit(-1);
+        }
+    }
     /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterVariableDefinition(MentalParser.VariableDefinitionContext ctx) {
+        if (ctx.parent instanceof MentalParser.ClassDeclarationContext) {
+            return ;
+        }
 		SymbolVariableList variableList = new SymbolVariableList(this.curSymbolTable, ctx);
 		for (SymbolVariable var : variableList.variables) {
 			this.curSymbolTable.add(var.variableName, var);
 		}
+        AstVariableDeclaration variableDeclaration = new AstVariableDeclaration();
+        variableDeclaration.variables = new LinkedList<>();
+        variableDeclaration.variableType = variableList.variableType;
+        this.tree.put(ctx, variableDeclaration);
 	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVariableDefinition(MentalParser.VariableDefinitionContext ctx) { }
+	@Override public void exitVariableDefinition(MentalParser.VariableDefinitionContext ctx) {
+        if (ctx.parent instanceof MentalParser.ClassDeclarationContext) {
+            return ;
+        }
+        AstVariableDeclaration treeNode = (AstVariableDeclaration) this.tree.get(ctx);
+        for (MentalParser.SingleVariableContext singleVariable : ctx.singleVariable()) {
+            treeNode.variables.add((AstSingleVariableDeclaration) this.tree.get(singleVariable));
+        }
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -223,20 +270,38 @@ public class BuildTreeListener extends MentalBaseListener {
 	 */
 	@Override public void enterFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) {
 		this.curSymbolTable.add(ctx.functionName.getText(), new SymbolFunction(this.curSymbolTable, ctx));
+        this.beginScope();
+        AstFunctionDefinition functionDefinition = new AstFunctionDefinition();
+        functionDefinition.functionHead = (SymbolFunction) this.curSymbolTable.getSymbol(ctx.functionName.getText());
+        this.tree.put(ctx, functionDefinition);
+        for (int i = 0, count = functionDefinition.functionHead.parameterName.size(); i < count; ++i) {
+            this.curSymbolTable.add(
+                    functionDefinition.functionHead.parameterName.get(i),
+                    new SymbolType(functionDefinition.functionHead.parameterType.get(i))
+            );
+        }
 	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) { }
+	@Override public void exitFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) {
+        this.endScope();
+        AstFunctionDefinition functionDefinition = (AstFunctionDefinition) this.tree.get(ctx);
+        functionDefinition.functionBody = (AstComponentStatement) this.tree.get(ctx.compoundStatement());
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterCompoundStatement(MentalParser.CompoundStatementContext ctx) {
-		this.beginScope();
+		if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
+            this.beginScope();
+        }
+        AstComponentStatement componentStatement = new AstComponentStatement();
+        this.tree.put(ctx, componentStatement);
 	}
 	/**
 	 * {@inheritDoc}
@@ -244,7 +309,16 @@ public class BuildTreeListener extends MentalBaseListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCompoundStatement(MentalParser.CompoundStatementContext ctx) {
-		this.endScope();
+        if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
+            this.endScope();
+        }
+        AstComponentStatement componentStatement = (AstComponentStatement) this.tree.get(ctx);
+        for (MentalParser.StatementContext statementContext : ctx.statement()) {
+            componentStatement.statements.add(this.tree.get(statementContext));
+        }
+        if (ctx.parent instanceof MentalParser.StatementContext) {
+            this.tree.put(ctx.parent, componentStatement);
+        }
 	}
 	/**
 	 * {@inheritDoc}

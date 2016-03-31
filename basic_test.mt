@@ -6,23 +6,8 @@ class AClass {
     bool[][] f;
 }
 
-int globalA = 5, globalB = 6, globalC;
-string dde = "affekd";
-int[] dfe = null;
+int a,b,c=12233;
 
-int a;
-
-int main(string[] args) {
-    int a, b, c;
-    {
-        int a;
-        {
-            int a;
-        }
-    }
-    return 0;
-}
-
-string whatILike(int a, int b, int c, string k) {
-    int a;
+int main() {
+    
 }
