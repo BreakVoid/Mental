@@ -580,18 +580,6 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterNULL(MentalParser.NULLContext ctx) { }
 	/**
 	 * {@inheritDoc}

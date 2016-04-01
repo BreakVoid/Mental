@@ -308,13 +308,6 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code REFERENCE_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code NULL}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree

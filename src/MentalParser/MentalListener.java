@@ -508,18 +508,6 @@ public interface MentalListener extends ParseTreeListener {
 	 */
 	void exitASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code REFERENCE_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code REFERENCE_EXPRESSION}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code NULL}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree

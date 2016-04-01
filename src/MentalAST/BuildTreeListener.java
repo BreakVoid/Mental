@@ -197,7 +197,6 @@ public class BuildTreeListener extends MentalBaseListener {
      * <p>The default implementation does nothing.</p>
      */
     @Override public void enterSingleVariable(MentalParser.SingleVariableContext ctx) {
-        // TODO
         AstSingleVariableDeclaration singleVariableDeclaration = new AstSingleVariableDeclaration();
         this.tree.put(ctx, singleVariableDeclaration);
         AstVariableDeclaration variableDeclaration = null;
@@ -548,13 +547,24 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLOGICAL_NOT_EXPRESSION(MentalParser.LOGICAL_NOT_EXPRESSIONContext ctx) { }
+	@Override public void enterLOGICAL_NOT_EXPRESSION(MentalParser.LOGICAL_NOT_EXPRESSIONContext ctx) {
+        AstLogicalNotExpression expression = new AstLogicalNotExpression();
+        this.tree.put(ctx, expression);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLOGICAL_NOT_EXPRESSION(MentalParser.LOGICAL_NOT_EXPRESSIONContext ctx) { }
+	@Override public void exitLOGICAL_NOT_EXPRESSION(MentalParser.LOGICAL_NOT_EXPRESSIONContext ctx) {
+        AstLogicalNotExpression thisExpression = (AstLogicalNotExpression) this.tree.get(ctx);
+        AstExpression childExpression = (AstExpression) this.tree.get(ctx.expression());
+        if (!childExpression.returnType.equals(SymbolTable.mentalBool)) {
+            System.err.println("fatal: try to apply logical-not-operator on a no-boolean item. " + ctx.getText());
+        }
+        thisExpression.childExpression = childExpression;
+        childExpression.parent = thisExpression;
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -608,13 +618,24 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBIT_NOT_EXPRESSION(MentalParser.BIT_NOT_EXPRESSIONContext ctx) { }
+	@Override public void enterBIT_NOT_EXPRESSION(MentalParser.BIT_NOT_EXPRESSIONContext ctx) {
+        AstBitNotExpression expression = new AstBitNotExpression();
+        this.tree.put(ctx, expression);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBIT_NOT_EXPRESSION(MentalParser.BIT_NOT_EXPRESSIONContext ctx) { }
+	@Override public void exitBIT_NOT_EXPRESSION(MentalParser.BIT_NOT_EXPRESSIONContext ctx) {
+        AstBitNotExpression thisExpression = (AstBitNotExpression) this.tree.get(ctx);
+        AstExpression childExpression = (AstExpression) this.tree.get(ctx.expression());
+        if (!childExpression.returnType.equals(SymbolTable.mentalInt)) {
+            System.err.println("fatal: try to apply bit-not-operator on a no-integer item. " + ctx.getText());
+        }
+        thisExpression.childExpression = childExpression;
+        childExpression.parent = thisExpression;
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -644,7 +665,11 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterINT_LITERAL(MentalParser.INT_LITERALContext ctx) { }
+	@Override public void enterINT_LITERAL(MentalParser.INT_LITERALContext ctx) {
+        AstIntLiteral intLiteral = new AstIntLiteral();
+        intLiteral.literalContext = Integer.parseInt(ctx.getText());
+        this.tree.put(ctx, intLiteral);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -712,7 +737,7 @@ public class BuildTreeListener extends MentalBaseListener {
             System.err.println("warning: try to apply suffix (inc/dec)reasement on a no-digit. " + ctx.expression().getText());
         }
         childExpression.parent = thisExpression;
-        thisExpression.expression = childExpression;
+        thisExpression.childExpression = childExpression;
         thisExpression.returnType = childExpression.returnType;
     }
 	/**
@@ -751,18 +776,6 @@ public class BuildTreeListener extends MentalBaseListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitREFERENCE_EXPRESSION(MentalParser.REFERENCE_EXPRESSIONContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -834,13 +847,34 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPREFIX_INC_DEC_EXPRESSION(MentalParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) { }
+	@Override public void enterPREFIX_INC_DEC_EXPRESSION(MentalParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) {
+        AstPrefixExpression prefixExpression = new AstPrefixExpression();
+        if (ctx.op.getType() == MentalParser.INC) {
+            prefixExpression.op = AstPrefixExpression.PLUS_PLUS;
+        } else {
+            prefixExpression.op = AstPrefixExpression.MINUS_MINUS;
+        }
+        this.tree.put(ctx, prefixExpression);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPREFIX_INC_DEC_EXPRESSION(MentalParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) { }
+	@Override public void exitPREFIX_INC_DEC_EXPRESSION(MentalParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) {
+        AstPrefixExpression thisExpression = (AstPrefixExpression) this.tree.get(ctx);
+        AstExpression childExpression = (AstExpression) this.tree.get(ctx.expression());
+        thisExpression.childExpression = childExpression;
+        childExpression.parent = thisExpression;
+        if (!childExpression.leftValue) {
+            System.err.println("fatal: try to apply a prefix inc/dec on a non-left-value. " + ctx.getText());
+            System.exit(-1);
+        }
+        if (!childExpression.returnType.equals(SymbolTable.mentalInt)) {
+            System.err.println("fatal: try to apply a prefix inc/dec on a no-integer. " + ctx.getText());
+            System.exit(-1);
+        }
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -882,7 +916,11 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSTRING_LITERAL(MentalParser.STRING_LITERALContext ctx) { }
+	@Override public void enterSTRING_LITERAL(MentalParser.STRING_LITERALContext ctx) {
+        AstStringLiteral stringLiteral = new AstStringLiteral();
+        stringLiteral.literalContext = ctx.getText();
+        this.tree.put(ctx, stringLiteral);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -910,13 +948,30 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) { }
+	@Override public void enterUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) {
+        AstUnaryAdditiveExpression expression = new AstUnaryAdditiveExpression();
+        if (ctx.op.getType() == MentalParser.PLUS) {
+            expression.op = AstUnaryAdditiveExpression.ADD;
+        } else {
+            expression.op = AstUnaryAdditiveExpression.SUB;
+        }
+        this.tree.put(ctx, expression);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) { }
+	@Override public void exitUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) {
+        AstUnaryAdditiveExpression thisExpression = (AstUnaryAdditiveExpression) this.tree.get(ctx);
+        AstExpression childExpression = (AstExpression) this.tree.get(ctx.expression());
+        childExpression.parent = thisExpression;
+        thisExpression.childExpression = childExpression;
+        if (childExpression.returnType.equals(SymbolTable.mentalInt)) {
+            System.err.println("fatal: try to apply unary plus/minus on a no-int type. " + ctx.getText());
+            System.exit(-1);
+        }
+    }
 	/**
 	 * {@inheritDoc}
 	 *

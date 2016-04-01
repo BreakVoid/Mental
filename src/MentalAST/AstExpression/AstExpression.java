@@ -16,11 +16,11 @@ public class AstExpression extends AstBaseNode {
     }
     @Override
     public String toPrintString(int indent) {
-        return addIndent(indent) + "<expression>:" + returnType.toString();
+        return addIndent(indent) + "<childExpression>:" + returnType.toString();
     }
     @Override
     public String toString() {
-        return "<expression>";
+        return "<childExpression>";
     }
     @Override
     public boolean equals(Object other) {

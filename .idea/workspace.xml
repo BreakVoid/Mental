@@ -2,64 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c35b8dae-0f88-4d1d-8daa-c07a46c2e329" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstDeclaration/AstClassDeclaration.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstDeclaration/AstDeclaration.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstDeclaration/AstFunctionDefinition.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstDeclaration/AstSingleVariableDeclaration.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstDeclaration/AstVariableDeclaration.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitNotExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBoolConstant.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstCreationExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstIdentifier.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstLogicalNotExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstPrefixExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstStringLiteral.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstSuffixExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnrayAddtiveExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstComponentStatement.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstEmptyStatement.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstIfStatement.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstStatement.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstWhileStatement.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalType/MentalFunction.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/ASTClassDeclaration.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/ASTComponentStatement.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/ASTDeclaration.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/ASTEmptyStatement.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/ASTExpression.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/ASTFunctionDefinition.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/ASTSingleVariableDeclaration.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/ASTStatement.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/ASTVariableDeclaration.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/ASTWhileStatement.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/AstBoolConstant.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/AstCreationExpression.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/AstIfStatement.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/AstStringLiteral.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/MentalAST/ASTForStatement.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstStatement/ASTForStatement.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/MentalAST/AstBinaryExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBinaryExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/MentalAST/AstIntLiteral.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstIntLiteral.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/MentalAST/AstJumpStatement.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstJumpStatement.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/MentalAST/AstNullConstant.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstNullConstant.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/MentalAST/AstUnaryExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/MentalAST/AstVarStatement.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstVarStatement.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryAdditiveExpression.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnrayAddtiveExpression.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnrayAddtiveExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstSubgroupExpression.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" afterPath="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/ASTVariable.java" afterPath="$PROJECT_DIR$/src/MentalAST/ASTVariable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBinaryExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBinaryExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitNotExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitNotExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstLogicalNotExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstLogicalNotExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstPrefixExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstPrefixExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstSuffixExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstSuffixExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryExpression.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" afterPath="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/Mental.g4" afterPath="$PROJECT_DIR$/src/MentalParser/Mental.g4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/Mental.tokens" afterPath="$PROJECT_DIR$/src/MentalParser/Mental.tokens" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalBaseVisitor.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalBaseVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalLexer.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalLexer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalLexer.tokens" afterPath="$PROJECT_DIR$/src/MentalParser/MentalLexer.tokens" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalListener.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalParser.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalVisitor.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalSymbols/SymbolFunction.java" afterPath="$PROJECT_DIR$/src/MentalSymbols/SymbolFunction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalSymbols/SymbolTable.java" afterPath="$PROJECT_DIR$/src/MentalSymbols/SymbolTable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalType/MentalString.java" afterPath="$PROJECT_DIR$/src/MentalType/MentalString.java" />
     </list>
     <ignored path="mo-compiler.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,27 +42,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BuildTreeListener.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BuildTreeListener.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3423">
-              <caret line="706" column="41" selection-start-line="706" selection-start-column="41" selection-end-line="706" selection-end-column="41" />
+            <state relative-caret-position="282">
+              <caret line="622" column="39" selection-start-line="622" selection-start-column="39" selection-end-line="622" selection-end-column="39" />
               <folding>
-                <element signature="e#25558#25559#0" expanded="true" />
-                <element signature="e#25606#25607#0" expanded="true" />
-                <marker date="1459478751000" expanded="false" signature="3370:3381" placeholder=" { " />
-                <marker date="1459478751000" expanded="false" signature="3418:3424" placeholder=" }" />
+                <element signature="e#26558#26559#0" expanded="true" />
+                <element signature="e#26606#26607#0" expanded="true" />
+                <marker date="1459481721000" expanded="false" signature="3370:3381" placeholder=" { " />
+                <marker date="1459481721000" expanded="false" signature="3418:3424" placeholder=" }" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AstPrefixExpression.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstPrefixExpression.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -110,28 +60,18 @@
       <file leaf-file-name="AstLogicalNotExpression.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstLogicalNotExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="63" selection-start-line="5" selection-start-column="63" selection-end-line="5" selection-end-column="63" />
+            <state relative-caret-position="165">
+              <caret line="11" column="48" selection-start-line="11" selection-start-column="48" selection-end-line="11" selection-end-column="48" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AstBitNotExpression.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitNotExpression.java">
+      <file leaf-file-name="AstSubgroupExpression.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstSubgroupExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="59" selection-start-line="5" selection-start-column="59" selection-end-line="5" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AstUnrayAddtiveExpression.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnrayAddtiveExpression.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="65" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="65" />
+            <state relative-caret-position="90">
+              <caret line="6" column="41" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -140,9 +80,12 @@
       <file leaf-file-name="AstUnaryExpression.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="55" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
-              <folding />
+            <state relative-caret-position="120">
+              <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
+              <folding>
+                <element signature="e#205#206#0" expanded="true" />
+                <element signature="e#248#249#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -150,41 +93,58 @@
       <file leaf-file-name="AstSuffixExpression.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstSuffixExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+            <state relative-caret-position="150">
+              <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ASTForStatement.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalAST/AstStatement/ASTForStatement.java">
+      <file leaf-file-name="AstPrefixExpression.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstPrefixExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+            <state relative-caret-position="210">
+              <caret line="14" column="48" selection-start-line="14" selection-start-column="48" selection-end-line="14" selection-end-column="48" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AstNullConstant.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstNullConstant.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="13" column="44" selection-start-line="13" selection-start-column="44" selection-end-line="13" selection-end-column="44" />
-              <folding>
-                <element signature="e#308#309#0" expanded="true" />
-                <element signature="e#359#360#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AstIfStatement.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MentalAST/AstStatement/AstIfStatement.java">
+      <file leaf-file-name="AstUnaryAdditiveExpression.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryAdditiveExpression.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
+              <caret line="13" column="28" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AstBitNotExpression.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitNotExpression.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AstBoolConstant.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstBoolConstant.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
               <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AstStringLiteral.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstStringLiteral.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -210,10 +170,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/MentalAST/ASTForStatement.java" />
-        <option value="$PROJECT_DIR$/src/MentalAST/ASTProgram.java" />
-        <option value="$PROJECT_DIR$/src/MentalAST/ASTWhileStatement.java" />
-        <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolType.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/ASTSingleVariable.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/ASTFunctionDefinition.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/ASTVariableDeclaration.java" />
@@ -244,23 +200,27 @@
         <option value="$PROJECT_DIR$/src/MentalAST/AstVarStatement.java" />
         <option value="$PROJECT_DIR$/src/MentalParser/MentalParser.java" />
         <option value="$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java" />
-        <option value="$PROJECT_DIR$/src/MentalParser/Mental.g4" />
         <option value="$PROJECT_DIR$/src/MentalType/MentalString.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/AstBaseNode.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/AstSuffixExpression.java" />
         <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolTable.java" />
         <option value="$PROJECT_DIR$/src/MentalSymbols/SymbolFunction.java" />
         <option value="$PROJECT_DIR$/src/MentalType/MentalFunction.java" />
-        <option value="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/AstIdentifier.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/AstCreationExpression.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/AstExpression.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/AstIfStatement.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstNullConstant.java" />
-        <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstPrefixExpression.java" />
-        <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnrayAddtiveExpression.java" />
-        <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitNotExpression.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstLogicalNotExpression.java" />
+        <option value="$PROJECT_DIR$/src/MentalParser/Mental.g4" />
+        <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnrayAddtiveExpression.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstSubgroupExpression.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryAdditiveExpression.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryExpression.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitNotExpression.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstSuffixExpression.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstPrefixExpression.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" />
       </list>
     </option>
   </component>
@@ -974,12 +934,12 @@
       <workItem from="1459410872030" duration="11124000" />
       <workItem from="1459437404459" duration="144000" />
       <workItem from="1459437591850" duration="222000" />
-      <workItem from="1459473109607" duration="5605000" />
+      <workItem from="1459473109607" duration="7916000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77287000" />
+    <option name="totallyTimeSpent" value="79598000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1003,12 +963,13 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47808218" sideWeight="0.5129241" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2584814" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47671232" sideWeight="0.48707592" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1020,7 +981,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="UnknownFeatures">
@@ -1048,20 +1008,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///usr/local/Cellar/antlr/4.5.2/antlr-4.5.2-complete.jar!/org/antlr/v4/runtime/ParserRuleContext.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="176" column="94" selection-start-line="176" selection-start-column="94" selection-end-line="176" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalSymbols/SymbolVariable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="10" column="35" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/basic_test.mt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -1112,35 +1058,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstStringLiteral.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
-          <folding>
-            <element signature="e#370#371#0" expanded="true" />
-            <element signature="e#414#415#0" expanded="true" />
-            <element signature="e#474#475#0" expanded="true" />
-            <element signature="e#558#559#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstBinaryExpression.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstBoolConstant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-          <folding>
-            <element signature="e#255#256#0" expanded="false" />
-            <element signature="e#311#312#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1259,43 +1181,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalParser/Mental.g4">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1124">
-          <caret line="80" column="4" selection-start-line="80" selection-start-column="4" selection-end-line="80" selection-end-column="4" />
-          <folding>
-            <marker date="1459474446000" expanded="true" signature="1822:1858" placeholder=":...;" />
-            <marker date="1459474446000" expanded="true" signature="1873:1931" placeholder=":...;" />
-            <marker date="1459474446000" expanded="true" signature="1942:1971" placeholder=":...;" />
-            <marker date="1459474446000" expanded="true" signature="1984:2015" placeholder=":...;" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="226" column="30" selection-start-line="226" selection-start-column="30" selection-end-line="226" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstIntLiteral.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstVariable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
-          <folding>
-            <element signature="e#366#367#0" expanded="true" />
-            <element signature="e#404#405#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1339,7 +1229,7 @@
         <state relative-caret-position="432">
           <caret line="841" column="0" selection-start-line="841" selection-start-column="0" selection-end-line="841" selection-end-column="0" />
           <folding>
-            <marker date="1459474446000" expanded="false" signature="366:435" placeholder="/all, warnings, unchecked, unused, cast/" />
+            <marker date="1459481233000" expanded="false" signature="366:435" placeholder="/all, warnings, unchecked, unused, cast/" />
           </folding>
         </state>
       </provider>
@@ -1378,14 +1268,6 @@
             <element signature="e#317#318#0" expanded="true" />
             <element signature="e#350#351#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstIdentifier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="56" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1438,64 +1320,134 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/MentalParser/Mental.g4">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="55" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
+        <state relative-caret-position="162">
+          <caret line="214" column="4" selection-start-line="214" selection-start-column="4" selection-end-line="214" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="226" column="30" selection-start-line="226" selection-start-column="30" selection-end-line="226" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstVariable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+          <folding>
+            <element signature="e#366#367#0" expanded="true" />
+            <element signature="e#404#405#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstIdentifier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstStringLiteral.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstSubgroupExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="41" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstSuffixExpression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+        <state relative-caret-position="150">
+          <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstBoolConstant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstPrefixExpression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+        <state relative-caret-position="210">
+          <caret line="14" column="48" selection-start-line="14" selection-start-column="48" selection-end-line="14" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnrayAddtiveExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryExpression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="65" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="65" />
-          <folding />
+        <state relative-caret-position="120">
+          <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
+          <folding>
+            <element signature="e#205#206#0" expanded="true" />
+            <element signature="e#248#249#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitNotExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryAdditiveExpression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="59" selection-start-line="5" selection-start-column="59" selection-end-line="5" selection-end-column="59" />
+        <state relative-caret-position="195">
+          <caret line="13" column="28" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstLogicalNotExpression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="63" selection-start-line="5" selection-start-column="63" selection-end-line="5" selection-end-column="63" />
+        <state relative-caret-position="165">
+          <caret line="11" column="48" selection-start-line="11" selection-start-column="48" selection-end-line="11" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3423">
-          <caret line="706" column="41" selection-start-line="706" selection-start-column="41" selection-end-line="706" selection-end-column="41" />
+        <state relative-caret-position="282">
+          <caret line="622" column="39" selection-start-line="622" selection-start-column="39" selection-end-line="622" selection-end-column="39" />
           <folding>
-            <element signature="e#25558#25559#0" expanded="true" />
-            <element signature="e#25606#25607#0" expanded="true" />
-            <marker date="1459478751000" expanded="false" signature="3370:3381" placeholder=" { " />
-            <marker date="1459478751000" expanded="false" signature="3418:3424" placeholder=" }" />
+            <element signature="e#26558#26559#0" expanded="true" />
+            <element signature="e#26606#26607#0" expanded="true" />
+            <marker date="1459481721000" expanded="false" signature="3370:3381" placeholder=" { " />
+            <marker date="1459481721000" expanded="false" signature="3418:3424" placeholder=" }" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitNotExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>

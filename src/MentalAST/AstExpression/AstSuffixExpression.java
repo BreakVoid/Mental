@@ -8,11 +8,11 @@ import MentalSymbols.SymbolTable;
 public class AstSuffixExpression extends AstExpression {
     public static final int PLUS_PLUS = 1;
     public static final int MINUS_MINUS = 2;
+    public AstExpression childExpression;
     public int op;
-    public AstExpression expression;
     public AstSuffixExpression() {
         this.op = 0;
         this.returnType = SymbolTable.mentalInt;
-        this.expression = new AstExpression();
+        this.childExpression = new AstExpression();
     }
 }

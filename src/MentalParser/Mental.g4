@@ -212,8 +212,6 @@ expression
 	#BIT_NOT_EXPRESSION
 	| op='!' expression
 	#LOGICAL_NOT_EXPRESSION
-	| op='&' expression
-	#REFERENCE_EXPRESSION
 	| expression op=('*'|'/'|'%') expression
 	#MULTIPLY_DIVIDE_EXPRESSION
 	| expression op=('+'|'-')  expression
