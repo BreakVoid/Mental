@@ -137,6 +137,30 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCallToString(MentalParser.CallToStringContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MentalParser#callSubString}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCallSubString(MentalParser.CallSubStringContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MentalParser#callLength}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCallLength(MentalParser.CallLengthContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MentalParser#callParseInt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCallParseInt(MentalParser.CallParseIntContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MentalParser#callOrd}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCallOrd(MentalParser.CallOrdContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MentalParser#emptyStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

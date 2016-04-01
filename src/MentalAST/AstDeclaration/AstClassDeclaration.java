@@ -1,5 +1,6 @@
-package MentalAST;
+package MentalAST.AstDeclaration;
 
+import MentalAST.AstBaseNode;
 import MentalSymbols.SymbolType;
 import MentalType.MentalClass;
 import MentalType.MentalType;
@@ -15,17 +16,14 @@ public class AstClassDeclaration extends AstDeclaration {
         this.classDetail = null;
     }
     @Override
-    public String toPrintString() {
-        return this.toPrintString(0);
-    }
     public String toPrintString(int indent) {
         MentalClass classBody = (MentalClass) this.classDetail.type;
-        String ret = addIndent(indent) + "<begin>class:" + classBody.className + '\n';
+        String ret = AstBaseNode.addIndent(indent) + "<begin>class:" + classBody.className + '\n';
 
         for (Map.Entry<String, MentalType> entry : classBody.classComponents.entrySet()) {
-            ret += addIndent(indent + 1) + "[" + entry.getKey() + "@" + entry.getValue().toString() + "]\n";
+            ret += AstBaseNode.addIndent(indent + 1) + "[" + entry.getKey() + "@" + entry.getValue().toString() + "]\n";
         }
-        ret += addIndent(indent) + "<end>class";
+        ret += AstBaseNode.addIndent(indent) + "<end>class";
         return ret;
     }
     @Override

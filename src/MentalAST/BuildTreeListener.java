@@ -1,8 +1,15 @@
 package MentalAST;
 
+import MentalAST.AstDeclaration.AstClassDeclaration;
+import MentalAST.AstDeclaration.AstFunctionDefinition;
+import MentalAST.AstDeclaration.AstSingleVariableDeclaration;
+import MentalAST.AstDeclaration.AstVariableDeclaration;
+import MentalAST.AstExpression.*;
+import MentalAST.AstStatement.AstComponentStatement;
 import MentalParser.MentalParser;
 import MentalParser.MentalBaseListener;
 import MentalSymbols.*;
+import MentalType.MentalFunction;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -397,6 +404,54 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCallSubString(MentalParser.CallSubStringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCallSubString(MentalParser.CallSubStringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCallLength(MentalParser.CallLengthContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCallLength(MentalParser.CallLengthContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCallParseInt(MentalParser.CallParseIntContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCallParseInt(MentalParser.CallParseIntContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCallOrd(MentalParser.CallOrdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCallOrd(MentalParser.CallOrdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEmptyStatement(MentalParser.EmptyStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -601,7 +656,26 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIDENTIFIER(MentalParser.IDENTIFIERContext ctx) { }
+	@Override public void enterIDENTIFIER(MentalParser.IDENTIFIERContext ctx) {
+        AstIdentifier identifier = new AstIdentifier();
+        identifier.name = ctx.Identifier().getText();
+        if (this.curSymbolTable.getSymbol(identifier.name) == null) {
+            System.err.println("warning: undefined identifier.");
+        } else {
+            SymbolBase base = this.curSymbolTable.getSymbol(identifier.name);
+            if (base instanceof SymbolVariable) {
+                identifier.returnType = ((SymbolVariable) base).variableType;
+                identifier.leftValue = true;
+            } else if (base instanceof SymbolFunction) {
+                identifier.returnType = new MentalFunction();
+                ((MentalFunction) identifier.returnType).functionHead = (SymbolFunction) base;
+            } else {
+                System.err.println("fatal: the identifier is a type.<" + identifier.name + ">");
+                System.exit(-1);
+            }
+        }
+        this.tree.put(ctx, identifier);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -613,13 +687,34 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) { }
+	@Override public void enterSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) {
+        AstSuffixExpression suffixExpression = new AstSuffixExpression();
+        if (ctx.op.getType() == MentalParser.INC) {
+            suffixExpression.op = AstSuffixExpression.PLUS_PLUS;
+        } else {
+            suffixExpression.op = AstSuffixExpression.MINUS_MINUS;
+        }
+        this.tree.put(ctx, suffixExpression);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) { }
+	@Override public void exitSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) {
+        AstSuffixExpression thisExpression = (AstSuffixExpression) this.tree.get(ctx);
+        AstExpression childExpression = (AstExpression) this.tree.get(ctx.expression());
+        if (!childExpression.leftValue) {
+            System.err.println("fatal: try to apply suffix (inc/dec)reasement on a no-leftvalue. " + ctx.expression().getText());
+            System.exit(-1);
+        }
+        if (!childExpression.returnType.equals(SymbolTable.mentalInt)) {
+            System.err.println("warning: try to apply suffix (inc/dec)reasement on a no-digit. " + ctx.expression().getText());
+        }
+        childExpression.parent = thisExpression;
+        thisExpression.expression = childExpression;
+        thisExpression.returnType = childExpression.returnType;
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -673,7 +768,9 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNULL(MentalParser.NULLContext ctx) { }
+	@Override public void enterNULL(MentalParser.NULLContext ctx) {
+		this.tree.put(ctx, new AstNullConstant());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -685,7 +782,11 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTRUE(MentalParser.TRUEContext ctx) { }
+	@Override public void enterTRUE(MentalParser.TRUEContext ctx) {
+        AstBoolConstant node = new AstBoolConstant();
+        node.boolConstant = true;
+        this.tree.put(ctx, node);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -793,7 +894,11 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFALSE(MentalParser.FALSEContext ctx) { }
+	@Override public void enterFALSE(MentalParser.FALSEContext ctx) {
+        AstBoolConstant node = new AstBoolConstant();
+        node.boolConstant = false;
+        this.tree.put(ctx, node);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -848,5 +953,8 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void visitErrorNode(ErrorNode node) { }
+	@Override public void visitErrorNode(ErrorNode node) {
+        System.err.println("fatal: there is an error in grammar analysis.");
+        System.exit(-1);
+    }
 }

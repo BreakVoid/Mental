@@ -128,9 +128,6 @@ statement
 	| variableDefinition
 	| callPrint
 	| callPrintln
-	| callGetString ';'
-	| callGetInt ';'
-	| callToString ';'
 	;
 
 callPrint
@@ -152,6 +149,19 @@ callGetInt
 callToString
 	: 'toString' '(' expression ')'
 	;
+
+callSubString
+    : 'substring' '(' expression ',' expression ')'
+    ;
+callLength
+    : 'length' '(' ')'
+    ;
+callParseInt
+    : 'parseInt' '(' ')'
+    ;
+callOrd
+    : 'ord' '(' expression ')'
+    ;
 
 emptyStatement
 	: ';'
@@ -190,7 +200,7 @@ expression
 	#CREATION_EXPRESSION
 	| expression '[' expression ']'
 	#ARRAY_SUBSCRIPTING_EXPRESSION
-	| expression op='.' Identifier
+	| expression op='.' (Identifier | callToString | callSubString | callLength | callParseInt | callOrd)
 	#MEMBER_ACCESS_EXPRESSION
 	| expression op=('++' | '--')
 	#SUFFIX_INC_DEC_EXPRESSION

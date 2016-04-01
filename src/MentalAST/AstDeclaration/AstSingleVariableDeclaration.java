@@ -1,5 +1,7 @@
-package MentalAST;
+package MentalAST.AstDeclaration;
 
+import MentalAST.AstExpression.AstExpression;
+import MentalAST.AstVariable;
 import MentalParser.MentalParser;
 import MentalType.MentalType;
 
@@ -15,10 +17,6 @@ public class AstSingleVariableDeclaration extends AstDeclaration {
     }
     public AstSingleVariableDeclaration(MentalType type, MentalParser.SingleVariableContext ctx) {
         this.variable = new AstVariable();
-    }
-    @Override
-    public String toPrintString() {
-        return this.toPrintString(0);
     }
     @Override
     public String toPrintString(int indent) {

@@ -1,4 +1,4 @@
-package MentalAST;
+package MentalAST.AstExpression;
 
 import MentalSymbols.SymbolTable;
 
@@ -8,6 +8,10 @@ import MentalSymbols.SymbolTable;
 public class AstNullConstant extends AstExpression {
     public AstNullConstant() {
         this.returnType = SymbolTable.mentalNull;
+    }
+    @Override
+    public String toPrintString(int indent) {
+        return addIndent(indent) + "<null>";
     }
     @Override
     public boolean equals(Object other) {

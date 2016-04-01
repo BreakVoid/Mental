@@ -1,4 +1,4 @@
-package MentalAST;
+package MentalAST.AstExpression;
 
 /**
  * Created by Songyu on 16/3/31.

@@ -11,7 +11,7 @@ public class MentalString extends MentalType {
     @Override
     public boolean equals(Object other) {
         if (other != null) {
-            if (other instanceof MentalString || other instanceof MentalNull) {
+            if (other instanceof MentalString) {
                 return true;
             }
         }

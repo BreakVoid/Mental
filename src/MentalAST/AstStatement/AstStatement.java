@@ -1,4 +1,6 @@
-package MentalAST;
+package MentalAST.AstStatement;
+
+import MentalAST.AstBaseNode;
 
 /**
  * Created by Songyu on 16/3/28.

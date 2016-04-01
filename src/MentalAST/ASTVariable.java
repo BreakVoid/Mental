@@ -13,13 +13,8 @@ public class AstVariable extends AstBaseNode {
         this.variableType = null;
     }
     @Override
-    public String toPrintString() {
-        return this.toPrintString(0);
-    }
-    @Override
     public String toPrintString(int indent) {
-        String ret = "";
-        return ret;
+        return this.toString();
     }
     @Override
     public String toString() {

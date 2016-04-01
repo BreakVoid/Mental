@@ -1,5 +1,6 @@
-package MentalAST;
+package MentalAST.AstDeclaration;
 
+import MentalAST.AstBaseNode;
 import MentalParser.MentalParser;
 import MentalType.MentalType;
 
@@ -12,10 +13,6 @@ import java.util.List;
 public class AstVariableDeclaration extends AstBaseNode {
     public MentalType variableType;
     public List<AstSingleVariableDeclaration> variables;
-    @Override
-    public String toPrintString() {
-        return this.toPrintString(0);
-    }
     @Override
     public String toPrintString(int indent) {
         if (this.variables.size() == 0) {

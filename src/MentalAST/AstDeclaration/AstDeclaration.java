@@ -1,13 +1,11 @@
-package MentalAST;
+package MentalAST.AstDeclaration;
+
+import MentalAST.AstBaseNode;
 
 /**
  * Created by Songyu on 16/3/28.
  */
 public class AstDeclaration extends AstBaseNode {
-    @Override
-    public String toPrintString() {
-        return this.toPrintString(0);
-    }
     @Override
     public String toPrintString(int indent) {
         return this.addIndent(indent) + "<declaration>";

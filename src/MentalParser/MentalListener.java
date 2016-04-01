@@ -218,6 +218,46 @@ public interface MentalListener extends ParseTreeListener {
 	 */
 	void exitCallToString(MentalParser.CallToStringContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MentalParser#callSubString}.
+	 * @param ctx the parse tree
+	 */
+	void enterCallSubString(MentalParser.CallSubStringContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MentalParser#callSubString}.
+	 * @param ctx the parse tree
+	 */
+	void exitCallSubString(MentalParser.CallSubStringContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MentalParser#callLength}.
+	 * @param ctx the parse tree
+	 */
+	void enterCallLength(MentalParser.CallLengthContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MentalParser#callLength}.
+	 * @param ctx the parse tree
+	 */
+	void exitCallLength(MentalParser.CallLengthContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MentalParser#callParseInt}.
+	 * @param ctx the parse tree
+	 */
+	void enterCallParseInt(MentalParser.CallParseIntContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MentalParser#callParseInt}.
+	 * @param ctx the parse tree
+	 */
+	void exitCallParseInt(MentalParser.CallParseIntContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MentalParser#callOrd}.
+	 * @param ctx the parse tree
+	 */
+	void enterCallOrd(MentalParser.CallOrdContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MentalParser#callOrd}.
+	 * @param ctx the parse tree
+	 */
+	void exitCallOrd(MentalParser.CallOrdContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MentalParser#emptyStatement}.
 	 * @param ctx the parse tree
 	 */

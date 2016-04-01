@@ -1,18 +1,18 @@
-package MentalAST;
+package MentalAST.AstExpression;
 
+import MentalAST.AstBaseNode;
+import MentalSymbols.SymbolTable;
 import MentalType.MentalType;
 
 /**
  * Created by Songyu on 16/3/29.
  */
 public class AstExpression extends AstBaseNode {
+    public boolean leftValue;
     public MentalType returnType;
     public AstExpression() {
-        this.returnType = new MentalType();
-    }
-    @Override
-    public String toPrintString() {
-        return this.toPrintString(0);
+        this.leftValue = false;
+        this.returnType = SymbolTable.mentalUnknownType;
     }
     @Override
     public String toPrintString(int indent) {

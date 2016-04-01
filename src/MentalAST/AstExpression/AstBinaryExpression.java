@@ -1,4 +1,6 @@
-package MentalAST;
+package MentalAST.AstExpression;
+
+import MentalAST.AstBaseNode;
 
 /**
  * Created by Songyu on 16/3/31.
@@ -10,12 +12,8 @@ public class AstBinaryExpression extends AstExpression {
         this.rightExpression = new AstExpression();
     }
     @Override
-    public String toPrintString() {
-        return this.toPrintString(0);
-    }
-    @Override
     public String toPrintString(int indent) {
-        String ret = addIndent(indent) + "<expression>:" + this.returnType.toString() + '\n';
+        String ret = AstBaseNode.addIndent(indent) + "<expression>:" + this.returnType.toString() + '\n';
         ret += leftExpression.toPrintString(indent + 1) + '\n';
         ret += rightExpression.toPrintString(indent + 1);
         return ret;

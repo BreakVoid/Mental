@@ -1,4 +1,4 @@
-package MentalAST;
+package MentalAST.AstExpression;
 
 import MentalSymbols.SymbolTable;
 
@@ -10,10 +10,6 @@ public class AstIntLiteral extends AstExpression {
     public AstIntLiteral() {
         this.literalContext = 0;
         this.returnType = SymbolTable.mentalInt;
-    }
-    @Override
-    public String toPrintString() {
-        return this.toPrintString(0);
     }
     @Override
     public String toPrintString(int indent) {

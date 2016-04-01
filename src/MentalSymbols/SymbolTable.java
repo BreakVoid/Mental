@@ -16,12 +16,12 @@ import java.util.HashMap;
  * Created by Songyu on 16/3/29.
  */
 public class SymbolTable {
-    public static MentalInt mentalInt = new MentalInt();
-    public static MentalString mentalString = new MentalString();
-    public static MentalBool mentalBool = new MentalBool();
-    public static MentalVoid mentalVoid = new MentalVoid();
-    public static MentalNull mentalNull = new MentalNull();
-    public static MentalUnknownType mentalUnknownType = new MentalUnknownType();
+    public static final MentalInt mentalInt = new MentalInt();
+    public static final MentalString mentalString = new MentalString();
+    public static final MentalBool mentalBool = new MentalBool();
+    public static final MentalVoid mentalVoid = new MentalVoid();
+    public static final MentalNull mentalNull = new MentalNull();
+    public static final MentalUnknownType mentalUnknownType = new MentalUnknownType();
 
     private HashMap<String, SymbolBase> table;
     public int stackLayer;

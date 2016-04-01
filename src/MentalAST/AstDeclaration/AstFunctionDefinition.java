@@ -1,5 +1,6 @@
-package MentalAST;
+package MentalAST.AstDeclaration;
 
+import MentalAST.AstStatement.AstComponentStatement;
 import MentalSymbols.SymbolFunction;
 
 /**
@@ -11,10 +12,6 @@ public class AstFunctionDefinition extends AstDeclaration {
     public AstFunctionDefinition() {
         this.functionHead = new SymbolFunction();
         this.functionBody = new AstComponentStatement();
-    }
-    @Override
-    public String toPrintString() {
-        return this.toPrintString(0);
     }
     @Override
     public String toPrintString(int indent) {

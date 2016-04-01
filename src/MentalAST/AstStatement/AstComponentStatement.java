@@ -1,4 +1,6 @@
-package MentalAST;
+package MentalAST.AstStatement;
+
+import MentalAST.AstBaseNode;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,14 +14,10 @@ public class AstComponentStatement extends AstStatement {
         this.statements = new LinkedList<>();
     }
     @Override
-    public String toPrintString() {
-        return this.toPrintString(0);
-    }
-    @Override
     public String toPrintString(int indent) {
         String ret = "";
         if (this.statements.size() == 0) {
-            ret += addIndent(indent) + "<empty component statement>";
+            ret += AstBaseNode.addIndent(indent) + "<empty component statement>";
         } else {
             for (AstBaseNode statement : this.statements) {
                 ret += statement.toPrintString(indent);

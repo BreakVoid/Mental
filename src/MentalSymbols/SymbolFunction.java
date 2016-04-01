@@ -19,7 +19,7 @@ public class SymbolFunction extends SymbolBase {
         returnType = SymbolTable.mentalUnknownType;
         parameterName = new ArrayList<>();
         parameterType = new ArrayList<>();
-        functionName = null;
+        functionName = "";
     }
     public SymbolFunction(SymbolFunction other) {
         this.returnType = other.returnType;

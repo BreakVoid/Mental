@@ -4,7 +4,10 @@ package MentalAST;
  * Created by Songyu on 16/3/28.
  */
 public class AstBaseNode {
-    public AstBaseNode() { }
+    public AstBaseNode parent;
+    public AstBaseNode() {
+        this.parent = null;
+    }
     public static String addIndent(int indent) {
         String ret = "";
         for (int i = 0; i < indent; ++i) {
