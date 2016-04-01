@@ -5,16 +5,16 @@ import MentalAST.AstExpression.AstExpression;
 /**
  * Created by Songyu on 16/3/30.
  */
-public class ASTForStatement {
+public class AstForStatement extends AstStatement {
     public AstExpression start, cond, loop;
     public AstStatement loopBody;
-    public ASTForStatement() {
+    public AstForStatement() {
         this.start = this.cond = this.loop = null;
         this.loopBody = null;
     }
     @Override
     public String toString() {
-        return "<for statement>";
+        return "<for loopBody>";
     }
     @Override
     public boolean equals(Object other) {
@@ -22,11 +22,11 @@ public class ASTForStatement {
             return true;
         }
         if (other != null) {
-            if (other instanceof ASTForStatement) {
-                if (this.start.equals(((ASTForStatement) other).start)) {
-                    if (this.cond.equals(((ASTForStatement) other).cond)) {
-                        if (this.loop.equals(((ASTForStatement) other).loop)) {
-                            if (this.loopBody.equals(((ASTForStatement) other).loopBody)) {
+            if (other instanceof AstForStatement) {
+                if (this.start.equals(((AstForStatement) other).start)) {
+                    if (this.cond.equals(((AstForStatement) other).cond)) {
+                        if (this.loop.equals(((AstForStatement) other).loop)) {
+                            if (this.loopBody.equals(((AstForStatement) other).loopBody)) {
                                 return true;
                             }
                         }

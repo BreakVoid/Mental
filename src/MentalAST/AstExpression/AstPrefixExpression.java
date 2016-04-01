@@ -14,4 +14,12 @@ public class AstPrefixExpression extends AstUnaryExpression {
         this.op = 0;
         this.returnType = SymbolTable.mentalInt;
     }
+    @Override
+    public String toPrintString(int indent) {
+        String ret = addIndent(indent) + "<prefix expression>:";
+        if (op == PLUS_PLUS) {
+            ret += "++\n" + this.childExpression.toPrintString(indent + 1);
+        }
+        return ret;
+    }
 }

@@ -79,7 +79,7 @@ parametersList
 	;
 
 program
-	: (declaration | definition)*
+	: (declaration | definition | emptyStatement)*
 	;
 
 declaration

@@ -17,18 +17,19 @@ public class AstComponentStatement extends AstStatement {
     public String toPrintString(int indent) {
         String ret = "";
         if (this.statements.size() == 0) {
-            ret += AstBaseNode.addIndent(indent) + "<empty component statement>";
+            ret += AstBaseNode.addIndent(indent) + "<empty component loopBody>";
         } else {
             for (AstBaseNode statement : this.statements) {
-                ret += statement.toPrintString(indent);
+                ret += statement.toPrintString(indent) + '\n';
             }
+            ret = ret.substring(0, ret.length() - 1);
         }
         return ret;
     }
     @Override
     public String toString() {
         if (this.statements == null) {
-            return "<empty component statement>";
+            return "<empty component loopBody>";
         } else {
             return "<component>[" + this.statements.size() + " statements]";
         }

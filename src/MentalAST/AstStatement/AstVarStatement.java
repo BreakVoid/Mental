@@ -16,7 +16,7 @@ public class AstVarStatement extends AstStatement {
     }
     @Override
     public String toString() {
-        return "<variable declaration statement>";
+        return "<variable declaration loopBody>";
     }
     @Override
     public boolean equals(Object other) {

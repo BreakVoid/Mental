@@ -6,8 +6,12 @@ class AClass {
     bool[][] f;
 }
 
-int a,b,c=12233;
+int a,b,c;
+int[] d = new int [5];
 
 int main() {
-
+    int[][] e = new int [6][8];
+    int b;
+    ++b;
+    -b;
 }

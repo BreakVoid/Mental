@@ -12,6 +12,10 @@ public class AstIdentifier extends AstExpression {
         this.returnType = SymbolTable.mentalUnknownType;
     }
     @Override
+    public String toPrintString(int indent) {
+        return addIndent(indent) + "<identifier>" + this.name + "@" + this.returnType.toString();
+    }
+    @Override
     public boolean equals(Object other) {
         if (this == other) {
             return true;

@@ -16,7 +16,7 @@ public class AstExpression extends AstBaseNode {
     }
     @Override
     public String toPrintString(int indent) {
-        return addIndent(indent) + "<childExpression>:" + returnType.toString();
+        return addIndent(indent) + "<expression>:" + returnType.toString();
     }
     @Override
     public String toString() {

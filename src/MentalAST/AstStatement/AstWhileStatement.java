@@ -7,14 +7,14 @@ import MentalAST.AstExpression.AstExpression;
  */
 public class AstWhileStatement extends AstStatement {
     public AstExpression cond;
-    public AstStatement statement;
+    public AstStatement loopBody;
     public AstWhileStatement() {
         this.cond = null;
-        this.statement = null;
+        this.loopBody = null;
     }
     @Override
     public String toString() {
-        return "<while statement>";
+        return "<while loopBody>";
     }
     @Override
     public boolean equals(Object other) {
@@ -24,7 +24,7 @@ public class AstWhileStatement extends AstStatement {
         if (other != null) {
             if (other instanceof AstWhileStatement) {
                 if (this.cond.equals(((AstWhileStatement) other).cond)) {
-                    if (this.statement.equals(((AstWhileStatement) other).statement)) {
+                    if (this.loopBody.equals(((AstWhileStatement) other).loopBody)) {
                         return true;
                     }
                 }
