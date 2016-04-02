@@ -693,8 +693,23 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-    // TODO
-	@Override public void enterFUNCTION_CALL(MentalParser.FUNCTION_CALLContext ctx) { }
+	@Override public void enterFUNCTION_CALL(MentalParser.FUNCTION_CALLContext ctx) {
+        AstFunctionCall functionCall = new AstFunctionCall();
+        this.tree.put(ctx, functionCall);
+        SymbolBase symbol = this.curSymbolTable.getSymbol(ctx.functionName.getText());
+        if (symbol != null) {
+             if (symbol instanceof SymbolFunction) {
+                 functionCall.functionHead = (SymbolFunction) symbol;
+                 // TODO
+             } else {
+                 System.err.println("fatal: the symbol `" + ctx.functionName.getText() + "` is not a function.");
+                 System.exit(-1);
+             }
+        } else {
+            System.err.println("fatal: the symbol `" + ctx.functionName.getText() + "` is not defined.");
+            System.exit(-1);
+        }
+    }
 	@Override public void exitFUNCTION_CALL(MentalParser.FUNCTION_CALLContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1223,9 +1238,17 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-    // TODO
-	@Override public void enterExpressionList(MentalParser.ExpressionListContext ctx) { }
-	@Override public void exitExpressionList(MentalParser.ExpressionListContext ctx) { }
+	@Override public void enterExpressionList(MentalParser.ExpressionListContext ctx) {
+        AstExpressionList expressionList = new AstExpressionList();
+        this.tree.put(ctx, expressionList);
+    }
+	@Override public void exitExpressionList(MentalParser.ExpressionListContext ctx) {
+        AstExpressionList thisList = (AstExpressionList) this.tree.get(ctx);
+        for (int i = 0, count = ctx.expression().size(); i < count; ++i) {
+            thisList.expressions.add((AstExpression) this.tree.get(ctx.expression(i)));
+            thisList.expressions.get(i).parent = thisList;
+        }
+    }
 
 	/**
 	 * {@inheritDoc}
