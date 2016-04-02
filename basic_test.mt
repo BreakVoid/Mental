@@ -11,6 +11,8 @@ int[] d = new int [5];
 
 int main() {
     int[][] e = new int [6][8];
+    AClass x = new AClass;
+    int[] c = e[a];
     int b;
     ++b;
     -b;

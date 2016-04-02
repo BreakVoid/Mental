@@ -200,7 +200,7 @@ expression
 	#CREATION_EXPRESSION
 	| expression '[' expression ']'
 	#ARRAY_SUBSCRIPTING_EXPRESSION
-	| expression op='.' (Identifier | callToString | callSubString | callLength | callParseInt | callOrd)
+	| expression op='.' (Identifier | callSubString | callLength | callParseInt | callOrd)
 	#MEMBER_ACCESS_EXPRESSION
 	| expression op=('++' | '--')
 	#SUFFIX_INC_DEC_EXPRESSION

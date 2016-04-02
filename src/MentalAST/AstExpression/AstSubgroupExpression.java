@@ -5,4 +5,7 @@ package MentalAST.AstExpression;
  */
 public class AstSubgroupExpression extends AstExpression {
     public AstExpression childExpression;
+    public AstSubgroupExpression() {
+        this.childExpression = null;
+    }
 }

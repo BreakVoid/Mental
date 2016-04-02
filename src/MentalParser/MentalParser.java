@@ -42,7 +42,7 @@ public class MentalParser extends Parser {
 		"className", "typeName", "array", "type", "parameter", "parametersList", 
 		"program", "declaration", "classDeclaration", "functionDeclaration", "definition", 
 		"singleVariable", "variableDefinition", "functionDefinition", "compoundStatement", 
-		"loopBody", "callPrint", "callPrintln", "callGetString", "callGetInt",
+		"statement", "callPrint", "callPrintln", "callGetString", "callGetInt", 
 		"callToString", "callSubString", "callLength", "callParseInt", "callOrd", 
 		"emptyStatement", "ifStatement", "ifElseStatement", "forStatement", "whileStatement", 
 		"jumpStatement", "expressionStatement", "expression", "expressionList"
@@ -2182,9 +2182,6 @@ public class MentalParser extends Parser {
 			return getRuleContext(ExpressionContext.class,0);
 		}
 		public TerminalNode Identifier() { return getToken(MentalParser.Identifier, 0); }
-		public CallToStringContext callToString() {
-			return getRuleContext(CallToStringContext.class,0);
-		}
 		public CallSubStringContext callSubString() {
 			return getRuleContext(CallSubStringContext.class,0);
 		}
@@ -2961,7 +2958,7 @@ public class MentalParser extends Parser {
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(379);
+			setState(378);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,27,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -2969,7 +2966,7 @@ public class MentalParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(377);
+					setState(376);
 					switch ( getInterpreter().adaptivePredict(_input,26,_ctx) ) {
 					case 1:
 						{
@@ -3155,7 +3152,7 @@ public class MentalParser extends Parser {
 						if (!(precpred(_ctx, 25))) throw new FailedPredicateException(this, "precpred(_ctx, 25)");
 						setState(366);
 						((MEMBER_ACCESS_EXPRESSIONContext)_localctx).op = match(PERIOD);
-						setState(373);
+						setState(372);
 						switch (_input.LA(1)) {
 						case Identifier:
 							{
@@ -3163,33 +3160,27 @@ public class MentalParser extends Parser {
 							match(Identifier);
 							}
 							break;
-						case T__14:
-							{
-							setState(368);
-							callToString();
-							}
-							break;
 						case T__15:
 							{
-							setState(369);
+							setState(368);
 							callSubString();
 							}
 							break;
 						case T__16:
 							{
-							setState(370);
+							setState(369);
 							callLength();
 							}
 							break;
 						case T__17:
 							{
-							setState(371);
+							setState(370);
 							callParseInt();
 							}
 							break;
 						case T__18:
 							{
-							setState(372);
+							setState(371);
 							callOrd();
 							}
 							break;
@@ -3202,9 +3193,9 @@ public class MentalParser extends Parser {
 						{
 						_localctx = new SUFFIX_INC_DEC_EXPRESSIONContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(375);
+						setState(374);
 						if (!(precpred(_ctx, 24))) throw new FailedPredicateException(this, "precpred(_ctx, 24)");
-						setState(376);
+						setState(375);
 						((SUFFIX_INC_DEC_EXPRESSIONContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==INC || _la==DEC) ) {
@@ -3217,7 +3208,7 @@ public class MentalParser extends Parser {
 					}
 					} 
 				}
-				setState(381);
+				setState(380);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,27,_ctx);
 			}
@@ -3267,21 +3258,21 @@ public class MentalParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(382);
+			setState(381);
 			expression(0);
-			setState(387);
+			setState(386);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(383);
+				setState(382);
 				match(COMMA);
-				setState(384);
+				setState(383);
 				expression(0);
 				}
 				}
-				setState(389);
+				setState(388);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -3340,7 +3331,7 @@ public class MentalParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3@\u0189\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3@\u0188\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -3366,17 +3357,17 @@ public class MentalParser extends Parser {
 		"\"\3\"\5\"\u0140\n\"\3\"\3\"\3\"\3\"\3\"\3\"\5\"\u0148\n\"\3\"\3\"\3\""+
 		"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3"+
 		"\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\""+
-		"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\5\"\u0178\n\"\3\"\3\"\7\"\u017c\n\"\f"+
-		"\"\16\"\u017f\13\"\3#\3#\3#\7#\u0184\n#\f#\16#\u0187\13#\3#\2\3B$\2\4"+
-		"\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BD\2\b\3"+
-		"\2+,\3\2&\'\3\2(*\3\2;<\3\2\67:\3\2\65\66\u01ad\2F\3\2\2\2\4L\3\2\2\2"+
-		"\6N\3\2\2\2\bQ\3\2\2\2\nX\3\2\2\2\f[\3\2\2\2\16h\3\2\2\2\20m\3\2\2\2\22"+
-		"o\3\2\2\2\24~\3\2\2\2\26\u008a\3\2\2\2\30\u008c\3\2\2\2\32\u0091\3\2\2"+
-		"\2\34\u009e\3\2\2\2\36\u00a8\3\2\2\2 \u00bc\3\2\2\2\"\u00be\3\2\2\2$\u00c4"+
+		"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\5\"\u0177\n\"\3\"\3\"\7\"\u017b\n\"\f\"\16"+
+		"\"\u017e\13\"\3#\3#\3#\7#\u0183\n#\f#\16#\u0186\13#\3#\2\3B$\2\4\6\b\n"+
+		"\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BD\2\b\3\2+,\3"+
+		"\2&\'\3\2(*\3\2;<\3\2\67:\3\2\65\66\u01ab\2F\3\2\2\2\4L\3\2\2\2\6N\3\2"+
+		"\2\2\bQ\3\2\2\2\nX\3\2\2\2\f[\3\2\2\2\16h\3\2\2\2\20m\3\2\2\2\22o\3\2"+
+		"\2\2\24~\3\2\2\2\26\u008a\3\2\2\2\30\u008c\3\2\2\2\32\u0091\3\2\2\2\34"+
+		"\u009e\3\2\2\2\36\u00a8\3\2\2\2 \u00bc\3\2\2\2\"\u00be\3\2\2\2$\u00c4"+
 		"\3\2\2\2&\u00ca\3\2\2\2(\u00ce\3\2\2\2*\u00d2\3\2\2\2,\u00d7\3\2\2\2."+
 		"\u00de\3\2\2\2\60\u00e2\3\2\2\2\62\u00e6\3\2\2\2\64\u00eb\3\2\2\2\66\u00ed"+
 		"\3\2\2\28\u00f3\3\2\2\2:\u00fb\3\2\2\2<\u010b\3\2\2\2>\u0119\3\2\2\2@"+
-		"\u011b\3\2\2\2B\u0147\3\2\2\2D\u0180\3\2\2\2FG\7$\2\2G\3\3\2\2\2HM\7\3"+
+		"\u011b\3\2\2\2B\u0147\3\2\2\2D\u017f\3\2\2\2FG\7$\2\2G\3\3\2\2\2HM\7\3"+
 		"\2\2IM\7\4\2\2JM\7\5\2\2KM\5\2\2\2LH\3\2\2\2LI\3\2\2\2LJ\3\2\2\2LK\3\2"+
 		"\2\2M\5\3\2\2\2NO\7?\2\2OP\7@\2\2P\7\3\2\2\2QU\5\4\3\2RT\5\6\4\2SR\3\2"+
 		"\2\2TW\3\2\2\2US\3\2\2\2UV\3\2\2\2V\t\3\2\2\2WU\3\2\2\2XY\5\b\5\2YZ\7"+
@@ -3453,33 +3444,32 @@ public class MentalParser extends Parser {
 		"\3\2\2\2\u0147\u0123\3\2\2\2\u0147\u0125\3\2\2\2\u0147\u0127\3\2\2\2\u0147"+
 		"\u012b\3\2\2\2\u0147\u0136\3\2\2\2\u0147\u013f\3\2\2\2\u0147\u0141\3\2"+
 		"\2\2\u0147\u0142\3\2\2\2\u0147\u0143\3\2\2\2\u0147\u0144\3\2\2\2\u0147"+
-		"\u0145\3\2\2\2\u0147\u0146\3\2\2\2\u0148\u017d\3\2\2\2\u0149\u014a\f\25"+
-		"\2\2\u014a\u014b\t\4\2\2\u014b\u017c\5B\"\26\u014c\u014d\f\24\2\2\u014d"+
-		"\u014e\t\3\2\2\u014e\u017c\5B\"\25\u014f\u0150\f\23\2\2\u0150\u0151\t"+
-		"\5\2\2\u0151\u017c\5B\"\24\u0152\u0153\f\22\2\2\u0153\u0154\t\6\2\2\u0154"+
-		"\u017c\5B\"\23\u0155\u0156\f\21\2\2\u0156\u0157\t\7\2\2\u0157\u017c\5"+
-		"B\"\22\u0158\u0159\f\20\2\2\u0159\u015a\7/\2\2\u015a\u017c\5B\"\21\u015b"+
-		"\u015c\f\17\2\2\u015c\u015d\7\60\2\2\u015d\u017c\5B\"\20\u015e\u015f\f"+
-		"\16\2\2\u015f\u0160\7\61\2\2\u0160\u017c\5B\"\17\u0161\u0162\f\r\2\2\u0162"+
-		"\u0163\7\62\2\2\u0163\u017c\5B\"\16\u0164\u0165\f\f\2\2\u0165\u0166\7"+
-		"\63\2\2\u0166\u017c\5B\"\r\u0167\u0168\f\13\2\2\u0168\u0169\7\64\2\2\u0169"+
-		"\u017c\5B\"\13\u016a\u016b\f\34\2\2\u016b\u016c\7?\2\2\u016c\u016d\5B"+
-		"\"\2\u016d\u016e\7@\2\2\u016e\u017c\3\2\2\2\u016f\u0170\f\33\2\2\u0170"+
-		"\u0177\7=\2\2\u0171\u0178\7$\2\2\u0172\u0178\5*\26\2\u0173\u0178\5,\27"+
-		"\2\u0174\u0178\5.\30\2\u0175\u0178\5\60\31\2\u0176\u0178\5\62\32\2\u0177"+
-		"\u0171\3\2\2\2\u0177\u0172\3\2\2\2\u0177\u0173\3\2\2\2\u0177\u0174\3\2"+
-		"\2\2\u0177\u0175\3\2\2\2\u0177\u0176\3\2\2\2\u0178\u017c\3\2\2\2\u0179"+
-		"\u017a\f\32\2\2\u017a\u017c\t\2\2\2\u017b\u0149\3\2\2\2\u017b\u014c\3"+
-		"\2\2\2\u017b\u014f\3\2\2\2\u017b\u0152\3\2\2\2\u017b\u0155\3\2\2\2\u017b"+
-		"\u0158\3\2\2\2\u017b\u015b\3\2\2\2\u017b\u015e\3\2\2\2\u017b\u0161\3\2"+
-		"\2\2\u017b\u0164\3\2\2\2\u017b\u0167\3\2\2\2\u017b\u016a\3\2\2\2\u017b"+
-		"\u016f\3\2\2\2\u017b\u0179\3\2\2\2\u017c\u017f\3\2\2\2\u017d\u017b\3\2"+
-		"\2\2\u017d\u017e\3\2\2\2\u017eC\3\2\2\2\u017f\u017d\3\2\2\2\u0180\u0185"+
-		"\5B\"\2\u0181\u0182\7>\2\2\u0182\u0184\5B\"\2\u0183\u0181\3\2\2\2\u0184"+
-		"\u0187\3\2\2\2\u0185\u0183\3\2\2\2\u0185\u0186\3\2\2\2\u0186E\3\2\2\2"+
-		"\u0187\u0185\3\2\2\2\37LU`fhmqw~\u0083\u008a\u008f\u0097\u009e\u00a3\u00ac"+
-		"\u00bc\u00fe\u0102\u0106\u0119\u0133\u0139\u013f\u0147\u0177\u017b\u017d"+
-		"\u0185";
+		"\u0145\3\2\2\2\u0147\u0146\3\2\2\2\u0148\u017c\3\2\2\2\u0149\u014a\f\25"+
+		"\2\2\u014a\u014b\t\4\2\2\u014b\u017b\5B\"\26\u014c\u014d\f\24\2\2\u014d"+
+		"\u014e\t\3\2\2\u014e\u017b\5B\"\25\u014f\u0150\f\23\2\2\u0150\u0151\t"+
+		"\5\2\2\u0151\u017b\5B\"\24\u0152\u0153\f\22\2\2\u0153\u0154\t\6\2\2\u0154"+
+		"\u017b\5B\"\23\u0155\u0156\f\21\2\2\u0156\u0157\t\7\2\2\u0157\u017b\5"+
+		"B\"\22\u0158\u0159\f\20\2\2\u0159\u015a\7/\2\2\u015a\u017b\5B\"\21\u015b"+
+		"\u015c\f\17\2\2\u015c\u015d\7\60\2\2\u015d\u017b\5B\"\20\u015e\u015f\f"+
+		"\16\2\2\u015f\u0160\7\61\2\2\u0160\u017b\5B\"\17\u0161\u0162\f\r\2\2\u0162"+
+		"\u0163\7\62\2\2\u0163\u017b\5B\"\16\u0164\u0165\f\f\2\2\u0165\u0166\7"+
+		"\63\2\2\u0166\u017b\5B\"\r\u0167\u0168\f\13\2\2\u0168\u0169\7\64\2\2\u0169"+
+		"\u017b\5B\"\13\u016a\u016b\f\34\2\2\u016b\u016c\7?\2\2\u016c\u016d\5B"+
+		"\"\2\u016d\u016e\7@\2\2\u016e\u017b\3\2\2\2\u016f\u0170\f\33\2\2\u0170"+
+		"\u0176\7=\2\2\u0171\u0177\7$\2\2\u0172\u0177\5,\27\2\u0173\u0177\5.\30"+
+		"\2\u0174\u0177\5\60\31\2\u0175\u0177\5\62\32\2\u0176\u0171\3\2\2\2\u0176"+
+		"\u0172\3\2\2\2\u0176\u0173\3\2\2\2\u0176\u0174\3\2\2\2\u0176\u0175\3\2"+
+		"\2\2\u0177\u017b\3\2\2\2\u0178\u0179\f\32\2\2\u0179\u017b\t\2\2\2\u017a"+
+		"\u0149\3\2\2\2\u017a\u014c\3\2\2\2\u017a\u014f\3\2\2\2\u017a\u0152\3\2"+
+		"\2\2\u017a\u0155\3\2\2\2\u017a\u0158\3\2\2\2\u017a\u015b\3\2\2\2\u017a"+
+		"\u015e\3\2\2\2\u017a\u0161\3\2\2\2\u017a\u0164\3\2\2\2\u017a\u0167\3\2"+
+		"\2\2\u017a\u016a\3\2\2\2\u017a\u016f\3\2\2\2\u017a\u0178\3\2\2\2\u017b"+
+		"\u017e\3\2\2\2\u017c\u017a\3\2\2\2\u017c\u017d\3\2\2\2\u017dC\3\2\2\2"+
+		"\u017e\u017c\3\2\2\2\u017f\u0184\5B\"\2\u0180\u0181\7>\2\2\u0181\u0183"+
+		"\5B\"\2\u0182\u0180\3\2\2\2\u0183\u0186\3\2\2\2\u0184\u0182\3\2\2\2\u0184"+
+		"\u0185\3\2\2\2\u0185E\3\2\2\2\u0186\u0184\3\2\2\2\37LU`fhmqw~\u0083\u008a"+
+		"\u008f\u0097\u009e\u00a3\u00ac\u00bc\u00fe\u0102\u0106\u0119\u0133\u0139"+
+		"\u013f\u0147\u0176\u017a\u017c\u0184";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

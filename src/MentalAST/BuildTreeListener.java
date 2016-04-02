@@ -11,10 +11,12 @@ import MentalParser.MentalBaseListener;
 import MentalSymbols.*;
 import MentalType.MentalArray;
 import MentalType.MentalFunction;
+import MentalType.MentalType;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -705,10 +707,15 @@ public class BuildTreeListener extends MentalBaseListener {
 	 */
 	@Override public void enterCREATION_EXPRESSION(MentalParser.CREATION_EXPRESSIONContext ctx) {
         AstCreationExpression creationExpression = new AstCreationExpression();
-        creationExpression.returnType = new MentalArray();
-        SymbolType type = (SymbolType) this.curSymbolTable.getSymbol(ctx.typeName().getText());
-        ((MentalArray) creationExpression.returnType).arrayType = type.type;
-        ((MentalArray) creationExpression.returnType).arrayDim = ctx.expression().size();
+		SymbolType type = (SymbolType) this.curSymbolTable.getSymbol(ctx.typeName().getText());
+		if (ctx.expression() == null || ctx.expression().size() == 0) {
+			creationExpression.returnType = type.type;
+			creationExpression.expressionList = null;
+		} else {
+			creationExpression.returnType = new MentalArray();
+			((MentalArray) creationExpression.returnType).arrayType = type.type;
+			((MentalArray) creationExpression.returnType).arrayDim = ctx.expression().size();
+		}
         this.tree.put(ctx, creationExpression);
     }
 	/**
@@ -718,15 +725,17 @@ public class BuildTreeListener extends MentalBaseListener {
 	 */
 	@Override public void exitCREATION_EXPRESSION(MentalParser.CREATION_EXPRESSIONContext ctx) {
         AstCreationExpression thisExpression = (AstCreationExpression) this.tree.get(ctx);
-        for (int i = 0, count = ctx.expression().size(); i < count; ++i) {
-            AstExpression childExpression = (AstExpression) this.tree.get(ctx.expression(i));
-            childExpression.parent = thisExpression;
-            if (!childExpression.returnType.equals(SymbolTable.mentalInt)) {
-                System.err.println("fatal: new an array with no-int size. " + ctx.expression(i).getText());
-                System.exit(-1);
-            }
-            thisExpression.expressionList.add(childExpression);
-        }
+		if (ctx.expression() != null) {
+			for (int i = 0, count = ctx.expression().size(); i < count; ++i) {
+				AstExpression childExpression = (AstExpression) this.tree.get(ctx.expression(i));
+				childExpression.parent = thisExpression;
+				if (!childExpression.returnType.equals(SymbolTable.mentalInt)) {
+					System.err.println("fatal: new an array with no-int size. " + ctx.expression(i).getText());
+					System.exit(-1);
+				}
+				thisExpression.expressionList.add(childExpression);
+			}
+		}
     }
 	/**
 	 * {@inheritDoc}
@@ -971,13 +980,34 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBIT_SHIFT_EXPRESSION(MentalParser.BIT_SHIFT_EXPRESSIONContext ctx) { }
+	@Override public void enterBIT_SHIFT_EXPRESSION(MentalParser.BIT_SHIFT_EXPRESSIONContext ctx) {
+        AstBitShiftExpression bitShiftExpression = new AstBitShiftExpression();
+        this.tree.put(ctx, bitShiftExpression);
+        if (ctx.op.getType() == MentalParser.LEFT_SHIFT) {
+            bitShiftExpression.op = AstBitShiftExpression.LEFT_SHIFT;
+        } else {
+            bitShiftExpression.op = AstBitShiftExpression.RIGHT_SHIFT;
+        }
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBIT_SHIFT_EXPRESSION(MentalParser.BIT_SHIFT_EXPRESSIONContext ctx) { }
+	@Override public void exitBIT_SHIFT_EXPRESSION(MentalParser.BIT_SHIFT_EXPRESSIONContext ctx) {
+        AstBitShiftExpression thisExpression = (AstBitShiftExpression) this.tree.get(ctx);
+        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
+        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
+        thisExpression.leftExpression.parent = thisExpression;
+        thisExpression.rightExpression.parent = thisExpression;
+        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
+            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                return;
+            }
+        }
+        System.err.println("fatal: the types of bit-shift expression cannnot accept. " + ctx.getText());
+        System.exit(-1);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -1016,37 +1046,86 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterARRAY_SUBSCRIPTING_EXPRESSION(MentalParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx) { }
+	@Override public void enterARRAY_SUBSCRIPTING_EXPRESSION(MentalParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx) {
+        AstArraySubscriptingExpression arraySubscriptingExpression = new AstArraySubscriptingExpression();
+        this.tree.put(ctx, arraySubscriptingExpression);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitARRAY_SUBSCRIPTING_EXPRESSION(MentalParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx) { }
+	@Override public void exitARRAY_SUBSCRIPTING_EXPRESSION(MentalParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx) {
+        AstArraySubscriptingExpression thisExpression = (AstArraySubscriptingExpression) this.tree.get(ctx);
+        thisExpression.primaryExpression = (AstExpression) this.tree.get(ctx.expression(0));
+        thisExpression.positionExpression = (AstExpression) this.tree.get(ctx.expression(1));
+        thisExpression.primaryExpression.parent = thisExpression;
+        thisExpression.positionExpression.parent = thisExpression;
+        if (thisExpression.primaryExpression.returnType instanceof MentalArray) {
+            if (thisExpression.positionExpression.returnType.equals(SymbolTable.mentalInt)) {
+                if (((MentalArray) thisExpression.primaryExpression.returnType).arrayDim > 1) {
+                    thisExpression.returnType = new MentalArray((MentalArray) thisExpression.primaryExpression.returnType);
+                    ((MentalArray) thisExpression.returnType).arrayDim--;
+                } else {
+                    thisExpression.returnType = ((MentalArray) thisExpression.primaryExpression.returnType).arrayType;
+                }
+            } else {
+                System.err.println("fatal: the result of position expression is not a integer. " + ctx.getText());
+                System.exit(-1);
+            }
+        } else {
+            System.err.println("fatal: the result of primary expression is not a array. " + ctx.getText());
+            System.exit(-1);
+        }
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSUBGROUP_EXPRESSION(MentalParser.SUBGROUP_EXPRESSIONContext ctx) { }
+	@Override public void enterSUBGROUP_EXPRESSION(MentalParser.SUBGROUP_EXPRESSIONContext ctx) {
+        AstSubgroupExpression subgroupExpression = new AstSubgroupExpression();
+        this.tree.put(ctx, subgroupExpression);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSUBGROUP_EXPRESSION(MentalParser.SUBGROUP_EXPRESSIONContext ctx) { }
+	@Override public void exitSUBGROUP_EXPRESSION(MentalParser.SUBGROUP_EXPRESSIONContext ctx) {
+        AstSubgroupExpression thisExpression = (AstSubgroupExpression) this.tree.get(ctx);
+        thisExpression.childExpression = (AstExpression) this.tree.get(ctx.expression());
+        thisExpression.childExpression.parent = thisExpression;
+        thisExpression.returnType = thisExpression.childExpression.returnType;
+    }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx) { }
+	@Override public void enterBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx) {
+		AstBitAndExpression bitAndExpression = new AstBitAndExpression();
+        this.tree.put(ctx, bitAndExpression);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx) { }
+	@Override public void exitBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx) {
+        AstBitAndExpression thisExpression = (AstBitAndExpression) this.tree.get(ctx);
+        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
+        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
+        thisExpression.leftExpression.parent = thisExpression;
+        thisExpression.rightExpression.parent = thisExpression;
+        if (thisExpression.leftExpression.equals(SymbolTable.mentalInt)) {
+            if (thisExpression.rightExpression.equals(SymbolTable.mentalInt)) {
+                return ;
+            }
+        }
+        System.err.println("fatal: the types of sides of bit-and expression cannot accept. " + ctx.getText());
+        System.exit(-1);
+    }
 	/**
 	 * {@inheritDoc}
 	 *
