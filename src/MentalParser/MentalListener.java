@@ -258,6 +258,16 @@ public interface MentalListener extends ParseTreeListener {
 	 */
 	void exitCallOrd(MentalParser.CallOrdContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MentalParser#callSize}.
+	 * @param ctx the parse tree
+	 */
+	void enterCallSize(MentalParser.CallSizeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MentalParser#callSize}.
+	 * @param ctx the parse tree
+	 */
+	void exitCallSize(MentalParser.CallSizeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MentalParser#emptyStatement}.
 	 * @param ctx the parse tree
 	 */

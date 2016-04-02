@@ -13,7 +13,7 @@ public class AstBinaryExpression extends AstExpression {
     }
     @Override
     public String toPrintString(int indent) {
-        String ret = AstBaseNode.addIndent(indent) + "<childExpression>:" + this.returnType.toString() + '\n';
+        String ret = AstBaseNode.addIndent(indent) + "<binary expression>:" + this.returnType.toString() + '\n';
         ret += leftExpression.toPrintString(indent + 1) + '\n';
         ret += rightExpression.toPrintString(indent + 1);
         return ret;

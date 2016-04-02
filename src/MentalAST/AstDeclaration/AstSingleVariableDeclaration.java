@@ -21,7 +21,10 @@ public class AstSingleVariableDeclaration extends AstDeclaration {
     @Override
     public String toPrintString(int indent) {
         String ret = "";
-        ret += addIndent(indent) + "<variable>" + variable.toString();
+        ret += addIndent(indent) + "<variable>" + this.variable.toString();
+        if (this.initializeExpression != null) {
+            ret += "\n" + addIndent(indent + 1) + "<initial value>:\n" + this.initializeExpression.toPrintString(indent + 2);
+        }
         return ret;
     }
     @Override

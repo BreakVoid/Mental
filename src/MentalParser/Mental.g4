@@ -162,6 +162,9 @@ callParseInt
 callOrd
     : 'ord' '(' expression ')'
     ;
+callSize
+    : 'size' '(' ')'
+    ;
 
 emptyStatement
 	: ';'
@@ -200,7 +203,7 @@ expression
 	#CREATION_EXPRESSION
 	| expression '[' expression ']'
 	#ARRAY_SUBSCRIPTING_EXPRESSION
-	| expression op='.' (Identifier | callSubString | callLength | callParseInt | callOrd)
+	| expression op='.' (Identifier | callSubString | callLength | callParseInt | callOrd | callSize)
 	#MEMBER_ACCESS_EXPRESSION
 	| expression op=('++' | '--')
 	#SUFFIX_INC_DEC_EXPRESSION
@@ -337,6 +340,3 @@ LBRACKET
 RBRACKET
     : ']'
     ;
-
-
-	

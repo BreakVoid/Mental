@@ -1,5 +1,6 @@
 package MentalAST.AstExpression;
 
+import MentalParser.MentalParser;
 import MentalSymbols.SymbolTable;
 
 /**
@@ -7,8 +8,8 @@ import MentalSymbols.SymbolTable;
  */
 public class AstUnaryAdditiveExpression extends AstUnaryExpression {
     public int op;
-    public static final int ADD = 1;
-    public static final int SUB = 2;
+    public static final int ADD = MentalParser.PLUS;
+    public static final int SUB = MentalParser.MINUS;
     public AstUnaryAdditiveExpression() {
         this.op = 0;
         this.childExpression = null;

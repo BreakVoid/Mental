@@ -6,14 +6,19 @@ class AClass {
     bool[][] f;
 }
 
-int a,b,c;
-int[] d = new int [5];
-
+int a,b,c,d,e;
 int main() {
-    int[][] e = new int [6][8];
     AClass x = new AClass;
-    int[] c = e[a];
+    AClass ccc = null;
+    a + b + c * d / e - 100;
     int b;
-    ++b;
-    -b;
+    string[] str = null;
+    ++++++++b;
+    ------b;
+    if (a == b) {
+        e = 2;
+    } else {
+        c = 5;
+    }
+    return 0;
 }

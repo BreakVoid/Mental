@@ -316,6 +316,18 @@ public class MentalBaseListener implements MentalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCallSize(MentalParser.CallSizeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCallSize(MentalParser.CallSizeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEmptyStatement(MentalParser.EmptyStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}

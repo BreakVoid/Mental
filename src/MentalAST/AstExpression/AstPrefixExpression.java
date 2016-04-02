@@ -1,13 +1,14 @@
 package MentalAST.AstExpression;
 
+import MentalParser.MentalParser;
 import MentalSymbols.SymbolTable;
 
 /**
  * Created by Songyu on 16/4/1.
  */
 public class AstPrefixExpression extends AstUnaryExpression {
-    public static final int PLUS_PLUS = 1;
-    public static final int MINUS_MINUS = 2;
+    public static final int PLUS_PLUS = MentalParser.INC;
+    public static final int MINUS_MINUS = MentalParser.DEC;
     public int op;
     public AstPrefixExpression() {
         this.leftValue = true;
@@ -19,6 +20,8 @@ public class AstPrefixExpression extends AstUnaryExpression {
         String ret = addIndent(indent) + "<prefix expression>:";
         if (op == PLUS_PLUS) {
             ret += "++\n" + this.childExpression.toPrintString(indent + 1);
+        } else {
+            ret += "--\n" + this.childExpression.toPrintString(indent + 1);
         }
         return ret;
     }

@@ -11,7 +11,7 @@ public class AstBaseNode {
     public static String addIndent(int indent) {
         String ret = "";
         for (int i = 0; i < indent; ++i) {
-            ret += "  ";
+            ret += "    ";
         }
         return ret;
     }
