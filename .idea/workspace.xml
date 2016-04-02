@@ -2,50 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c35b8dae-0f88-4d1d-8daa-c07a46c2e329" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstAssignExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitOrExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitXorExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstCallGetInt.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstCallGetString.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstCallLength.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstCallOrd.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstCallParseInt.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstCallSize.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstCallSubString.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstCallToString.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstEqualityExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstLogicalAndExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstLogicalOrExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstMemberAccessExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstRelationExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstCallPrint.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstCallPrintln.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/basic_test.mt" afterPath="$PROJECT_DIR$/basic_test.mt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" afterPath="$PROJECT_DIR$/src/MentalAST/ASTBaseNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstDeclaration/AstSingleVariableDeclaration.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstDeclaration/AstSingleVariableDeclaration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstAdditiveExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstAdditiveExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBinaryExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBinaryExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitAndExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitAndExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitShiftExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstBitShiftExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstCreationExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstCreationExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstLogicalNotExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstLogicalNotExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstMulDivExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstMulDivExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstPrefixExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstPrefixExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstSuffixExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstSuffixExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryAdditiveExpression.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstExpression/AstUnaryAdditiveExpression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstIfStatement.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstIfStatement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstJumpStatement.java" afterPath="$PROJECT_DIR$/src/MentalAST/AstStatement/AstJumpStatement.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" afterPath="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/Mental.g4" afterPath="$PROJECT_DIR$/src/MentalParser/Mental.g4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/Mental.tokens" afterPath="$PROJECT_DIR$/src/MentalParser/Mental.tokens" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalBaseListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalBaseVisitor.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalBaseVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalLexer.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalLexer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalLexer.tokens" afterPath="$PROJECT_DIR$/src/MentalParser/MentalLexer.tokens" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalListener.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalParser.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MentalParser/MentalVisitor.java" afterPath="$PROJECT_DIR$/src/MentalParser/MentalVisitor.java" />
     </list>
     <ignored path="mo-compiler.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,13 +25,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BuildTreeListener.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BuildTreeListener.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="376" column="9" selection-start-line="376" selection-start-column="9" selection-end-line="376" selection-end-column="9" />
+            <state relative-caret-position="447">
+              <caret line="1230" column="4" selection-start-line="1230" selection-start-column="4" selection-end-line="1230" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2300#2301#0" expanded="true" />
+                <element signature="e#2352#2353#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -178,7 +137,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AstSingleVariableDeclaration.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AstSingleVariableDeclaration.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MentalAST/AstDeclaration/AstSingleVariableDeclaration.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="420">
@@ -257,9 +216,9 @@
         <option value="$PROJECT_DIR$/src/MentalAST/AstExpression/AstCallGetString.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/AstStatement/AstCallPrint.java" />
         <option value="$PROJECT_DIR$/src/MentalAST/AstStatement/AstCallPrintln.java" />
-        <option value="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" />
         <option value="$PROJECT_DIR$/basic_test.mt" />
         <option value="$PROJECT_DIR$/src/MentalAST/AstDeclaration/AstSingleVariableDeclaration.java" />
+        <option value="$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java" />
       </list>
     </option>
   </component>
@@ -976,12 +935,12 @@
       <workItem from="1459473109607" duration="14060000" />
       <workItem from="1459523206620" duration="850000" />
       <workItem from="1459567178006" duration="5246000" />
-      <workItem from="1459594771783" duration="12033000" />
+      <workItem from="1459594771783" duration="12699000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="103871000" />
+    <option name="totallyTimeSpent" value="104537000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -994,7 +953,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.49676898" order="6" side_tool="false" content_ui="tabs" />
@@ -1524,16 +1483,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="376" column="9" selection-start-line="376" selection-start-column="9" selection-end-line="376" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/basic_test.mt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -1555,6 +1504,18 @@
         <state relative-caret-position="420">
           <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MentalAST/BuildTreeListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="1230" column="4" selection-start-line="1230" selection-start-column="4" selection-end-line="1230" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2300#2301#0" expanded="true" />
+            <element signature="e#2352#2353#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

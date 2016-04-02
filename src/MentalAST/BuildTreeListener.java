@@ -21,11 +21,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * This class provides an empty implementation of {@link MentalBaseListener},
- * which can be extended to create a listener which only needs to handle a subset
- * of the available methods.
- */
 public class BuildTreeListener extends MentalBaseListener {
 	public HashMap<ParseTree, AstBaseNode> tree;
 	public SymbolTable curSymbolTable;
@@ -45,79 +40,19 @@ public class BuildTreeListener extends MentalBaseListener {
 		this.symbolTableList.removeLast();
 		this.curSymbolTable = this.symbolTableList.getLast();
 	}
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterClassName(MentalParser.ClassNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitClassName(MentalParser.ClassNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterTypeName(MentalParser.TypeNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitTypeName(MentalParser.TypeNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterArray(MentalParser.ArrayContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitArray(MentalParser.ArrayContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterType(MentalParser.TypeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitType(MentalParser.TypeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterParametersList(MentalParser.ParametersListContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitParametersList(MentalParser.ParametersListContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterProgram(MentalParser.ProgramContext ctx) {
         this.tree.put(ctx, new AstProgram());
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitProgram(MentalParser.ProgramContext ctx) {
 		AstProgram node = (AstProgram) tree.get(ctx);
 		List<AstBaseNode> child = node.declarations;
@@ -133,13 +68,7 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaration(MentalParser.DeclarationContext ctx) {
-    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
+	@Override public void enterDeclaration(MentalParser.DeclarationContext ctx) { }
 	@Override public void exitDeclaration(MentalParser.DeclarationContext ctx) {
         if (ctx.classDeclaration() != null) {
             this.tree.put(ctx, tree.get(ctx.classDeclaration()));
@@ -159,24 +88,13 @@ public class BuildTreeListener extends MentalBaseListener {
         classDeclaration.classDetail = (SymbolType) this.curSymbolTable.getSymbol(ctx.className().getText());
         this.tree.put(ctx, classDeclaration);
 	}
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitClassDeclaration(MentalParser.ClassDeclarationContext ctx) {
-	}
+	@Override public void exitClassDeclaration(MentalParser.ClassDeclarationContext ctx) {	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterFunctionDeclaration(MentalParser.FunctionDeclarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitFunctionDeclaration(MentalParser.FunctionDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -184,11 +102,6 @@ public class BuildTreeListener extends MentalBaseListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterDefinition(MentalParser.DefinitionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitDefinition(MentalParser.DefinitionContext ctx) {
         if (ctx.functionDefinition() != null) {
             this.tree.put(ctx, this.tree.get(ctx.functionDefinition()));
@@ -219,11 +132,6 @@ public class BuildTreeListener extends MentalBaseListener {
         singleVariableDeclaration.variable.variableName = ctx.Identifier().getText();
         singleVariableDeclaration.variable.variableType = variableDeclaration.variableType;
     }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     @Override public void exitSingleVariable(MentalParser.SingleVariableContext ctx) {
         if (ctx.parent != null && ctx.parent.parent instanceof MentalParser.ClassDeclarationContext) {
             return ;
@@ -262,11 +170,6 @@ public class BuildTreeListener extends MentalBaseListener {
         variableDeclaration.variableType = variableList.variableType;
         this.tree.put(ctx, variableDeclaration);
 	}
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitVariableDefinition(MentalParser.VariableDefinitionContext ctx) {
         if (ctx.parent instanceof MentalParser.ClassDeclarationContext) {
             return ;
@@ -295,11 +198,6 @@ public class BuildTreeListener extends MentalBaseListener {
             );
         }
 	}
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) {
         this.endScope();
         AstFunctionDefinition functionDefinition = (AstFunctionDefinition) this.tree.get(ctx);
@@ -319,11 +217,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstComponentStatement componentStatement = new AstComponentStatement();
         this.tree.put(ctx, componentStatement);
 	}
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitCompoundStatement(MentalParser.CompoundStatementContext ctx) {
         if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
             this.endScope();
@@ -345,11 +238,6 @@ public class BuildTreeListener extends MentalBaseListener {
             this.tree.put(ctx, varStatement);
         }
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitStatement(MentalParser.StatementContext ctx) {
         if (ctx.variableDefinition() != null) {
             AstVarStatement varStatement = (AstVarStatement) this.tree.get(ctx);
@@ -386,11 +274,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstCallPrint callPrint = new AstCallPrint();
         this.tree.put(ctx, callPrint);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitCallPrint(MentalParser.CallPrintContext ctx) {
         AstCallPrint thisCall = (AstCallPrint) this.tree.get(ctx);
         thisCall.parameter = (AstExpression) this.tree.get(ctx.expression());
@@ -408,11 +291,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstCallPrintln callPrintln = new AstCallPrintln();
         this.tree.put(ctx, callPrintln);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitCallPrintln(MentalParser.CallPrintlnContext ctx) {
         AstCallPrintln thisCall = (AstCallPrintln) this.tree.get(ctx);
         thisCall.parameter = (AstExpression) this.tree.get(ctx.expression());
@@ -430,11 +308,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstCallGetString callGetString = new AstCallGetString();
         this.tree.put(ctx, callGetString);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitCallGetString(MentalParser.CallGetStringContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -445,11 +318,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstCallGetInt callGetInt = new AstCallGetInt();
         this.tree.put(ctx, callGetInt);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitCallGetInt(MentalParser.CallGetIntContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -460,11 +328,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstCallToString callToString = new AstCallToString();
         this.tree.put(ctx, callToString);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitCallToString(MentalParser.CallToStringContext ctx) {
         AstCallToString thisCall = (AstCallToString) this.tree.get(ctx);
         thisCall.childExpression = (AstExpression) this.tree.get(ctx.expression());
@@ -483,11 +346,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstCallSubString callSubString = new AstCallSubString();
         this.tree.put(ctx, callSubString);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitCallSubString(MentalParser.CallSubStringContext ctx) {
         AstCallSubString thisCall = (AstCallSubString) this.tree.get(ctx);
         thisCall.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -513,13 +371,7 @@ public class BuildTreeListener extends MentalBaseListener {
         AstCallLength callLength = new AstCallLength();
         this.tree.put(ctx, callLength);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCallLength(MentalParser.CallLengthContext ctx) {
-    }
+	@Override public void exitCallLength(MentalParser.CallLengthContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -529,11 +381,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstCallParseInt callParseInt = new AstCallParseInt();
         this.tree.put(ctx, callParseInt);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitCallParseInt(MentalParser.CallParseIntContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -544,11 +391,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstCallOrd callOrd = new AstCallOrd();
         this.tree.put(ctx, callOrd);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitCallOrd(MentalParser.CallOrdContext ctx) {
         AstCallOrd thisCall = (AstCallOrd) this.tree.get(ctx);
         thisCall.childExpression = (AstExpression) this.tree.get(ctx.expression());
@@ -567,11 +409,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstCallSize callSize = new AstCallSize();
         this.tree.put(ctx, callSize);
     }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
     @Override public void exitCallSize(MentalParser.CallSizeContext ctx) { }
     /**
 	 * {@inheritDoc}
@@ -582,14 +419,7 @@ public class BuildTreeListener extends MentalBaseListener {
         AstEmptyStatement emptyStatement = new AstEmptyStatement();
         this.tree.put(ctx, emptyStatement);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEmptyStatement(MentalParser.EmptyStatementContext ctx) {
-
-    }
+	@Override public void exitEmptyStatement(MentalParser.EmptyStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -599,11 +429,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstIfStatement ifStatement = new AstIfStatement();
         this.tree.put(ctx, ifStatement);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitIfStatement(MentalParser.IfStatementContext ctx) {
         AstIfStatement thisStatement = (AstIfStatement) this.tree.get(ctx);
         thisStatement.condition = (AstExpression) this.tree.get(ctx.expression());
@@ -624,11 +449,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstIfStatement ifElseStatement = new AstIfStatement();
         this.tree.put(ctx, ifElseStatement);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitIfElseStatement(MentalParser.IfElseStatementContext ctx) {
         AstIfStatement thisStatement = (AstIfStatement) this.tree.get(ctx);
         thisStatement.condition = (AstExpression) this.tree.get(ctx.expression());
@@ -651,11 +471,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstForStatement forStatement = new AstForStatement();
         this.tree.put(ctx, forStatement);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitForStatement(MentalParser.ForStatementContext ctx) {
         AstForStatement thisStatement = (AstForStatement) this.tree.get(ctx);
         thisStatement.start = (AstExpression) this.tree.get(ctx.start);
@@ -680,11 +495,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstWhileStatement whileStatement = new AstWhileStatement();
         this.tree.put(ctx, whileStatement);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitWhileStatement(MentalParser.WhileStatementContext ctx) {
         AstWhileStatement thisStatement = (AstWhileStatement) this.tree.get(ctx);
         thisStatement.cond = (AstExpression) this.tree.get(ctx.cond);
@@ -714,11 +524,6 @@ public class BuildTreeListener extends MentalBaseListener {
         }
         this.tree.put(ctx, jumpStatement);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitJumpStatement(MentalParser.JumpStatementContext ctx) {
         AstJumpStatement thisStatement = (AstJumpStatement) this.tree.get(ctx);
         if (thisStatement.variant == AstJumpStatement.BREAK || thisStatement.variant == AstJumpStatement.CONTINUE) {
@@ -760,11 +565,6 @@ public class BuildTreeListener extends MentalBaseListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterExpressionStatement(MentalParser.ExpressionStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitExpressionStatement(MentalParser.ExpressionStatementContext ctx) {
         AstExpressionStatement expressionStatement = new AstExpressionStatement();
         expressionStatement.expression = (AstExpression) this.tree.get(ctx.expression());
@@ -779,11 +579,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstBitXorExpression bitXorExpression = new AstBitXorExpression();
         this.tree.put(ctx, bitXorExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitBIT_XOR_EXPRESSION(MentalParser.BIT_XOR_EXPRESSIONContext ctx) {
         AstBitXorExpression thisExpression = (AstBitXorExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -807,11 +602,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstLogicalNotExpression expression = new AstLogicalNotExpression();
         this.tree.put(ctx, expression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitLOGICAL_NOT_EXPRESSION(MentalParser.LOGICAL_NOT_EXPRESSIONContext ctx) {
         AstLogicalNotExpression thisExpression = (AstLogicalNotExpression) this.tree.get(ctx);
         thisExpression.childExpression = (AstExpression) this.tree.get(ctx.expression());
@@ -830,11 +620,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstMemberAccessExpression memberAccessExpression = new AstMemberAccessExpression();
         this.tree.put(ctx, memberAccessExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitMEMBER_ACCESS_EXPRESSION(MentalParser.MEMBER_ACCESS_EXPRESSIONContext ctx) {
         AstMemberAccessExpression thisExpression = (AstMemberAccessExpression) this.tree.get(ctx);
         thisExpression.primaryExpression = (AstExpression) this.tree.get(ctx.expression());
@@ -908,12 +693,8 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+    // TODO
 	@Override public void enterFUNCTION_CALL(MentalParser.FUNCTION_CALLContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitFUNCTION_CALL(MentalParser.FUNCTION_CALLContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -925,11 +706,6 @@ public class BuildTreeListener extends MentalBaseListener {
         additiveExpression.op = ctx.op.getType();
         this.tree.put(ctx, additiveExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitADDITIVE_EXPRESSION(MentalParser.ADDITIVE_EXPRESSIONContext ctx) {
         AstAdditiveExpression thisExpression = (AstAdditiveExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -986,11 +762,6 @@ public class BuildTreeListener extends MentalBaseListener {
 		}
         this.tree.put(ctx, creationExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitCREATION_EXPRESSION(MentalParser.CREATION_EXPRESSIONContext ctx) {
         AstCreationExpression thisExpression = (AstCreationExpression) this.tree.get(ctx);
 		if (ctx.expression() != null) {
@@ -1046,11 +817,6 @@ public class BuildTreeListener extends MentalBaseListener {
         }
         this.tree.put(ctx, relationExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitRELATION_EXPRESSION(MentalParser.RELATION_EXPRESSIONContext ctx) {
         AstRelationExpression thisExpression = (AstRelationExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -1079,11 +845,6 @@ public class BuildTreeListener extends MentalBaseListener {
         equalityExpression.op = ctx.op.getType();
         this.tree.put(ctx, equalityExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitEQUALITY_EXPRESSION(MentalParser.EQUALITY_EXPRESSIONContext ctx) {
         AstEqualityExpression thisExpression = (AstEqualityExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -1106,11 +867,6 @@ public class BuildTreeListener extends MentalBaseListener {
         intLiteral.literalContext = Integer.parseInt(ctx.getText());
         this.tree.put(ctx, intLiteral);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitINT_LITERAL(MentalParser.INT_LITERALContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1137,11 +893,6 @@ public class BuildTreeListener extends MentalBaseListener {
         }
         this.tree.put(ctx, identifier);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitIDENTIFIER(MentalParser.IDENTIFIERContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1153,11 +904,6 @@ public class BuildTreeListener extends MentalBaseListener {
         suffixExpression.op = ctx.op.getType();
         this.tree.put(ctx, suffixExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) {
         AstSuffixExpression thisExpression = (AstSuffixExpression) this.tree.get(ctx);
         thisExpression.childExpression = (AstExpression) this.tree.get(ctx.expression());
@@ -1183,11 +929,6 @@ public class BuildTreeListener extends MentalBaseListener {
         mulDivExpression.op = ctx.op.getType();
         this.tree.put(ctx, mulDivExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx) {
         AstMulDivExpression thisExpression = (AstMulDivExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -1210,11 +951,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstLogicalOrExpression logicalOrExpression = new AstLogicalOrExpression();
         this.tree.put(ctx, logicalOrExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx) {
         AstLogicalOrExpression thisExpression = (AstLogicalOrExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -1238,11 +974,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstAssignExpression assignExpression = new AstAssignExpression();
         this.tree.put(ctx, assignExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx) {
         AstAssignExpression thisExpression = (AstAssignExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -1270,11 +1001,6 @@ public class BuildTreeListener extends MentalBaseListener {
 	@Override public void enterNULL(MentalParser.NULLContext ctx) {
 		this.tree.put(ctx, new AstNullConstant());
 	}
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitNULL(MentalParser.NULLContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1286,11 +1012,6 @@ public class BuildTreeListener extends MentalBaseListener {
         node.boolConstant = true;
         this.tree.put(ctx, node);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitTRUE(MentalParser.TRUEContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1301,11 +1022,6 @@ public class BuildTreeListener extends MentalBaseListener {
 		AstBitOrExpression bitOrExpression = new AstBitOrExpression();
         this.tree.put(ctx, bitOrExpression);
 	}
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx) {
         AstBitOrExpression thisExpression = (AstBitOrExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -1329,11 +1045,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstLogicalAndExpression logicalAndExpression = new AstLogicalAndExpression();
         this.tree.put(ctx, logicalAndExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx) {
         AstLogicalAndExpression thisExpression = (AstLogicalAndExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -1358,11 +1069,6 @@ public class BuildTreeListener extends MentalBaseListener {
         bitShiftExpression.op = ctx.op.getType();
         this.tree.put(ctx, bitShiftExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitBIT_SHIFT_EXPRESSION(MentalParser.BIT_SHIFT_EXPRESSIONContext ctx) {
         AstBitShiftExpression thisExpression = (AstBitShiftExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -1387,11 +1093,6 @@ public class BuildTreeListener extends MentalBaseListener {
         prefixExpression.op = ctx.op.getType();
         this.tree.put(ctx, prefixExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitPREFIX_INC_DEC_EXPRESSION(MentalParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) {
         AstPrefixExpression thisExpression = (AstPrefixExpression) this.tree.get(ctx);
         thisExpression.childExpression = (AstExpression) this.tree.get(ctx.expression());
@@ -1414,11 +1115,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstArraySubscriptingExpression arraySubscriptingExpression = new AstArraySubscriptingExpression();
         this.tree.put(ctx, arraySubscriptingExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitARRAY_SUBSCRIPTING_EXPRESSION(MentalParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx) {
         AstArraySubscriptingExpression thisExpression = (AstArraySubscriptingExpression) this.tree.get(ctx);
         thisExpression.primaryExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -1451,11 +1147,6 @@ public class BuildTreeListener extends MentalBaseListener {
         AstSubgroupExpression subgroupExpression = new AstSubgroupExpression();
         this.tree.put(ctx, subgroupExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitSUBGROUP_EXPRESSION(MentalParser.SUBGROUP_EXPRESSIONContext ctx) {
         AstSubgroupExpression thisExpression = (AstSubgroupExpression) this.tree.get(ctx);
         thisExpression.childExpression = (AstExpression) this.tree.get(ctx.expression());
@@ -1471,11 +1162,6 @@ public class BuildTreeListener extends MentalBaseListener {
 		AstBitAndExpression bitAndExpression = new AstBitAndExpression();
         this.tree.put(ctx, bitAndExpression);
 	}
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx) {
         AstBitAndExpression thisExpression = (AstBitAndExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
@@ -1500,11 +1186,6 @@ public class BuildTreeListener extends MentalBaseListener {
         stringLiteral.literalContext = ctx.getText();
         this.tree.put(ctx, stringLiteral);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitSTRING_LITERAL(MentalParser.STRING_LITERALContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1516,11 +1197,6 @@ public class BuildTreeListener extends MentalBaseListener {
         node.boolConstant = false;
         this.tree.put(ctx, node);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitFALSE(MentalParser.FALSEContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1532,11 +1208,6 @@ public class BuildTreeListener extends MentalBaseListener {
         unaryAdditiveExpression.op = ctx.op.getType();
         this.tree.put(ctx, unaryAdditiveExpression);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) {
         AstUnaryAdditiveExpression thisExpression = (AstUnaryAdditiveExpression) this.tree.get(ctx);
         AstExpression childExpression = (AstExpression) this.tree.get(ctx.expression());
@@ -1552,12 +1223,8 @@ public class BuildTreeListener extends MentalBaseListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+    // TODO
 	@Override public void enterExpressionList(MentalParser.ExpressionListContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitExpressionList(MentalParser.ExpressionListContext ctx) { }
 
 	/**
@@ -1566,23 +1233,8 @@ public class BuildTreeListener extends MentalBaseListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterEveryRule(ParserRuleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void exitEveryRule(ParserRuleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void visitTerminal(TerminalNode node) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void visitErrorNode(ErrorNode node) {
         System.err.println("fatal: there is an error in grammar analysis.");
         System.exit(-1);
