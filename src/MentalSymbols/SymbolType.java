@@ -12,20 +12,21 @@ import java.util.HashMap;
 public class SymbolType extends SymbolBase {
     public MentalType type;
     public SymbolType() {
-        this.type = new MentalType();
-    }
-    public SymbolType(MentalType type) {
-        this.type = type;
+        this.type = new MentalClass();
     }
     public SymbolType(SymbolType other) {
         this.type = other.type;
     }
-    public SymbolType(SymbolTable scope, MentalParser.ClassDeclarationContext classDeclCtx) {
+    public void setType(MentalType type) {
+        this.type = type;
+    }
+    public boolean setType(SymbolTable scope, MentalParser.ClassDeclarationContext classDeclCtx) {
+        boolean existError = false;
         this.stackLayer = scope.stackLayer;
         HashMap<String, MentalType> classComponents = new HashMap<String, MentalType>();
-        this.type = new MentalClass(classComponents);
+        ((MentalClass) this.type).setClassComponents(classComponents);
         // Get className
-        ((MentalClass)this.type).className = classDeclCtx.className().getText();
+        ((MentalClass) this.type).className = classDeclCtx.className().getText();
         // Process class components
         for (int i = 0, varCount = classDeclCtx.variableDefinition().size(); i < varCount; ++i) {
             // for each variable definition
@@ -39,7 +40,7 @@ public class SymbolType extends SymbolBase {
             if (!(varDefCtx.type().typeName().getText().equals(classDeclCtx.className().getText()))) {
                 if (baseType == null || !(baseType instanceof SymbolType)) {
                     System.err.println("fatal: declarate a variable with bad type.");
-                    System.exit(-1);
+                    existError = true;
                 }
             }
 
@@ -73,10 +74,11 @@ public class SymbolType extends SymbolBase {
                 } else {
                     // exit if redefinition occurs.
                     System.err.println("fatal: redefine a member " + id + " in class " + ((MentalClass) this.type).className);
-                    System.exit(-1);
+                    existError = true;
                 }
             }
         }
+        return existError;
     }
     @Override
     public String toString() {

@@ -9,7 +9,7 @@ public class AstStatement extends AstBaseNode {
     public AstStatement() { }
     @Override
     public String toString() {
-        return "<loopBody>";
+        return "<statement>";
     }
     @Override
     public boolean equals(Object other) {

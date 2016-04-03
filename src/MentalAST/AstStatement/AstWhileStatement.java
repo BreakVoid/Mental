@@ -13,6 +13,13 @@ public class AstWhileStatement extends AstStatement {
         this.loopBody = null;
     }
     @Override
+    public String toPrintString(int indent) {
+        String ret = addIndent(indent) + "<while expression>\n";
+        ret += addIndent(indent + 1) + "<condition expression>\n" + this.cond.toPrintString(indent + 2) + "\n";
+        ret += addIndent(indent + 1) + "<loop body>\n" + this.loopBody.toPrintString(indent + 2);
+        return ret;
+    }
+    @Override
     public String toString() {
         return "<while loopBody>";
     }

@@ -28,14 +28,26 @@ public class SymbolTable {
     public SymbolTable() {
         this.stackLayer = 0;
         this.table = new HashMap<>();
-        this.table.put("int", new SymbolType(mentalInt));
-        this.table.get("int").stackLayer = 65536;
-        this.table.put("string", new SymbolType(mentalString));
-        this.table.get("string").stackLayer = 65536;
-        this.table.put("bool", new SymbolType(mentalBool));
-        this.table.get("bool").stackLayer = 65536;
-        this.table.put("void", new SymbolType(mentalVoid));
-        this.table.get("void").stackLayer = 65536;
+        SymbolType symbolInt = new SymbolType();
+
+        symbolInt.setType(mentalInt);
+        symbolInt.stackLayer = 65535;
+        this.table.put("int", symbolInt);
+
+        SymbolType symbolString = new SymbolType();
+        symbolString.setType(mentalString);
+        symbolString.stackLayer = 65535;
+        this.table.put("string", symbolString);
+
+        SymbolType symbolBool = new SymbolType();
+        symbolBool.setType(mentalBool);
+        symbolBool.stackLayer = 65535;
+        this.table.put("bool", symbolBool);
+
+        SymbolType symbolVoid = new SymbolType();
+        symbolVoid.setType(mentalVoid);
+        symbolVoid.stackLayer = 65535;
+        this.table.put("void", symbolVoid);
     }
     public SymbolTable(SymbolTable other) {
         this.stackLayer = other.stackLayer;

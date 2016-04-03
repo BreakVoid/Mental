@@ -28,7 +28,8 @@ public class SymbolFunction extends SymbolBase {
         this.functionName = other.functionName;
     }
     // Constructor a function symbol from a given scope and FunctionDefinitionContext.
-    public SymbolFunction(SymbolTable scope, MentalParser.FunctionDefinitionContext funcDefCtx) {
+    public boolean setFunction(SymbolTable scope, MentalParser.FunctionDefinitionContext funcDefCtx) {
+        boolean existError = false;
         this.stackLayer = scope.stackLayer;
         // Set the name of the function.
         this.functionName = funcDefCtx.functionName.getText();
@@ -42,7 +43,7 @@ public class SymbolFunction extends SymbolBase {
             SymbolBase baseType = scope.getSymbol(funcDefCtx.type().typeName().getText());
             if (baseType == null || !(baseType instanceof SymbolType)) {
                     System.err.println("fatal: no such a type " + funcDefCtx.type().typeName().getText());
-                    System.exit(-1);
+                    existError = true;
             }
             if (funcDefCtx.type().array().size() != 0) {
                 this.returnType = new MentalArray(funcDefCtx.type());
@@ -72,7 +73,7 @@ public class SymbolFunction extends SymbolBase {
                 SymbolBase baseType = scope.getSymbol(typeCtx.typeName().getText());
                 if (baseType == null || !(baseType instanceof SymbolType)) {
                     System.err.println("fatal: no such a type " + funcDefCtx.type().typeName().getText());
-                    System.exit(-1);
+                    existError = true;
                 }
                 if (typeCtx.array().size() != 0) {
                     type = new MentalArray(typeCtx);
@@ -88,6 +89,7 @@ public class SymbolFunction extends SymbolBase {
                 parameterType.add(type);
             }
         }
+        return existError;
     }
     @Override
     public String toString() {

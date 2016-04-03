@@ -10,4 +10,11 @@ public class AstCallPrintln extends AstStatement {
     public AstCallPrintln() {
         this.parameter = null;
     }
+    @Override
+    public String toPrintString(int indent) {
+        String ret = "";
+        ret += addIndent(indent) + "<internal function call>:println(str)" + "\n";
+        ret += this.parameter.toPrintString(indent + 1);
+        return ret;
+    }
 }

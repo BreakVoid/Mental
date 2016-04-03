@@ -16,7 +16,7 @@ public class MentalClass extends MentalType {
         this.className = other.className;
         this.classComponents = new HashMap<>(other.classComponents);
     }
-    public MentalClass(HashMap<String, MentalType> types) {
+    public void setClassComponents(HashMap<String, MentalType> types) {
         this.classComponents = types;
         this.className = "";
     }
