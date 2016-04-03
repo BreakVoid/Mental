@@ -9,4 +9,8 @@ public class AstCallGetInt extends AstExpression {
     public AstCallGetInt() {
         this.returnType = SymbolTable.mentalInt;
     }
+    @Override
+    public String toPrintString(int indent) {
+        return addIndent(indent) + "<getInt()>:int";
+    }
 }

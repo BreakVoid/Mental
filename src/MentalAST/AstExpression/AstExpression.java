@@ -20,7 +20,7 @@ public class AstExpression extends AstBaseNode {
     }
     @Override
     public String toString() {
-        return "<childExpression>";
+        return "<unknown expression>";
     }
     @Override
     public boolean equals(Object other) {

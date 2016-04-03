@@ -10,4 +10,12 @@ public class AstBitNotExpression extends AstUnaryExpression {
         this.childExpression = null;
         this.returnType = SymbolTable.mentalInt;
     }
+
+    @Override
+    public String toPrintString(int indent) {
+        String ret = addIndent(indent) + "<bit not expression>:int\n";
+        ret += this.childExpression.toPrintString(indent + 1);
+        return ret;
+    }
+
 }

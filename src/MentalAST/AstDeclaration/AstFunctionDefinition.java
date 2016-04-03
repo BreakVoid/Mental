@@ -17,7 +17,9 @@ public class AstFunctionDefinition extends AstDeclaration {
     public String toPrintString(int indent) {
         String ret = addIndent(indent) + "<begin>function\n";
         ret += addIndent(indent + 1) + "<format>" + this.functionHead.toString().substring(10) + '\n';
-        ret += this.functionBody.toPrintString(indent + 1) + '\n';
+        ret += addIndent(indent + 1) + "<begin function body>\n";
+        ret += this.functionBody.toPrintString(indent + 2) + '\n';
+        ret += addIndent(indent + 1) + "<end function body>\n";
         ret += addIndent(indent) + "<end>function";
         return ret;
     }

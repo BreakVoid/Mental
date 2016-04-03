@@ -9,4 +9,10 @@ public class AstCallToString extends AstUnaryExpression {
     public AstCallToString() {
         this.returnType = SymbolTable.mentalString;
     }
+    @Override
+    public String toPrintString(int indent) {
+        String ret = addIndent(indent) + "<toString(int)>:string\n";
+        ret += this.childExpression.toPrintString(indent + 1);
+        return ret;
+    }
 }

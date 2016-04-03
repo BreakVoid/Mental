@@ -8,4 +8,10 @@ public class AstSubgroupExpression extends AstExpression {
     public AstSubgroupExpression() {
         this.childExpression = null;
     }
+    @Override
+    public String toPrintString(int indent) {
+        String ret = addIndent(indent) + "<subgroup expression>:" + this.returnType.toString() + "\n";
+        ret += this.childExpression.toPrintString(indent + 1);
+        return ret;
+    }
 }

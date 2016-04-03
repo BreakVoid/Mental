@@ -16,4 +16,14 @@ public class AstSuffixExpression extends AstExpression {
         this.returnType = SymbolTable.mentalInt;
         this.childExpression = new AstExpression();
     }
+    @Override
+    public String toPrintString(int indent) {
+        String ret = addIndent(indent) + "<suffix expression (";
+        if (op == PLUS_PLUS) {
+            ret += "++)>:int\n" + this.childExpression.toPrintString(indent + 1);
+        } else {
+            ret += "--)>:int\n" + this.childExpression.toPrintString(indent + 1);
+        }
+        return ret;
+    }
 }

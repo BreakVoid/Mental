@@ -23,7 +23,7 @@ public class AstSingleVariableDeclaration extends AstDeclaration {
         String ret = "";
         ret += addIndent(indent) + "<variable>" + this.variable.toString();
         if (this.initializeExpression != null) {
-            ret += "\n" + addIndent(indent + 1) + "<initial value>:\n" + this.initializeExpression.toPrintString(indent + 2);
+            ret += "\n" + addIndent(indent + 1) + "<initial value>\n" + this.initializeExpression.toPrintString(indent + 2);
         }
         return ret;
     }

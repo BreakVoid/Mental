@@ -572,9 +572,9 @@ public class BuildTreeListener extends MentalBaseListener {
 	@Override public void enterJumpStatement(MentalParser.JumpStatementContext ctx) {
         AstJumpStatement jumpStatement = new AstJumpStatement();
         if (ctx.expression() == null) {
-            if (ctx.getText().equals("continue")) {
+            if (ctx.getText().equals("continue;")) {
                 jumpStatement.variant = AstJumpStatement.CONTINUE;
-            } else {
+            } else if (ctx.getText().equals("break;")) {
                 jumpStatement.variant = AstJumpStatement.BREAK;
             }
         } else {

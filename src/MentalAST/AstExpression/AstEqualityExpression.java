@@ -19,11 +19,10 @@ public class AstEqualityExpression extends AstBinaryExpression {
     public String toPrintString(int indent) {
         String ret = addIndent(indent) + "<equality expression";
         if (this.op == EQUAL) {
-            ret += "(==)";
+            ret += "(==)\n";
         } else {
-            ret += "(!=)";
+            ret += "(!=)\n";
         }
-        ret += ">\n";
         ret += this.leftExpression.toPrintString(indent + 1) + '\n';
         ret += this.rightExpression.toPrintString(indent + 1);
         return ret;

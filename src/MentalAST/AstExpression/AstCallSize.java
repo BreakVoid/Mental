@@ -9,4 +9,8 @@ public class AstCallSize extends AstExpression {
     public AstCallSize() {
         this.returnType = SymbolTable.mentalInt;
     }
+    @Override
+    public String toPrintString(int indent) {
+        return addIndent(indent) + "<array.size()>:int";
+    }
 }

@@ -8,4 +8,8 @@ public class AstUnaryExpression extends AstExpression {
     public AstUnaryExpression() {
         this.childExpression = null;
     }
+    @Override
+    public String toPrintString(int indent) {
+        return addIndent(indent) + "<unknown unary expression>";
+    }
 }

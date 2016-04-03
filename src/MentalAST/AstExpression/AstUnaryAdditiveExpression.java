@@ -15,4 +15,15 @@ public class AstUnaryAdditiveExpression extends AstUnaryExpression {
         this.childExpression = null;
         this.returnType = SymbolTable.mentalInt;
     }
+    @Override
+    public String toPrintString(int indent) {
+        String ret = addIndent(indent) + "<unary additive expression (";
+        if (this.op == ADD) {
+            ret += "+):int\n";
+        } else {
+            ret += "-):int\n";
+        }
+        ret += this.childExpression.toPrintString(indent + 1);
+        return ret;
+    }
 }

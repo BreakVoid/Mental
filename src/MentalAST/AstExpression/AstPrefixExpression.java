@@ -17,11 +17,11 @@ public class AstPrefixExpression extends AstUnaryExpression {
     }
     @Override
     public String toPrintString(int indent) {
-        String ret = addIndent(indent) + "<prefix expression>:";
+        String ret = addIndent(indent) + "<prefix expression (";
         if (op == PLUS_PLUS) {
-            ret += "++\n" + this.childExpression.toPrintString(indent + 1);
+            ret += "++)>:int\n" + this.childExpression.toPrintString(indent + 1);
         } else {
-            ret += "--\n" + this.childExpression.toPrintString(indent + 1);
+            ret += "--)>:int\n" + this.childExpression.toPrintString(indent + 1);
         }
         return ret;
     }

@@ -21,15 +21,14 @@ public class AstRelationExpression extends AstBinaryExpression {
     public String toPrintString(int indent) {
         String ret = AstBaseNode.addIndent(indent) + "<relation expression";
         if (this.op == LESS) {
-            ret += "(<)";
+            ret += "(<):bool\n";
         } else if (this.op == LESS_EQ) {
-            ret += "(<=)";
+            ret += "(<=):bool\n";
         } else if (this.op == GREATER) {
-            ret += "(>)";
+            ret += "(>):bool\n";
         } else {
-            ret += "(>=)";
+            ret += "(>=):bool\n";
         }
-        ret += ">\n";
         ret += this.leftExpression.toPrintString(indent + 1) + '\n';
         ret += this.rightExpression.toPrintString(indent + 1);
         return ret;
