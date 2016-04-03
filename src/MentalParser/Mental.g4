@@ -199,7 +199,7 @@ expressionStatement
 expression
 	: '(' expression ')'
     #SUBGROUP_EXPRESSION
-	|'new' typeName ('[' expression ']')*
+	|'new' typeName ('[' expression ']')* array*
 	#CREATION_EXPRESSION
 	| expression '[' expression ']'
 	#ARRAY_SUBSCRIPTING_EXPRESSION

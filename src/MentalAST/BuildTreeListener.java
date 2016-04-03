@@ -870,7 +870,8 @@ public class BuildTreeListener extends MentalBaseListener {
 	@Override public void enterCREATION_EXPRESSION(MentalParser.CREATION_EXPRESSIONContext ctx) {
         AstCreationExpression creationExpression = new AstCreationExpression();
 		SymbolType type = (SymbolType) this.curSymbolTable.getSymbol(ctx.typeName().getText());
-		if (ctx.expression() == null || ctx.expression().size() == 0) {
+		if ((ctx.expression() == null || ctx.expression().size() == 0)
+                && (ctx.array() == null || ctx.array().size() == 0)) {
 			creationExpression.returnType = type.type;
             creationExpression.baseType = type.type;
 			creationExpression.expressionList = null;
@@ -885,8 +886,13 @@ public class BuildTreeListener extends MentalBaseListener {
 		} else {
 			creationExpression.returnType = new MentalArray();
             creationExpression.baseType = type.type;
+            creationExpression.resultDim = ctx.expression().size() + ctx.array().size();
+            creationExpression.determinedDim = ctx.expression().size();
 			((MentalArray) creationExpression.returnType).arrayType = type.type;
-			((MentalArray) creationExpression.returnType).arrayDim = ctx.expression().size();
+			((MentalArray) creationExpression.returnType).arrayDim = creationExpression.resultDim;
+            if (creationExpression.determinedDim == 0) {
+                System.err.println("warning: this new expression does nothing.\n\t" + ctx.toStringTree(new MentalParser(null)));
+            }
 		}
         this.tree.put(ctx, creationExpression);
     }

@@ -1,10 +1,12 @@
 int main() {
-    A1 aa;
+    A1[] aa = new A1 [5];
+    aa[1].a2.a3.num=123;
     for (;;)break;
-    K(aa);
+    K(aa[2]);
     int a = 0, b = a, c = b;
     if (a == b) {
-
+        int[][] arr = new int [8] [];
+        arr[1] = new int [4];
     } else {
 
     }
