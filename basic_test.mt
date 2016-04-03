@@ -52,6 +52,7 @@ int main(){
 	int c = 1;
 	int year = 2016;
 	string tell = "wukefengggao\n";;
+	int tellLength = tell.length();
 	Mo tellnoo = null;
 	bool zici = true;
 	bool nozici = false;
