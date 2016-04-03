@@ -11,7 +11,7 @@ public class AstPrefixExpression extends AstUnaryExpression {
     public static final int MINUS_MINUS = MentalParser.DEC;
     public int op;
     public AstPrefixExpression() {
-        this.leftValue = true;
+        this.leftValue = false;
         this.op = 0;
         this.returnType = SymbolTable.mentalInt;
     }

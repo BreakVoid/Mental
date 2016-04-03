@@ -961,7 +961,7 @@ public class BuildTreeListener extends MentalBaseListener {
             }
         }
         System.err.println("fatal: the types of relation expression cannot accept. " + ctx.getText());
-        System.exit(-1);
+        this.existError = true;
     }
 	/**
 	 * {@inheritDoc}
