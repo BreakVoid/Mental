@@ -874,6 +874,14 @@ public class BuildTreeListener extends MentalBaseListener {
 			creationExpression.returnType = type.type;
             creationExpression.baseType = type.type;
 			creationExpression.expressionList = null;
+
+            if (creationExpression.returnType.equals(SymbolTable.mentalInt)
+                    || creationExpression.returnType.equals(SymbolTable.mentalBool)
+                    || creationExpression.returnType.equals(SymbolTable.mentalString)
+                    ) {
+                System.err.println("fatal: new a object of basic type is unaccepted.\n\t" + ctx.getText());
+                this.existError = true;
+            }
 		} else {
 			creationExpression.returnType = new MentalArray();
             creationExpression.baseType = type.type;

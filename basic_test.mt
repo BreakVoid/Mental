@@ -3,6 +3,11 @@ int main() {
     for (;;)break;
     K(aa);
     int a = 0, b = a, c = b;
+    if (a == b) {
+
+    } else {
+
+    }
     return 0;
 }
 
