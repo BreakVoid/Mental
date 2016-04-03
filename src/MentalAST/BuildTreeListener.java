@@ -129,6 +129,20 @@ public class BuildTreeListener extends MentalBaseListener {
 		AstClassDeclaration classDeclaration = new AstClassDeclaration();
         classDeclaration.classDetail = (SymbolType) this.curSymbolTable.getSymbol(ctx.className().getText());
         this.tree.put(ctx, classDeclaration);
+        if (ctx.variableDefinition() != null) {
+            for (int i = 0, count = ctx.variableDefinition().size(); i < count; ++i) {
+                MentalParser.VariableDefinitionContext variableDefinitionContext = ctx.variableDefinition(i);
+                if (variableDefinitionContext.singleVariable() != null) {
+                    for (int j = 0, varCount = variableDefinitionContext.singleVariable().size(); j < varCount; ++j) {
+                        MentalParser.SingleVariableContext singleVariableContext = variableDefinitionContext.singleVariable(j);
+                        if (singleVariableContext.expression() != null) {
+                            System.err.println("warning: variable declaration in class declaration should not have initial value\n\t"
+                                    + "which will ignored.:\n\t\t" + singleVariableContext.getText());
+                        }
+                    }
+                }
+            }
+        }
 	}
 	@Override public void exitClassDeclaration(MentalParser.ClassDeclarationContext ctx) {	}
 	/**
@@ -228,6 +242,9 @@ public class BuildTreeListener extends MentalBaseListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) {
+        if (ctx.parent instanceof MentalParser.ClassDeclarationContext) {
+            return;
+        }
 		this.beginScope();
         AstFunctionDefinition functionDefinition = new AstFunctionDefinition();
         functionDefinition.functionHead = (SymbolFunction) this.curSymbolTable.getSymbol(ctx.functionName.getText());
@@ -245,6 +262,9 @@ public class BuildTreeListener extends MentalBaseListener {
         }
 	}
 	@Override public void exitFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) {
+        if (ctx.parent instanceof MentalParser.ClassDeclarationContext) {
+            return;
+        }
         this.endScope();
         AstFunctionDefinition functionDefinition = (AstFunctionDefinition) this.tree.get(ctx);
         functionDefinition.functionBody = (AstComponentStatement) this.tree.get(ctx.compoundStatement());

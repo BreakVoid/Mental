@@ -31,7 +31,17 @@ class A2 {
 }
 
 class A3 {
-    int num;
-    int[] nums;
+    int num = 1;
+    int[] nums = null;
+    void k() {
+
+    }
 }
 
+int size() {
+    return 1;
+}
+
+class A4 {
+
+}

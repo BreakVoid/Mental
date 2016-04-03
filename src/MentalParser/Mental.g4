@@ -88,7 +88,7 @@ declaration
 	;
 
 classDeclaration
-	: 'class' name=className? '{' variableDefinition* '}'
+	: 'class' name=className? '{' (variableDefinition | functionDefinition)* '}'
 	;
 
 functionDeclaration
