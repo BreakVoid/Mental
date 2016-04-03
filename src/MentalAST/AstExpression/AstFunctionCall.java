@@ -8,9 +8,11 @@ import MentalSymbols.SymbolFunction;
  */
 public class AstFunctionCall extends AstExpression {
     public SymbolFunction functionHead;
+    public String functionName;
     public AstExpressionList parameters;
     public AstFunctionCall() {
         this.functionHead = null;
+        this.functionName = null;
         this.parameters = null;
     }
     @Override

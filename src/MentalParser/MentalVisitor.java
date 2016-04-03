@@ -107,66 +107,6 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(MentalParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MentalParser#callPrint}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCallPrint(MentalParser.CallPrintContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MentalParser#callPrintln}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCallPrintln(MentalParser.CallPrintlnContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MentalParser#callGetString}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCallGetString(MentalParser.CallGetStringContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MentalParser#callGetInt}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCallGetInt(MentalParser.CallGetIntContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MentalParser#callToString}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCallToString(MentalParser.CallToStringContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MentalParser#callSubString}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCallSubString(MentalParser.CallSubStringContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MentalParser#callLength}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCallLength(MentalParser.CallLengthContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MentalParser#callParseInt}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCallParseInt(MentalParser.CallParseIntContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MentalParser#callOrd}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCallOrd(MentalParser.CallOrdContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MentalParser#callSize}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCallSize(MentalParser.CallSizeContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link MentalParser#emptyStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -377,13 +317,6 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code INTERNAL_FUNCTION_CALL}
-	 * labeled alternative in {@link MentalParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitINTERNAL_FUNCTION_CALL(MentalParser.INTERNAL_FUNCTION_CALLContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code STRING_LITERAL}
 	 * labeled alternative in {@link MentalParser#expression}.
 	 * @param ctx the parse tree
@@ -404,6 +337,12 @@ public interface MentalVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MentalParser#functionCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionCall(MentalParser.FunctionCallContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MentalParser#expressionList}.
 	 * @param ctx the parse tree

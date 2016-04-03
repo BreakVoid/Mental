@@ -316,10 +316,6 @@ public class BuildTreeListener extends MentalBaseListener {
             this.tree.put(ctx, this.tree.get(ctx.compoundStatement()));
         } else if (ctx.emptyStatement() != null) {
             this.tree.put(ctx, this.tree.get(ctx.emptyStatement()));
-        } else if (ctx.callPrint() != null) {
-            this.tree.put(ctx, this.tree.get(ctx.callPrint()));
-        } else if (ctx.callPrintln() != null) {
-            this.tree.put(ctx, this.tree.get(ctx.callPrintln()));
         } else if (ctx.expressionStatement() != null) {
             this.tree.put(ctx, this.tree.get(ctx.expressionStatement()));
         } else if (ctx.forStatement() != null) {
@@ -331,159 +327,6 @@ public class BuildTreeListener extends MentalBaseListener {
         }
         this.tree.get(ctx).parent = this.tree.get(ctx.parent);
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCallPrint(MentalParser.CallPrintContext ctx) {
-        AstCallPrint callPrint = new AstCallPrint();
-        this.tree.put(ctx, callPrint);
-    }
-	@Override public void exitCallPrint(MentalParser.CallPrintContext ctx) {
-        AstCallPrint thisCall = (AstCallPrint) this.tree.get(ctx);
-        thisCall.parameter = (AstExpression) this.tree.get(ctx.expression());
-        thisCall.parameter.parent = thisCall;
-        if (!thisCall.parameter.returnType.equals(SymbolTable.mentalString)) {
-            System.err.println("fatal: print only accept string as parameter.\n\t" + ctx.getText());
-            this.existError = true;
-        }
-    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCallPrintln(MentalParser.CallPrintlnContext ctx) {
-        AstCallPrintln callPrintln = new AstCallPrintln();
-        this.tree.put(ctx, callPrintln);
-    }
-	@Override public void exitCallPrintln(MentalParser.CallPrintlnContext ctx) {
-        AstCallPrintln thisCall = (AstCallPrintln) this.tree.get(ctx);
-        thisCall.parameter = (AstExpression) this.tree.get(ctx.expression());
-        thisCall.parameter.parent = thisCall;
-        if (!thisCall.parameter.returnType.equals(SymbolTable.mentalString)) {
-            System.err.println("fatal: println only accept string as parameter.\n\t" + ctx.getText());
-            this.existError = true;
-        }
-    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCallGetString(MentalParser.CallGetStringContext ctx) {
-        AstCallGetString callGetString = new AstCallGetString();
-        this.tree.put(ctx, callGetString);
-    }
-	@Override public void exitCallGetString(MentalParser.CallGetStringContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCallGetInt(MentalParser.CallGetIntContext ctx) {
-        AstCallGetInt callGetInt = new AstCallGetInt();
-        this.tree.put(ctx, callGetInt);
-    }
-	@Override public void exitCallGetInt(MentalParser.CallGetIntContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCallToString(MentalParser.CallToStringContext ctx) {
-        AstCallToString callToString = new AstCallToString();
-        this.tree.put(ctx, callToString);
-    }
-	@Override public void exitCallToString(MentalParser.CallToStringContext ctx) {
-        AstCallToString thisCall = (AstCallToString) this.tree.get(ctx);
-        thisCall.childExpression = (AstExpression) this.tree.get(ctx.expression());
-        thisCall.childExpression.parent = thisCall;
-        if (!thisCall.childExpression.returnType.equals(SymbolTable.mentalInt)) {
-            System.err.println("fatal: the parameter of toString(int) call is not an integer.\n\t" + ctx.getText());
-            this.existError = true;
-        }
-    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCallSubString(MentalParser.CallSubStringContext ctx) {
-        AstCallSubString callSubString = new AstCallSubString();
-        this.tree.put(ctx, callSubString);
-    }
-	@Override public void exitCallSubString(MentalParser.CallSubStringContext ctx) {
-        AstCallSubString thisCall = (AstCallSubString) this.tree.get(ctx);
-        thisCall.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
-        thisCall.leftExpression.parent = thisCall;
-        thisCall.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
-        thisCall.rightExpression.parent = thisCall;
-        if (thisCall.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
-            if (thisCall.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
-                return;
-            }
-        }
-        System.err.println("fatal: at least one parameter in substring call is not integer.\n"
-                + "\t" + ctx.expression(0).getText() + "\n"
-                + "\t" + ctx.expression(1).getText()
-        );
-        this.existError = true;
-    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCallLength(MentalParser.CallLengthContext ctx) {
-        AstCallLength callLength = new AstCallLength();
-        this.tree.put(ctx, callLength);
-    }
-	@Override public void exitCallLength(MentalParser.CallLengthContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCallParseInt(MentalParser.CallParseIntContext ctx) {
-        AstCallParseInt callParseInt = new AstCallParseInt();
-        this.tree.put(ctx, callParseInt);
-    }
-	@Override public void exitCallParseInt(MentalParser.CallParseIntContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCallOrd(MentalParser.CallOrdContext ctx) {
-        AstCallOrd callOrd = new AstCallOrd();
-        this.tree.put(ctx, callOrd);
-    }
-	@Override public void exitCallOrd(MentalParser.CallOrdContext ctx) {
-        AstCallOrd thisCall = (AstCallOrd) this.tree.get(ctx);
-        thisCall.childExpression = (AstExpression) this.tree.get(ctx.expression());
-        thisCall.childExpression.parent = thisCall;
-        if (!(thisCall.childExpression.returnType instanceof MentalInt)) {
-            System.err.println("fatal: the parameter of ord(int) call is not an integer.\n\t" + ctx.getText());
-            this.existError = true;
-        }
-    }
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    @Override public void enterCallSize(MentalParser.CallSizeContext ctx) {
-        AstCallSize callSize = new AstCallSize();
-        this.tree.put(ctx, callSize);
-    }
-    @Override public void exitCallSize(MentalParser.CallSizeContext ctx) { }
-    /**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterEmptyStatement(MentalParser.EmptyStatementContext ctx) {
         AstEmptyStatement emptyStatement = new AstEmptyStatement();
         this.tree.put(ctx, emptyStatement);
@@ -702,49 +545,87 @@ public class BuildTreeListener extends MentalBaseListener {
         AstMemberAccessExpression thisExpression = (AstMemberAccessExpression) this.tree.get(ctx);
         thisExpression.primaryExpression = (AstExpression) this.tree.get(ctx.expression());
         thisExpression.primaryExpression.parent = thisExpression;
-        if (ctx.callLength() != null) {
-            if (thisExpression.primaryExpression.returnType instanceof MentalString) {
-                thisExpression.memberExpression = (AstExpression) this.tree.get(ctx.callLength());
-                thisExpression.memberExpression.parent = thisExpression;
-                thisExpression.returnType = SymbolTable.mentalInt;
-            } else {
-                System.err.println("fatal: try to apply length() method on other type except string.\n\t" + ctx.getText());
-                this.existError = true;
-            }
-        } else if (ctx.callSubString() != null) {
-            if (thisExpression.primaryExpression.returnType instanceof MentalString) {
-                thisExpression.memberExpression = (AstExpression) this.tree.get(ctx.callSubString());
-                thisExpression.memberExpression.parent = thisExpression;
-                thisExpression.returnType = SymbolTable.mentalString;
-            } else {
-                System.err.println("fatal: try to apply substring(int, int) method on other type except string.\n\t" + ctx.getText());
-                this.existError = true;
-            }
-        } else if (ctx.callOrd() != null) {
-            if (thisExpression.primaryExpression.returnType instanceof MentalString) {
-                thisExpression.memberExpression = (AstExpression) this.tree.get(ctx.callOrd());
-                thisExpression.memberExpression.parent = thisExpression;
-                thisExpression.returnType = SymbolTable.mentalInt;
-            } else {
-                System.err.println("fatal: try to apply ord(int) method on other type except string.\n\t" + ctx.getText());
-                this.existError = true;
-            }
-        } else if (ctx.callParseInt() != null) {
-            if (thisExpression.primaryExpression.returnType instanceof MentalString) {
-                thisExpression.memberExpression = (AstExpression) this.tree.get(ctx.callParseInt());
-                thisExpression.memberExpression.parent = thisExpression;
-                thisExpression.returnType = SymbolTable.mentalInt;
-            } else {
-                System.err.println("fatal: try to apply parseInt() method on other type except string.\n\t" + ctx.getText());
-                this.existError = true;
-            }
-        } else if (ctx.callSize() != null) {
-            if (thisExpression.primaryExpression.returnType instanceof MentalArray) {
-                thisExpression.memberExpression = (AstExpression) this.tree.get(ctx.callSize());
-                thisExpression.returnType = SymbolTable.mentalInt;
-            } else {
-                System.err.println("fatal: try to apply size() method on other type except array.\n\t" + ctx.getText());
-                this.existError = true;
+        if (ctx.functionCall() != null) {
+            AstFunctionCall functionCall = (AstFunctionCall) this.tree.get(ctx.functionCall());
+            if (ctx.functionCall().functionName.getText().equals("length")) {
+                if (thisExpression.primaryExpression.returnType instanceof MentalString) {
+                    thisExpression.memberExpression = new AstCallLength();
+                    thisExpression.memberExpression.parent = thisExpression;
+                    thisExpression.returnType = SymbolTable.mentalInt;
+                    if (functionCall.parameters.expressions.size() != 0) {
+                        System.err.println("fatal: the number of parameters of string.length is wrong.\n\t" + ctx.functionCall().getText());
+                        this.existError = true;
+                    }
+                } else {
+                    System.err.println("fatal: try to apply length() method on other type.\n\t" + ctx.getText());
+                    this.existError = true;
+                }
+            } else if (ctx.functionCall().functionName.getText().equals("substring")) {
+                if (thisExpression.primaryExpression.returnType instanceof MentalString) {
+                    thisExpression.memberExpression = new AstCallSubString();
+                    thisExpression.memberExpression.parent = thisExpression;
+                    thisExpression.returnType = SymbolTable.mentalString;
+                    if (functionCall.parameters.expressions.size() == 2) {
+                        ((AstCallSubString) thisExpression.memberExpression).leftExpression = functionCall.parameters.expressions.get(0);
+                        ((AstCallSubString) thisExpression.memberExpression).rightExpression = functionCall.parameters.expressions.get(1);
+                        if (!((AstCallSubString) thisExpression.memberExpression).leftExpression.returnType.equals(SymbolTable.mentalInt)) {
+                            System.err.println("fatal: the type of the first parameter of string.substring is not int.\n\t" + ctx.functionCall().getText());
+                        }
+                        if (!((AstCallSubString) thisExpression.memberExpression).rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                            System.err.println("fatal: the type of the second parameter of string.substring is not int.\n\t" + ctx.functionCall().getText());
+                        }
+                    } else {
+                        System.err.println("fatal: the number of parameters of string.substring is wrong.\n\t" + ctx.functionCall().getText());
+                        this.existError = true;
+                    }
+                } else {
+                    System.err.println("fatal: try to apply substring(int, int) method on other type.\n\t" + ctx.getText());
+                    this.existError = true;
+                }
+            } else if (ctx.functionCall().functionName.getText().equals("ord")) {
+                if (thisExpression.primaryExpression.returnType instanceof MentalString) {
+                    thisExpression.memberExpression = new AstCallOrd();
+                    thisExpression.memberExpression.parent = thisExpression;
+                    thisExpression.returnType = SymbolTable.mentalInt;
+                    if (functionCall.parameters.expressions.size() == 1) {
+                        ((AstCallOrd) thisExpression.memberExpression).childExpression = functionCall.parameters.expressions.get(0);
+                        if (!((AstCallOrd) thisExpression.memberExpression).childExpression.returnType.equals(SymbolTable.mentalInt)) {
+                            System.err.println("fatal: the type of the parameter of string.ord is not int.\n\t" + ctx.functionCall().getText());
+                        }
+                    } else {
+                        System.err.println("fatal: the number of parameters of string.ord is wrong.\n\t" + ctx.functionCall().getText());
+                        this.existError = true;
+                    }
+                } else {
+                    System.err.println("fatal: try to apply ord(int) method on other type except string.\n\t" + ctx.getText());
+                    this.existError = true;
+                }
+            } else if (ctx.functionCall().functionName.getText().equals("parseInt")) {
+                if (thisExpression.primaryExpression.returnType instanceof MentalString) {
+                    thisExpression.memberExpression = new AstCallParseInt();
+                    thisExpression.memberExpression.parent = thisExpression;
+                    thisExpression.returnType = SymbolTable.mentalInt;
+                    if (functionCall.parameters.expressions.size() != 0) {
+                        System.err.println("fatal: the number of parameters of string.parseInt is wrong.\n\t" + ctx.functionCall().getText());
+                        this.existError = true;
+                    }
+                } else {
+                    System.err.println("fatal: try to apply parseInt() method on other type except string.\n\t" + ctx.getText());
+                    this.existError = true;
+                }
+            } else if (ctx.functionCall().functionName.getText().equals("size")) {
+                if (thisExpression.primaryExpression.returnType instanceof MentalArray) {
+                    thisExpression.memberExpression = new AstCallSize();
+                    thisExpression.memberExpression.parent = thisExpression;
+                    thisExpression.returnType = SymbolTable.mentalInt;
+                    if (functionCall.parameters.expressions.size() != 0) {
+                        System.err.println("fatal: the number of parameters of array.size is wrong.\n\t" + ctx.functionCall().getText());
+                        this.existError = true;
+                    }
+                } else {
+                    System.err.println("fatal: try to apply size() method on other type except array.\n\t" + ctx.getText());
+                    this.existError = true;
+                }
             }
         } else {
             thisExpression.memberExpression = null;
@@ -774,26 +655,105 @@ public class BuildTreeListener extends MentalBaseListener {
 	@Override public void enterFUNCTION_CALL(MentalParser.FUNCTION_CALLContext ctx) {
         AstFunctionCall functionCall = new AstFunctionCall();
         this.tree.put(ctx, functionCall);
-        SymbolBase symbol = this.curSymbolTable.getSymbol(ctx.functionName.getText());
+        String functionName = ctx.functionCall().functionName.getText();
+        functionCall.functionName = functionName;
+        if (functionName.equals("print")
+                || functionName.equals("println")
+                || functionName.equals("getInt")
+                || functionName.equals("getString")
+                || functionName.equals("toString")) {
+            return ;
+        }
+        SymbolBase symbol = this.curSymbolTable.getSymbol(functionName);
         if (symbol != null) {
              if (symbol instanceof SymbolFunction) {
                  functionCall.functionHead = (SymbolFunction) symbol;
                  functionCall.returnType = functionCall.functionHead.returnType;
              } else {
-                 System.err.println("fatal: the symbol `" + ctx.functionName.getText() + "` is not a function.");
+                 System.err.println("fatal: the symbol `" + functionName + "` is not a function.");
                  this.existError = true;
              }
         } else {
-            System.err.println("fatal: the symbol `" + ctx.functionName.getText() + "` is not defined.");
+            System.err.println("fatal: the symbol `" + functionName + "` is not defined.");
             this.existError = true;
         }
     }
 	@Override public void exitFUNCTION_CALL(MentalParser.FUNCTION_CALLContext ctx) {
         AstFunctionCall thisCall = (AstFunctionCall) this.tree.get(ctx);
-        if (ctx.expressionList() != null) {
-            thisCall.parameters = (AstExpressionList) this.tree.get(ctx.expressionList());
+        String functionName = thisCall.functionName;
+        if (ctx.functionCall().expressionList() != null) {
+            thisCall.parameters = (AstExpressionList) this.tree.get(ctx.functionCall().expressionList());
         } else {
             thisCall.parameters = new AstExpressionList();
+        }
+        if (functionName.equals("print")
+                || functionName.equals("println")
+                || functionName.equals("getInt")
+                || functionName.equals("getString")
+                || functionName.equals("toString")) {
+            if (functionName.equals("print")) {
+                if (thisCall.parameters.expressions.size() == 1) {
+                    if (thisCall.parameters.expressions.get(0).returnType.equals(SymbolTable.mentalString)) {
+                        AstCallPrint callPrint = new AstCallPrint();
+                        callPrint.parameter = thisCall.parameters.expressions.get(0);
+                        callPrint.parameter.parent = callPrint;
+                        this.tree.replace(ctx, callPrint);
+                    } else {
+                        System.err.println("fatal: print only accept string as parameter.\n\t" + ctx.getText());
+                        this.existError = true;
+                    }
+                } else {
+                    System.err.println("fatal: the number of parameters of print(str) is wrong.\n\t" + ctx.getText());
+                    this.existError = true;
+                }
+            } else if (functionName.equals("println")) {
+                if (thisCall.parameters.expressions.size() == 1) {
+                    if (thisCall.parameters.expressions.get(0).returnType.equals(SymbolTable.mentalString)) {
+                        AstCallPrintln callPrintln = new AstCallPrintln();
+                        callPrintln.parameter = thisCall.parameters.expressions.get(0);
+                        callPrintln.parameter.parent = callPrintln;
+                        this.tree.replace(ctx, callPrintln);
+                    } else {
+                        System.err.println("fatal: println only accept string as parameter.\n\t" + ctx.getText());
+                        this.existError = true;
+                    }
+                } else {
+                    System.err.println("fatal: the number of parameters of println(str) is wrong.\n\t" + ctx.getText());
+                    this.existError = true;
+                }
+            } else if (functionName.equals("getInt")) {
+                if (thisCall.parameters.expressions.size() == 0) {
+                    AstCallGetInt callGetInt = new AstCallGetInt();
+                    this.tree.replace(ctx, callGetInt);
+                } else {
+                    System.err.println("fatal: getInt() accepts no parameter.\n\t" + ctx.getText());
+                    this.existError = true;
+                }
+            } else if (functionName.equals("getString")) {
+                if (thisCall.parameters.expressions.size() == 0) {
+                    AstCallGetString callGetString = new AstCallGetString();
+                    this.tree.replace(ctx, callGetString);
+                } else {
+                    System.err.println("fatal: getString() accepts no parameter.\n\t" + ctx.getText());
+                    this.existError = true;
+                }
+            } else if (functionName.equals("toString")) {
+                if (thisCall.parameters.expressions.size() == 1) {
+                    if (thisCall.parameters.expressions.get(0).returnType.equals(SymbolTable.mentalInt)) {
+                        AstCallToString callToString = new AstCallToString();
+                        callToString.childExpression = thisCall.parameters.expressions.get(0);
+                        callToString.childExpression.parent = callToString;
+                        this.tree.replace(ctx, callToString);
+                    } else {
+                        System.err.println("fatal: toString only accepts int as parameter.\n\t" + ctx.getText());
+                        this.existError = true;
+                    }
+                } else {
+                    System.err.println("fatal: the number of parameters of toString(int) is wrong.\n\t" + ctx.getText());
+                    this.existError = true;
+                }
+            }
+            return ;
         }
         thisCall.parameters.parent = thisCall;
         if (thisCall.functionHead == null) {
@@ -803,7 +763,7 @@ public class BuildTreeListener extends MentalBaseListener {
             if (thisCall.functionHead.parameterType.size() == thisCall.parameters.expressions.size()) {
                 for (int i = 0, count = thisCall.functionHead.parameterType.size(); i < count; ++i) {
                     if (!thisCall.functionHead.parameterType.get(i).equals(thisCall.parameters.expressions.get(i).returnType)) {
-                        System.err.println("fatal: the type of a parameter mismatched. "
+                        System.err.println("fatal: the type of " + Integer.toString(i) + "-th parameter mismatched. "
                                 + "\n\t expected " + thisCall.functionHead.parameterType.get(i).toString()
                                 + "\n\t occurs " + thisCall.parameters.expressions.get(i).returnType.toString()
                         );
@@ -811,7 +771,7 @@ public class BuildTreeListener extends MentalBaseListener {
                     }
                 }
             } else {
-                System.err.println("fatal: the function call of `" + thisCall.functionHead.functionName
+                System.err.println("fatal: the function call of `" + functionName
                         + "` has a wrong number of parameters.\n"
                         + "\t expected " + Integer.toString(thisCall.functionHead.parameterType.size())
                         + "\n\t occurs " + Integer.toString(thisCall.parameters.expressions.size())
@@ -822,21 +782,6 @@ public class BuildTreeListener extends MentalBaseListener {
         }
     }
     /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    @Override public void enterINTERNAL_FUNCTION_CALL(MentalParser.INTERNAL_FUNCTION_CALLContext ctx) { }
-    @Override public void exitINTERNAL_FUNCTION_CALL(MentalParser.INTERNAL_FUNCTION_CALLContext ctx) {
-        if (ctx.callGetInt() != null) {
-            this.tree.put(ctx, this.tree.get(ctx.callGetInt()));
-        } else if (ctx.callGetString() != null) {
-            this.tree.put(ctx, this.tree.get(ctx.callGetString()));
-        } else if (ctx.callToString() != null) {
-            this.tree.put(ctx, this.tree.get(ctx.callToString()));
-        }
-    }
-	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
@@ -1373,7 +1318,32 @@ public class BuildTreeListener extends MentalBaseListener {
             this.existError = true;
         }
     }
-	/**
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void enterFunctionCall(MentalParser.FunctionCallContext ctx) {
+        if (ctx.parent instanceof MentalParser.FUNCTION_CALLContext) {
+            return;
+        }
+        AstFunctionCall functionCall = new AstFunctionCall();
+        functionCall.functionName = ctx.functionName.getText();
+        this.tree.put(ctx, functionCall);
+    }
+    @Override public void exitFunctionCall(MentalParser.FunctionCallContext ctx) {
+        if (ctx.parent instanceof MentalParser.FUNCTION_CALLContext) {
+            return;
+        }
+        AstFunctionCall thisCall = (AstFunctionCall) this.tree.get(ctx);
+        if (ctx.expressionList() != null) {
+            thisCall.parameters = (AstExpressionList) this.tree.get(ctx.expressionList());
+        } else {
+            thisCall.parameters = new AstExpressionList();
+        }
+        thisCall.parameters.parent = thisCall;
+    }
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>

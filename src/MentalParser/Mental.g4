@@ -126,10 +126,10 @@ statement
 	| jumpStatement
 	| emptyStatement
 	| variableDefinition
-	| callPrint
-	| callPrintln
+//	| callPrint
+//	| callPrintln
 	;
-
+/*
 callPrint
 	: 'print' '(' expression ')' ';'
 	;
@@ -165,7 +165,7 @@ callOrd
 callSize
     : 'size' '(' ')'
     ;
-
+*/
 emptyStatement
 	: ';'
 	;
@@ -203,7 +203,7 @@ expression
 	#CREATION_EXPRESSION
 	| expression '[' expression ']'
 	#ARRAY_SUBSCRIPTING_EXPRESSION
-	| expression op='.' (Identifier | callSubString | callLength | callParseInt | callOrd | callSize)
+	| expression op='.' (Identifier | functionCall)
 	#MEMBER_ACCESS_EXPRESSION
 	| expression op=('++' | '--')
 	#SUFFIX_INC_DEC_EXPRESSION
@@ -237,10 +237,8 @@ expression
 	#LOGICAL_OR_EXPRESSION
 	| <assoc=right> expression op='=' expression
 	#ASSIGN_EXPRESSION
-	| functionName=Identifier '(' expressionList? ')'
+	| functionCall
 	#FUNCTION_CALL
-	| (callGetInt | callGetString | callToString)
-	#INTERNAL_FUNCTION_CALL
 	| Identifier
 	#IDENTIFIER
 	| INT
@@ -254,7 +252,9 @@ expression
 	| 'null'
 	#NULL
 	;
-
+functionCall
+    : functionName=Identifier '(' expressionList? ')'
+    ;
 expressionList
 	: expression (',' expression)*
 	;
