@@ -732,11 +732,11 @@ public class BuildTreeListener extends MentalBaseListener {
             if (thisExpression.primaryExpression.returnType instanceof MentalClass) {
                 MentalClass thisClass = (MentalClass) thisExpression.primaryExpression.returnType;
                 if (thisClass.classComponents.get(thisExpression.memberName) != null) {
-                    thisExpression.leftValue = true;
+                    thisExpression.leftValue = thisExpression.primaryExpression.leftValue;
                     thisExpression.returnType = thisClass.classComponents.get(thisExpression.memberName);
                 } else {
                     System.out.println("fatal: the class `" + thisClass.className
-                            + "` does not have the memeber `" + thisExpression.memberName + "`."
+                            + "` does not have the member `" + thisExpression.memberName + "`."
                     );
                     this.existError = true;
                 }

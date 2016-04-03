@@ -21,7 +21,7 @@ public class AstCreationExpression extends AstExpression {
     @Override
     public String toPrintString(int indent) {
         String ret = addIndent(indent) + "<creation expression>:" + this.returnType.toString();
-        if (this.expressionList.size() == 0) {
+        if (this.expressionList == null || this.expressionList.size() == 0) {
             return ret;
         } else {
             ret += "\n" + addIndent(indent + 1) + "<dimension:1>\n"

@@ -3,6 +3,7 @@ int main() {
     aa[1].a2.a3.num=123;
     for (;;)break;
     K(aa[2]);
+    f().a2 = new A2;
     int a = 0, b = a, c = b;
     if (a == b) {
         int[][] arr = new int [8] [];
@@ -11,6 +12,10 @@ int main() {
 
     }
     return 0;
+}
+
+A1 f() {
+    return new A1;
 }
 
 void K(A1 e) {
