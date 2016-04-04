@@ -187,7 +187,7 @@ whileStatement
 	;
 
 jumpStatement
-	: 'return' expression ';'
+	: 'return' expression? ';'
 	| 'continue' ';'
 	| 'break' ';'
 	;

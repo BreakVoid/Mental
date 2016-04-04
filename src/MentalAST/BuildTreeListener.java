@@ -349,7 +349,12 @@ public class BuildTreeListener extends MentalBaseListener {
             this.tree.put(ctx, this.tree.get(ctx.jumpStatement()));
         }
         // connect its parent link
-        this.tree.get(ctx).parent = this.tree.get(ctx.parent);
+        if (this.tree.get(ctx) != null) {
+            this.tree.get(ctx).parent = this.tree.get(ctx.parent);
+        } else {
+            System.err.println("fatal: unknown statement.");
+            this.existError = true;
+        }
     }
     /**
      * build tree of a compound statement
@@ -483,6 +488,8 @@ public class BuildTreeListener extends MentalBaseListener {
                 jumpStatement.variant = AstJumpStatement.CONTINUE;
             } else if (ctx.getText().equals("break;")) {
                 jumpStatement.variant = AstJumpStatement.BREAK;
+            } else if (ctx.getText().equals("return;")) {
+                jumpStatement.variant = AstJumpStatement.RETURN;
             }
         } else {
             jumpStatement.variant = AstJumpStatement.RETURN;
@@ -503,8 +510,14 @@ public class BuildTreeListener extends MentalBaseListener {
                 return;
             }
         } else {
-            thisStatement.returnExpression = (AstExpression) this.tree.get(ctx.expression());
-            thisStatement.returnExpression.parent = thisStatement;
+            if (ctx.expression() != null) {
+                thisStatement.returnExpression = (AstExpression) this.tree.get(ctx.expression());
+                thisStatement.returnExpression.parent = thisStatement;
+            } else {
+                thisStatement.returnExpression = new AstExpression();
+                thisStatement.returnExpression.returnType = SymbolTable.mentalVoid;
+                thisStatement.returnExpression.parent = thisStatement;
+            }
             RuleContext node = ctx.parent;
             while (node != null && !(node instanceof MentalParser.FunctionDefinitionContext)) {
                 node = node.parent;
@@ -1191,6 +1204,8 @@ public class BuildTreeListener extends MentalBaseListener {
         if (thisExpression.leftExpression.returnType.equals(thisExpression.rightExpression.returnType)) {
             return;
         }
+        System.err.println(thisExpression.leftExpression.toPrintString());
+        System.err.println(thisExpression.rightExpression.toPrintString());
         System.err.println("fatal: the types of equality expression cannot accept.\n\t" + ctx.getText());
         this.existError = true;
     }

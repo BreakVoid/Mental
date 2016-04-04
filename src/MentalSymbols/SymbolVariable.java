@@ -1,6 +1,5 @@
 package MentalSymbols;
 
-import MentalParser.MentalParser;
 import MentalType.MentalType;
 
 /**

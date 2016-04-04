@@ -6,25 +6,12 @@ package MentalCore;
 
 import MentalAST.BuildTreeListener;
 import MentalParser.*;
-import MentalSymbols.SymbolBase;
-import MentalSymbols.SymbolFunction;
-import MentalSymbols.SymbolTable;
-import MentalSymbols.SymbolType;
-import MentalType.*;
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.tree.CommonTree;
-import org.antlr.v4.runtime.misc.FlexibleHashMap;
-import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.IOException;
-import java.util.Map;
-
-import static MentalParser.MentalParser.*;
 
 public class Main {
     public static void main(String[] args) {

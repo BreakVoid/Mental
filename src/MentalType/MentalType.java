@@ -1,9 +1,5 @@
 package MentalType;
 
-import MentalParser.MentalParser;
-
-import java.util.HashMap;
-
 /**
  * Created by Songyu on 16/3/29.
  */

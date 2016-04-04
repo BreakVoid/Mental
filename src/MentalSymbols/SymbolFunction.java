@@ -3,7 +3,6 @@ package MentalSymbols;
 import MentalParser.MentalParser;
 import MentalType.MentalType;
 import MentalType.MentalArray;
-import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 import java.util.ArrayList;
 

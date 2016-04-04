@@ -1,14 +1,11 @@
 package MentalSymbols;
 
-import MentalType.MentalType;
 import MentalType.MentalInt;
 import MentalType.MentalString;
 import MentalType.MentalVoid;
 import MentalType.MentalBool;
 import MentalType.MentalNull;
 import MentalType.MentalUnknownType;
-
-import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 import java.util.HashMap;
 
