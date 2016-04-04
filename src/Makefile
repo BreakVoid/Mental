@@ -11,8 +11,11 @@ all:
 	$(JVC) MentalType/*.java
 
 clean:
-	$(MAKE) -C MentalAST clean
-	$(MAKE) -C MentalCore clean
-	$(MAKE) -C MentalParser clean
-	$(MAKE) -C MentalSymbols clean
-	$(MAKE) -C MentalType clean
+	-rm -f MentalAST/*.class
+	-rm -f MentalAST/AstDeclaration/*.class
+	-rm -f MentalAST/AstExpression/*.class
+	-rm -f MentalAST/AstStatement/*.class
+	-rm -f MentalCore/*.class
+	-rm -f MentalParser/*.class
+	-rm -f MentalSymbols/*.class
+	-rm -f MentalType/*.class

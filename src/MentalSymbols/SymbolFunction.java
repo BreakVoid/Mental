@@ -41,8 +41,9 @@ public class SymbolFunction extends SymbolBase {
         } else {
             SymbolBase baseType = scope.getSymbol(funcDefCtx.type().typeName().getText());
             if (baseType == null || !(baseType instanceof SymbolType)) {
-                    System.err.println("fatal: no such a type " + funcDefCtx.type().typeName().getText());
-                    existError = true;
+                System.err.println("fatal: no such a type " + funcDefCtx.type().typeName().getText());
+                existError = true;
+                System.exit(1);
             }
             if (funcDefCtx.type().array().size() != 0) {
                 this.returnType = new MentalArray(funcDefCtx.type());
@@ -71,7 +72,7 @@ public class SymbolFunction extends SymbolBase {
                 // Process the type of a single variable.
                 SymbolBase baseType = scope.getSymbol(typeCtx.typeName().getText());
                 if (baseType == null || !(baseType instanceof SymbolType)) {
-                    System.err.println("fatal: no such a type " + funcDefCtx.type().typeName().getText());
+                    System.err.println("fatal: no such a type " + typeCtx.typeName().getText());
                     existError = true;
                     System.exit(1);
                 }
