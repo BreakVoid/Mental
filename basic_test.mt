@@ -47,6 +47,9 @@ Mo xu(Mo m0, RedBoy boys){
 
 int main(){
 	//test initialization
+	int[][] arr;
+	arr[1] = 1;
+	int 1;
 	int a;
 	int b;
 	int c = 1;

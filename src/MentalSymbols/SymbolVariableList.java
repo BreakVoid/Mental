@@ -9,7 +9,7 @@ import java.util.LinkedList;
 /**
  * Created by Songyu on 16/3/30.
  */
-public class SymbolVariableList extends Object {
+public class SymbolVariableList {
     public MentalType variableType;
     public LinkedList<SymbolVariable> variables;
     public SymbolVariableList() {
@@ -36,8 +36,13 @@ public class SymbolVariableList extends Object {
         }
         this.variableType = type;
         for (int j = 0, idCount = varDefCtx.singleVariable().size(); j < idCount; ++j) {
-            String id = varDefCtx.singleVariable(j).Identifier().getText();
-            this.variables.add(new SymbolVariable(scope, type, id));
+            if (varDefCtx.singleVariable(j).Identifier() != null) {
+                String id = varDefCtx.singleVariable(j).Identifier().getText();
+                this.variables.add(new SymbolVariable(scope, type, id));
+            } else {
+                System.err.println("fatal: the identifier is illegal.\n\t" + varDefCtx.getText());
+                System.exit(-1);
+            }
         }
     }
 }
