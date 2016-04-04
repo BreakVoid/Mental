@@ -52,12 +52,12 @@ public class BuildTreeListener extends MentalBaseListener {
 	}
     @Override public void enterEveryRule(ParserRuleContext ctx) {
         if (this.existError) {
-            //System.exit(1);
+            System.exit(1);
         }
     }
     @Override public void exitEveryRule(ParserRuleContext ctx) {
         if (this.existError) {
-            //System.exit(1);
+            System.exit(1);
         }
     }
     @Override public void visitTerminal(TerminalNode node) { }
@@ -1201,7 +1201,8 @@ public class BuildTreeListener extends MentalBaseListener {
         AstIdentifier identifier = new AstIdentifier();
         identifier.name = ctx.Identifier().getText();
         if (this.curSymbolTable.getSymbol(identifier.name) == null) {
-            System.err.println("warning: undefined identifier.");
+            System.err.println("fatal: undefined identifier.");
+            this.existError = true;
         } else {
             SymbolBase base = this.curSymbolTable.getSymbol(identifier.name);
             if (base instanceof SymbolVariable) {

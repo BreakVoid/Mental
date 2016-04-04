@@ -22,7 +22,7 @@ public class SymbolVariableList {
         SymbolBase baseType = scope.getSymbol(varDefCtx.type().typeName().getText());
         if (baseType == null || !(baseType instanceof SymbolType)) {
             System.err.println("fatal: no such a type " + varDefCtx.type().typeName().getText());
-            System.exit(-1);
+            System.exit(1);
         }
         MentalType type;
         if (varDefCtx.type().array().size() != 0) {

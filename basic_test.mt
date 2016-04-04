@@ -49,7 +49,7 @@ int main(){
 	//test initialization
 	int[][] arr;
 	arr[1] = 1;
-	int 1;
+	safefad;
 	int a;
 	int b;
 	int c = 1;

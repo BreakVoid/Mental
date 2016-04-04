@@ -41,6 +41,7 @@ public class SymbolType extends SymbolBase {
                 if (baseType == null || !(baseType instanceof SymbolType)) {
                     System.err.println("fatal: declarate a variable with bad type.");
                     existError = true;
+                    System.exit(1);
                 }
             }
 

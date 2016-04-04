@@ -74,6 +74,7 @@ public class SymbolFunction extends SymbolBase {
                 if (baseType == null || !(baseType instanceof SymbolType)) {
                     System.err.println("fatal: no such a type " + funcDefCtx.type().typeName().getText());
                     existError = true;
+                    System.exit(1);
                 }
                 if (typeCtx.array().size() != 0) {
                     type = new MentalArray(typeCtx);
