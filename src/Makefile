@@ -1,12 +1,14 @@
+JVC = javac -cp "./antlr-4.5.3-complete.jar:.:$$CLASSPATH"
+
 all:
-	javac MentalAST/*.java
-	javac MentalAST/AstDeclaration/*.java
-	javac MentalAST/AstExpression/*.java
-	javac MentalAST/AstStatement/*.java
-	javac MentalCore/*.java
-	javac MentalParser/*.java
-	javac MentalSymbols/*.java
-	javac MentalType/*.java
+	$(JVC) MentalAST/*.java
+	$(JVC) MentalAST/AstDeclaration/*.java
+	$(JVC) MentalAST/AstExpression/*.java
+	$(JVC) MentalAST/AstStatement/*.java
+	$(JVC) MentalCore/*.java
+	$(JVC) MentalParser/*.java
+	$(JVC) MentalSymbols/*.java
+	$(JVC) MentalType/*.java
 
 clean:
 	$(MAKE) -C MentalAST clean

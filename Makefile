@@ -1,6 +1,5 @@
 all:
 	$(MAKE) -C src all
-	if [ ! -d out ]; then mkdir out; fi
 	if [ ! -d out/MentalAST ]; then mkdir out/MentalAST; fi
 	if [ ! -d out/MentalAST/AstDeclaration ]; then mkdir out/MentalAST/AstDeclaration; fi
 	if [ ! -d out/MentalAST/AstExpression ]; then mkdir out/MentalAST/AstExpression; fi
@@ -17,6 +16,7 @@ all:
 	cp src/MentalParser/*.class out/MentalParser/
 	cp src/MentalSymbols/*.class out/MentalSymbols/
 	cp src/MentalType/*.class out/MentalType/
+	$(MAKE) -C src clean
 clean:
 	$(MAKE) -C src clean
 	-rm -rf out

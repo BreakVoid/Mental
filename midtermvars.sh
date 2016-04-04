@@ -1,0 +1,1 @@
+export CCHK=(java -cp ".:out/:src/antlr-4.5.3-complete.jar:$CLASSPATH" MentalCore.Main)
