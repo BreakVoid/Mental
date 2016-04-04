@@ -15,19 +15,19 @@ import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import sun.jvm.hotspot.debugger.cdbg.Sym;
-import sun.jvm.hotspot.utilities.IntArray;
-import sun.jvm.hotspot.utilities.IntegerEnum;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 
 public class BuildTreeListener extends MentalBaseListener {
-    public boolean existError;
-	public HashMap<ParseTree, AstBaseNode> tree;
-	public SymbolTable curSymbolTable;
-	public LinkedList<SymbolTable> symbolTableList;
+    /**
+     * Initialize the listener
+     */
+    public boolean existError;                                      // record whether there is any error in the program.
+	public HashMap<ParseTree, AstBaseNode> tree;                    // a K-V map used in building my abstract syntax tree.
+	public SymbolTable curSymbolTable;                              // the symbol table in current scope.
+	public LinkedList<SymbolTable> symbolTableList;                 // list of different stack scope
+
 	public BuildTreeListener() {
         this.existError = false;
 		this.tree = new HashMap<>();
@@ -35,15 +35,39 @@ public class BuildTreeListener extends MentalBaseListener {
 		this.symbolTableList.add(new SymbolTable());
 		this.curSymbolTable = this.symbolTableList.getLast();
 	}
+    /**
+     * make a copy of current scope and increase the stack label.
+     */
 	public void beginScope() {
 		this.symbolTableList.add(new SymbolTable(curSymbolTable));
 		this.curSymbolTable = this.symbolTableList.getLast();
 		this.curSymbolTable.stackLayer++;
 	}
+    /**
+     * remove the current scope and back the lastest one.
+     */
 	public void endScope() {
 		this.symbolTableList.removeLast();
 		this.curSymbolTable = this.symbolTableList.getLast();
 	}
+    @Override public void enterEveryRule(ParserRuleContext ctx) {
+        if (this.existError) {
+            //System.exit(-1);
+        }
+    }
+    @Override public void exitEveryRule(ParserRuleContext ctx) {
+        if (this.existError) {
+            //System.exit(-1);
+        }
+    }
+    @Override public void visitTerminal(TerminalNode node) { }
+    @Override public void visitErrorNode(ErrorNode node) {
+        System.err.println("fatal: there is an error in grammar analysis.");
+        System.exit(-1);
+    }
+    /**
+     * function following do nothing because none of them have effect.
+     */
 	@Override public void enterClassName(MentalParser.ClassNameContext ctx) { }
 	@Override public void exitClassName(MentalParser.ClassNameContext ctx) { }
 	@Override public void enterTypeName(MentalParser.TypeNameContext ctx) { }
@@ -54,6 +78,13 @@ public class BuildTreeListener extends MentalBaseListener {
 	@Override public void exitType(MentalParser.TypeContext ctx) { }
 	@Override public void enterParametersList(MentalParser.ParametersListContext ctx) { }
 	@Override public void exitParametersList(MentalParser.ParametersListContext ctx) { }
+    /**
+     * iterate the child of program twice in this function.
+     * first time
+     *     get the name of all functions and classes and allocate a space in symbol table for each one.
+     * second time
+     *     process the members of a class and the format of a function.
+     */
 	@Override public void enterProgram(MentalParser.ProgramContext ctx) {
         this.tree.put(ctx, new AstProgram());
         for (int i = 0, count = ctx.getChildCount(); i < count; ++i) {
@@ -61,13 +92,16 @@ public class BuildTreeListener extends MentalBaseListener {
                 continue;
             }
             if (ctx.getChild(i) instanceof MentalParser.DeclarationContext) {
+                // class is declaration.
                 MentalParser.DeclarationContext declarationContext = (MentalParser.DeclarationContext) ctx.getChild(i);
                 if (declarationContext.classDeclaration() != null) {
                     this.curSymbolTable.add(declarationContext.classDeclaration().className().getText(), new SymbolType());
                 }
             } else if (ctx.getChild(i) instanceof MentalParser.DefinitionContext) {
+                // variable and function is definition.
                 MentalParser.DefinitionContext definitionContext = (MentalParser.DefinitionContext) ctx.getChild(i);
                 if (definitionContext.functionDefinition() != null) {
+                    // it is a function definition.
                     this.curSymbolTable.add(definitionContext.functionDefinition().functionName.getText(), new SymbolFunction());
                 }
             }
@@ -81,7 +115,10 @@ public class BuildTreeListener extends MentalBaseListener {
                 if (definitionContext.functionDefinition() != null) {
                     MentalParser.FunctionDefinitionContext functionDefinitionContext = definitionContext.functionDefinition();
                     SymbolFunction symbolFunction = (SymbolFunction) this.curSymbolTable.getSymbol(functionDefinitionContext.functionName.getText());
-                    if (symbolFunction.setFunction(this.curSymbolTable, functionDefinitionContext) ) {
+                    // setFunction will process the basic message of a function
+                    //     function name, type of return value, types of parameters.
+                    // if there is anything wrong the function returns true.
+                    if (symbolFunction.setFunction(this.curSymbolTable, functionDefinitionContext)) {
                         this.existError = true;
                     }
                 }
@@ -91,6 +128,9 @@ public class BuildTreeListener extends MentalBaseListener {
                     MentalParser.ClassDeclarationContext classDeclaration = declarationContext.classDeclaration();
                     if (classDeclaration.className() != null) {
                         SymbolType symbolType = (SymbolType) this.curSymbolTable.getSymbol(classDeclaration.className().getText());
+                        // setType will process the members of a class
+                        //     name and type of each member.
+                        // returns true if there is anything wrong.
                         if (symbolType.setType(this.curSymbolTable, classDeclaration)) {
                             this.existError = true;
                         }
@@ -105,6 +145,7 @@ public class BuildTreeListener extends MentalBaseListener {
             if (ctx.getChild(i) instanceof MentalParser.EmptyStatementContext) {
                 continue;
             }
+            // connect the child to their parent.
             program.declarations.add(tree.get(ctx.getChild(i)));
 		}
 	}
@@ -116,14 +157,14 @@ public class BuildTreeListener extends MentalBaseListener {
 	@Override public void enterDeclaration(MentalParser.DeclarationContext ctx) { }
 	@Override public void exitDeclaration(MentalParser.DeclarationContext ctx) {
         if (ctx.classDeclaration() != null) {
+            // just do the path compression.
             this.tree.put(ctx, tree.get(ctx.classDeclaration()));
             this.tree.get(ctx).parent = this.tree.get(ctx.parent);
         }
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * all the messages of a class have been got in enterProgram()
+     *    so this function just build the AST for a class declaration from the message in the symbol table. 
 	 */
 	@Override public void enterClassDeclaration(MentalParser.ClassDeclarationContext ctx) {
 		AstClassDeclaration classDeclaration = new AstClassDeclaration();
@@ -146,16 +187,13 @@ public class BuildTreeListener extends MentalBaseListener {
 	}
 	@Override public void exitClassDeclaration(MentalParser.ClassDeclarationContext ctx) {	}
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * there is no function declaration in this language,
+     *     this pair of functions is for the furture support if function declaration is need.
 	 */
 	@Override public void enterFunctionDeclaration(MentalParser.FunctionDeclarationContext ctx) { }
 	@Override public void exitFunctionDeclaration(MentalParser.FunctionDeclarationContext ctx) { }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * compress the path on AST.
 	 */
 	@Override public void enterDefinition(MentalParser.DefinitionContext ctx) { }
 	@Override public void exitDefinition(MentalParser.DefinitionContext ctx) {
@@ -167,28 +205,35 @@ public class BuildTreeListener extends MentalBaseListener {
         this.tree.get(ctx).parent = this.tree.get(ctx.parent);
     }
     /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
+     * In my compiler, it is allowed to define several variables in a single variable definition.
+     *     this pair of functions processes one variable in a variable definition.
      */
     @Override public void enterSingleVariable(MentalParser.SingleVariableContext ctx) {
         AstSingleVariableDeclaration singleVariableDeclaration = new AstSingleVariableDeclaration();
         this.tree.put(ctx, singleVariableDeclaration);
         AstVariableDeclaration variableDeclaration = null;
         if (ctx.parent != null && ctx.parent.parent instanceof MentalParser.ClassDeclarationContext) {
+            // the parent of this definition is a class declaration, so the message of this statement is useless
             return ;
         }
         if (ctx.parent instanceof MentalParser.VariableDefinitionContext) {
+            // the type is contained in its parent, and the node of its parent is in the map.
             variableDeclaration = (AstVariableDeclaration) this.tree.get(ctx.parent);
         } else {
             System.err.println("unknown exception.");
             this.existError = true;
         }
+        // new a node.
         singleVariableDeclaration.variable = new AstVariable();
+        // get the name of the variable.
         singleVariableDeclaration.variable.variableName = ctx.Identifier().getText();
+        // set the type of the variable.
         singleVariableDeclaration.variable.variableType = variableDeclaration.variableType;
     }
     @Override public void exitSingleVariable(MentalParser.SingleVariableContext ctx) {
+        /**
+         * this function mainly process the initializing expression of a variable.
+         */
         if (ctx.parent != null && ctx.parent.parent instanceof MentalParser.ClassDeclarationContext) {
             return ;
         }
@@ -209,9 +254,7 @@ public class BuildTreeListener extends MentalBaseListener {
         singleVariableDeclaration.parent = this.tree.get(ctx.parent);
     }
     /**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * process a sentence of variable definition, which may define several variable.
 	 */
 	@Override public void enterVariableDefinition(MentalParser.VariableDefinitionContext ctx) {
         if (ctx.parent instanceof MentalParser.ClassDeclarationContext) {
@@ -237,9 +280,7 @@ public class BuildTreeListener extends MentalBaseListener {
         variableDeclaration.parent = this.tree.get(ctx.parent);
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * build the ast of a function.
 	 */
 	@Override public void enterFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) {
         if (ctx.parent instanceof MentalParser.ClassDeclarationContext) {
@@ -248,7 +289,9 @@ public class BuildTreeListener extends MentalBaseListener {
 		this.beginScope();
         AstFunctionDefinition functionDefinition = new AstFunctionDefinition();
         functionDefinition.functionHead = (SymbolFunction) this.curSymbolTable.getSymbol(ctx.functionName.getText());
+        // I think the name of itself cannot be redefine in the function.
         functionDefinition.functionHead.stackLayer = 65536;
+        // add the parameters to the scope.
         this.tree.put(ctx, functionDefinition);
         for (int i = 0, count = functionDefinition.functionHead.parameterName.size(); i < count; ++i) {
             this.curSymbolTable.add(
@@ -263,40 +306,19 @@ public class BuildTreeListener extends MentalBaseListener {
 	}
 	@Override public void exitFunctionDefinition(MentalParser.FunctionDefinitionContext ctx) {
         if (ctx.parent instanceof MentalParser.ClassDeclarationContext) {
+            // for furture support of member method.
             return;
         }
+
         this.endScope();
+        // connect the tree node.
         AstFunctionDefinition functionDefinition = (AstFunctionDefinition) this.tree.get(ctx);
-        functionDefinition.functionBody = (AstComponentStatement) this.tree.get(ctx.compoundStatement());
+        functionDefinition.functionBody = (AstCompoundStatement) this.tree.get(ctx.compoundStatement());
         functionDefinition.parent = this.tree.get(ctx.parent);
         functionDefinition.functionBody.parent = functionDefinition;
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCompoundStatement(MentalParser.CompoundStatementContext ctx) {
-		if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
-            this.beginScope();
-        }
-        AstComponentStatement componentStatement = new AstComponentStatement();
-        this.tree.put(ctx, componentStatement);
-	}
-	@Override public void exitCompoundStatement(MentalParser.CompoundStatementContext ctx) {
-        if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
-            this.endScope();
-        }
-        AstComponentStatement componentStatement = (AstComponentStatement) this.tree.get(ctx);
-        for (MentalParser.StatementContext statementContext : ctx.statement()) {
-            componentStatement.statements.add(this.tree.get(statementContext));
-        }
-        componentStatement.parent = this.tree.get(ctx.parent);
-	}
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * just a C-style union of statements
 	 */
 	@Override public void enterStatement(MentalParser.StatementContext ctx) {
         if (ctx.variableDefinition() != null) {
@@ -305,6 +327,7 @@ public class BuildTreeListener extends MentalBaseListener {
         }
     }
 	@Override public void exitStatement(MentalParser.StatementContext ctx) {
+        // compress the path
         if (ctx.variableDefinition() != null) {
             AstVarStatement varStatement = (AstVarStatement) this.tree.get(ctx);
             varStatement.variableDeclaration = (AstVariableDeclaration) this.tree.get(ctx.variableDefinition());
@@ -325,17 +348,42 @@ public class BuildTreeListener extends MentalBaseListener {
         } else if (ctx.jumpStatement() != null) {
             this.tree.put(ctx, this.tree.get(ctx.jumpStatement()));
         }
+        // connect its parent link
         this.tree.get(ctx).parent = this.tree.get(ctx.parent);
     }
+    /**
+     * build tree of a compound statement
+     * new a scope if it is not the function body.
+     */
+    @Override public void enterCompoundStatement(MentalParser.CompoundStatementContext ctx) {
+        // new a scope if it is not the function body.
+        if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
+            this.beginScope();
+        }
+        AstCompoundStatement componentStatement = new AstCompoundStatement();
+        this.tree.put(ctx, componentStatement);
+    }
+    @Override public void exitCompoundStatement(MentalParser.CompoundStatementContext ctx) {
+        if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
+            this.endScope();
+        }
+        AstCompoundStatement thisStatement = (AstCompoundStatement) this.tree.get(ctx);
+        // it is not necessary to set the parent of children, it will be done in the exitStatement().
+        for (MentalParser.StatementContext statementContext : ctx.statement()) {
+            thisStatement.statements.add(this.tree.get(statementContext));
+        }
+        thisStatement.parent = this.tree.get(ctx.parent);
+    }
+    /**
+     * empty statement
+     */
 	@Override public void enterEmptyStatement(MentalParser.EmptyStatementContext ctx) {
         AstEmptyStatement emptyStatement = new AstEmptyStatement();
         this.tree.put(ctx, emptyStatement);
     }
 	@Override public void exitEmptyStatement(MentalParser.EmptyStatementContext ctx) { }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * process `if (expression) statement`
 	 */
 	@Override public void enterIfStatement(MentalParser.IfStatementContext ctx) {
         AstIfStatement ifStatement = new AstIfStatement();
@@ -353,9 +401,7 @@ public class BuildTreeListener extends MentalBaseListener {
         }
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * process `if (expression) statement else statement`
 	 */
 	@Override public void enterIfElseStatement(MentalParser.IfElseStatementContext ctx) {
         AstIfStatement ifElseStatement = new AstIfStatement();
@@ -375,9 +421,8 @@ public class BuildTreeListener extends MentalBaseListener {
         }
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * for statement
+     * for (start?; cond?; loop) loopBody
 	 */
 	@Override public void enterForStatement(MentalParser.ForStatementContext ctx) {
         AstForStatement forStatement = new AstForStatement();
@@ -408,9 +453,8 @@ public class BuildTreeListener extends MentalBaseListener {
         }
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * while statement
+     * while (cond) loopBody
 	 */
 	@Override public void enterWhileStatement(MentalParser.WhileStatementContext ctx) {
         AstWhileStatement whileStatement = new AstWhileStatement();
@@ -428,9 +472,9 @@ public class BuildTreeListener extends MentalBaseListener {
         }
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * return expression;
+     * continue;
+     * break;
 	 */
 	@Override public void enterJumpStatement(MentalParser.JumpStatementContext ctx) {
         AstJumpStatement jumpStatement = new AstJumpStatement();
@@ -448,6 +492,7 @@ public class BuildTreeListener extends MentalBaseListener {
 	@Override public void exitJumpStatement(MentalParser.JumpStatementContext ctx) {
         AstJumpStatement thisStatement = (AstJumpStatement) this.tree.get(ctx);
         if (thisStatement.variant == AstJumpStatement.BREAK || thisStatement.variant == AstJumpStatement.CONTINUE) {
+            // continue and break are not allowed out of loop statement.
             RuleContext node = ctx;
             while (node != null && !(node.parent instanceof MentalParser.ForStatementContext
                     || node.parent instanceof MentalParser.WhileStatementContext)
@@ -481,9 +526,8 @@ public class BuildTreeListener extends MentalBaseListener {
         this.existError = true;
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * expression statement
+     *     most important one is `a=b;`
 	 */
 	@Override public void enterExpressionStatement(MentalParser.ExpressionStatementContext ctx) { }
 	@Override public void exitExpressionStatement(MentalParser.ExpressionStatementContext ctx) {
@@ -491,33 +535,10 @@ public class BuildTreeListener extends MentalBaseListener {
         expressionStatement.expression = (AstExpression) this.tree.get(ctx.expression());
         this.tree.put(ctx, expressionStatement);
     }
+	
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBIT_XOR_EXPRESSION(MentalParser.BIT_XOR_EXPRESSIONContext ctx) {
-        AstBitXorExpression bitXorExpression = new AstBitXorExpression();
-        this.tree.put(ctx, bitXorExpression);
-    }
-	@Override public void exitBIT_XOR_EXPRESSION(MentalParser.BIT_XOR_EXPRESSIONContext ctx) {
-        AstBitXorExpression thisExpression = (AstBitXorExpression) this.tree.get(ctx);
-        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
-        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
-        thisExpression.leftExpression.parent = thisExpression;
-        thisExpression.rightExpression.parent = thisExpression;
-        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
-            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
-                return;
-            }
-        }
-        System.err.println("fatal: the types of bit-xor expression cannot accept.\n\t" + ctx.getText());
-        this.existError = true;
-    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * !a
+     * a should be boolean.
 	 */
 	@Override public void enterLOGICAL_NOT_EXPRESSION(MentalParser.LOGICAL_NOT_EXPRESSIONContext ctx) {
         AstLogicalNotExpression expression = new AstLogicalNotExpression();
@@ -533,9 +554,10 @@ public class BuildTreeListener extends MentalBaseListener {
         }
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * a.b 
+     * a shouble be a class for member access 
+     *     or a array for array.size() 
+     *     or some other string method
 	 */
 	@Override public void enterMEMBER_ACCESS_EXPRESSION(MentalParser.MEMBER_ACCESS_EXPRESSIONContext ctx) {
         AstMemberAccessExpression memberAccessExpression = new AstMemberAccessExpression();
@@ -546,8 +568,11 @@ public class BuildTreeListener extends MentalBaseListener {
         thisExpression.primaryExpression = (AstExpression) this.tree.get(ctx.expression());
         thisExpression.primaryExpression.parent = thisExpression;
         if (ctx.functionCall() != null) {
+            // this member access expression is a internal method call
+            // the the function call message from functionCall context.
             AstFunctionCall functionCall = (AstFunctionCall) this.tree.get(ctx.functionCall());
             if (ctx.functionCall().functionName.getText().equals("length")) {
+                // it may be string.length()
                 if (thisExpression.primaryExpression.returnType instanceof MentalString) {
                     thisExpression.memberExpression = new AstCallLength();
                     thisExpression.memberExpression.parent = thisExpression;
@@ -561,6 +586,8 @@ public class BuildTreeListener extends MentalBaseListener {
                     this.existError = true;
                 }
             } else if (ctx.functionCall().functionName.getText().equals("substring")) {
+                // it may be string.substring(left, right)
+                //     both left and right should be int.
                 if (thisExpression.primaryExpression.returnType instanceof MentalString) {
                     thisExpression.memberExpression = new AstCallSubString();
                     thisExpression.memberExpression.parent = thisExpression;
@@ -583,6 +610,8 @@ public class BuildTreeListener extends MentalBaseListener {
                     this.existError = true;
                 }
             } else if (ctx.functionCall().functionName.getText().equals("ord")) {
+                // it may be a string.ord(index)
+                //     index should be int. 
                 if (thisExpression.primaryExpression.returnType instanceof MentalString) {
                     thisExpression.memberExpression = new AstCallOrd();
                     thisExpression.memberExpression.parent = thisExpression;
@@ -601,6 +630,7 @@ public class BuildTreeListener extends MentalBaseListener {
                     this.existError = true;
                 }
             } else if (ctx.functionCall().functionName.getText().equals("parseInt")) {
+                // it may be a string.parseInt()
                 if (thisExpression.primaryExpression.returnType instanceof MentalString) {
                     thisExpression.memberExpression = new AstCallParseInt();
                     thisExpression.memberExpression.parent = thisExpression;
@@ -614,6 +644,7 @@ public class BuildTreeListener extends MentalBaseListener {
                     this.existError = true;
                 }
             } else if (ctx.functionCall().functionName.getText().equals("size")) {
+                // it may be a array.size()
                 if (thisExpression.primaryExpression.returnType instanceof MentalArray) {
                     thisExpression.memberExpression = new AstCallSize();
                     thisExpression.memberExpression.parent = thisExpression;
@@ -628,9 +659,11 @@ public class BuildTreeListener extends MentalBaseListener {
                 }
             }
         } else {
+            // it is a member access.
             thisExpression.memberExpression = null;
             thisExpression.memberName = ctx.Identifier().getText();
             if (thisExpression.primaryExpression.returnType instanceof MentalClass) {
+                // the primary expression is not a class.
                 MentalClass thisClass = (MentalClass) thisExpression.primaryExpression.returnType;
                 if (thisClass.classComponents.get(thisExpression.memberName) != null) {
                     thisExpression.leftValue = thisExpression.primaryExpression.leftValue;
@@ -648,9 +681,7 @@ public class BuildTreeListener extends MentalBaseListener {
         }
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * process function call.
 	 */
 	@Override public void enterFUNCTION_CALL(MentalParser.FUNCTION_CALLContext ctx) {
         AstFunctionCall functionCall = new AstFunctionCall();
@@ -662,8 +693,12 @@ public class BuildTreeListener extends MentalBaseListener {
                 || functionName.equals("getInt")
                 || functionName.equals("getString")
                 || functionName.equals("toString")) {
+            // internal functions are not in symbol table.
+            // it will produce an error if find them in the symbol table.
             return ;
         }
+        // get the message of the function
+        //     function name, parameters' type, set the return value of this call.
         SymbolBase symbol = this.curSymbolTable.getSymbol(functionName);
         if (symbol != null) {
              if (symbol instanceof SymbolFunction) {
@@ -691,7 +726,10 @@ public class BuildTreeListener extends MentalBaseListener {
                 || functionName.equals("getInt")
                 || functionName.equals("getString")
                 || functionName.equals("toString")) {
+            // it is an internal function call
+            //     and the node of this function call will be replaced by an internal function call node.
             if (functionName.equals("print")) {
+                // may be print(str)
                 if (thisCall.parameters.expressions.size() == 1) {
                     if (thisCall.parameters.expressions.get(0).returnType.equals(SymbolTable.mentalString)) {
                         AstCallPrint callPrint = new AstCallPrint();
@@ -707,6 +745,7 @@ public class BuildTreeListener extends MentalBaseListener {
                     this.existError = true;
                 }
             } else if (functionName.equals("println")) {
+                // may be println(str)
                 if (thisCall.parameters.expressions.size() == 1) {
                     if (thisCall.parameters.expressions.get(0).returnType.equals(SymbolTable.mentalString)) {
                         AstCallPrintln callPrintln = new AstCallPrintln();
@@ -722,6 +761,7 @@ public class BuildTreeListener extends MentalBaseListener {
                     this.existError = true;
                 }
             } else if (functionName.equals("getInt")) {
+                // may be getInt()
                 if (thisCall.parameters.expressions.size() == 0) {
                     AstCallGetInt callGetInt = new AstCallGetInt();
                     this.tree.replace(ctx, callGetInt);
@@ -730,6 +770,7 @@ public class BuildTreeListener extends MentalBaseListener {
                     this.existError = true;
                 }
             } else if (functionName.equals("getString")) {
+                // may be getString()
                 if (thisCall.parameters.expressions.size() == 0) {
                     AstCallGetString callGetString = new AstCallGetString();
                     this.tree.replace(ctx, callGetString);
@@ -738,6 +779,7 @@ public class BuildTreeListener extends MentalBaseListener {
                     this.existError = true;
                 }
             } else if (functionName.equals("toString")) {
+                // may be toString(int)
                 if (thisCall.parameters.expressions.size() == 1) {
                     if (thisCall.parameters.expressions.get(0).returnType.equals(SymbolTable.mentalInt)) {
                         AstCallToString callToString = new AstCallToString();
@@ -782,55 +824,34 @@ public class BuildTreeListener extends MentalBaseListener {
         }
     }
     /**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterADDITIVE_EXPRESSION(MentalParser.ADDITIVE_EXPRESSIONContext ctx) {
-        AstAdditiveExpression additiveExpression = new AstAdditiveExpression();
-        additiveExpression.op = ctx.op.getType();
-        this.tree.put(ctx, additiveExpression);
+     * x = y
+     * x, y should be the same type.
+     */
+    @Override public void enterASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx) {
+        AstAssignExpression assignExpression = new AstAssignExpression();
+        this.tree.put(ctx, assignExpression);
     }
-	@Override public void exitADDITIVE_EXPRESSION(MentalParser.ADDITIVE_EXPRESSIONContext ctx) {
-        AstAdditiveExpression thisExpression = (AstAdditiveExpression) this.tree.get(ctx);
+    @Override public void exitASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx) {
+        AstAssignExpression thisExpression = (AstAssignExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
-        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
         thisExpression.leftExpression.parent = thisExpression;
+        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
         thisExpression.rightExpression.parent = thisExpression;
-        if (thisExpression.leftExpression.returnType.equals(thisExpression.rightExpression.returnType)) {
-            if (thisExpression.op == AstAdditiveExpression.ADD) {
-                if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalString)) {
-                    if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalString)) {
-                        // string + string
-                        thisExpression.returnType = SymbolTable.mentalString;
-                        return;
-                    }
-                } else {
-                    if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
-                        if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
-                            // int + int
-                            thisExpression.returnType = SymbolTable.mentalInt;
-                            return;
-                        }
-                    }
-                }
-            } else {
-                if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
-                    if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
-                        // int - int
-                        thisExpression.returnType = SymbolTable.mentalInt;
-                        return;
-                    }
-                }
-            }
+        if (!thisExpression.leftExpression.leftValue) {
+            System.err.println("fatal: the left side of operator= cannot be a left-value.\n\t" + ctx.getText());
+            this.existError = true;
         }
-        System.err.println("fatal: the types of additive expression cannot accept. \n\t" + ctx.getText());
-        this.existError = true;
+        if (!thisExpression.leftExpression.returnType.equals(thisExpression.rightExpression.returnType)) {
+            System.err.println("fatal: the types of both sides of operator= are different.\n"
+                    + "\t left side: " + thisExpression.leftExpression.returnType + "\n"
+                    + "\tright side: " + thisExpression.rightExpression.returnType
+            );
+            this.existError = true;
+        }
+        thisExpression.returnType = thisExpression.leftExpression.returnType;
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * new type ([int])* ([])*
 	 */
 	@Override public void enterCREATION_EXPRESSION(MentalParser.CREATION_EXPRESSIONContext ctx) {
         AstCreationExpression creationExpression = new AstCreationExpression();
@@ -875,10 +896,229 @@ public class BuildTreeListener extends MentalBaseListener {
 			}
 		}
     }
+    /**
+     * x++, x--
+     * x should be a left-value, and int
+     */
+    @Override public void enterSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) {
+        AstSuffixExpression suffixExpression = new AstSuffixExpression();
+        suffixExpression.op = ctx.op.getType();
+        this.tree.put(ctx, suffixExpression);
+    }
+    @Override public void exitSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) {
+        AstSuffixExpression thisExpression = (AstSuffixExpression) this.tree.get(ctx);
+        thisExpression.childExpression = (AstExpression) this.tree.get(ctx.expression());
+        thisExpression.childExpression.parent = thisExpression;
+        thisExpression.returnType = thisExpression.childExpression.returnType;
+        if (!thisExpression.childExpression.leftValue) {
+            System.err.println("fatal: try to apply suffix (inc/dec)reasement on a no-leftvalue.\n\t" + ctx.expression().getText());
+            this.existError = true;
+        }
+        if (!thisExpression.childExpression.returnType.equals(SymbolTable.mentalInt)) {
+            System.err.println("fatal: try to apply suffix (inc/dec)reasement on a no-digit.\n\t" + ctx.expression().getText());
+            this.existError = true;
+        }
+
+    }
+    /**
+     * ++x, --x
+     * x should be left-value and int.
+     */
+    @Override public void enterPREFIX_INC_DEC_EXPRESSION(MentalParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) {
+        AstPrefixExpression prefixExpression = new AstPrefixExpression();
+        prefixExpression.op = ctx.op.getType();
+        this.tree.put(ctx, prefixExpression);
+    }
+    @Override public void exitPREFIX_INC_DEC_EXPRESSION(MentalParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) {
+        AstPrefixExpression thisExpression = (AstPrefixExpression) this.tree.get(ctx);
+        thisExpression.childExpression = (AstExpression) this.tree.get(ctx.expression());
+        thisExpression.childExpression.parent = thisExpression;
+        if (!thisExpression.childExpression.leftValue) {
+            System.err.println("fatal: try to apply a prefix inc/dec on a non-left-value.\n\t" + ctx.getText());
+            this.existError = true;
+        }
+        if (!thisExpression.childExpression.returnType.equals(SymbolTable.mentalInt)) {
+            System.err.println("fatal: try to apply a prefix inc/dec on a no-integer.\n\t" + ctx.getText());
+            this.existError = true;
+        }
+    }
+    /**
+     * +x, -x
+     * x should be int.
+     */
+    @Override public void enterUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) {
+        AstUnaryAdditiveExpression unaryAdditiveExpression = new AstUnaryAdditiveExpression();
+        unaryAdditiveExpression.op = ctx.op.getType();
+        this.tree.put(ctx, unaryAdditiveExpression);
+    }
+    @Override public void exitUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) {
+        AstUnaryAdditiveExpression thisExpression = (AstUnaryAdditiveExpression) this.tree.get(ctx);
+        AstExpression childExpression = (AstExpression) this.tree.get(ctx.expression());
+        childExpression.parent = thisExpression;
+        thisExpression.childExpression = childExpression;
+        if (!childExpression.returnType.equals(SymbolTable.mentalInt)) {
+            System.err.println("fatal: try to apply unary plus/minus on a no-int type.\n\t" + ctx.getText());
+            this.existError = true;
+        }
+    }
+    /**
+     * x + y, x - y, str1 + str2
+     */
+    @Override public void enterADDITIVE_EXPRESSION(MentalParser.ADDITIVE_EXPRESSIONContext ctx) {
+        AstAdditiveExpression additiveExpression = new AstAdditiveExpression();
+        additiveExpression.op = ctx.op.getType();
+        this.tree.put(ctx, additiveExpression);
+    }
+    @Override public void exitADDITIVE_EXPRESSION(MentalParser.ADDITIVE_EXPRESSIONContext ctx) {
+        AstAdditiveExpression thisExpression = (AstAdditiveExpression) this.tree.get(ctx);
+        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
+        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
+        thisExpression.leftExpression.parent = thisExpression;
+        thisExpression.rightExpression.parent = thisExpression;
+        if (thisExpression.leftExpression.returnType.equals(thisExpression.rightExpression.returnType)) {
+            if (thisExpression.op == AstAdditiveExpression.ADD) {
+                if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalString)) {
+                    if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalString)) {
+                        // string + string
+                        thisExpression.returnType = SymbolTable.mentalString;
+                        return;
+                    }
+                } else {
+                    if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
+                        if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                            // int + int
+                            thisExpression.returnType = SymbolTable.mentalInt;
+                            return;
+                        }
+                    }
+                }
+            } else {
+                if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
+                    if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                        // int - int
+                        thisExpression.returnType = SymbolTable.mentalInt;
+                        return;
+                    }
+                }
+            }
+        }
+        System.err.println("fatal: the types of additive expression cannot accept. \n\t" + ctx.getText());
+        this.existError = true;
+    }
+    /**
+     * x * y, x / y, x % y
+     * x, y should be int.
+     */
+    @Override public void enterMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx) {
+        AstMulDivExpression mulDivExpression = new AstMulDivExpression();
+        mulDivExpression.op = ctx.op.getType();
+        this.tree.put(ctx, mulDivExpression);
+    }
+    @Override public void exitMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx) {
+        AstMulDivExpression thisExpression = (AstMulDivExpression) this.tree.get(ctx);
+        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
+        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
+        thisExpression.leftExpression.parent = thisExpression.rightExpression.parent = thisExpression;
+        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
+            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                return;
+            }
+        }
+        System.err.println("fatal: the types of multiply/divide expression cannot accept.\n\t" + ctx.getText());
+        this.existError = true;
+    }
+    /**
+     * x << y, x >> y
+     * x, y should be int.
+     */
+    @Override public void enterBIT_SHIFT_EXPRESSION(MentalParser.BIT_SHIFT_EXPRESSIONContext ctx) {
+        AstBitShiftExpression bitShiftExpression = new AstBitShiftExpression();
+        bitShiftExpression.op = ctx.op.getType();
+        this.tree.put(ctx, bitShiftExpression);
+    }
+    @Override public void exitBIT_SHIFT_EXPRESSION(MentalParser.BIT_SHIFT_EXPRESSIONContext ctx) {
+        AstBitShiftExpression thisExpression = (AstBitShiftExpression) this.tree.get(ctx);
+        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
+        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
+        thisExpression.leftExpression.parent = thisExpression;
+        thisExpression.rightExpression.parent = thisExpression;
+        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
+            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                return;
+            }
+        }
+        System.err.println("fatal: the types of bit-shift expression cannnot accept.\n\t" + ctx.getText());
+        this.existError = true;
+    }
+    /**
+     * x & y
+     * x, y should be int
+     */
+    @Override public void enterBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx) {
+        AstBitAndExpression bitAndExpression = new AstBitAndExpression();
+        this.tree.put(ctx, bitAndExpression);
+    }
+    @Override public void exitBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx) {
+        AstBitAndExpression thisExpression = (AstBitAndExpression) this.tree.get(ctx);
+        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
+        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
+        thisExpression.leftExpression.parent = thisExpression;
+        thisExpression.rightExpression.parent = thisExpression;
+        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
+            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                return ;
+            }
+        }
+        System.err.println("fatal: the types of sides of bit-and expression cannot accept.\n\t" + ctx.getText());
+        this.existError = true;
+    }
+    /**
+     * x | y
+     * x, y should be int.
+     */
+    @Override public void enterBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx) {
+        AstBitOrExpression bitOrExpression = new AstBitOrExpression();
+        this.tree.put(ctx, bitOrExpression);
+    }
+    @Override public void exitBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx) {
+        AstBitOrExpression thisExpression = (AstBitOrExpression) this.tree.get(ctx);
+        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
+        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
+        thisExpression.leftExpression.parent = thisExpression;
+        thisExpression.rightExpression.parent = thisExpression;
+        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
+            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                return;
+            }
+        }
+        System.err.println("fatal: the types of bit-or expression cannot accept.\n\t" + ctx.getText());
+        this.existError = true;
+    }
+    /**
+     * a ^ b
+     * both a, b should be int.
+     */
+    @Override public void enterBIT_XOR_EXPRESSION(MentalParser.BIT_XOR_EXPRESSIONContext ctx) {
+        AstBitXorExpression bitXorExpression = new AstBitXorExpression();
+        this.tree.put(ctx, bitXorExpression);
+    }
+    @Override public void exitBIT_XOR_EXPRESSION(MentalParser.BIT_XOR_EXPRESSIONContext ctx) {
+        AstBitXorExpression thisExpression = (AstBitXorExpression) this.tree.get(ctx);
+        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
+        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
+        thisExpression.leftExpression.parent = thisExpression;
+        thisExpression.rightExpression.parent = thisExpression;
+        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
+            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                return;
+            }
+        }
+        System.err.println("fatal: the types of bit-xor expression cannot accept.\n\t" + ctx.getText());
+        this.existError = true;
+    }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * ~x
+     * x should be a int
 	 */
 	@Override public void enterBIT_NOT_EXPRESSION(MentalParser.BIT_NOT_EXPRESSIONContext ctx) {
         AstBitNotExpression expression = new AstBitNotExpression();
@@ -899,9 +1139,8 @@ public class BuildTreeListener extends MentalBaseListener {
         }
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * a < b, a <= b, a > b, a >= b
+     *  a, b may both be int or string.
 	 */
 	@Override public void enterRELATION_EXPRESSION(MentalParser.RELATION_EXPRESSIONContext ctx) {
         AstRelationExpression relationExpression = new AstRelationExpression();
@@ -935,9 +1174,8 @@ public class BuildTreeListener extends MentalBaseListener {
         this.existError = true;
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * a == b, a != b
+     * a, b should be the same type.
 	 */
 	@Override public void enterEQUALITY_EXPRESSION(MentalParser.EQUALITY_EXPRESSIONContext ctx) {
         AstEqualityExpression equalityExpression = new AstEqualityExpression();
@@ -957,20 +1195,7 @@ public class BuildTreeListener extends MentalBaseListener {
         this.existError = true;
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterINT_LITERAL(MentalParser.INT_LITERALContext ctx) {
-        AstIntLiteral intLiteral = new AstIntLiteral();
-        intLiteral.literalContext = Integer.parseInt(ctx.getText());
-        this.tree.put(ctx, intLiteral);
-    }
-	@Override public void exitINT_LITERAL(MentalParser.INT_LITERALContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * use a variable such as "x", "y" in "x = y"
 	 */
 	@Override public void enterIDENTIFIER(MentalParser.IDENTIFIERContext ctx) {
         AstIdentifier identifier = new AstIdentifier();
@@ -994,151 +1219,15 @@ public class BuildTreeListener extends MentalBaseListener {
     }
 	@Override public void exitIDENTIFIER(MentalParser.IDENTIFIERContext ctx) { }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) {
-        AstSuffixExpression suffixExpression = new AstSuffixExpression();
-        suffixExpression.op = ctx.op.getType();
-        this.tree.put(ctx, suffixExpression);
-    }
-	@Override public void exitSUFFIX_INC_DEC_EXPRESSION(MentalParser.SUFFIX_INC_DEC_EXPRESSIONContext ctx) {
-        AstSuffixExpression thisExpression = (AstSuffixExpression) this.tree.get(ctx);
-        thisExpression.childExpression = (AstExpression) this.tree.get(ctx.expression());
-        thisExpression.childExpression.parent = thisExpression;
-        thisExpression.returnType = thisExpression.childExpression.returnType;
-        if (!thisExpression.childExpression.leftValue) {
-            System.err.println("fatal: try to apply suffix (inc/dec)reasement on a no-leftvalue.\n\t" + ctx.expression().getText());
-            this.existError = true;
-        }
-        if (!thisExpression.childExpression.returnType.equals(SymbolTable.mentalInt)) {
-            System.err.println("fatal: try to apply suffix (inc/dec)reasement on a no-digit.\n\t" + ctx.expression().getText());
-            this.existError = true;
-        }
-
-    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx) {
-        AstMulDivExpression mulDivExpression = new AstMulDivExpression();
-        mulDivExpression.op = ctx.op.getType();
-        this.tree.put(ctx, mulDivExpression);
-    }
-	@Override public void exitMULTIPLY_DIVIDE_EXPRESSION(MentalParser.MULTIPLY_DIVIDE_EXPRESSIONContext ctx) {
-        AstMulDivExpression thisExpression = (AstMulDivExpression) this.tree.get(ctx);
-        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
-        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
-        thisExpression.leftExpression.parent = thisExpression.rightExpression.parent = thisExpression;
-        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
-            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
-                return;
-            }
-        }
-        System.err.println("fatal: the types of multiply/divide expression cannot accept.\n\t" + ctx.getText());
-        this.existError = true;
-    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx) {
-        AstLogicalOrExpression logicalOrExpression = new AstLogicalOrExpression();
-        this.tree.put(ctx, logicalOrExpression);
-    }
-	@Override public void exitLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx) {
-        AstLogicalOrExpression thisExpression = (AstLogicalOrExpression) this.tree.get(ctx);
-        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
-        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
-        thisExpression.leftExpression.parent = thisExpression;
-        thisExpression.rightExpression.parent = thisExpression;
-        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalBool)) {
-            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalBool)) {
-                return;
-            }
-        }
-        System.err.println("fatal: the types of logical-or expression cannot accept.\n\t" + ctx.getText());
-        this.existError = true;
-    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx) {
-        AstAssignExpression assignExpression = new AstAssignExpression();
-        this.tree.put(ctx, assignExpression);
-    }
-	@Override public void exitASSIGN_EXPRESSION(MentalParser.ASSIGN_EXPRESSIONContext ctx) {
-        AstAssignExpression thisExpression = (AstAssignExpression) this.tree.get(ctx);
-        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
-        thisExpression.leftExpression.parent = thisExpression;
-        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
-        thisExpression.rightExpression.parent = thisExpression;
-        if (!thisExpression.leftExpression.leftValue) {
-            System.err.println("fatal: the left side of operator= cannot be a left-value.\n\t" + ctx.getText());
-            this.existError = true;
-        }
-        if (!thisExpression.leftExpression.returnType.equals(thisExpression.rightExpression.returnType)) {
-            System.err.println("fatal: the types of both sides of operator= are different.\n"
-                    + "\t left side: " + thisExpression.leftExpression.returnType + "\n"
-                    + "\tright side: " + thisExpression.rightExpression.returnType
-            );
-            this.existError = true;
-        }
-        thisExpression.returnType = thisExpression.leftExpression.returnType;
-    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * null
 	 */
 	@Override public void enterNULL(MentalParser.NULLContext ctx) {
 		this.tree.put(ctx, new AstNullConstant());
 	}
 	@Override public void exitNULL(MentalParser.NULLContext ctx) { }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTRUE(MentalParser.TRUEContext ctx) {
-        AstBoolConstant node = new AstBoolConstant();
-        node.boolConstant = true;
-        this.tree.put(ctx, node);
-    }
-	@Override public void exitTRUE(MentalParser.TRUEContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx) {
-		AstBitOrExpression bitOrExpression = new AstBitOrExpression();
-        this.tree.put(ctx, bitOrExpression);
-	}
-	@Override public void exitBIT_OR_EXPRESSION(MentalParser.BIT_OR_EXPRESSIONContext ctx) {
-        AstBitOrExpression thisExpression = (AstBitOrExpression) this.tree.get(ctx);
-        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
-        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
-        thisExpression.leftExpression.parent = thisExpression;
-        thisExpression.rightExpression.parent = thisExpression;
-        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
-            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
-                return;
-            }
-        }
-        System.err.println("fatal: the types of bit-or expression cannot accept.\n\t" + ctx.getText());
-        this.existError = true;
-    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * x && y
+     * x, y should be boolean.
 	 */
 	@Override public void enterLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx) {
         AstLogicalAndExpression logicalAndExpression = new AstLogicalAndExpression();
@@ -1158,57 +1247,31 @@ public class BuildTreeListener extends MentalBaseListener {
         System.err.println("fatal: the types of logical-and expression cannot accept.\n\t" + ctx.getText());
         this.existError = true;
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBIT_SHIFT_EXPRESSION(MentalParser.BIT_SHIFT_EXPRESSIONContext ctx) {
-        AstBitShiftExpression bitShiftExpression = new AstBitShiftExpression();
-        bitShiftExpression.op = ctx.op.getType();
-        this.tree.put(ctx, bitShiftExpression);
+    /**
+     * x || y
+     * x, y should be boolean.
+     */
+    @Override public void enterLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx) {
+        AstLogicalOrExpression logicalOrExpression = new AstLogicalOrExpression();
+        this.tree.put(ctx, logicalOrExpression);
     }
-	@Override public void exitBIT_SHIFT_EXPRESSION(MentalParser.BIT_SHIFT_EXPRESSIONContext ctx) {
-        AstBitShiftExpression thisExpression = (AstBitShiftExpression) this.tree.get(ctx);
+    @Override public void exitLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx) {
+        AstLogicalOrExpression thisExpression = (AstLogicalOrExpression) this.tree.get(ctx);
         thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
         thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
         thisExpression.leftExpression.parent = thisExpression;
         thisExpression.rightExpression.parent = thisExpression;
-        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
-            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalBool)) {
+            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalBool)) {
                 return;
             }
         }
-        System.err.println("fatal: the types of bit-shift expression cannnot accept.\n\t" + ctx.getText());
+        System.err.println("fatal: the types of logical-or expression cannot accept.\n\t" + ctx.getText());
         this.existError = true;
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPREFIX_INC_DEC_EXPRESSION(MentalParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) {
-        AstPrefixExpression prefixExpression = new AstPrefixExpression();
-        prefixExpression.op = ctx.op.getType();
-        this.tree.put(ctx, prefixExpression);
-    }
-	@Override public void exitPREFIX_INC_DEC_EXPRESSION(MentalParser.PREFIX_INC_DEC_EXPRESSIONContext ctx) {
-        AstPrefixExpression thisExpression = (AstPrefixExpression) this.tree.get(ctx);
-        thisExpression.childExpression = (AstExpression) this.tree.get(ctx.expression());
-        thisExpression.childExpression.parent = thisExpression;
-        if (!thisExpression.childExpression.leftValue) {
-            System.err.println("fatal: try to apply a prefix inc/dec on a non-left-value.\n\t" + ctx.getText());
-            this.existError = true;
-        }
-        if (!thisExpression.childExpression.returnType.equals(SymbolTable.mentalInt)) {
-            System.err.println("fatal: try to apply a prefix inc/dec on a no-integer.\n\t" + ctx.getText());
-            this.existError = true;
-        }
-    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * x[i]
+     * x should be a array, i should be a int.
 	 */
 	@Override public void enterARRAY_SUBSCRIPTING_EXPRESSION(MentalParser.ARRAY_SUBSCRIPTING_EXPRESSIONContext ctx) {
         AstArraySubscriptingExpression arraySubscriptingExpression = new AstArraySubscriptingExpression();
@@ -1238,9 +1301,7 @@ public class BuildTreeListener extends MentalBaseListener {
         }
     }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * (expression)
 	 */
 	@Override public void enterSUBGROUP_EXPRESSION(MentalParser.SUBGROUP_EXPRESSIONContext ctx) {
         AstSubgroupExpression subgroupExpression = new AstSubgroupExpression();
@@ -1253,33 +1314,18 @@ public class BuildTreeListener extends MentalBaseListener {
         thisExpression.returnType = thisExpression.childExpression.returnType;
         thisExpression.leftValue = thisExpression.childExpression.leftValue;
     }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx) {
-		AstBitAndExpression bitAndExpression = new AstBitAndExpression();
-        this.tree.put(ctx, bitAndExpression);
-	}
-	@Override public void exitBIT_AND_EXPRESSION(MentalParser.BIT_AND_EXPRESSIONContext ctx) {
-        AstBitAndExpression thisExpression = (AstBitAndExpression) this.tree.get(ctx);
-        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
-        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
-        thisExpression.leftExpression.parent = thisExpression;
-        thisExpression.rightExpression.parent = thisExpression;
-        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
-            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
-                return ;
-            }
-        }
-        System.err.println("fatal: the types of sides of bit-and expression cannot accept.\n\t" + ctx.getText());
-        this.existError = true;
+    /**
+     * int literal
+     * 12212, 124213, ...
+     */
+    @Override public void enterINT_LITERAL(MentalParser.INT_LITERALContext ctx) {
+        AstIntLiteral intLiteral = new AstIntLiteral();
+        intLiteral.literalContext = Integer.parseInt(ctx.getText());
+        this.tree.put(ctx, intLiteral);
     }
+    @Override public void exitINT_LITERAL(MentalParser.INT_LITERALContext ctx) { }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * string literal
 	 */
 	@Override public void enterSTRING_LITERAL(MentalParser.STRING_LITERALContext ctx) {
         AstStringLiteral stringLiteral = new AstStringLiteral();
@@ -1287,10 +1333,17 @@ public class BuildTreeListener extends MentalBaseListener {
         this.tree.put(ctx, stringLiteral);
     }
 	@Override public void exitSTRING_LITERAL(MentalParser.STRING_LITERALContext ctx) { }
+    /**
+     * true
+     */
+    @Override public void enterTRUE(MentalParser.TRUEContext ctx) {
+        AstBoolConstant node = new AstBoolConstant();
+        node.boolConstant = true;
+        this.tree.put(ctx, node);
+    }
+    @Override public void exitTRUE(MentalParser.TRUEContext ctx) { }
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * false
 	 */
 	@Override public void enterFALSE(MentalParser.FALSEContext ctx) {
         AstBoolConstant node = new AstBoolConstant();
@@ -1298,30 +1351,10 @@ public class BuildTreeListener extends MentalBaseListener {
         this.tree.put(ctx, node);
     }
 	@Override public void exitFALSE(MentalParser.FALSEContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) {
-        AstUnaryAdditiveExpression unaryAdditiveExpression = new AstUnaryAdditiveExpression();
-        unaryAdditiveExpression.op = ctx.op.getType();
-        this.tree.put(ctx, unaryAdditiveExpression);
-    }
-	@Override public void exitUNRAY_PLUS_MINUS_EXPRESSION(MentalParser.UNRAY_PLUS_MINUS_EXPRESSIONContext ctx) {
-        AstUnaryAdditiveExpression thisExpression = (AstUnaryAdditiveExpression) this.tree.get(ctx);
-        AstExpression childExpression = (AstExpression) this.tree.get(ctx.expression());
-        childExpression.parent = thisExpression;
-        thisExpression.childExpression = childExpression;
-        if (!childExpression.returnType.equals(SymbolTable.mentalInt)) {
-            System.err.println("fatal: try to apply unary plus/minus on a no-int type.\n\t" + ctx.getText());
-            this.existError = true;
-        }
-    }
     /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
+     * function call
+     *     only for member access expression
+     *     FUNCTION_CALL expression will process in itself.
      */
     @Override public void enterFunctionCall(MentalParser.FunctionCallContext ctx) {
         if (ctx.parent instanceof MentalParser.FUNCTION_CALLContext) {
@@ -1344,9 +1377,7 @@ public class BuildTreeListener extends MentalBaseListener {
         thisCall.parameters.parent = thisCall;
     }
     /**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * which will transmit to a function call.
 	 */
 	@Override public void enterExpressionList(MentalParser.ExpressionListContext ctx) {
         AstExpressionList expressionList = new AstExpressionList();
@@ -1358,26 +1389,5 @@ public class BuildTreeListener extends MentalBaseListener {
             thisList.expressions.add((AstExpression) this.tree.get(ctx.expression(i)));
             thisList.expressions.get(i).parent = thisList;
         }
-    }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterEveryRule(ParserRuleContext ctx) {
-        if (this.existError) {
-            //System.exit(-1);
-        }
-    }
-	@Override public void exitEveryRule(ParserRuleContext ctx) {
-        if (this.existError) {
-            //System.exit(-1);
-        }
-    }
-	@Override public void visitTerminal(TerminalNode node) { }
-	@Override public void visitErrorNode(ErrorNode node) {
-        System.err.println("fatal: there is an error in grammar analysis.");
-        System.exit(-1);
     }
 }

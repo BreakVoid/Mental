@@ -6,7 +6,7 @@ package MentalSymbols;
 public class SymbolBase {
     public int stackLayer;
     public SymbolBase() {
-        stackLayer = 0;
+        this.stackLayer = 0;
     }
     @Override
     public String toString() {

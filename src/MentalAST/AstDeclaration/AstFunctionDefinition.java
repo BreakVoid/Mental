@@ -1,6 +1,6 @@
 package MentalAST.AstDeclaration;
 
-import MentalAST.AstStatement.AstComponentStatement;
+import MentalAST.AstStatement.AstCompoundStatement;
 import MentalSymbols.SymbolFunction;
 
 /**
@@ -8,10 +8,10 @@ import MentalSymbols.SymbolFunction;
  */
 public class AstFunctionDefinition extends AstDeclaration {
     public SymbolFunction functionHead;
-    public AstComponentStatement functionBody;
+    public AstCompoundStatement functionBody;
     public AstFunctionDefinition() {
         this.functionHead = new SymbolFunction();
-        this.functionBody = new AstComponentStatement();
+        this.functionBody = new AstCompoundStatement();
     }
     @Override
     public String toPrintString(int indent) {

@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * Created by Songyu on 16/3/30.
  */
-public class AstComponentStatement extends AstStatement {
+public class AstCompoundStatement extends AstStatement {
     public List<AstBaseNode> statements;
-    public AstComponentStatement() {
+    public AstCompoundStatement() {
         this.statements = new LinkedList<>();
     }
     @Override
@@ -40,8 +40,8 @@ public class AstComponentStatement extends AstStatement {
             return true;
         }
         if (other != null) {
-            if (other instanceof AstComponentStatement) {
-                if (this.statements.equals(((AstComponentStatement) other).statements)) {
+            if (other instanceof AstCompoundStatement) {
+                if (this.statements.equals(((AstCompoundStatement) other).statements)) {
                     return true;
                 }
             }
