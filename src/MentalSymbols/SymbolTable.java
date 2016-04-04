@@ -59,7 +59,7 @@ public class SymbolTable {
                 this.table.replace(id, symbol);
             } else {
                 System.err.println("fatal: redefine a identifier <" + id + "> in the same scope.");
-                System.exit(-1);
+                System.exit(1);
             }
         } else {
             this.table.put(id, symbol);

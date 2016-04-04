@@ -41,7 +41,7 @@ public class SymbolVariableList {
                 this.variables.add(new SymbolVariable(scope, type, id));
             } else {
                 System.err.println("fatal: the identifier is illegal.\n\t" + varDefCtx.getText());
-                System.exit(-1);
+                System.exit(1);
             }
         }
     }

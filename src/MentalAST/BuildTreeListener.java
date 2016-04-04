@@ -52,18 +52,18 @@ public class BuildTreeListener extends MentalBaseListener {
 	}
     @Override public void enterEveryRule(ParserRuleContext ctx) {
         if (this.existError) {
-            //System.exit(-1);
+            //System.exit(1);
         }
     }
     @Override public void exitEveryRule(ParserRuleContext ctx) {
         if (this.existError) {
-            //System.exit(-1);
+            //System.exit(1);
         }
     }
     @Override public void visitTerminal(TerminalNode node) { }
     @Override public void visitErrorNode(ErrorNode node) {
         System.err.println("fatal: there is an error in grammar analysis.");
-        System.exit(-1);
+        System.exit(1);
     }
     /**
      * function following do nothing because none of them have effect.
