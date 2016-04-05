@@ -2,7 +2,6 @@ package MentalSymbols;
 
 import MentalParser.MentalParser;
 import MentalType.*;
-import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 import java.util.HashMap;
 
