@@ -401,7 +401,9 @@ public class BuildTreeListener extends MentalBaseListener {
         thisStatement.thenStatement = (AstStatement) this.tree.get(ctx.thenStatement);
         thisStatement.thenStatement.parent = thisStatement;
         if (!thisStatement.condition.returnType.equals(SymbolTable.mentalBool)) {
-            System.err.println("fatal: the condition of if-statement is not boolean." + ctx.expression().getText());
+            System.err.println("fatal: the condition of if-statement is not boolean.\n\t"
+                    + ctx.expression().getText() + "@" + thisStatement.condition.returnType.toString()
+            );
             this.existError = true;
         }
     }
@@ -453,7 +455,9 @@ public class BuildTreeListener extends MentalBaseListener {
         thisStatement.loopBody = (AstStatement) this.tree.get(ctx.statement());
         thisStatement.loopBody.parent = thisStatement;
         if (!thisStatement.cond.returnType.equals(SymbolTable.mentalBool)) {
-            System.err.println("fatal: the loop condition of for statement does not return boolean. " + ctx.cond.getText());
+            System.err.println("fatal: the loop condition of for statement does not return boolean.\n\t"
+                    + ctx.cond.getText() + "@" + thisStatement.cond.returnType.toString()
+            );
             this.existError = true;
         }
     }
@@ -472,7 +476,9 @@ public class BuildTreeListener extends MentalBaseListener {
         thisStatement.loopBody = (AstStatement) this.tree.get(ctx.statement());
         thisStatement.loopBody.parent = thisStatement;
         if (!thisStatement.cond.returnType.equals(SymbolTable.mentalBool)) {
-            System.err.println("fatal: the loop condition of for statement does not return boolean. " + ctx.cond.getText());
+            System.err.println("fatal: the loop condition of for statement does not return boolean.\n\t"
+                    + ctx.cond.getText() + "@" + thisStatement.cond.returnType.toString()
+            );
             this.existError = true;
         }
     }
@@ -853,15 +859,17 @@ public class BuildTreeListener extends MentalBaseListener {
         if (!thisExpression.leftExpression.leftValue) {
             System.err.println("fatal: the left side of operator= cannot be a left-value.\n\t" + ctx.getText());
             this.existError = true;
+        } else {
+            if (!thisExpression.leftExpression.returnType.equals(thisExpression.rightExpression.returnType)) {
+                System.err.println("fatal: the types of both sides of operator= are different.\n"
+                        + "\t left side: " + thisExpression.leftExpression.returnType + "\n"
+                        + "\tright side: " + thisExpression.rightExpression.returnType
+                );
+                this.existError = true;
+            } else {
+                thisExpression.returnType = thisExpression.leftExpression.returnType;
+            }
         }
-        if (!thisExpression.leftExpression.returnType.equals(thisExpression.rightExpression.returnType)) {
-            System.err.println("fatal: the types of both sides of operator= are different.\n"
-                    + "\t left side: " + thisExpression.leftExpression.returnType + "\n"
-                    + "\tright side: " + thisExpression.rightExpression.returnType
-            );
-            this.existError = true;
-        }
-        thisExpression.returnType = thisExpression.leftExpression.returnType;
     }
 	/**
 	 * new type ([int])* ([])*
@@ -902,9 +910,16 @@ public class BuildTreeListener extends MentalBaseListener {
 				AstExpression childExpression = (AstExpression) this.tree.get(ctx.expression(i));
 				childExpression.parent = thisExpression;
 				if (!childExpression.returnType.equals(SymbolTable.mentalInt)) {
-					System.err.println("fatal: new an array with no-int size.\n\t" + ctx.expression(i).getText());
+                    System.err.println("fatal: new an array with no-int size.\n\t" + ctx.expression(i).getText());
                     this.existError = true;
-				}
+                } else {
+                    if (childExpression instanceof AstIntLiteral) {
+                        if (((AstIntLiteral) childExpression).literalContext <= 0) {
+                            System.err.println("fatal: new an array with negative size.\n\t" + ctx.expression(i).getText());
+                            this.existError = true;
+                        }
+                    }
+                }
 				thisExpression.expressionList.add(childExpression);
 			}
 		}
@@ -926,12 +941,12 @@ public class BuildTreeListener extends MentalBaseListener {
         if (!thisExpression.childExpression.leftValue) {
             System.err.println("fatal: try to apply suffix (inc/dec)reasement on a no-leftvalue.\n\t" + ctx.expression().getText());
             this.existError = true;
+        } else {
+            if (!thisExpression.childExpression.returnType.equals(SymbolTable.mentalInt)) {
+                System.err.println("fatal: try to apply suffix (inc/dec)reasement on a no-digit.\n\t" + ctx.expression().getText());
+                this.existError = true;
+            }
         }
-        if (!thisExpression.childExpression.returnType.equals(SymbolTable.mentalInt)) {
-            System.err.println("fatal: try to apply suffix (inc/dec)reasement on a no-digit.\n\t" + ctx.expression().getText());
-            this.existError = true;
-        }
-
     }
     /**
      * ++x, --x
@@ -949,10 +964,11 @@ public class BuildTreeListener extends MentalBaseListener {
         if (!thisExpression.childExpression.leftValue) {
             System.err.println("fatal: try to apply a prefix inc/dec on a non-left-value.\n\t" + ctx.getText());
             this.existError = true;
-        }
-        if (!thisExpression.childExpression.returnType.equals(SymbolTable.mentalInt)) {
-            System.err.println("fatal: try to apply a prefix inc/dec on a no-integer.\n\t" + ctx.getText());
-            this.existError = true;
+        } else {
+            if (!thisExpression.childExpression.returnType.equals(SymbolTable.mentalInt)) {
+                System.err.println("fatal: try to apply a prefix inc/dec on a no-integer.\n\t" + ctx.getText());
+                this.existError = true;
+            }
         }
     }
     /**
@@ -972,6 +988,18 @@ public class BuildTreeListener extends MentalBaseListener {
         if (!childExpression.returnType.equals(SymbolTable.mentalInt)) {
             System.err.println("fatal: try to apply unary plus/minus on a no-int type.\n\t" + ctx.getText());
             this.existError = true;
+        } else {
+            if (childExpression instanceof AstIntLiteral) {
+                if (thisExpression.op == AstUnaryAdditiveExpression.ADD) {
+                    AstIntLiteral newIntLiteral = new AstIntLiteral();
+                    newIntLiteral.literalContext = +((AstIntLiteral) childExpression).literalContext;
+                    this.tree.replace(ctx, newIntLiteral);
+                } else if (thisExpression.op == AstUnaryAdditiveExpression.SUB) {
+                    AstIntLiteral newIntLiteral = new AstIntLiteral();
+                    newIntLiteral.literalContext = -((AstIntLiteral) childExpression).literalContext;
+                    this.tree.replace(ctx, newIntLiteral);
+                }
+            }
         }
     }
     /**
