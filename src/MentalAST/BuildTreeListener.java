@@ -375,14 +375,32 @@ public class BuildTreeListener extends MentalBaseListener {
     @Override public void enterCompoundStatement(MentalParser.CompoundStatementContext ctx) {
         // new a scope if it is not the function body.
         if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
-            this.beginScope();
+            if (ctx.parent instanceof MentalParser.StatementContext
+                    && !(
+                        ctx.parent.parent instanceof MentalParser.ForStatementContext
+                        || ctx.parent.parent instanceof MentalParser.WhileStatementContext
+                        || ctx.parent.parent instanceof MentalParser.IfStatementContext
+                        || ctx.parent.parent instanceof MentalParser.IfElseStatementContext
+                        )
+                    ) {
+                this.beginScope();
+            }
         }
         AstCompoundStatement componentStatement = new AstCompoundStatement();
         this.tree.put(ctx, componentStatement);
     }
     @Override public void exitCompoundStatement(MentalParser.CompoundStatementContext ctx) {
         if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
-            this.endScope();
+            if (ctx.parent instanceof MentalParser.StatementContext
+                    && !(
+                    ctx.parent.parent instanceof MentalParser.ForStatementContext
+                            || ctx.parent.parent instanceof MentalParser.WhileStatementContext
+                            || ctx.parent.parent instanceof MentalParser.IfStatementContext
+                            || ctx.parent.parent instanceof MentalParser.IfElseStatementContext
+            )
+                    ) {
+                this.endScope();
+            }
         }
         AstCompoundStatement thisStatement = (AstCompoundStatement) this.tree.get(ctx);
         // it is not necessary to set the parent of children, it will be done in the exitStatement().
