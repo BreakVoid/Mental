@@ -1380,6 +1380,7 @@ public class BuildTreeListener extends MentalBaseListener {
                 } else {
                     thisExpression.returnType = ((MentalArray) thisExpression.primaryExpression.returnType).arrayType;
                 }
+                thisExpression.leftValue = thisExpression.primaryExpression.leftValue;
             } else {
                 System.err.println("fatal: the result of position expression is not a integer.\n\t" + ctx.getText());
                 this.existError = true;
