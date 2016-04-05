@@ -321,6 +321,12 @@ public class BuildTreeListener extends MentalBaseListener {
 	 * just a C-style union of statements
 	 */
 	@Override public void enterStatement(MentalParser.StatementContext ctx) {
+        if (ctx.parent instanceof MentalParser.ForStatementContext
+                || ctx.parent instanceof MentalParser.WhileStatementContext
+                || ctx.parent instanceof MentalParser.IfStatementContext
+                || ctx.parent instanceof MentalParser.IfElseStatementContext) {
+            this.beginScope();
+        }
         if (ctx.variableDefinition() != null) {
             AstVarStatement varStatement = new AstVarStatement();
             this.tree.put(ctx, varStatement);
@@ -354,6 +360,12 @@ public class BuildTreeListener extends MentalBaseListener {
         } else {
             System.err.println("fatal: unknown statement.");
             this.existError = true;
+        }
+        if (ctx.parent instanceof MentalParser.ForStatementContext
+                || ctx.parent instanceof MentalParser.WhileStatementContext
+                || ctx.parent instanceof MentalParser.IfStatementContext
+                || ctx.parent instanceof MentalParser.IfElseStatementContext) {
+            this.endScope();
         }
     }
     /**
@@ -1244,7 +1256,7 @@ public class BuildTreeListener extends MentalBaseListener {
         AstIdentifier identifier = new AstIdentifier();
         identifier.name = ctx.Identifier().getText();
         if (this.curSymbolTable.getSymbol(identifier.name) == null) {
-            System.err.println("fatal: undefined identifier.");
+            System.err.println("fatal: undefined identifier.\n\t" + ctx.Identifier());
             this.existError = true;
         } else {
             SymbolBase base = this.curSymbolTable.getSymbol(identifier.name);
