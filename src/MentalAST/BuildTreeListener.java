@@ -35,6 +35,24 @@ public class BuildTreeListener extends MentalBaseListener {
 		this.symbolTableList.add(new SymbolTable());
 		this.curSymbolTable = this.symbolTableList.getLast();
 	}
+    public boolean checkMain() {
+        if (this.curSymbolTable.getSymbol("main") == null) {
+            System.err.println("fatal: the function `main` is undefined.");
+            return false;
+        } else {
+            SymbolFunction functionMain = (SymbolFunction) this.curSymbolTable.getSymbol("main");
+            if (functionMain.returnType.equals(SymbolTable.mentalInt)) {
+                if (functionMain.parameterType == null || functionMain.parameterType.size() == 0) {
+                    return true;
+                }
+            }
+            System.err.println("fatal: the format of `main` is incorrect.\n\t"
+                    + "expects: int main()\n\t"
+                    + "occurs:  " + functionMain.toString().substring(10)
+            );
+            return false;
+        }
+    }
     /**
      * make a copy of current scope and increase the stack label.
      */
@@ -148,6 +166,9 @@ public class BuildTreeListener extends MentalBaseListener {
             // connect the child to their parent.
             program.declarations.add(tree.get(ctx.getChild(i)));
 		}
+        if (!this.checkMain()) {
+            this.existError = true;
+        }
 	}
 	/**
 	 * {@inheritDoc}

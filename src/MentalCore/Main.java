@@ -31,6 +31,9 @@ public class Main {
         MentalParser.ProgramContext programContext = parser.program();
         BuildTreeListener listener = new BuildTreeListener();
         walker.walk(listener, programContext);
+        if (listener.existError) {
+            System.exit(1);
+        }
         System.out.println();
         System.out.println(listener.tree.get(programContext).toPrintString());
     }
