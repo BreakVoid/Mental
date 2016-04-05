@@ -321,6 +321,12 @@ public class BuildTreeListener extends MentalBaseListener {
 	 * just a C-style union of statements
 	 */
 	@Override public void enterStatement(MentalParser.StatementContext ctx) {
+        if (ctx.parent instanceof MentalParser.ForStatementContext
+                || ctx.parent instanceof MentalParser.WhileStatementContext
+                || ctx.parent instanceof MentalParser.IfStatementContext
+                || ctx.parent instanceof MentalParser.IfElseStatementContext) {
+            this.beginScope();
+        }
         if (ctx.variableDefinition() != null) {
             AstVarStatement varStatement = new AstVarStatement();
             this.tree.put(ctx, varStatement);
@@ -355,6 +361,12 @@ public class BuildTreeListener extends MentalBaseListener {
             System.err.println("fatal: unknown statement.");
             this.existError = true;
         }
+        if (ctx.parent instanceof MentalParser.ForStatementContext
+                || ctx.parent instanceof MentalParser.WhileStatementContext
+                || ctx.parent instanceof MentalParser.IfStatementContext
+                || ctx.parent instanceof MentalParser.IfElseStatementContext) {
+            this.endScope();
+        }
     }
     /**
      * build tree of a compound statement
@@ -363,14 +375,32 @@ public class BuildTreeListener extends MentalBaseListener {
     @Override public void enterCompoundStatement(MentalParser.CompoundStatementContext ctx) {
         // new a scope if it is not the function body.
         if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
-            this.beginScope();
+            if (ctx.parent instanceof MentalParser.StatementContext
+                    && !(
+                        ctx.parent.parent instanceof MentalParser.ForStatementContext
+                        || ctx.parent.parent instanceof MentalParser.WhileStatementContext
+                        || ctx.parent.parent instanceof MentalParser.IfStatementContext
+                        || ctx.parent.parent instanceof MentalParser.IfElseStatementContext
+                        )
+                    ) {
+                this.beginScope();
+            }
         }
         AstCompoundStatement componentStatement = new AstCompoundStatement();
         this.tree.put(ctx, componentStatement);
     }
     @Override public void exitCompoundStatement(MentalParser.CompoundStatementContext ctx) {
         if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
-            this.endScope();
+            if (ctx.parent instanceof MentalParser.StatementContext
+                    && !(
+                    ctx.parent.parent instanceof MentalParser.ForStatementContext
+                            || ctx.parent.parent instanceof MentalParser.WhileStatementContext
+                            || ctx.parent.parent instanceof MentalParser.IfStatementContext
+                            || ctx.parent.parent instanceof MentalParser.IfElseStatementContext
+            )
+                    ) {
+                this.endScope();
+            }
         }
         AstCompoundStatement thisStatement = (AstCompoundStatement) this.tree.get(ctx);
         // it is not necessary to set the parent of children, it will be done in the exitStatement().
@@ -1244,7 +1274,7 @@ public class BuildTreeListener extends MentalBaseListener {
         AstIdentifier identifier = new AstIdentifier();
         identifier.name = ctx.Identifier().getText();
         if (this.curSymbolTable.getSymbol(identifier.name) == null) {
-            System.err.println("fatal: undefined identifier.");
+            System.err.println("fatal: undefined identifier.\n\t" + ctx.Identifier());
             this.existError = true;
         } else {
             SymbolBase base = this.curSymbolTable.getSymbol(identifier.name);
