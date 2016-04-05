@@ -19,7 +19,7 @@ public class SymbolTable {
     public static final MentalVoid mentalVoid = new MentalVoid();
     public static final MentalNull mentalNull = new MentalNull();
     public static final MentalUnknownType mentalUnknownType = new MentalUnknownType();
-
+    public static final int maxLayer = 2147483647;
     private HashMap<String, SymbolBase> table;
     public int stackLayer;
     public SymbolTable() {
@@ -28,22 +28,22 @@ public class SymbolTable {
         SymbolType symbolInt = new SymbolType();
 
         symbolInt.setType(mentalInt);
-        symbolInt.stackLayer = 65535;
+        symbolInt.stackLayer = maxLayer;
         this.table.put("int", symbolInt);
 
         SymbolType symbolString = new SymbolType();
         symbolString.setType(mentalString);
-        symbolString.stackLayer = 65535;
+        symbolString.stackLayer = maxLayer;
         this.table.put("string", symbolString);
 
         SymbolType symbolBool = new SymbolType();
         symbolBool.setType(mentalBool);
-        symbolBool.stackLayer = 65535;
+        symbolBool.stackLayer = maxLayer;
         this.table.put("bool", symbolBool);
 
         SymbolType symbolVoid = new SymbolType();
         symbolVoid.setType(mentalVoid);
-        symbolVoid.stackLayer = 65535;
+        symbolVoid.stackLayer = maxLayer;
         this.table.put("void", symbolVoid);
     }
     public SymbolTable(SymbolTable other) {

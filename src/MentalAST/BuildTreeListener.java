@@ -290,7 +290,7 @@ public class BuildTreeListener extends MentalBaseListener {
         AstFunctionDefinition functionDefinition = new AstFunctionDefinition();
         functionDefinition.functionHead = (SymbolFunction) this.curSymbolTable.getSymbol(ctx.functionName.getText());
         // I think the name of itself cannot be redefine in the function.
-        functionDefinition.functionHead.stackLayer = 65536;
+        functionDefinition.functionHead.stackLayer = SymbolTable.maxLayer;
         // add the parameters to the scope.
         this.tree.put(ctx, functionDefinition);
         for (int i = 0, count = functionDefinition.functionHead.parameterName.size(); i < count; ++i) {
