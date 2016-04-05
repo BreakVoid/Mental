@@ -55,7 +55,7 @@ public class SymbolTable {
             if (this.table.get(id).stackLayer < symbol.stackLayer) {
                 this.table.replace(id, symbol);
             } else {
-                System.err.println("fatal: redefine a identifier <" + id + "> in the same scope.");
+                System.err.println("fatal: cannot override the identifier `" + id + "`.");
                 System.exit(1);
             }
         } else {
