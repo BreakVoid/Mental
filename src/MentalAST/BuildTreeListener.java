@@ -376,13 +376,10 @@ public class BuildTreeListener extends MentalBaseListener {
         // new a scope if it is not the function body.
         if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
             if (ctx.parent instanceof MentalParser.StatementContext
-                    && !(
-                        ctx.parent.parent instanceof MentalParser.ForStatementContext
+                    && !(ctx.parent.parent instanceof MentalParser.ForStatementContext
                         || ctx.parent.parent instanceof MentalParser.WhileStatementContext
                         || ctx.parent.parent instanceof MentalParser.IfStatementContext
-                        || ctx.parent.parent instanceof MentalParser.IfElseStatementContext
-                        )
-                    ) {
+                        || ctx.parent.parent instanceof MentalParser.IfElseStatementContext)) {
                 this.beginScope();
             }
         }
@@ -392,13 +389,10 @@ public class BuildTreeListener extends MentalBaseListener {
     @Override public void exitCompoundStatement(MentalParser.CompoundStatementContext ctx) {
         if (!(ctx.parent instanceof MentalParser.FunctionDefinitionContext)) {
             if (ctx.parent instanceof MentalParser.StatementContext
-                    && !(
-                    ctx.parent.parent instanceof MentalParser.ForStatementContext
+                    && !(ctx.parent.parent instanceof MentalParser.ForStatementContext
                             || ctx.parent.parent instanceof MentalParser.WhileStatementContext
                             || ctx.parent.parent instanceof MentalParser.IfStatementContext
-                            || ctx.parent.parent instanceof MentalParser.IfElseStatementContext
-            )
-                    ) {
+                            || ctx.parent.parent instanceof MentalParser.IfElseStatementContext)) {
                 this.endScope();
             }
         }
