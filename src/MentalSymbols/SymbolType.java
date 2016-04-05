@@ -2,6 +2,7 @@ package MentalSymbols;
 
 import MentalParser.MentalParser;
 import MentalType.*;
+import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 import java.util.HashMap;
 
@@ -22,7 +23,7 @@ public class SymbolType extends SymbolBase {
     }
     public boolean setType(SymbolTable scope, MentalParser.ClassDeclarationContext classDeclCtx) {
         boolean existError = false;
-        this.stackLayer = scope.stackLayer;
+        this.stackLayer = SymbolTable.maxLayer;
         HashMap<String, MentalType> classComponents = new HashMap<String, MentalType>();
         ((MentalClass) this.type).setClassComponents(classComponents);
         // Get className

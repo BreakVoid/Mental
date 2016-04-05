@@ -29,7 +29,7 @@ public class SymbolFunction extends SymbolBase {
     // Constructor a function symbol from a given scope and FunctionDefinitionContext.
     public boolean setFunction(SymbolTable scope, MentalParser.FunctionDefinitionContext funcDefCtx) {
         boolean existError = false;
-        this.stackLayer = scope.stackLayer;
+        this.stackLayer = SymbolTable.maxLayer;
         // Set the name of the function.
         this.functionName = funcDefCtx.functionName.getText();
         this.parameterName = new ArrayList<>();
