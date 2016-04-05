@@ -6,6 +6,7 @@ package MentalCore;
 
 import MentalAST.BuildTreeListener;
 import MentalParser.*;
+import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStream;
@@ -17,7 +18,11 @@ public class Main {
     public static void main(String[] args) {
         TokenStream tokens = null;
         try {
-            tokens = new CommonTokenStream(new MentalLexer(new ANTLRInputStream(System.in)));
+            if (args.length >= 1) {
+                tokens = new CommonTokenStream(new MentalLexer(new ANTLRFileStream(args[0])));
+            } else {
+                tokens = new CommonTokenStream(new MentalLexer(new ANTLRInputStream(System.in)));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
