@@ -1402,7 +1402,6 @@ public class BuildTreeListener extends MentalBaseListener {
         thisExpression.childExpression = (AstExpression) this.tree.get(ctx.expression());
         thisExpression.childExpression.parent = thisExpression;
         thisExpression.returnType = thisExpression.childExpression.returnType;
-        thisExpression.leftValue = thisExpression.childExpression.leftValue;
     }
     /**
      * int literal
