@@ -34,7 +34,8 @@ public class Main {
         if (listener.existError) {
             System.exit(1);
         }
-        System.out.println();
-        System.out.println(listener.tree.get(programContext).toPrintString());
+        if (args.length >= 1) {
+            System.out.println(listener.tree.get(programContext).toPrintString());
+        }
     }
 }
