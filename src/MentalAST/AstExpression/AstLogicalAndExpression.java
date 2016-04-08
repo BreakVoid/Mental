@@ -17,4 +17,11 @@ public class AstLogicalAndExpression extends AstBinaryExpression {
         ret += this.rightExpression.toPrintString(indent + 1);
         return ret;
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent);
+        ret += this.leftExpression.toPrettyPrint() + " && ";
+        ret += this.rightExpression.toPrettyPrint();
+        return ret;
+    }
 }

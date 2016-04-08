@@ -16,4 +16,10 @@ public class AstLogicalNotExpression extends AstUnaryExpression {
         ret += this.childExpression.toPrintString(indent + 1);
         return ret;
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent) + "!";
+        ret += this.childExpression.toPrettyPrint();
+        return ret;
+    }
 }

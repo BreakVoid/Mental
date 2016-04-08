@@ -13,4 +13,8 @@ public class AstCallSize extends AstExpression {
     public String toPrintString(int indent) {
         return addIndent(indent) + "<array.size()>:int";
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        return "size()";
+    }
 }

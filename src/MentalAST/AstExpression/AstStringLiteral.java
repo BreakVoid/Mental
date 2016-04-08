@@ -12,12 +12,12 @@ public class AstStringLiteral extends AstExpression {
         this.returnType = SymbolTable.mentalString;
     }
     @Override
-    public String toPrintString() {
-        return this.toPrintString(0);
-    }
-    @Override
     public String toPrintString(int indent) {
         return addIndent(indent) + "<string-literal>:" + this.literalContext;
+    }
+    @Override
+    public String toPrettyPrint(int indent) {
+        return addIndent(indent) + this.literalContext;
     }
     @Override
     public boolean equals(Object other) {

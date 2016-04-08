@@ -13,4 +13,8 @@ public class AstCallLength extends AstExpression {
     public String toPrintString(int indent) {
         return addIndent(indent) + "<string.length()>:int";
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        return "length()";
+    }
 }

@@ -14,6 +14,10 @@ public class AstNullConstant extends AstExpression {
         return addIndent(indent) + "<null>";
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        return addIndent(indent) + "null";
+    }
+    @Override
     public boolean equals(Object other) {
         if (other != null) {
             if (other instanceof AstNullConstant) {

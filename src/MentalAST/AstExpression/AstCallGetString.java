@@ -13,4 +13,8 @@ public class AstCallGetString extends AstExpression {
     public String toPrintString(int indent) {
         return addIndent(indent) + "<getString()>:string";
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        return "getString()";
+    }
 }

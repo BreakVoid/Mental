@@ -33,4 +33,19 @@ public class AstFunctionCall extends AstExpression {
             return ret;
         }
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent) + this.functionHead.functionName;
+        if (this.parameters == null || this.parameters.expressions.size() == 0) {
+            ret += "()";
+            return ret;
+        } else {
+            ret += "("  + this.parameters.expressions.get(0).toPrettyPrint();
+            for (int i = 1, count = this.parameters.expressions.size(); i < count; ++i) {
+                ret += ", " + this.parameters.expressions.get(i).toPrettyPrint();
+            }
+            ret += ")";
+            return ret;
+        }
+    }
 }

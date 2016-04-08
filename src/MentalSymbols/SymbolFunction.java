@@ -1,8 +1,8 @@
 package MentalSymbols;
 
 import MentalParser.MentalParser;
-import MentalType.MentalType;
 import MentalType.MentalArray;
+import MentalType.MentalType;
 
 import java.util.ArrayList;
 

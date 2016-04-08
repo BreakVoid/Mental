@@ -18,4 +18,10 @@ public class AstBitNotExpression extends AstUnaryExpression {
         return ret;
     }
 
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent) + "~";
+        ret += this.childExpression.toPrettyPrint();
+        return ret;
+    }
 }

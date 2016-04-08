@@ -16,4 +16,11 @@ public class AstCallSubString extends AstBinaryExpression {
         ret += addIndent(indent + 1) + "<right bound>\n" + this.rightExpression.toPrintString(indent + 2);
         return ret;
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = "substring(";
+        ret += this.leftExpression.toPrettyPrint() + ", ";
+        ret += this.rightExpression.toPrettyPrint() + ")";
+        return ret;
+    }
 }

@@ -1,6 +1,5 @@
 package MentalAST.AstExpression;
 
-import MentalAST.AstBaseNode;
 import MentalSymbols.SymbolTable;
 
 /**
@@ -13,6 +12,10 @@ public class AstBoolConstant extends AstExpression {
     }
     @Override
     public String toPrintString(int indent) {
-        return AstBaseNode.addIndent(indent) + "<bool>:" + Boolean.toString(this.boolConstant);
+        return addIndent(indent) + "<bool>:" + Boolean.toString(this.boolConstant);
+    }
+    @Override
+    public String toPrettyPrint(int indent) {
+        return addIndent(indent) + Boolean.toString(this.boolConstant);
     }
 }

@@ -20,6 +20,17 @@ public class AstWhileStatement extends AstStatement {
         return ret;
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent) + "while (";
+        ret += this.cond.toPrettyPrint() + ") ";
+        if (this.loopBody instanceof AstCompoundStatement) {
+            ret += this.loopBody.toPrettyPrint(indent + 1);
+        } else {
+            ret += "\n" + this.loopBody.toPrettyPrint(indent + 1);
+        }
+        return ret;
+    }
+    @Override
     public String toString() {
         return "<while loopBody>";
     }

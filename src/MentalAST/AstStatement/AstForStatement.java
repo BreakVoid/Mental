@@ -1,7 +1,6 @@
 package MentalAST.AstStatement;
 
 import MentalAST.AstExpression.AstExpression;
-import MentalSymbols.SymbolTable;
 
 /**
  * Created by Songyu on 16/3/30.
@@ -30,6 +29,27 @@ public class AstForStatement extends AstStatement {
             ret += "\n" + this.loop.toPrintString(indent + 2) + "\n";
         }
         ret += addIndent(indent + 1) + "<loop body>\n" + this.loopBody.toPrintString(indent + 2);
+        return ret;
+    }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent) + "for (";
+        if (this.start == null) {
+            ret += "; ";
+        } else {
+            ret += this.start.toPrettyPrint() + "; ";
+        }
+        ret += this.cond.toPrettyPrint() + "; ";
+        if (this.loop == null) {
+            ret += ") ";
+        } else {
+            ret += this.loop.toPrettyPrint() + ") ";
+        }
+        if (this.loopBody instanceof AstCompoundStatement) {
+            ret += this.loopBody.toPrettyPrint(indent + 1);
+        } else {
+            ret += "\n" + this.loopBody.toPrettyPrint(indent + 1);
+        }
         return ret;
     }
     @Override

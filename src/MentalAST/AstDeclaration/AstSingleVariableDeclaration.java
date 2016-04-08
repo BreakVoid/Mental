@@ -28,6 +28,15 @@ public class AstSingleVariableDeclaration extends AstDeclaration {
         return ret;
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        String ret = "";
+        ret += this.variable.toPrettyPrint();
+        if (this.initializeExpression != null) {
+            ret += " = " + this.initializeExpression.toPrettyPrint();
+        }
+        return ret;
+    }
+    @Override
     public String toString() {
         String ret = "";
         if (this.variable != null) {

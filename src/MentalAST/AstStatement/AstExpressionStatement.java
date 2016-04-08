@@ -14,4 +14,8 @@ public class AstExpressionStatement extends AstStatement {
     public String toPrintString(int indent) {
         return addIndent(indent) + "<expression statment>\n" + this.expression.toPrintString(indent + 1);
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        return addIndent(indent) + this.expression.toPrettyPrint() + ";";
+    }
 }

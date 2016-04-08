@@ -10,6 +10,10 @@ public class AstEmptyStatement extends AstStatement {
         return addIndent(indent) + "<empty statement>";
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        return addIndent(indent) + ";";
+    }
+    @Override
     public boolean equals(Object other) {
         return other != null && other instanceof AstEmptyStatement;
     }

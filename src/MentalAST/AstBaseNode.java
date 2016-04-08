@@ -23,6 +23,14 @@ public class AstBaseNode {
         ret += addIndent(indent) + "<BASE NODE>";
         return ret;
     }
+    public String toPrettyPrint() {
+        return this.toPrettyPrint(0);
+    }
+    public String toPrettyPrint(int indent) {
+        String ret = "";
+        ret += addIndent(indent) + "";
+        return ret;
+    }
     @Override
     public String toString() {
         return "<BASE NODE>";

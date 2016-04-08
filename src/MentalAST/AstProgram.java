@@ -22,6 +22,16 @@ public class AstProgram extends AstBaseNode {
         return ret;
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent);
+        if (this.declarations != null) {
+            for (AstBaseNode e : this.declarations) {
+                ret += e.toPrettyPrint(indent) + "\n";
+            }
+        }
+        return ret;
+    }
+    @Override
     public String toString() {
         return "<program>";
     }

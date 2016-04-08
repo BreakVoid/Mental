@@ -1,11 +1,6 @@
 package MentalSymbols;
 
-import MentalType.MentalInt;
-import MentalType.MentalString;
-import MentalType.MentalVoid;
-import MentalType.MentalBool;
-import MentalType.MentalNull;
-import MentalType.MentalUnknownType;
+import MentalType.*;
 
 import java.util.HashMap;
 

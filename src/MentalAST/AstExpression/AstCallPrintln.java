@@ -1,7 +1,5 @@
 package MentalAST.AstExpression;
 
-import MentalAST.AstExpression.AstExpression;
-import MentalAST.AstStatement.AstStatement;
 import MentalSymbols.SymbolTable;
 
 /**
@@ -19,5 +17,9 @@ public class AstCallPrintln extends AstExpression {
         ret += addIndent(indent) + "<internal function call>:println(str)" + "\n";
         ret += this.parameter.toPrintString(indent + 1);
         return ret;
+    }
+    @Override
+    public String toPrettyPrint(int indent) {
+        return addIndent(indent) + "println(" + this.parameter.toPrettyPrint() + ")";
     }
 }

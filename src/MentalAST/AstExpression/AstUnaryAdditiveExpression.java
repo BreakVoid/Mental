@@ -26,4 +26,14 @@ public class AstUnaryAdditiveExpression extends AstUnaryExpression {
         ret += this.childExpression.toPrintString(indent + 1);
         return ret;
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent);
+        if (op == ADD) {
+            ret += "+" + this.childExpression.toPrettyPrint();
+        } else {
+            ret += "-" + this.childExpression.toPrettyPrint();
+        }
+        return ret;
+    }
 }

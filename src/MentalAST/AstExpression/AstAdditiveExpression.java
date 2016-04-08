@@ -29,4 +29,16 @@ public class AstAdditiveExpression extends AstBinaryExpression {
         ret += rightExpression.toPrintString(indent + 1);
         return ret;
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = AstBaseNode.addIndent(indent);
+        ret += leftExpression.toPrettyPrint();
+        if (op == ADD) {
+            ret += " + ";
+        } else {
+            ret += " - ";
+        }
+        ret += rightExpression.toPrettyPrint();
+        return ret;
+    }
 }
