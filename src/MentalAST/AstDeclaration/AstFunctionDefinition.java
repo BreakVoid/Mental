@@ -24,6 +24,20 @@ public class AstFunctionDefinition extends AstDeclaration {
         return ret;
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent)
+                + this.functionHead.returnType.toString() + " " + this.functionHead.functionName + "(";
+        if (this.functionHead.parameterName.size() > 0) {
+            ret += this.functionHead.parameterType.get(0).toString() + " " + this.functionHead.parameterName.get(0);
+            for (int i = 1, count = this.functionHead.parameterName.size(); i < count; ++i) {
+                ret += "," + this.functionHead.parameterType.get(i).toString() + " " + this.functionHead.parameterName.get(i);
+            }
+        }
+        ret += ") ";
+        ret += this.functionBody.toPrettyPrint(indent + 1) + '\n';
+        return ret;
+    }
+    @Override
     public String toString() {
         if (this.functionHead == null || this.functionBody == null) {
             return "";

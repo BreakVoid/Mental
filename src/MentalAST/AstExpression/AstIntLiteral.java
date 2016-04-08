@@ -16,6 +16,10 @@ public class AstIntLiteral extends AstExpression {
         return addIndent(indent) + "<int-literal>:" + Integer.toString(literalContext);
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        return addIndent(indent) + Integer.toString(literalContext);
+    }
+    @Override
     public boolean equals(Object other) {
         if (this == other) {
             return true;

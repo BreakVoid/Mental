@@ -25,4 +25,14 @@ public class AstPrefixExpression extends AstUnaryExpression {
         }
         return ret;
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent);
+        if (op == PLUS_PLUS) {
+            ret += "++" + this.childExpression.toPrettyPrint();
+        } else {
+            ret += "--" + this.childExpression.toPrettyPrint();
+        }
+        return ret;
+    }
 }

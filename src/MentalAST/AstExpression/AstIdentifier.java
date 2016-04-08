@@ -16,6 +16,10 @@ public class AstIdentifier extends AstExpression {
         return addIndent(indent) + "<identifier>" + this.name + "@" + this.returnType.toString();
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        return addIndent(indent) + this.name;
+    }
+    @Override
     public boolean equals(Object other) {
         if (this == other) {
             return true;

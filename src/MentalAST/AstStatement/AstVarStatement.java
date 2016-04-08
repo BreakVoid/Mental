@@ -15,6 +15,10 @@ public class AstVarStatement extends AstStatement {
         return this.variableDeclaration.toPrintString(indent);
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        return this.variableDeclaration.toPrettyPrint(indent);
+    }
+    @Override
     public String toString() {
         return "<variable declaration loopBody>";
     }

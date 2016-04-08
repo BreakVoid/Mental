@@ -15,4 +15,8 @@ public class AstCallToString extends AstUnaryExpression {
         ret += this.childExpression.toPrintString(indent + 1);
         return ret;
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        return addIndent(indent) + "toString(" + this.childExpression.toPrettyPrint() + ")";
+    }
 }

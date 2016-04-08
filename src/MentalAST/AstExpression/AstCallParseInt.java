@@ -13,4 +13,8 @@ public class AstCallParseInt extends AstExpression {
     public String toPrintString(int indent) {
         return addIndent(indent) + "<string.parseInt()>:int";
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        return "parseInt()";
+    }
 }

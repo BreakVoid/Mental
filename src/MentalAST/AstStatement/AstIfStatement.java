@@ -24,4 +24,26 @@ public class AstIfStatement extends AstStatement {
         }
         return ret;
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent) + "if (";
+        ret += this.condition.toPrettyPrint() + ") ";
+        if (this.thenStatement instanceof AstCompoundStatement) {
+            ret += this.thenStatement.toPrettyPrint(indent + 1);
+        } else {
+            ret += "\n" + this.thenStatement.toPrettyPrint(indent + 1);
+        }
+        if (this.elseStatement != null) {
+            if (!(this.thenStatement instanceof AstCompoundStatement)) {
+                ret += "\n";
+            }
+            ret += "else ";
+            if (this.elseStatement instanceof AstCompoundStatement) {
+                ret += this.elseStatement.toPrettyPrint(indent + 1);
+            } else {
+                ret += "\n" + this.elseStatement.toPrettyPrint(indent + 1);
+            }
+        }
+        return ret;
+    }
 }

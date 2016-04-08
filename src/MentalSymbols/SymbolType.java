@@ -1,7 +1,9 @@
 package MentalSymbols;
 
 import MentalParser.MentalParser;
-import MentalType.*;
+import MentalType.MentalArray;
+import MentalType.MentalClass;
+import MentalType.MentalType;
 
 import java.util.HashMap;
 

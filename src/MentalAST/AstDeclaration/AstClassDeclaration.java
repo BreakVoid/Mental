@@ -27,6 +27,17 @@ public class AstClassDeclaration extends AstDeclaration {
         return ret;
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        MentalClass classBody = (MentalClass) this.classDetail.type;
+        String ret = AstBaseNode.addIndent(indent) + "class " + classBody.className + "{\n";
+
+        for (Map.Entry<String, MentalType> entry : classBody.classComponents.entrySet()) {
+            ret += AstBaseNode.addIndent(indent + 1) + entry.getValue().toString() + entry.getKey() + ";\n";
+        }
+        ret += AstBaseNode.addIndent(indent) + "}\n";
+        return ret;
+    }
+    @Override
     public String toString() {
         return "<class>" + this.classDetail.type.toString();
     }

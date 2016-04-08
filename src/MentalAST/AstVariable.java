@@ -17,6 +17,10 @@ public class AstVariable extends AstBaseNode {
         return this.toString();
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        return this.variableName;
+    }
+    @Override
     public String toString() {
         return "[" + this.variableName + "@" + this.variableType.toString() + "]";
     }

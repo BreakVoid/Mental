@@ -1,6 +1,5 @@
 package MentalAST.AstExpression;
 
-import MentalAST.AstBaseNode;
 import MentalParser.MentalParser;
 import MentalSymbols.SymbolTable;
 
@@ -25,6 +24,18 @@ public class AstEqualityExpression extends AstBinaryExpression {
         }
         ret += this.leftExpression.toPrintString(indent + 1) + '\n';
         ret += this.rightExpression.toPrintString(indent + 1);
+        return ret;
+    }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent);
+        ret += this.leftExpression.toPrettyPrint();
+        if (this.op == EQUAL) {
+            ret += " == ";
+        } else {
+            ret += " != ";
+        }
+        ret += this.rightExpression.toPrettyPrint();
         return ret;
     }
 }

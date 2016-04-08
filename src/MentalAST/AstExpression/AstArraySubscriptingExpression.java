@@ -16,4 +16,11 @@ public class AstArraySubscriptingExpression extends AstExpression {
         ret += addIndent(indent + 1) + "<position expression>\n" + this.positionExpression.toPrintString(indent + 2);
         return ret;
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent);
+        ret += this.primaryExpression.toPrettyPrint() + "[";
+        ret += this.positionExpression.toPrettyPrint() + "]";
+        return ret;
+    }
 }
