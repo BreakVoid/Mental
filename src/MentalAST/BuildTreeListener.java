@@ -295,6 +295,7 @@ public class BuildTreeListener extends MentalBaseListener {
         } else {
             System.err.println("unknown exception.");
             this.existError = true;
+            return;
         }
         // new a node.
         singleVariableDeclaration.variable = new AstVariable();
