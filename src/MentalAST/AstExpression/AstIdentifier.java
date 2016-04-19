@@ -1,5 +1,7 @@
 package MentalAST.AstExpression;
 
+import MentalAST.AstVariable;
+import MentalSymbols.SymbolBase;
 import MentalSymbols.SymbolTable;
 
 /**
@@ -7,13 +9,15 @@ import MentalSymbols.SymbolTable;
  */
 public class AstIdentifier extends AstExpression {
     public String name;
+    public AstVariable variable;
     public AstIdentifier() {
         this.name = "";
         this.returnType = SymbolTable.mentalUnknownType;
+        this.variable = null;
     }
     @Override
     public String toPrintString(int indent) {
-        return addIndent(indent) + "<identifier>" + this.name + "@" + this.returnType.toString();
+        return addIndent(indent) + "<identifier>" + this.variable.toString();
     }
     @Override
     public boolean equals(Object other) {

@@ -8,9 +8,11 @@ import MentalType.MentalType;
 public class AstVariable extends AstBaseNode {
     public String variableName;
     public MentalType variableType;
+    public int variableID;
     public AstVariable() {
         this.variableName = null;
         this.variableType = null;
+        this.variableID = 0;
     }
     @Override
     public String toPrintString(int indent) {
@@ -18,7 +20,7 @@ public class AstVariable extends AstBaseNode {
     }
     @Override
     public String toString() {
-        return "[" + this.variableName + "@" + this.variableType.toString() + "]";
+        return "[" + this.variableName + "@" + this.variableType.toString() + "],id:" + Integer.toString(this.variableID);
     }
     @Override
     public boolean equals(Object other) {

@@ -1,26 +1,30 @@
 package MentalSymbols;
 
+import MentalAST.AstVariable;
 import MentalType.MentalType;
 
 /**
  * Created by Songyu on 16/3/30.
  */
 public class SymbolVariable extends SymbolBase {
-    public String variableName;
-    public MentalType variableType;
+    public AstVariable variable;
     public SymbolVariable() {
-        this.variableName = null;
-        this.variableType = null;
+        this.variable = new AstVariable();
+        this.variable.variableName = null;
+        this.variable.variableType = null;
+        this.variable.variableID = 0;
         this.stackLayer = 0;
     }
     public SymbolVariable(SymbolTable scope, MentalType type, String name) {
+        this.variable = new AstVariable();
         this.stackLayer = scope.stackLayer;
-        this.variableType = type;
-        this.variableName = name;
+        this.variable.variableType = type;
+        this.variable.variableName = name;
+        this.variable.variableID = 0;
     }
     @Override
     public String toString() {
-        return "<variable>" + variableName + '[' + variableType.toString() + ']';
+        return "<variable>" + this.variable.variableName + '[' + this.variable.variableType.toString() + "],id:" + Integer.toString(this.variable.variableID);
     }
     @Override
     public boolean equals(Object other) {
@@ -29,10 +33,8 @@ public class SymbolVariable extends SymbolBase {
         }
         if (other != null) {
             if (other instanceof SymbolVariable) {
-                if (this.variableName.equals(((SymbolVariable) other).variableName)) {
-                    if (this.variableType.equals(((SymbolVariable) other).variableType)) {
-                        return true;
-                    }
+                if (this.variable.variableID == ((SymbolVariable) other).variable.variableID) {
+                    return true;
                 }
             }
         }
