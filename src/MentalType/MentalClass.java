@@ -7,7 +7,7 @@ import java.util.HashMap;
  */
 public class MentalClass extends MentalType {
     public String className;
-    public HashMap<String, MentalType> classComponents;
+    public HashMap<String, MentalClassMember> classComponents;
     public MentalClass() {
         this.classComponents = new HashMap<>();
         this.className = "";
@@ -16,7 +16,7 @@ public class MentalClass extends MentalType {
         this.className = other.className;
         this.classComponents = new HashMap<>(other.classComponents);
     }
-    public void setClassComponents(HashMap<String, MentalType> types) {
+    public void setClassComponents(HashMap<String, MentalClassMember> types) {
         this.classComponents = types;
         this.className = "";
     }

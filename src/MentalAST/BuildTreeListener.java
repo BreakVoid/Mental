@@ -13,6 +13,7 @@ import MentalType.MentalArray;
 import MentalType.MentalClass;
 import MentalType.MentalFunction;
 import MentalType.MentalString;
+import MentalType.MentalClassMember;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -747,7 +748,7 @@ public class BuildTreeListener extends MentalBaseListener {
                 MentalClass thisClass = (MentalClass) thisExpression.primaryExpression.returnType;
                 if (thisClass.classComponents.get(thisExpression.memberName) != null) {
                     thisExpression.leftValue = thisExpression.primaryExpression.leftValue;
-                    thisExpression.returnType = thisClass.classComponents.get(thisExpression.memberName);
+                    thisExpression.returnType = thisClass.classComponents.get(thisExpression.memberName).memberType;
                 } else {
                     System.err.println("fatal: the class `" + thisClass.className
                             + "` does not have the member `" + thisExpression.memberName + "`."

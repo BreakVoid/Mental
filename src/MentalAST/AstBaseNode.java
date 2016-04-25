@@ -1,5 +1,5 @@
 package MentalAST;
-
+import MentalIR.IRAstVisitor;
 /**
  * Created by Songyu on 16/3/28.
  */
@@ -38,5 +38,8 @@ public class AstBaseNode {
     @Override
     public boolean equals(Object other) {
         return other != null && other instanceof AstBaseNode;
+    }
+    public void visit(IRAstVisitor visitor) {
+        visitor.visitBase(this);
     }
 }

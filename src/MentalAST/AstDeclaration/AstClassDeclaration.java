@@ -3,7 +3,7 @@ package MentalAST.AstDeclaration;
 import MentalAST.AstBaseNode;
 import MentalSymbols.SymbolType;
 import MentalType.MentalClass;
-import MentalType.MentalType;
+import MentalType.MentalClassMember;
 
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public class AstClassDeclaration extends AstDeclaration {
         MentalClass classBody = (MentalClass) this.classDetail.type;
         String ret = AstBaseNode.addIndent(indent) + "<begin>class:" + classBody.className + '\n';
 
-        for (Map.Entry<String, MentalType> entry : classBody.classComponents.entrySet()) {
+        for (Map.Entry<String, MentalClassMember> entry : classBody.classComponents.entrySet()) {
             ret += AstBaseNode.addIndent(indent + 1) + "[" + entry.getKey() + "@" + entry.getValue().toString() + "]\n";
         }
         ret += AstBaseNode.addIndent(indent) + "<end>class";
@@ -31,8 +31,8 @@ public class AstClassDeclaration extends AstDeclaration {
         MentalClass classBody = (MentalClass) this.classDetail.type;
         String ret = AstBaseNode.addIndent(indent) + "class " + classBody.className + "{\n";
 
-        for (Map.Entry<String, MentalType> entry : classBody.classComponents.entrySet()) {
-            ret += AstBaseNode.addIndent(indent + 1) + entry.getValue().toString() + entry.getKey() + ";\n";
+        for (Map.Entry<String, MentalClassMember> entry : classBody.classComponents.entrySet()) {
+            ret += AstBaseNode.addIndent(indent + 1) + entry.getValue().memberType.toString() + " " + entry.getKey() + ";\n";
         }
         ret += AstBaseNode.addIndent(indent) + "}\n";
         return ret;
