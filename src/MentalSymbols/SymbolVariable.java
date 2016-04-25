@@ -22,6 +22,13 @@ public class SymbolVariable extends SymbolBase {
         this.variable.variableName = name;
         this.variable.variableID = 0;
     }
+    public SymbolVariable(SymbolTable scope, MentalType type, String name, int id) {
+        this.variable = new AstVariable();
+        this.stackLayer = scope.stackLayer;
+        this.variable.variableType = type;
+        this.variable.variableName = name;
+        this.variable.variableID = id;
+    }
     @Override
     public String toString() {
         return "<variable>" + this.variable.variableName + '[' + this.variable.variableType.toString() + "],id:" + Integer.toString(this.variable.variableID);

@@ -332,7 +332,8 @@ public class BuildTreeListener extends MentalBaseListener {
                     new SymbolVariable(
                             this.curSymbolTable,
                             functionDefinition.functionHead.parameterType.get(i),
-                            functionDefinition.functionHead.parameterName.get(i)
+                            functionDefinition.functionHead.parameterName.get(i),
+                            this.globalVariableCounter++
                     )
             );
         }

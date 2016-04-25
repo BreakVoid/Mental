@@ -5,9 +5,12 @@ package MentalIR;
  */
 public class IRLocate extends IRData {
     public IRData headPoint;
-    public int addressShift;
+    public IRData shift;
     public IRLocate() {
         this.headPoint = null;
-        this.addressShift = -1;
+        this.shift = null;
+    }
+    public IRLoad flat() {
+        return new IRLoad(this);
     }
 }

@@ -1,5 +1,8 @@
 package MentalAST;
 
+import MentalIR.IRAstVisitor;
+import MentalIR.IRInstruction;
+
 import java.util.LinkedList;
 
 /**
@@ -48,5 +51,10 @@ public class AstProgram extends AstBaseNode {
             }
         }
         return false;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(IRAstVisitor visitor) {
+        return visitor.visitProgram(this);
     }
 }

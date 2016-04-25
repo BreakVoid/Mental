@@ -1,7 +1,11 @@
 package MentalAST.AstExpression;
 
+import MentalIR.IRAstVisitor;
+import MentalIR.IRInstruction;
 import MentalParser.MentalParser;
 import MentalSymbols.SymbolTable;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/4/1.
@@ -35,5 +39,10 @@ public class AstUnaryAdditiveExpression extends AstUnaryExpression {
             ret += "-" + this.childExpression.toPrettyPrint();
         }
         return ret;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(IRAstVisitor visitor) {
+        return visitor.visitUnaryAdditiveExpression(this);
     }
 }
