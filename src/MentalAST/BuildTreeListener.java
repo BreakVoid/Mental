@@ -1062,6 +1062,17 @@ public class BuildTreeListener extends MentalBaseListener {
                     newIntLiteral.literalContext = -((AstIntLiteral) childExpression).literalContext;
                     this.tree.replace(ctx, newIntLiteral);
                 }
+            } else if (childExpression instanceof AstUnaryAdditiveExpression) {
+                if (((AstUnaryAdditiveExpression) childExpression).op == AstUnaryAdditiveExpression.ADD) {
+                    thisExpression.childExpression = ((AstUnaryAdditiveExpression) childExpression).childExpression;
+                } else if (((AstUnaryAdditiveExpression) childExpression).op == AstUnaryAdditiveExpression.SUB) {
+                    thisExpression.childExpression = ((AstUnaryAdditiveExpression) childExpression).childExpression;
+                    if (thisExpression.op == AstUnaryAdditiveExpression.SUB) {
+                        thisExpression.op = AstUnaryAdditiveExpression.ADD;
+                    } else {
+                        thisExpression.op = AstUnaryAdditiveExpression.SUB;
+                    }
+                }
             }
         }
     }
