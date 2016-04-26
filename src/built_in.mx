@@ -1,0 +1,35 @@
+bool ____built_in_compare_string(string lhs, string rhs)
+{
+    int minLength = lhs.length();
+    if (minLength > rhs.length()) {
+        minLength = rhs.length();
+    }
+    int i;
+    for (i = 0; i < minLength; ++i) {
+        int x = lhs.ord(i);
+        int y = rhs.ord(i);
+        if (x != y) {
+            return x < y;
+        }
+    }
+    return minLength < rhs.length();
+}
+
+bool ____built_in_equal_string(string lhs, string rhs)
+{
+    if (lhs.length() != rhs.length()) {
+        return false;
+    }
+    int i;
+    int length = lhs.length();
+    for (i = 0; i < length; ++i) {
+        if (lhs.ord(i) != rhs.ord(i)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main() {
+    return 0;
+}

@@ -1,5 +1,10 @@
 package MentalAST.AstStatement;
 
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
+
+import java.util.LinkedList;
+
 /**
  * Created by Songyu on 16/3/30.
  */
@@ -16,5 +21,10 @@ public class AstEmptyStatement extends AstStatement {
     @Override
     public boolean equals(Object other) {
         return other != null && other instanceof AstEmptyStatement;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return new LinkedList<>();
     }
 }

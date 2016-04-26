@@ -1,7 +1,11 @@
 package MentalAST.AstStatement;
 
 import MentalAST.AstExpression.AstExpression;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalSymbols.SymbolTable;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/3/31.
@@ -44,5 +48,10 @@ public class AstJumpStatement extends AstStatement {
             ret += addIndent(indent) + "break;";
         }
         return ret;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitJumpStatement(this);
     }
 }

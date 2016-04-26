@@ -273,6 +273,11 @@ public class BuildTreeListener extends MentalBaseListener {
         if (ctx.expression() != null) {
             singleVariableDeclaration.initializeExpression = (AstExpression) this.tree.get(ctx.expression());
         }
+        singleVariableDeclaration.parent = this.tree.get(ctx.parent);
+        SymbolVariable var = new SymbolVariable();
+        var.variable = singleVariableDeclaration.variable;
+        var.stackLayer = this.curSymbolTable.stackLayer;
+        this.curSymbolTable.add(var.variable.variableName, var);
         if (singleVariableDeclaration.initializeExpression == null) {
             return;
         }
@@ -283,11 +288,6 @@ public class BuildTreeListener extends MentalBaseListener {
             );
             this.existError = true;
         }
-        singleVariableDeclaration.parent = this.tree.get(ctx.parent);
-        SymbolVariable var = new SymbolVariable();
-        var.variable = singleVariableDeclaration.variable;
-        var.stackLayer = this.curSymbolTable.stackLayer;
-        this.curSymbolTable.add(var.variable.variableName, var);
     }
     /**
 	 * process a sentence of variable definition, which may define several variable.

@@ -1,6 +1,10 @@
 package MentalAST.AstStatement;
 
 import MentalAST.AstExpression.AstExpression;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/3/31.
@@ -45,5 +49,10 @@ public class AstIfStatement extends AstStatement {
             }
         }
         return ret;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitIfStatement(this);
     }
 }
