@@ -1,9 +1,8 @@
 package MentalAST.AstExpression;
 
 import MentalAST.AstVariable;
-import MentalIR.IRAstVisitor;
+import MentalIR.AstVisitor;
 import MentalIR.IRInstruction;
-import MentalSymbols.SymbolBase;
 import MentalSymbols.SymbolTable;
 
 import java.util.LinkedList;
@@ -43,7 +42,7 @@ public class AstIdentifier extends AstExpression {
     }
 
     @Override
-    public LinkedList<IRInstruction> visit(IRAstVisitor visitor) {
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
         return visitor.visitIdentifier(this);
     }
 }

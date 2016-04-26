@@ -1,5 +1,10 @@
 package MentalAST.AstExpression;
 
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
+
+import java.util.LinkedList;
+
 /**
  * Created by Songyu on 16/4/2.
  */
@@ -34,5 +39,10 @@ public class AstMemberAccessExpression extends AstExpression {
             ret += this.memberName;
         }
         return ret;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitMemberAccessExpression(this);
     }
 }

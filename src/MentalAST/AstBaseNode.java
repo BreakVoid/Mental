@@ -1,9 +1,8 @@
 package MentalAST;
-import MentalIR.IRAstVisitor;
+import MentalIR.AstVisitor;
 import MentalIR.IRInstruction;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by Songyu on 16/3/28.
@@ -45,7 +44,7 @@ public class AstBaseNode {
         return other != null && other instanceof AstBaseNode;
     }
 
-    public LinkedList<IRInstruction> visit(IRAstVisitor visitor) {
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
         return visitor.visitBase(this);
     }
 }

@@ -1,5 +1,10 @@
 package MentalAST.AstExpression;
 
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
+
+import java.util.LinkedList;
+
 /**
  * Created by Songyu on 16/4/2.
  */
@@ -22,5 +27,10 @@ public class AstArraySubscriptingExpression extends AstExpression {
         ret += this.primaryExpression.toPrettyPrint() + "[";
         ret += this.positionExpression.toPrettyPrint() + "]";
         return ret;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitArraySubscriptingExpression(this);
     }
 }

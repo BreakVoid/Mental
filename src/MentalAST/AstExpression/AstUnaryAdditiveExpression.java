@@ -1,6 +1,6 @@
 package MentalAST.AstExpression;
 
-import MentalIR.IRAstVisitor;
+import MentalIR.AstVisitor;
 import MentalIR.IRInstruction;
 import MentalParser.MentalParser;
 import MentalSymbols.SymbolTable;
@@ -42,7 +42,7 @@ public class AstUnaryAdditiveExpression extends AstUnaryExpression {
     }
 
     @Override
-    public LinkedList<IRInstruction> visit(IRAstVisitor visitor) {
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
         return visitor.visitUnaryAdditiveExpression(this);
     }
 }

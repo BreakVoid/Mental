@@ -3,9 +3,11 @@ package MentalIR;
 /**
  * Created by Songyu on 16/4/25.
  */
-public class IRAdd extends IRArithmetic {
-    public IRData lhs, rhs;
+public class IRAdd extends IRBinaryArithmetic {
     public IRAdd() {
-        this.lhs = this.rhs = null;
+        super();
+    }
+    public IRAdd(IRData lhs, IRData rhs, IRData res) {
+        super(lhs, rhs, res);
     }
 }

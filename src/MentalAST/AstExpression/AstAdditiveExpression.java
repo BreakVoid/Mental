@@ -1,13 +1,12 @@
 package MentalAST.AstExpression;
 
 import MentalAST.AstBaseNode;
-import MentalIR.IRAstVisitor;
+import MentalIR.AstVisitor;
 import MentalIR.IRInstruction;
 import MentalParser.MentalParser;
 import MentalSymbols.SymbolTable;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by Songyu on 16/4/1.
@@ -48,7 +47,7 @@ public class AstAdditiveExpression extends AstBinaryExpression {
     }
 
     @Override
-    public LinkedList<IRInstruction> visit(IRAstVisitor visitor) {
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
         return visitor.visitAdditiveExpression(this);
     }
 }

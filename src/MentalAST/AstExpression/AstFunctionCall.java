@@ -1,7 +1,11 @@
 package MentalAST.AstExpression;
 
 import MentalAST.AstExpressionList;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalSymbols.SymbolFunction;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/4/2.
@@ -47,5 +51,10 @@ public class AstFunctionCall extends AstExpression {
             ret += ")";
             return ret;
         }
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitFunctionCall(this);
     }
 }

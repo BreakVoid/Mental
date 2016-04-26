@@ -1,6 +1,6 @@
 package MentalAST.AstExpression;
 
-import MentalIR.IRAstVisitor;
+import MentalIR.AstVisitor;
 import MentalIR.IRInstruction;
 import MentalSymbols.SymbolTable;
 
@@ -32,7 +32,7 @@ public class AstNullConstant extends AstExpression {
     }
 
     @Override
-    public LinkedList<IRInstruction> visit(IRAstVisitor visitor) {
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
         return visitor.visitNullConstant(this);
     }
 }

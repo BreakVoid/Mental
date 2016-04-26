@@ -1,5 +1,7 @@
 package MentalAST.AstExpression;
 
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalType.MentalType;
 
 import java.util.LinkedList;
@@ -53,5 +55,10 @@ public class AstCreationExpression extends AstExpression {
             }
             return ret;
         }
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitCreationExpression(this);
     }
 }

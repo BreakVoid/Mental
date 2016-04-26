@@ -5,7 +5,9 @@ package MentalIR;
  */
 public class IRInstruction {
     public IRInstruction nextInstruction;
+    public int label;
     public IRInstruction() {
         this.nextInstruction = null;
+        this.label = -1;
     }
 }

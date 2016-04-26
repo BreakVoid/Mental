@@ -9,4 +9,8 @@ public class IRStore extends IRInstruction {
     public IRStore() {
         this.src = this.dest = null;
     }
+    public IRStore(IRData src, IRData dest) {
+        this.src = src;
+        this.dest = dest;
+    }
 }

@@ -1,6 +1,10 @@
 package MentalAST.AstExpression;
 
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalParser.MentalParser;
+
+import java.util.LinkedList;
 
 import static MentalSymbols.SymbolTable.mentalInt;
 
@@ -39,5 +43,10 @@ public class AstBitShiftExpression extends AstBinaryExpression {
         }
         ret += this.rightExpression.toPrettyPrint();
         return ret;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitBitShiftExpression(this);
     }
 }

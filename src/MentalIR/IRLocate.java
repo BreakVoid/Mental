@@ -10,7 +10,11 @@ public class IRLocate extends IRData {
         this.headPoint = null;
         this.shift = null;
     }
-    public IRLoad flat() {
+    public IRLocate(IRData headPoint, IRData shift) {
+        this.headPoint = headPoint;
+        this.shift = shift;
+    }
+    public IRLoad load() {
         return new IRLoad(this);
     }
 }

@@ -1,5 +1,10 @@
 package MentalAST.AstExpression;
 
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
+
+import java.util.LinkedList;
+
 /**
  * Created by Songyu on 16/4/1.
  */
@@ -17,5 +22,10 @@ public class AstSubgroupExpression extends AstUnaryExpression {
     @Override
     public String toPrettyPrint(int indent) {
         return addIndent(indent) + "(" + this.childExpression.toPrettyPrint() + ")";
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitSubgroupExpression(this);
     }
 }
