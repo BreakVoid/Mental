@@ -12,16 +12,25 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import java.io.IOException;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
+        FileInputStream builtInFunction = null;
+        try {
+            builtInFunction = new FileInputStream("src/built_in.mx");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         TokenStream tokens = null;
         try {
             if (args.length >= 1) {
-                tokens = new CommonTokenStream(new MentalLexer(new ANTLRFileStream(args[0])));
+                FileInputStream sourceFile = new FileInputStream(args[0]);
+                InputStream seqStream = new SequenceInputStream(builtInFunction, sourceFile);
+                tokens = new CommonTokenStream(new MentalLexer(new ANTLRInputStream(seqStream)));
             } else {
-                tokens = new CommonTokenStream(new MentalLexer(new ANTLRInputStream(System.in)));
+                InputStream seqStream = new SequenceInputStream(builtInFunction, System.in);
+                tokens = new CommonTokenStream(new MentalLexer(new ANTLRInputStream(seqStream)));
             }
         } catch (IOException e) {
             e.printStackTrace();

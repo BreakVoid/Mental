@@ -326,6 +326,7 @@ public class BuildTreeListener extends MentalBaseListener {
         functionDefinition.functionHead.stackLayer = SymbolTable.maxLayer;
         // add the parameters to the scope.
         this.tree.put(ctx, functionDefinition);
+        functionDefinition.firstVariableID = globalVariableCounter;
         for (int i = 0, count = functionDefinition.functionHead.parameterName.size(); i < count; ++i) {
             this.curSymbolTable.add(
                     functionDefinition.functionHead.parameterName.get(i),
@@ -350,6 +351,7 @@ public class BuildTreeListener extends MentalBaseListener {
         functionDefinition.functionBody = (AstCompoundStatement) this.tree.get(ctx.compoundStatement());
         functionDefinition.parent = this.tree.get(ctx.parent);
         functionDefinition.functionBody.parent = functionDefinition;
+        functionDefinition.lastVariableID = this.globalVariableCounter - 1;
     }
 	/**
 	 * just a C-style union of statements

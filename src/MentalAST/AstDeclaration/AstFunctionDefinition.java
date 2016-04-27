@@ -9,9 +9,13 @@ import MentalSymbols.SymbolFunction;
 public class AstFunctionDefinition extends AstDeclaration {
     public SymbolFunction functionHead;
     public AstCompoundStatement functionBody;
+    public int firstVariableID;
+    public int lastVariableID;
     public AstFunctionDefinition() {
         this.functionHead = new SymbolFunction();
         this.functionBody = new AstCompoundStatement();
+        this.firstVariableID = 0;
+        this.lastVariableID = 0;
     }
     @Override
     public String toPrintString(int indent) {

@@ -30,6 +30,8 @@ bool ____built_in_equal_string(string lhs, string rhs)
     return true;
 }
 
-int main() {
-    return 0;
+void ____built_in_println(string str)
+{
+    print(str);
+    print("\n");
 }

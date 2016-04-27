@@ -1,0 +1,16 @@
+package MentalIR;
+
+/**
+ * Created by Songyu on 16/4/27.
+ */
+public class IRLabelEndif extends IRLabel {
+    public static int nextEndIfLabel = 0;
+    public IRLabelEndif() {
+        this.labelID = nextEndIfLabel++;
+    }
+
+    @Override
+    public String toString() {
+        return "_end_if_" + Integer.toString(this.labelID);
+    }
+}

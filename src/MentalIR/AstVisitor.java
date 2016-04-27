@@ -16,13 +16,11 @@ public class AstVisitor {
     public LinkedList<IRInstruction> labelLocations;
     public HashMap<AstBaseNode, IRData> expressionResult;
     public LinkedList<IRStringLiteral> stringLiterals;
-    public int nextLabel;
 
     public AstVisitor() {
         this.labelLocations = new LinkedList<>();
         this.expressionResult = new HashMap<>();
         this.stringLiterals = new LinkedList<>();
-        this.nextLabel = 0;
     }
 
     public LinkedList<IRInstruction> visitBase(AstBaseNode node) {
@@ -694,6 +692,14 @@ public class AstVisitor {
     }
 
     public LinkedList<IRInstruction> visitCreationExpression(AstCreationExpression astCreationExpression) {
+        LinkedList<IRInstruction> resultInstructions;
+        if (astCreationExpression.resultDim - astCreationExpression.determinedDim > 1) {
+            throw new RuntimeException();
+        }
+        if (astCreationExpression.expressionList != null && astCreationExpression.expressionList.size() == 1) {
+            LinkedList<IRInstruction> sizeInstructions = astCreationExpression.expressionList.get(0).visit(this);
+
+        }
         // TODO
         return null;
     }
@@ -750,6 +756,41 @@ public class AstVisitor {
     }
 
     public LinkedList<IRInstruction> visitExpressionList(AstExpressionList astExpressionList) {
+        // TODO
+        return null;
+    }
+
+    public LinkedList<IRInstruction> visitCallGetInt(AstCallGetInt astCallGetInt) {
+        // TODO
+        return null;
+    }
+
+    public LinkedList<IRInstruction> visitCallGetString(AstCallGetString astCallGetString) {
+        // TODO
+        return null;
+    }
+
+    public LinkedList<IRInstruction> visitCallParseInt(AstCallParseInt astCallParseInt) {
+        // TODO
+        return null;
+    }
+
+    public LinkedList<IRInstruction> visitCallPrint(AstCallPrint astCallPrint) {
+        // TODO
+        return null;
+    }
+
+    public LinkedList<IRInstruction> visitCallPrintln(AstCallPrintln astCallPrintln) {
+        // TODO
+        return null;
+    }
+
+    public LinkedList<IRInstruction> visitCallSubString(AstCallSubString astCallSubString) {
+        // TODO
+        return null;
+    }
+
+    public LinkedList<IRInstruction> visitCallToString(AstCallToString astCallToString) {
         // TODO
         return null;
     }

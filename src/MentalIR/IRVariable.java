@@ -6,6 +6,10 @@ package MentalIR;
 public class IRVariable extends IRData {
     public int variableID = 0;
     public IRVariable() {
+        this.variableID = -1;
+    }
+    public IRVariable(int id) {
+        this.variableID = id;
     }
 
     @Override
