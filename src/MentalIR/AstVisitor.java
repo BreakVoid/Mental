@@ -1,10 +1,8 @@
 package MentalIR;
 import MentalAST.*;
-import MentalAST.AstDeclaration.AstDeclaration;
 import MentalAST.AstExpression.*;
 import MentalAST.AstStatement.*;
 import MentalType.MentalClass;
-import sun.awt.image.ImageWatched;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -37,7 +35,7 @@ public class AstVisitor {
     public LinkedList<IRInstruction> visitIdentifier(AstIdentifier astIdentifier) {
         IRVariable irVariable = new IRVariable();
         this.expressionResult.put(astIdentifier, irVariable);
-        irVariable.variableID = astIdentifier.variable.variableID;
+        irVariable.variableID = astIdentifier.variable.globalID;
         return new LinkedList<>();
     }
 

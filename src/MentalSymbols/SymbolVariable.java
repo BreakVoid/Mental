@@ -12,7 +12,7 @@ public class SymbolVariable extends SymbolBase {
         this.variable = new AstVariable();
         this.variable.variableName = null;
         this.variable.variableType = null;
-        this.variable.variableID = 0;
+        this.variable.globalID = 0;
         this.stackLayer = 0;
     }
     public SymbolVariable(SymbolTable scope, MentalType type, String name) {
@@ -20,18 +20,18 @@ public class SymbolVariable extends SymbolBase {
         this.stackLayer = scope.stackLayer;
         this.variable.variableType = type;
         this.variable.variableName = name;
-        this.variable.variableID = 0;
+        this.variable.globalID = 0;
     }
     public SymbolVariable(SymbolTable scope, MentalType type, String name, int id) {
         this.variable = new AstVariable();
         this.stackLayer = scope.stackLayer;
         this.variable.variableType = type;
         this.variable.variableName = name;
-        this.variable.variableID = id;
+        this.variable.globalID = id;
     }
     @Override
     public String toString() {
-        return "<variable>" + this.variable.variableName + '[' + this.variable.variableType.toString() + "],id:" + Integer.toString(this.variable.variableID);
+        return "<variable>" + this.variable.variableName + '[' + this.variable.variableType.toString() + "],id:" + Integer.toString(this.variable.globalID);
     }
     @Override
     public boolean equals(Object other) {
@@ -40,7 +40,7 @@ public class SymbolVariable extends SymbolBase {
         }
         if (other != null) {
             if (other instanceof SymbolVariable) {
-                if (this.variable.variableID == ((SymbolVariable) other).variable.variableID) {
+                if (this.variable.globalID == ((SymbolVariable) other).variable.globalID) {
                     return true;
                 }
             }

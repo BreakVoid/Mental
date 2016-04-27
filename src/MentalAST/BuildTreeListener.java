@@ -13,7 +13,6 @@ import MentalType.MentalArray;
 import MentalType.MentalClass;
 import MentalType.MentalFunction;
 import MentalType.MentalString;
-import MentalType.MentalClassMember;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -31,6 +30,7 @@ public class BuildTreeListener extends MentalBaseListener {
 	public HashMap<ParseTree, AstBaseNode> tree;                    // a K-V map used in building my abstract syntax tree.
 	public SymbolTable curSymbolTable;                              // the symbol table in current scope.
 	public LinkedList<SymbolTable> symbolTableList;                 // list of different stack scope
+    public int variableCounter;
     public int globalVariableCounter;
 
 	public BuildTreeListener() {
@@ -39,6 +39,7 @@ public class BuildTreeListener extends MentalBaseListener {
 		this.symbolTableList = new LinkedList<>();
 		this.symbolTableList.add(new SymbolTable());
 		this.curSymbolTable = this.symbolTableList.getLast();
+        this.variableCounter = 0;
         this.globalVariableCounter = 0;
 	}
     public boolean checkMain() {
@@ -75,7 +76,7 @@ public class BuildTreeListener extends MentalBaseListener {
 		this.curSymbolTable = this.symbolTableList.getLast();
 	}
     public int newVariableID() {
-        return this.globalVariableCounter++;
+        return this.variableCounter++;
     }
     @Override public void enterEveryRule(ParserRuleContext ctx) {
         if (this.existError) {
@@ -256,7 +257,17 @@ public class BuildTreeListener extends MentalBaseListener {
         }
         // new a node.
         singleVariableDeclaration.variable = new AstVariable();
-        singleVariableDeclaration.variable.variableID = this.newVariableID();
+        singleVariableDeclaration.variable.globalID = this.newVariableID();
+        if (!(ctx.parent.parent instanceof MentalParser.ProgramContext)) {
+            ParserRuleContext pCtx = (ParserRuleContext) ctx.parent;
+            while (pCtx != null && !(pCtx instanceof MentalParser.FunctionDefinitionContext)) {
+                pCtx = (ParserRuleContext) pCtx.parent;
+            }
+            AstFunctionDefinition functionDefinition = (AstFunctionDefinition) this.tree.get(pCtx);
+            singleVariableDeclaration.variable.localID = singleVariableDeclaration.variable.globalID - functionDefinition.firstVariableID;
+        } else if (ctx.parent.parent instanceof MentalParser.ProgramContext) {
+            singleVariableDeclaration.variable.localID = this.globalVariableCounter++;
+        }
         // get the name of the variable.
         singleVariableDeclaration.variable.variableName = ctx.Identifier().getText();
         // set the type of the variable.
@@ -326,16 +337,18 @@ public class BuildTreeListener extends MentalBaseListener {
         functionDefinition.functionHead.stackLayer = SymbolTable.maxLayer;
         // add the parameters to the scope.
         this.tree.put(ctx, functionDefinition);
-        functionDefinition.firstVariableID = globalVariableCounter;
+        functionDefinition.firstVariableID = variableCounter;
         for (int i = 0, count = functionDefinition.functionHead.parameterName.size(); i < count; ++i) {
+            SymbolVariable thisParameter = new SymbolVariable(
+                    this.curSymbolTable,
+                    functionDefinition.functionHead.parameterType.get(i),
+                    functionDefinition.functionHead.parameterName.get(i),
+                    this.variableCounter++
+            );
+            thisParameter.variable.localID = thisParameter.variable.globalID - functionDefinition.firstVariableID;
             this.curSymbolTable.add(
                     functionDefinition.functionHead.parameterName.get(i),
-                    new SymbolVariable(
-                            this.curSymbolTable,
-                            functionDefinition.functionHead.parameterType.get(i),
-                            functionDefinition.functionHead.parameterName.get(i),
-                            this.globalVariableCounter++
-                    )
+                    thisParameter
             );
         }
 	}
@@ -351,7 +364,7 @@ public class BuildTreeListener extends MentalBaseListener {
         functionDefinition.functionBody = (AstCompoundStatement) this.tree.get(ctx.compoundStatement());
         functionDefinition.parent = this.tree.get(ctx.parent);
         functionDefinition.functionBody.parent = functionDefinition;
-        functionDefinition.lastVariableID = this.globalVariableCounter - 1;
+        functionDefinition.lastVariableID = this.variableCounter - 1;
     }
 	/**
 	 * just a C-style union of statements

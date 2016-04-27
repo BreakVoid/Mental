@@ -1,4 +1,4 @@
-bool ____built_in_compare_string(string lhs, string rhs)
+bool ____built_in_string_less(string lhs, string rhs)
 {
     int minLength = lhs.length();
     if (minLength > rhs.length()) {
@@ -15,7 +15,7 @@ bool ____built_in_compare_string(string lhs, string rhs)
     return minLength < rhs.length();
 }
 
-bool ____built_in_equal_string(string lhs, string rhs)
+bool ____built_in_string_equal(string lhs, string rhs)
 {
     if (lhs.length() != rhs.length()) {
         return false;
@@ -28,6 +28,33 @@ bool ____built_in_equal_string(string lhs, string rhs)
         }
     }
     return true;
+}
+
+bool ____built_in_string_greater(string lhs, string rhs)
+{
+    return ____built_in_string_less(rhs, lhs);
+}
+
+bool ____built_in_string_less_equal(string lhs, string rhs)
+{
+    int minLength = lhs.length();
+    if (minLength > rhs.length()) {
+        minLength = rhs.length();
+    }
+    int i;
+    for (i = 0; i < minLength; ++i) {
+        int x = lhs.ord(i);
+        int y = rhs.ord(i);
+        if (x != y) {
+            return x < y;
+        }
+    }
+    return lhs.length() < rhs.length();
+}
+
+bool ____built_in_string_greater_equal(string lhs, string rhs)
+{
+    return ____built_in_string_less_equal(rhs, lhs);
 }
 
 void ____built_in_println(string str)
