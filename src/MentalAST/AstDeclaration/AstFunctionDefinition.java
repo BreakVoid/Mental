@@ -1,7 +1,11 @@
 package MentalAST.AstDeclaration;
 
 import MentalAST.AstStatement.AstCompoundStatement;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalSymbols.SymbolFunction;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/3/30.
@@ -61,5 +65,10 @@ public class AstFunctionDefinition extends AstDeclaration {
             }
         }
         return false;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitFunctionDefinition(this);
     }
 }

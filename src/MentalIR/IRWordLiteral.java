@@ -11,9 +11,13 @@ public class IRWordLiteral extends IRData {
     public int context;
     public IRWordLiteral() {
         this.context = 0;
+        this.registerName = -1;
+        this.inRegister = false;
     }
     public IRWordLiteral(int context) {
         this.context = context;
+        this.registerName = -1;
+        this.inRegister = false;
     }
 
     @Override

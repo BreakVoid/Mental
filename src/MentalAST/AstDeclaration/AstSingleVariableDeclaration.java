@@ -2,8 +2,12 @@ package MentalAST.AstDeclaration;
 
 import MentalAST.AstExpression.AstExpression;
 import MentalAST.AstVariable;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalParser.MentalParser;
 import MentalType.MentalType;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/3/30.
@@ -64,5 +68,10 @@ public class AstSingleVariableDeclaration extends AstDeclaration {
             }
         }
         return false;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitSingleVariableDeclaration(this);
     }
 }

@@ -9,6 +9,8 @@ public class IRLocate extends IRData {
     public IRLocate() {
         this.headPoint = null;
         this.shift = null;
+        this.inRegister = false;
+        this.registerName = -1;
     }
     public IRLocate(IRData headPoint, IRData shift) {
         this.headPoint = headPoint;

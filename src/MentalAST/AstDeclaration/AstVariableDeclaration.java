@@ -1,6 +1,8 @@
 package MentalAST.AstDeclaration;
 
 import MentalAST.AstBaseNode;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalParser.MentalParser;
 import MentalType.MentalType;
 
@@ -73,4 +75,8 @@ public class AstVariableDeclaration extends AstBaseNode {
         return false;
     }
 
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitVariableDeclaration(this);
+    }
 }

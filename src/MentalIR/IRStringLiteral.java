@@ -5,10 +5,13 @@ package MentalIR;
  */
 public class IRStringLiteral extends IRData {
     public String context;
+    public IRLabelGlobalData label;
     public IRStringLiteral() {
         this.context = null;
+        this.label = null;
     }
     public IRStringLiteral(String str) {
         this.context = str;
+        this.label = new IRLabelGlobalData();
     }
 }

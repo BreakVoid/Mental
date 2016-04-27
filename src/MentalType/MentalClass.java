@@ -8,17 +8,21 @@ import java.util.HashMap;
 public class MentalClass extends MentalType {
     public String className;
     public HashMap<String, MentalClassMember> classComponents;
+    public int classSize;
     public MentalClass() {
         this.classComponents = new HashMap<>();
         this.className = "";
+        this.classSize = 0;
     }
     public MentalClass(MentalClass other) {
         this.className = other.className;
         this.classComponents = new HashMap<>(other.classComponents);
+        this.classSize = other.classSize;
     }
     public void setClassComponents(HashMap<String, MentalClassMember> types) {
         this.classComponents = types;
         this.className = "";
+        this.classSize = types.size();
     }
     @Override
     public String toString() {

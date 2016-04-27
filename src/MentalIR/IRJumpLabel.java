@@ -3,12 +3,12 @@ package MentalIR;
 /**
  * Created by Songyu on 16/4/25.
  */
-public class IRJump extends IRInstruction {
+public class IRJumpLabel extends IRInstruction {
     public IRLabel gotoLabel;
-    public IRJump() {
+    public IRJumpLabel() {
         this.gotoLabel = null;
     }
-    public IRJump(IRLabel gotoLabel) {
+    public IRJumpLabel(IRLabel gotoLabel) {
         this.gotoLabel = gotoLabel;
     }
 }

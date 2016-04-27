@@ -83,6 +83,7 @@ public class SymbolType extends SymbolBase {
                 }
             }
         }
+        ((MentalClass) type).classSize = classMemberCount;
         return existError;
     }
     @Override

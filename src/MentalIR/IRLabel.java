@@ -3,7 +3,7 @@ package MentalIR;
 /**
  * Created by Songyu on 16/4/27.
  */
-public class IRLabel {
+public class IRLabel extends IRData {
     public static int nextLabel = 0;
     public int labelID;
     public IRLabel() {
