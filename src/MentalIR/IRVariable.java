@@ -12,12 +12,16 @@ public class IRVariable extends IRData {
         this.inRegister = false;
         this.registerName = -1;
         this.stackShift = -1;
+        this.globalDataLabel = null;
+        this.isParameterForCall = false;
     }
     public IRVariable(int id) {
         this.variableID = id;
         this.inRegister = false;
         this.registerName = -1;
         this.stackShift = -1;
+        this.globalDataLabel = null;
+        this.isParameterForCall = false;
     }
 
     @Override

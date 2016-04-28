@@ -7,6 +7,9 @@ public class IRAdd extends IRBinaryArithmetic {
     public IRAdd() {
         super();
     }
+    public IRAdd(IRData lhs, IRData rhs) {
+        super(lhs, rhs);
+    }
     public IRAdd(IRData lhs, IRData rhs, IRData res) {
         super(lhs, rhs, res);
     }

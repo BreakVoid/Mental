@@ -30,6 +30,21 @@ bool ____built_in_string_equal(string lhs, string rhs)
     return true;
 }
 
+bool ____built_in_string_inequal(string lhs, string rhs)
+{
+    if (lhs.length() != rhs.length()) {
+        return true;
+    }
+    int i;
+    int length = lhs.length();
+    for (i = 0; i < length; ++i) {
+        if (lhs.ord(i) != rhs.ord(i)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool ____built_in_string_greater(string lhs, string rhs)
 {
     return ____built_in_string_less(rhs, lhs);
@@ -49,7 +64,7 @@ bool ____built_in_string_less_equal(string lhs, string rhs)
             return x < y;
         }
     }
-    return lhs.length() < rhs.length();
+    return lhs.length() <= rhs.length();
 }
 
 bool ____built_in_string_greater_equal(string lhs, string rhs)

@@ -13,6 +13,7 @@ public class IRTemporary extends IRData {
         this.inRegister = false;
         this.registerName = -1;
         this.valid = false;
+        this.isParameterForCall = false;
     }
 
     @Override

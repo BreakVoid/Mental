@@ -6,4 +6,5 @@ package MentalIR;
 public abstract class IRData {
     public boolean inRegister;
     public int registerName;
+    public boolean isParameterForCall;
 }
