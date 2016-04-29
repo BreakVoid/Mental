@@ -3,8 +3,7 @@ package MentalIR;
 /**
  * Created by Songyu on 16/4/25.
  */
-public class IRJumpLabel extends IRInstruction {
-    public IRLabel gotoLabel;
+public class IRJumpLabel extends IRBranch {
     public IRJumpLabel() {
         this.gotoLabel = null;
     }

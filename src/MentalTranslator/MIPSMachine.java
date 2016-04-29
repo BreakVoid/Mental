@@ -1,4 +1,4 @@
-package MentalMIPS;
+package MentalTranslator;
 
 import MentalIR.IRData;
 

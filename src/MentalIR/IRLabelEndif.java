@@ -3,9 +3,9 @@ package MentalIR;
 /**
  * Created by Songyu on 16/4/27.
  */
-public class IRLabelEndif extends IRLabel {
+public class IRLabelEndIf extends IRLabel {
     public static int nextEndIfLabel = 0;
-    public IRLabelEndif() {
+    public IRLabelEndIf() {
         this.labelID = nextEndIfLabel++;
     }
 

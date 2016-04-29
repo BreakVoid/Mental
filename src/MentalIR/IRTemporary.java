@@ -8,16 +8,38 @@ public class IRTemporary extends IRData {
     public int temporaryID;
     public boolean valid;
     public int stackShift;
+    public int counter;
     public IRTemporary() {
         this.temporaryID = globalTemporaryCount++;
         this.inRegister = false;
         this.registerName = -1;
         this.valid = false;
         this.isParameterForCall = false;
+        this.counter = 1;
     }
 
     @Override
     public String toString() {
         return "%" + Integer.toString(this.temporaryID);
     }
+
+    public void Consume() {
+        if (this.valid) {
+            this.counter--;
+            if (this.counter == 0) {
+                this.valid = false;
+            }
+        } else {
+            System.err.println("translator: try to consume an invalid temporary.");
+            throw new RuntimeException();
+        }
+    }
+
+    public void Produce() {
+        this.valid = true;
+        if (this.counter == 0) {
+            this.counter = 1;
+        }
+    }
+
 }

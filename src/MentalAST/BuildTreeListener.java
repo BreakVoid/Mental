@@ -258,15 +258,15 @@ public class BuildTreeListener extends MentalBaseListener {
         // new a node.
         singleVariableDeclaration.variable = new AstVariable();
         singleVariableDeclaration.variable.globalID = this.newVariableID();
-        if (!(ctx.parent.parent instanceof MentalParser.ProgramContext)) {
-            ParserRuleContext pCtx = (ParserRuleContext) ctx.parent;
+        if ((ctx.parent.parent.parent instanceof MentalParser.ProgramContext)) {
+            singleVariableDeclaration.variable.localID = this.globalVariableCounter++;
+        } else {
+            ParserRuleContext pCtx = (ParserRuleContext) ctx.parent.parent;
             while (pCtx != null && !(pCtx instanceof MentalParser.FunctionDefinitionContext)) {
                 pCtx = (ParserRuleContext) pCtx.parent;
             }
             AstFunctionDefinition functionDefinition = (AstFunctionDefinition) this.tree.get(pCtx);
             singleVariableDeclaration.variable.localID = singleVariableDeclaration.variable.globalID - functionDefinition.firstVariableID;
-        } else if (ctx.parent.parent instanceof MentalParser.ProgramContext) {
-            singleVariableDeclaration.variable.localID = this.globalVariableCounter++;
         }
         // get the name of the variable.
         singleVariableDeclaration.variable.variableName = ctx.Identifier().getText();

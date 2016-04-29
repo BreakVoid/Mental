@@ -1,6 +1,6 @@
 package MentalIR;
 
-import MentalMIPS.MIPSRegister;
+import MentalTranslator.MIPSRegister;
 
 /**
  * Created by Songyu on 16/4/26.

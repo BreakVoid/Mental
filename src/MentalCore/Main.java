@@ -4,7 +4,10 @@ package MentalCore;
  * Created by Songyu on 16/3/28.
  */
 
+import MentalAST.AstProgram;
 import MentalAST.BuildTreeListener;
+import MentalIR.AstVisitor;
+import MentalIR.IRStringLiteral;
 import MentalParser.*;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -41,11 +44,16 @@ public class Main {
         MentalParser.ProgramContext programContext = parser.program();
         BuildTreeListener listener = new BuildTreeListener();
         walker.walk(listener, programContext);
+        AstProgram astProgram = (AstProgram) listener.tree.get(programContext);
         if (listener.existError) {
             System.exit(1);
         }
-        if (args.length >= 1) {
-            System.out.println(listener.tree.get(programContext).toPrintString());
+
+        AstVisitor visitor = new AstVisitor();
+        visitor.visitProgram(astProgram);
+        System.out.println("String Literals:");
+        for (IRStringLiteral stringLiteral : visitor.stringLiterals) {
+            System.out.println(String.format("\t%%%d:%s", stringLiteral.label.labelID, stringLiteral.context));
         }
     }
 }
