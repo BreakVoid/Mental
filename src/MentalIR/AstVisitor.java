@@ -12,34 +12,48 @@ import MentalType.MentalVoid;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.function.IntBinaryOperator;
 
 /**
  * Created by Songyu on 16/4/19.
  */
 public class AstVisitor {
+    public HashMap<AstBaseNode, IRData> expressionResult;
+
     public LinkedList<IRInstruction> functionInstructionLists;
     public LinkedList<IRInstruction> globalVariableInitialize;
-    public HashMap<AstBaseNode, IRData> expressionResult;
+
     public HashMap<String, IRStringLiteral> stringMap;
-    public HashMap<Integer, IRLabelGlobalData> globalVariableMap;
     public LinkedList<IRStringLiteral> stringLiterals;
+    public IRStringLiteral literalNewline;
+
+    public HashMap<Integer, IRVariable> variableMap;
+    public HashMap<Integer, IRLabelGlobalData> globalVariableMap;
+    public LinkedList<IRVariable> globalVariables;
+
     public IRLabel endFunction;
     public IRLabel continueLoop;
     public IRLabel endLoop;
-    public IRStringLiteral literalNewline;
+
     public AstVisitor() {
-        this.functionInstructionLists = new LinkedList<>();
         this.expressionResult = new HashMap<>();
+
+        this.functionInstructionLists = new LinkedList<>();
+        this.globalVariableInitialize = new LinkedList<>();
+
         this.stringLiterals = new LinkedList<>();
-        this.endFunction = null;
-        this.endLoop = null;
-        this.continueLoop = null;
         this.stringMap = new HashMap<>();
         this.literalNewline = new IRStringLiteral("\"\\n\"");
         this.stringMap.put("\"\\n\"", this.literalNewline);
         this.stringLiterals.add(this.literalNewline);
-        this.globalVariableInitialize = new LinkedList<>();
+
         this.globalVariableMap = new HashMap<>();
+        this.variableMap = new HashMap<>();
+        this.globalVariables = new LinkedList<>();
+
+        this.endFunction = null;
+        this.endLoop = null;
+        this.continueLoop = null;
     }
 
     public LinkedList<IRInstruction> visitBase(AstBaseNode node) {
@@ -65,14 +79,16 @@ public class AstVisitor {
     }
 
     public LinkedList<IRInstruction> visitIdentifier(AstIdentifier astIdentifier) {
-        IRVariable irVariable = new IRVariable();
-        this.expressionResult.put(astIdentifier, irVariable);
-        irVariable.variableID = astIdentifier.variable.globalID;
-        irVariable.stackShift = astIdentifier.variable.localID;
-        IRLabelGlobalData irLabelGlobalData = this.globalVariableMap.get(irVariable.variableID);
-        if (irLabelGlobalData != null) {
-            irVariable.globalDataLabel = irLabelGlobalData;
+        IRVariable irVariable;
+        irVariable = this.variableMap.get(astIdentifier.variable.globalID);
+        if (irVariable == null) {
+            irVariable = new IRVariable();
+            irVariable.variableID = astIdentifier.variable.globalID;
+            irVariable.stackShift = astIdentifier.variable.localID;
+            irVariable.globalDataLabel = this.globalVariableMap.get(irVariable.variableID);
+            this.variableMap.put(astIdentifier.variable.globalID, irVariable);
         }
+        this.expressionResult.put(astIdentifier, irVariable);
         return new LinkedList<>();
     }
 
@@ -1283,7 +1299,7 @@ public class AstVisitor {
         return resultInstructions;
     }
 
-    public LinkedList<IRInstruction> visitWhileStatment(AstWhileStatement astWhileStatement) {
+    public LinkedList<IRInstruction> visitWhileStatement(AstWhileStatement astWhileStatement) {
         IRLabel endLoopBackup = this.endLoop;
         IRLabel continueLoopBackup = this.continueLoop;
         //--------------------------------------------------------------
@@ -1478,13 +1494,28 @@ public class AstVisitor {
 
     public LinkedList<IRInstruction> visitSingleVariableDeclaration(AstSingleVariableDeclaration astSingleVariableDeclaration) {
         // would never be called.
-        return null;
+        throw new RuntimeException();
     }
 
     public LinkedList<IRInstruction> visitVariableDeclaration(AstVariableDeclaration astVariableDeclaration) {
         LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
         IRInstruction lastInstruction = null;
         for (AstSingleVariableDeclaration astSingleVariableDeclaration : astVariableDeclaration.variables) {
+            IRVariable irVariable = this.variableMap.get(astSingleVariableDeclaration.variable.globalID);
+
+            if (irVariable == null) {
+                irVariable = new IRVariable();
+                irVariable.variableID = astSingleVariableDeclaration.variable.globalID;
+                irVariable.stackShift = astSingleVariableDeclaration.variable.localID;
+                this.variableMap.put(astSingleVariableDeclaration.variable.globalID, irVariable);
+            }
+
+            if (astSingleVariableDeclaration.parent.parent instanceof AstProgram) {
+                irVariable.globalDataLabel = new IRLabelGlobalData();
+                this.globalVariableMap.put(irVariable.variableID, irVariable.globalDataLabel);
+                this.globalVariables.add(irVariable);
+            }
+
             if (astSingleVariableDeclaration.initializeExpression != null) {
                 LinkedList<IRInstruction> initialExpressionInstructions = astSingleVariableDeclaration.initializeExpression.visit(this);
                 if (lastInstruction != null) {
@@ -1503,13 +1534,9 @@ public class AstVisitor {
                     initialExpressionRes = irLoad.dest;
                 }
                 resultInstructions.addAll(initialExpressionInstructions);
-                IRStore irStore = new IRStore(initialExpressionRes, new IRVariable(astSingleVariableDeclaration.variable.globalID));
-                ((IRVariable) irStore.dest).stackShift = astSingleVariableDeclaration.variable.localID;
-                if (astSingleVariableDeclaration.parent.parent instanceof AstProgram) {
-                    IRVariable irVariable = (IRVariable) irStore.dest;
-                    irVariable.globalDataLabel = new IRLabelGlobalData();
-                    this.globalVariableMap.put(irVariable.variableID, irVariable.globalDataLabel);
-                }
+
+                IRStore irStore = new IRStore(initialExpressionRes, irVariable);
+
                 if (resultInstructions.size() > 0) {
                     resultInstructions.getLast().nextInstruction = irStore;
                 }

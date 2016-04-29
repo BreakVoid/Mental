@@ -23,8 +23,8 @@ public class IRTemporary extends IRData {
         return "%" + Integer.toString(this.temporaryID);
     }
 
-    public void Consume() {
-        if (this.valid) {
+    public void consume() {
+        if (this.valid && this.counter > 0) {
             this.counter--;
             if (this.counter == 0) {
                 this.valid = false;
@@ -35,7 +35,7 @@ public class IRTemporary extends IRData {
         }
     }
 
-    public void Produce() {
+    public void produce() {
         this.valid = true;
         if (this.counter == 0) {
             this.counter = 1;

@@ -57,6 +57,6 @@ public class AstWhileStatement extends AstStatement {
 
     @Override
     public LinkedList<IRInstruction> visit(AstVisitor visitor) {
-        return visitor.visitWhileStatment(this);
+        return visitor.visitWhileStatement(this);
     }
 }
