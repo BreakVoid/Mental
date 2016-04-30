@@ -36,9 +36,11 @@ public class IRTemporary extends IRData {
     }
 
     public void produce() {
-        this.valid = true;
-        if (this.counter == 0) {
-            this.counter = 1;
+        if (!this.valid) {
+            this.valid = true;
+            if (this.counter == 0) {
+                this.counter = 1;
+            }
         }
     }
 

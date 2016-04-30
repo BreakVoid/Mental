@@ -9,6 +9,7 @@ import MentalType.MentalClass;
 import MentalType.MentalInt;
 import MentalType.MentalString;
 import MentalType.MentalVoid;
+import sun.awt.image.ImageWatched;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -512,13 +513,13 @@ public class AstVisitor {
     }
 
     public LinkedList<IRInstruction> visitLogicalAndExpression(AstLogicalAndExpression astLogicalAndExpression) {
-        // TODO
-
         LinkedList<IRInstruction> resultInstructions;
+        IRLabelShortPathEvaluate irLabelShortPathEvaluate = new IRLabelShortPathEvaluate();
+        IRNullOperation irNullOperation = new IRNullOperation();
+        irNullOperation.label = irLabelShortPathEvaluate;
+        // get left expression result and instructions.
         LinkedList<IRInstruction> lhsInstructions = astLogicalAndExpression.leftExpression.visit(this);
-        LinkedList<IRInstruction> rhsInstructions = astLogicalAndExpression.rightExpression.visit(this);
         IRData lhsRes = this.expressionResult.get(astLogicalAndExpression.leftExpression);
-        IRData rhsRes = this.expressionResult.get(astLogicalAndExpression.rightExpression);
         if (lhsRes instanceof IRLocate) {
             IRLoad irLoad = ((IRLocate) lhsRes).load();
             if (lhsInstructions.size() > 0) {
@@ -527,6 +528,21 @@ public class AstVisitor {
             lhsInstructions.add(irLoad);
             lhsRes = irLoad.dest;
         }
+        // set the read time of lhsRes as 3 if it is a temporary.
+        if (lhsRes instanceof IRTemporary) {
+            ((IRTemporary) lhsRes).counter = 3;
+        }
+
+        resultInstructions = lhsInstructions;
+        // if lhsRes == 0 then the right expression would not be evaluated.
+        IRBranchEqualZero irBranchEqualZero = new IRBranchEqualZero(lhsRes, irLabelShortPathEvaluate);
+        if (resultInstructions.size() > 0) {
+            resultInstructions.getLast().nextInstruction = irBranchEqualZero;
+        }
+        resultInstructions.add(irBranchEqualZero);
+
+        LinkedList<IRInstruction> rhsInstructions = astLogicalAndExpression.rightExpression.visit(this);
+        IRData rhsRes = this.expressionResult.get(astLogicalAndExpression.rightExpression);
         if (rhsRes instanceof IRLocate) {
             IRLoad irLoad = ((IRLocate) rhsRes).load();
             if (rhsInstructions.size() > 0) {
@@ -535,30 +551,32 @@ public class AstVisitor {
             rhsInstructions.add(irLoad);
             rhsRes = irLoad.dest;
         }
-        if (lhsInstructions.size() > 0) {
-            if (rhsInstructions.size() > 0) {
-                lhsInstructions.getLast().nextInstruction = rhsInstructions.getFirst();
-            }
+
+        if (rhsInstructions.size() > 0) {
+            resultInstructions.getLast().nextInstruction = rhsInstructions.getFirst();
         }
-        resultInstructions = lhsInstructions;
         resultInstructions.addAll(rhsInstructions);
-        IRBinaryArithmetic thisInstruction;
-        thisInstruction = new IRBitAnd(lhsRes, rhsRes, new IRTemporary());
-        if (resultInstructions.size() > 0) {
-            resultInstructions.getLast().nextInstruction = thisInstruction;
-        }
+
+        IRBinaryArithmetic thisInstruction = new IRBitAnd(lhsRes, rhsRes, lhsRes);
+        resultInstructions.getLast().nextInstruction = thisInstruction;
         resultInstructions.add(thisInstruction);
+        resultInstructions.getLast().nextInstruction = irNullOperation;
+        resultInstructions.add(irNullOperation);
+
         this.expressionResult.put(astLogicalAndExpression, thisInstruction.res);
+
         return resultInstructions;
     }
 
     public LinkedList<IRInstruction> visitLogicalOrExpression(AstLogicalOrExpression astLogicalOrExpression) {
-        // TODO
         LinkedList<IRInstruction> resultInstructions;
+        // set label for short evaluate.
+        IRLabelShortPathEvaluate irLabelShortPathEvaluate = new IRLabelShortPathEvaluate();
+        IRNullOperation irNullOperation = new IRNullOperation();
+        irNullOperation.label = irLabelShortPathEvaluate;
+
         LinkedList<IRInstruction> lhsInstructions = astLogicalOrExpression.leftExpression.visit(this);
-        LinkedList<IRInstruction> rhsInstructions = astLogicalOrExpression.rightExpression.visit(this);
         IRData lhsRes = this.expressionResult.get(astLogicalOrExpression.leftExpression);
-        IRData rhsRes = this.expressionResult.get(astLogicalOrExpression.rightExpression);
         if (lhsRes instanceof IRLocate) {
             IRLoad irLoad = ((IRLocate) lhsRes).load();
             if (lhsInstructions.size() > 0) {
@@ -567,6 +585,18 @@ public class AstVisitor {
             lhsInstructions.add(irLoad);
             lhsRes = irLoad.dest;
         }
+        if (lhsRes instanceof IRTemporary) {
+            ((IRTemporary) lhsRes).counter = 3;
+        }
+        resultInstructions = lhsInstructions;
+        IRBranchNotEqualZero irBranchNotEqualZero = new IRBranchNotEqualZero(lhsRes, irLabelShortPathEvaluate);
+        if (resultInstructions.size() > 0) {
+            resultInstructions.getLast().nextInstruction = irBranchNotEqualZero;
+        }
+        resultInstructions.add(irBranchNotEqualZero);
+
+        LinkedList<IRInstruction> rhsInstructions = astLogicalOrExpression.rightExpression.visit(this);
+        IRData rhsRes = this.expressionResult.get(astLogicalOrExpression.rightExpression);
         if (rhsRes instanceof IRLocate) {
             IRLoad irLoad = ((IRLocate) rhsRes).load();
             if (rhsInstructions.size() > 0) {
@@ -575,19 +605,21 @@ public class AstVisitor {
             rhsInstructions.add(irLoad);
             rhsRes = irLoad.dest;
         }
-        if (lhsInstructions.size() > 0) {
-            if (rhsInstructions.size() > 0) {
-                lhsInstructions.getLast().nextInstruction = rhsInstructions.getFirst();
-            }
+        if (rhsInstructions.size() > 0) {
+            resultInstructions.getLast().nextInstruction = rhsInstructions.getFirst();
         }
-        resultInstructions = lhsInstructions;
         resultInstructions.addAll(rhsInstructions);
+
         IRBinaryArithmetic thisInstruction;
-        thisInstruction = new IRBitOr(lhsRes, rhsRes, new IRTemporary());
+        thisInstruction = new IRBitOr(lhsRes, rhsRes, lhsRes);
+
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = thisInstruction;
         }
         resultInstructions.add(thisInstruction);
+        resultInstructions.getLast().nextInstruction = irNullOperation;
+        resultInstructions.add(irNullOperation);
+
         this.expressionResult.put(astLogicalOrExpression, thisInstruction.res);
         return resultInstructions;
     }

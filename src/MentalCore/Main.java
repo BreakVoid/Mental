@@ -55,8 +55,6 @@ public class Main {
         AstVisitor visitor = new AstVisitor();
         visitor.visitProgram(astProgram);
 
-        System.out.println(listener.globalVariableCounter);
-
         MIPSStaticData mipsStaticData = new MIPSStaticData();
 
         for (IRStringLiteral irStringLiteral : visitor.stringLiterals) {
