@@ -53,6 +53,13 @@ public class IRReturn extends IRJumpLabel {
                     String.format("\tmove $v0, %s", this.returnValue.toRegister())
             );
         }
+        if (this.nextInstruction != null) {
+            if (this.nextInstruction.label != this.gotoLabel) {
+                mipsInstructions.add(
+                        String.format("\tb %s", this.gotoLabel.toString())
+                );
+            }
+        }
         String str = "";
         for (String statement : mipsInstructions) {
             str += statement + "\n";

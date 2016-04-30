@@ -2,6 +2,7 @@ package MentalTranslator;
 
 import MentalIR.IRInstruction;
 import MentalIR.IRLabelEndFunction;
+import MentalIR.IRNullOperation;
 
 /**
  * Created by Songyu on 16/4/30.
@@ -30,7 +31,9 @@ public class MIPSFunctions extends MIPSTranslator {
         );
         for (; instruction != null; instruction = instruction.nextInstruction) {
             if (instruction.label instanceof IRLabelEndFunction) {
-                mipsStatement.add(instruction.label.toString() + ":");
+                if (instruction instanceof IRNullOperation) {
+                    mipsStatement.add(instruction.label.toString() + ":");
+                }
             } else {
                 mipsStatement.add(instruction.toMips(machine));
             }
