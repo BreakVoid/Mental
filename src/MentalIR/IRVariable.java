@@ -42,6 +42,7 @@ public class IRVariable extends IRData {
     }
 
     public void produce() {
+        this.inRegister = true;
         this.status = 1;
     }
 

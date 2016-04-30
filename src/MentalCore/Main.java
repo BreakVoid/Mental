@@ -8,6 +8,7 @@ import MentalAST.AstProgram;
 import MentalAST.BuildTreeListener;
 import MentalIR.*;
 import MentalParser.*;
+import MentalTranslator.MIPSFunctions;
 import MentalTranslator.MIPSProgram;
 import MentalTranslator.MIPSStaticData;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -23,7 +24,7 @@ public class Main {
     public static void main(String[] args) {
         FileInputStream builtInFunction = null;
         try {
-            builtInFunction = new FileInputStream("src/built_in.mx");
+            builtInFunction = new FileInputStream("src/empty.mx");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -65,9 +66,13 @@ public class Main {
 
         for (IRInstruction instruction : visitor.globalVariableInitialize) {
             mipsProgram.globalInitialize.translate(instruction);
-            System.err.println(mipsProgram.globalInitialize.machine.registerUse());
+            // System.err.println(mipsProgram.globalInitialize.machine.registerUse());
         }
 
+        for (int i = 0, count = visitor.functionInstructionLists.size(); i < count; ++i) {
+            mipsProgram.functions.add(new MIPSFunctions());
+            mipsProgram.functions.getLast().translate(visitor.functionStackSize.get(i), visitor.functionInstructionLists.get(i));
+        }
         System.out.print(mipsProgram);
     }
 }

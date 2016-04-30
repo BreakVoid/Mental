@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class MIPSProgram {
     public MIPSStaticData staticData;
     public MIPSGlobalInitialize globalInitialize;
-    public LinkedList<MIPSTranslator> functions;
+    public LinkedList<MIPSFunctions> functions;
     public LinkedList<String> beginMainLabel;
     public LinkedList<String> endMainLabel;
     public MIPSProgram() {
@@ -41,6 +41,14 @@ public class MIPSProgram {
         for (String statement : this.endMainLabel) {
             program += statement + "\n";
         }
+
+        for (MIPSFunctions function : this.functions) {
+            for (String statement: function.mipsStatement) {
+                program += statement + "\n";
+            }
+            program += "\n";
+        }
+
         return program;
     }
 }

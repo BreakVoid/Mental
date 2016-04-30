@@ -66,6 +66,8 @@ public class AstVisitor {
     public HashMap<AstBaseNode, IRData> expressionResult;
 
     public LinkedList<IRInstruction> functionInstructionLists;
+    public LinkedList<Integer> functionStackSize;
+
     public LinkedList<IRInstruction> globalVariableInitialize;
 
     public HashMap<String, IRStringLiteral> stringMap;
@@ -84,6 +86,7 @@ public class AstVisitor {
         this.expressionResult = new HashMap<>();
 
         this.functionInstructionLists = new LinkedList<>();
+        this.functionStackSize = new LinkedList<>();
         this.globalVariableInitialize = new LinkedList<>();
 
         this.stringLiterals = new LinkedList<>();
@@ -117,6 +120,7 @@ public class AstVisitor {
                 LinkedList<IRInstruction> functionInstructions = astDeclaration.visit(this);
                 if (functionInstructions.size() > 0) {
                     this.functionInstructionLists.add(functionInstructions.getFirst());
+                    this.functionStackSize.add(((AstFunctionDefinition) astDeclaration).lastVariableID - ((AstFunctionDefinition) astDeclaration).firstVariableID + 1);
                 }
             }
         }
@@ -821,6 +825,15 @@ public class AstVisitor {
                 // call string.ord(pos)
                 // get position
                 IRData callParameter = this.expressionResult.get(astMemberAccessExpression.memberExpression);
+                if (callParameter instanceof IRLocate) {
+                    IRLoad irLoad = ((IRLocate) callParameter).load();
+                    if (resultInstructions.size() > 1) {
+                        resultInstructions.getLast().nextInstruction = irLoad;
+                    }
+                    resultInstructions.add(irLoad);
+                    callParameter = irLoad.dest;
+                }
+
                 // load data
                 IRLoad irLoad = new IRLoad(new IRLocate(primaryRes, callParameter), 1);
                 // set result
@@ -902,6 +915,7 @@ public class AstVisitor {
     }
 
     public LinkedList<IRInstruction> visitCallLength(AstCallLength astCallLength) {
+        // do nothing.
         return new LinkedList<>();
     }
 
@@ -1558,13 +1572,12 @@ public class AstVisitor {
             }
         }
 
-        IRJumpRegisterRA irJumpRegisterRA = new IRJumpRegisterRA();
-        irJumpRegisterRA.label = endFunction;
-
+        IRNullOperation irNullOperation = new IRNullOperation();
+        irNullOperation.label = this.endFunction;
         if (resultInstructions.size() > 0) {
-            resultInstructions.getLast().nextInstruction = irJumpRegisterRA;
+            resultInstructions.getLast().nextInstruction = irNullOperation;
         }
-        resultInstructions.add(irJumpRegisterRA);
+        resultInstructions.add(irNullOperation);
         this.endFunction = endFunctionBackup;
         return resultInstructions;
     }

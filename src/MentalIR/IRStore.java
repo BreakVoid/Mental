@@ -174,6 +174,13 @@ public class IRStore extends IRInstruction {
             mipsInstructions.add(
                     String.format("\tsw %s, %s", this.src.toRegister(), this.dest.toAddress())
             );
+            if (((IRVariable) this.dest).status == 2) {
+                if (this.dest.registerName != this.src.registerName) {
+                    mipsInstructions.add(
+                            String.format("\tmove %s, %s", this.dest.registerName, this.src.registerName)
+                    );
+                }
+            }
             if (this.src instanceof IRVariable) {
                 this.src.consume();
             } else if (this.src instanceof IRTemporary){
