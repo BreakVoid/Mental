@@ -1,5 +1,7 @@
 package MentalIR;
 
+import MentalTranslator.MIPSRegister;
+
 /**
  * Created by Songyu on 16/4/27.
  */
@@ -15,5 +17,7 @@ public class IRMemoryAllocate extends IRSystemCall {
         this.variant = 9;
         this.amount = amount;
         this.res = new IRTemporary();
+        this.res.registerName = MIPSRegister.v0;
+        this.res.inRegister = true;
     }
 }

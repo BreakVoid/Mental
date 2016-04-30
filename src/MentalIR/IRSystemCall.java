@@ -8,4 +8,5 @@ public class IRSystemCall extends IRInstruction {
     public IRSystemCall() {
         this.variant = -1;
     }
+
 }

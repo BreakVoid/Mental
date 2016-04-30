@@ -8,4 +8,5 @@ public class IRNullOperation extends IRInstruction {
         this.nextInstruction = null;
         this.label = null;
     }
+
 }

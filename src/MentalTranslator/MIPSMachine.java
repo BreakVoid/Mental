@@ -1,6 +1,7 @@
 package MentalTranslator;
 
 import MentalIR.IRData;
+import MentalIR.IRTemporary;
 import MentalIR.IRVariable;
 
 /**
@@ -26,7 +27,12 @@ public class MIPSMachine {
         }
         if (this.registerData[i] instanceof IRVariable) {
             if (((IRVariable) this.registerData[i]).status == 2) {
-
+                return true;
+            }
+        }
+        if (this.registerData[i] instanceof IRTemporary) {
+            if (!this.registerData[i].valid) {
+                return true;
             }
         }
         return false;
@@ -118,8 +124,19 @@ public class MIPSMachine {
         }
     }
 
+    public int getEmptyRegister() {
+        int res = this.getEmptyRegisterT();
+        if (res != -1) {
+            return res;
+        }
+        return this.getEmptyRegisterS();
+    }
+
     public void use(int registerName, IRData data) {
         this.registerEmpty[registerName] = false;
+        if (this.registerData[registerName] != null) {
+            this.erase(registerName);
+        }
         this.registerData[registerName] = data;
     }
 
@@ -129,6 +146,7 @@ public class MIPSMachine {
             if (this.registerData[registerName] instanceof IRVariable) {
                 ((IRVariable) this.registerData[registerName]).status = 0;
             }
+            this.registerData[registerName].inRegister = false;
         }
         this.registerData[registerName] = null;
     }

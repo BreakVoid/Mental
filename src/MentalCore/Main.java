@@ -6,21 +6,16 @@ package MentalCore;
 
 import MentalAST.AstProgram;
 import MentalAST.BuildTreeListener;
-import MentalIR.AstVisitor;
-import MentalIR.IRLabelGlobalData;
-import MentalIR.IRStringLiteral;
-import MentalIR.IRVariable;
+import MentalIR.*;
 import MentalParser.*;
+import MentalTranslator.MIPSProgram;
 import MentalTranslator.MIPSStaticData;
-import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.*;
-import java.util.LinkedList;
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -55,18 +50,21 @@ public class Main {
         AstVisitor visitor = new AstVisitor();
         visitor.visitProgram(astProgram);
 
-        MIPSStaticData mipsStaticData = new MIPSStaticData();
+        MIPSProgram mipsProgram = new MIPSProgram();
+        MIPSStaticData mipsStaticData = mipsProgram.staticData;
 
         for (IRStringLiteral irStringLiteral : visitor.stringLiterals) {
-            mipsStaticData.append(irStringLiteral);
+            mipsStaticData.translate(irStringLiteral);
         }
 
         for (IRVariable irVariable : visitor.globalVariables) {
-            mipsStaticData.append(irVariable);
+            mipsStaticData.translate(irVariable);
         }
 
-        for (String statement : mipsStaticData.mipsStatements) {
-            System.out.println(statement);
+        for (IRInstruction instruction : visitor.globalVariableInitialize) {
+            mipsProgram.globalInitialize.translate(instruction);
         }
+
+        System.out.print(mipsProgram);
     }
 }

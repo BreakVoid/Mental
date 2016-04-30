@@ -16,12 +16,13 @@ public class MIPSStaticData {
         this.mipsStatements = new LinkedList<>();
         this.mipsStatements.add("\t.data");
     }
-    public void append(IRData data) {
+    public void translate(IRData data) {
         if (data instanceof IRVariable) {
             if (((IRVariable) data).globalDataLabel != null) {
-                // mipsStatements.add("\t.data");
+//                mipsStatements.add("\t.data");
+//                mipsStatements.add("\t.align 2");
                 mipsStatements.add(((IRVariable) data).globalDataLabel.toString() + ":");
-                mipsStatements.add("\t.space 4");
+                mipsStatements.add("\t.word 0");
             } else {
                 throw new RuntimeException("not a static variable, cannot put it to static area.");
             }

@@ -44,4 +44,13 @@ public class IRVariable extends IRData {
     public void produce() {
         this.status = 1;
     }
+
+    @Override
+    public String toAddress() {
+        if (this.globalDataLabel == null) {
+            return String.format("%d($fp)", -4 * this.stackShift);
+        } else {
+            return String.format("%s", this.globalDataLabel.toString());
+        }
+    }
 }

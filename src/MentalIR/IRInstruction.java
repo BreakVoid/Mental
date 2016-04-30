@@ -1,5 +1,7 @@
 package MentalIR;
 
+import MentalTranslator.MIPSMachine;
+
 /**
  * Created by Songyu on 16/4/19.
  */
@@ -9,5 +11,14 @@ public class IRInstruction {
     public IRInstruction() {
         this.nextInstruction = null;
         this.label = null;
+    }
+
+    public String toMips(MIPSMachine mipsMachine) {
+        // would never be called.
+        throw new RuntimeException("an unknown instruction.");
+    }
+
+    public String toString() {
+        return "unknown ir instruction.";
     }
 }

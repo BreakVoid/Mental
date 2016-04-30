@@ -1,19 +1,63 @@
 package MentalIR;
-import MentalAST.*;
+
+import MentalAST.AstBaseNode;
 import MentalAST.AstDeclaration.AstFunctionDefinition;
 import MentalAST.AstDeclaration.AstSingleVariableDeclaration;
 import MentalAST.AstDeclaration.AstVariableDeclaration;
-import MentalAST.AstExpression.*;
-import MentalAST.AstStatement.*;
+import MentalAST.AstExpression.AstAdditiveExpression;
+import MentalAST.AstExpression.AstArraySubscriptingExpression;
+import MentalAST.AstExpression.AstAssignExpression;
+import MentalAST.AstExpression.AstBitAndExpression;
+import MentalAST.AstExpression.AstBitNotExpression;
+import MentalAST.AstExpression.AstBitOrExpression;
+import MentalAST.AstExpression.AstBitShiftExpression;
+import MentalAST.AstExpression.AstBitXorExpression;
+import MentalAST.AstExpression.AstBoolConstant;
+import MentalAST.AstExpression.AstCallGetInt;
+import MentalAST.AstExpression.AstCallGetString;
+import MentalAST.AstExpression.AstCallLength;
+import MentalAST.AstExpression.AstCallOrd;
+import MentalAST.AstExpression.AstCallParseInt;
+import MentalAST.AstExpression.AstCallPrint;
+import MentalAST.AstExpression.AstCallPrintln;
+import MentalAST.AstExpression.AstCallSize;
+import MentalAST.AstExpression.AstCallSubString;
+import MentalAST.AstExpression.AstCallToString;
+import MentalAST.AstExpression.AstCreationExpression;
+import MentalAST.AstExpression.AstEqualityExpression;
+import MentalAST.AstExpression.AstExpression;
+import MentalAST.AstExpression.AstFunctionCall;
+import MentalAST.AstExpression.AstIdentifier;
+import MentalAST.AstExpression.AstIntLiteral;
+import MentalAST.AstExpression.AstLogicalAndExpression;
+import MentalAST.AstExpression.AstLogicalNotExpression;
+import MentalAST.AstExpression.AstLogicalOrExpression;
+import MentalAST.AstExpression.AstMemberAccessExpression;
+import MentalAST.AstExpression.AstMulDivExpression;
+import MentalAST.AstExpression.AstNullConstant;
+import MentalAST.AstExpression.AstPrefixExpression;
+import MentalAST.AstExpression.AstRelationExpression;
+import MentalAST.AstExpression.AstStringLiteral;
+import MentalAST.AstExpression.AstSubgroupExpression;
+import MentalAST.AstExpression.AstSuffixExpression;
+import MentalAST.AstExpression.AstUnaryAdditiveExpression;
+import MentalAST.AstExpressionList;
+import MentalAST.AstProgram;
+import MentalAST.AstStatement.AstCompoundStatement;
+import MentalAST.AstStatement.AstExpressionStatement;
+import MentalAST.AstStatement.AstForStatement;
+import MentalAST.AstStatement.AstIfStatement;
+import MentalAST.AstStatement.AstJumpStatement;
+import MentalAST.AstStatement.AstVarStatement;
+import MentalAST.AstStatement.AstWhileStatement;
 import MentalType.MentalClass;
 import MentalType.MentalInt;
 import MentalType.MentalString;
 import MentalType.MentalVoid;
-import sun.awt.image.ImageWatched;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.function.IntBinaryOperator;
+
 
 /**
  * Created by Songyu on 16/4/19.
@@ -1262,7 +1306,7 @@ public class AstVisitor {
             }
         }
 
-        // append branch instruction.
+        // translate branch instruction.
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = irBranchEqualZero;
         }
@@ -1284,7 +1328,7 @@ public class AstVisitor {
         }
         resultInstructions.addAll(thenInstructions);
 
-        // append else instructions.
+        // translate else instructions.
         if (resultInstructions.size() > 0) {
             if (elseInstructions.size() > 0) {
                 resultInstructions.getLast().nextInstruction = elseInstructions.getFirst();
@@ -1292,7 +1336,7 @@ public class AstVisitor {
         }
         resultInstructions.addAll(elseInstructions);
 
-        //append null operation as EndIF.
+        //translate null operation as EndIF.
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = irEndIfInstruction;
         }
@@ -1380,7 +1424,7 @@ public class AstVisitor {
         }
         resultInstructions.addAll(loopInstructions);
 
-        // append the null operation.
+        // translate the null operation.
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = endLoopInstructions;
         }
@@ -1420,7 +1464,7 @@ public class AstVisitor {
     }
 
     public LinkedList<IRInstruction> visitCallGetString(AstCallGetString astCallGetString) {
-        // would never be called.
+        // TODO
         throw new RuntimeException();
     }
 
