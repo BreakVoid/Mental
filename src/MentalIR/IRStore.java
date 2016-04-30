@@ -42,10 +42,13 @@ public class IRStore extends IRInstruction {
             if (this.src instanceof IRWordLiteral) {
                 ((IRWordLiteral) this.src).produce();
             }
+            if (this.src instanceof IRStringLiteral) {
+                this.src.produce();
+            }
             mipsMachine.use(this.src.registerName, this.src);
             if (this.src instanceof IRStringLiteral) {
                 mipsInstructions.add(
-                        String.format("\tla %s, (%s)", this.src.toRegister(), ((IRStringLiteral) this.src).label.toString())
+                        String.format("\tla %s, %s", this.src.toRegister(), ((IRStringLiteral) this.src).label.toString())
                 );
             } else if (this.src instanceof IRWordLiteral) {
                 mipsInstructions.add(
@@ -88,9 +91,11 @@ public class IRStore extends IRInstruction {
                                 ((IRWordLiteral) ((IRLocate) this.dest).shift).context, ((IRLocate) this.dest).headPoint.toRegister())
                 );
                 if (this.src instanceof IRTemporary) {
-                    ((IRTemporary) this.src).consume();
+                    this.src.consume();
                 } else if (this.src instanceof IRVariable) {
-                    ((IRVariable) this.src).consume();
+                    this.src.consume();
+                } else if (this.dest instanceof IRStringLiteral) {
+                    this.src.consume();
                 } else {
                     mipsMachine.erase(this.src.registerName);
                 }
@@ -129,6 +134,8 @@ public class IRStore extends IRInstruction {
                     ((IRVariable) this.src).consume();
                 } else if (this.src instanceof IRTemporary) {
                     ((IRTemporary) this.src).consume();
+                } else if (this.src instanceof IRStringLiteral) {
+                    ((IRStringLiteral) this.src).consume();
                 } else {
                     mipsMachine.erase(this.src.registerName);
                 }
@@ -157,6 +164,8 @@ public class IRStore extends IRInstruction {
                     ((IRVariable) this.src).consume();
                 } else if (this.src instanceof IRTemporary) {
                     ((IRTemporary) this.src).consume();
+                } else if (this.src instanceof IRStringLiteral) {
+                    ((IRStringLiteral) this.src).consume();
                 } else {
                     mipsMachine.erase(this.src.registerName);
                 }
@@ -166,9 +175,11 @@ public class IRStore extends IRInstruction {
                     String.format("\tsw %s, %s", this.src.toRegister(), this.dest.toAddress())
             );
             if (this.src instanceof IRVariable) {
-                ((IRVariable) this.src).consume();
+                this.src.consume();
             } else if (this.src instanceof IRTemporary){
-                ((IRTemporary) this.src).consume();
+                this.src.consume();
+            } else if (this.src instanceof IRStringLiteral) {
+                this.src.consume();
             } else {
                 mipsMachine.erase(this.src.registerName);
             }

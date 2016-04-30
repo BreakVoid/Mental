@@ -16,8 +16,10 @@ import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.*;
+import java.util.Random;
 
 public class Main {
+    public static Random globalRandom = new Random();
     public static void main(String[] args) {
         FileInputStream builtInFunction = null;
         try {
@@ -63,6 +65,7 @@ public class Main {
 
         for (IRInstruction instruction : visitor.globalVariableInitialize) {
             mipsProgram.globalInitialize.translate(instruction);
+            System.err.println(mipsProgram.globalInitialize.machine.registerUse());
         }
 
         System.out.print(mipsProgram);

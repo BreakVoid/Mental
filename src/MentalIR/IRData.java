@@ -26,4 +26,7 @@ public abstract class IRData {
         // would never be called.
         throw new RuntimeException();
     }
+
+    public void consume() {}
+    public void produce() {}
 }

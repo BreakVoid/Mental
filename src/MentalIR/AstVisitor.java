@@ -166,6 +166,7 @@ public class AstVisitor {
         if (this.stringMap.get(astStringLiteral.literalContext) == null) {
             irStringLiteral = new IRStringLiteral(astStringLiteral.literalContext);
             this.stringLiterals.add(irStringLiteral);
+            this.stringMap.put(astStringLiteral.literalContext, irStringLiteral);
         } else {
             irStringLiteral = this.stringMap.get(astStringLiteral.literalContext);
         }
