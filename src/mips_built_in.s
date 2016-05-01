@@ -4,7 +4,7 @@ _func_____built_in_toString:     # t0 head of buffer
 	li $a0, 32
 	syscall
 	move $t0, $v0
-	lw $t1, 0($fp)               # t1 the number need to convert
+	lw $t1, -4($sp)               # t1 the number need to convert
 	slt $t2, $t1, $zero          # t2 the sign of the number
 	bnez $t2, toString_int_less_than_zero
 toString_neg_parameter:

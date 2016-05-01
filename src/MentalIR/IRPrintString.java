@@ -1,6 +1,7 @@
 package MentalIR;
 
 import MentalTranslator.MIPSMachine;
+import MentalTranslator.MIPSRegister;
 
 import java.util.LinkedList;
 
@@ -39,7 +40,14 @@ public class IRPrintString extends IRSystemCall {
                         String.format("\tmove $a0, %s", this.stringLocation.toRegister())
                 );
             }
+        } else if (this.stringLocation instanceof IRTemporary) {
+            if (this.stringLocation.registerName != MIPSRegister.a0) {
+                mipsInstructions.add(
+                        String.format("\tmove $a0, %s", this.stringLocation.toRegister())
+                );
+            }
         }
+        this.stringLocation.consume();
         mipsInstructions.add("\tsyscall");
         String str = "";
         for (String statement : mipsInstructions) {
