@@ -32,18 +32,7 @@ public class IRCall extends IRInstruction {
         if (this.label != null) {
             mipsInstructions.add(this.label + ":");
         }
-        for (int i = 8; i < 26; ++i) {
-            if (!mipsMachine.isEmpty(i)) {
-                if (mipsMachine.canBeRewrite(i)) {
-                    mipsMachine.erase(i);
-                } else {
-                    mipsInstructions.add(
-                            String.format("\tsw $%d, %d($sp)", i, 4 * (31 - i))
-                    );
-                    storedRegister.add(i);
-                }
-            }
-        }
+
         for (int i = 0, count = this.parameters.size(); i < count; ++i) {
             IRData thisParameter = this.parameters.get(i);
             if (!thisParameter.inRegister) {
@@ -53,6 +42,7 @@ public class IRCall extends IRInstruction {
                 }
                 thisParameter.inRegister = true;
                 thisParameter.produce();
+                mipsMachine.use(thisParameter.registerName, thisParameter);
 
                 if (thisParameter instanceof IRVariable) {
                     mipsInstructions.add(
@@ -74,6 +64,20 @@ public class IRCall extends IRInstruction {
             );
             thisParameter.consume();
         }
+
+        for (int i = 8; i < 26; ++i) {
+            if (!mipsMachine.isEmpty(i)) {
+                if (mipsMachine.canBeRewrite(i)) {
+                    mipsMachine.erase(i);
+                } else {
+                    mipsInstructions.add(
+                            String.format("\tsw $%d, %d($sp)", i, 4 * (31 - i))
+                    );
+                    storedRegister.add(i);
+                }
+            }
+        }
+
         mipsInstructions.add(
                 String.format("jal %s", this.functionName.toString())
         );

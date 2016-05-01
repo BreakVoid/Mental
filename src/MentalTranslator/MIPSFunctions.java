@@ -36,6 +36,7 @@ public class MIPSFunctions extends MIPSTranslator {
                 }
             } else {
                 mipsStatement.add(instruction.toMips(machine));
+                System.err.println(this.machine.registerUse());
             }
         }
         mipsStatement.add(

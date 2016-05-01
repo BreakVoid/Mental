@@ -824,6 +824,9 @@ public class AstVisitor {
             if (astMemberAccessExpression.memberExpression instanceof AstCallOrd) {
                 // call string.ord(pos)
                 // get position
+                if (primaryRes instanceof IRStringLiteral) {
+                    primaryRes = ((IRStringLiteral) primaryRes).label;
+                }
                 IRData callParameter = this.expressionResult.get(astMemberAccessExpression.memberExpression);
                 if (callParameter instanceof IRLocate) {
                     IRLoad irLoad = ((IRLocate) callParameter).load();
@@ -847,6 +850,9 @@ public class AstVisitor {
                 // call string.length()
                 // locate the data of length
                 // set result
+                if (primaryRes instanceof IRStringLiteral) {
+                    primaryRes = ((IRStringLiteral) primaryRes).label;
+                }
                 IRData expressionRes = new IRLocate(primaryRes, new IRWordLiteral(-4));
                 this.expressionResult.put(astMemberAccessExpression, expressionRes);
             } else if (astMemberAccessExpression.memberExpression instanceof AstCallSize) {
@@ -856,6 +862,9 @@ public class AstVisitor {
                 IRData expressionRes = new IRLocate(primaryRes, new IRWordLiteral(-4));
                 this.expressionResult.put(astMemberAccessExpression, expressionRes);
             } else if (astMemberAccessExpression.memberExpression instanceof AstCallSubString){
+                if (primaryRes instanceof IRStringLiteral) {
+                    primaryRes = ((IRStringLiteral) primaryRes).label;
+                }
                 // call string.substring(left, right)
                 AstCallSubString astCallSubString = (AstCallSubString) astMemberAccessExpression.memberExpression;
                 // get left and right boundary of the substring

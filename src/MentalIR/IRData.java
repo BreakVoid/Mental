@@ -7,7 +7,6 @@ public abstract class IRData {
     public boolean inRegister;
     public int registerName;
     public boolean isParameterForCall;
-    public boolean valid;
     
     @Override
     public String toString() {

@@ -45,7 +45,7 @@ public class IRLoad extends IRInstruction {
 
             if (this.src.headPoint instanceof IRLabelGlobalData) {
                 mipsInstructions.add(
-                        String.format("\tla %s, %s", this.src.toRegister(), this.src.toString())
+                        String.format("\tla %s, %s", this.src.headPoint.toRegister(), this.src.headPoint.toString())
                 );
                 this.src.produce();
             } else if (this.src.headPoint instanceof IRVariable) {

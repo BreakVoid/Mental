@@ -30,11 +30,13 @@ public class IRPrintString extends IRSystemCall {
             mipsInstructions.add(
                     String.format("\tla $a0, %s", ((IRStringLiteral) this.stringLocation).label.toString())
             );
+            this.stringLocation.produce();
         } else if (this.stringLocation instanceof IRVariable) {
             if (!this.stringLocation.inRegister) {
                 mipsInstructions.add(
                         String.format("\tlw $a0, %s", this.stringLocation.toAddress())
                 );
+                this.stringLocation.produce();
             } else {
                 mipsInstructions.add(
                         String.format("\tmove $a0, %s", this.stringLocation.toRegister())

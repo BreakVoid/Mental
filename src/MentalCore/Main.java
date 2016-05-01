@@ -21,10 +21,12 @@ import java.util.Random;
 
 public class Main {
     public static Random globalRandom = new Random();
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         FileInputStream builtInFunction = null;
+        FileInputStream builtInMips = null;
         try {
             builtInFunction = new FileInputStream("src/empty.mx");
+            builtInMips = new FileInputStream("src/mips_built_in.s");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -66,13 +68,18 @@ public class Main {
 
         for (IRInstruction instruction : visitor.globalVariableInitialize) {
             mipsProgram.globalInitialize.translate(instruction);
-            // System.err.println(mipsProgram.globalInitialize.machine.registerUse());
         }
+        mipsProgram.globalInitialize.machine.clear();
 
         for (int i = 0, count = visitor.functionInstructionLists.size(); i < count; ++i) {
             mipsProgram.functions.add(new MIPSFunctions());
             mipsProgram.functions.getLast().translate(visitor.functionStackSize.get(i), visitor.functionInstructionLists.get(i));
+            mipsProgram.functions.getLast().machine.clear();
         }
-        System.out.print(mipsProgram);
+        System.out.println(mipsProgram);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(builtInMips));
+        for (String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
+            System.out.println(line);
+        }
     }
 }
