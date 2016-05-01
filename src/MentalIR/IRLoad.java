@@ -47,12 +47,12 @@ public class IRLoad extends IRInstruction {
                 mipsInstructions.add(
                         String.format("\tla %s, %s", this.src.headPoint.toRegister(), this.src.headPoint.toString())
                 );
-                this.src.produce();
+                this.src.headPoint.produce();
             } else if (this.src.headPoint instanceof IRVariable) {
                 mipsInstructions.add(
                         String.format("\tlw %s, %s", this.src.headPoint.toRegister(), this.src.headPoint.toAddress())
                 );
-                this.src.produce();
+                this.src.headPoint.produce();
             } else if (this.src.headPoint instanceof IRLocate) {
                 throw new RuntimeException("what the fuck!!!");
             }

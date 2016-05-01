@@ -88,6 +88,7 @@ public class MIPSMachine {
 
     public void erase(int registerName) {
         if (!this.canBeRewrite(registerName)) {
+            System.err.println(this.registerData[registerName]);
             throw new RuntimeException("the data will be used after. (register: " + Integer.toString(registerName) + ")");
         }
         if (this.registerData[registerName] != null) {

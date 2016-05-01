@@ -1115,8 +1115,8 @@ public class BuildTreeListener extends MentalBaseListener {
                             if (thisExpression.rightExpression instanceof AstStringLiteral) {
                                 AstStringLiteral replaceNode = new AstStringLiteral();
                                 replaceNode.literalContext =
-                                        ((AstStringLiteral) thisExpression.leftExpression).literalContext
-                                                + ((AstStringLiteral) thisExpression.rightExpression).literalContext;
+                                        ((AstStringLiteral) thisExpression.leftExpression).literalContext.substring(0, ((AstStringLiteral) thisExpression.leftExpression).literalContext.length() - 1)
+                                                + ((AstStringLiteral) thisExpression.rightExpression).literalContext.substring(1, ((AstStringLiteral) thisExpression.rightExpression).literalContext.length());
                                 this.tree.replace(ctx, replaceNode);
                             }
                         }

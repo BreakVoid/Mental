@@ -29,6 +29,7 @@ public class IRStore extends IRInstruction {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
+
         // process the source of data.
         if (!this.src.inRegister) {
             this.src.registerName = mipsMachine.getEmptyRegister();
@@ -94,10 +95,16 @@ public class IRStore extends IRInstruction {
                     this.src.consume();
                 } else if (this.src instanceof IRVariable) {
                     this.src.consume();
-                } else if (this.dest instanceof IRStringLiteral) {
+                } else if (this.src instanceof IRStringLiteral) {
                     this.src.consume();
                 } else {
                     mipsMachine.erase(this.src.registerName);
+                }
+
+                if (((IRLocate) this.dest).headPoint instanceof IRTemporary) {
+                    ((IRLocate) this.dest).headPoint.consume();
+                } else if (((IRLocate) this.dest).headPoint instanceof IRVariable) {
+                    ((IRLocate) this.dest).headPoint.consume();
                 }
             } else if (((IRLocate) this.dest).shift instanceof IRVariable) {
                 // the shift is a data and it is in a variable.
@@ -141,7 +148,9 @@ public class IRStore extends IRInstruction {
                 }
             } else if (((IRLocate) this.dest).shift instanceof IRTemporary) {
                 String headRegister = ((IRLocate) this.dest).headPoint.toRegister();
+
                 String shiftRegister = ((IRLocate) this.dest).shift.toRegister();
+
                 if (((IRLocate) this.dest).headPoint instanceof IRVariable) {
                     ((IRVariable) ((IRLocate) this.dest).headPoint).consume();
                 } else if (((IRLocate) this.dest).headPoint instanceof IRTemporary) {
@@ -184,6 +193,9 @@ public class IRStore extends IRInstruction {
             if (this.src instanceof IRVariable) {
                 this.src.consume();
             } else if (this.src instanceof IRTemporary){
+                if (this.src instanceof IRWordLiteral) {
+                    this.src.produce();
+                }
                 this.src.consume();
             } else if (this.src instanceof IRStringLiteral) {
                 this.src.consume();

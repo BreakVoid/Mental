@@ -192,13 +192,13 @@ public class AstVisitor {
             rhsInstructions.add(irLoad);
             rhsRes = irLoad.dest;
         }
-        resultInstructions = lhsInstructions;
+        resultInstructions = rhsInstructions;
         if (resultInstructions.size() > 0) {
-            if (rhsInstructions.size() > 0) {
-                resultInstructions.getLast().nextInstruction = rhsInstructions.getFirst();
+            if (lhsInstructions.size() > 0) {
+                resultInstructions.getLast().nextInstruction = lhsInstructions.getFirst();
             }
         }
-        resultInstructions.addAll(rhsInstructions);
+        resultInstructions.addAll(lhsInstructions);
         IRStore irStore = new IRStore(rhsRes, lhsRes);
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = irStore;
@@ -389,14 +389,15 @@ public class AstVisitor {
             }
         }
         resultInstructions.addAll(positionInstructions);
-        IRMul getRealPos = new IRMul(new IRWordLiteral(4), positionRes, new IRTemporary());
+
+        IRMul getRealPos = new IRMul(positionRes, new IRWordLiteral(4), new IRTemporary());
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = getRealPos;
         }
         resultInstructions.add(getRealPos);
         IRLocate irLocate = new IRLocate(primaryRes, getRealPos.res);
         this.expressionResult.put(astArraySubscriptingExpression, irLocate);
-        return new LinkedList<>();
+        return resultInstructions;
     }
 
     public LinkedList<IRInstruction> visitBitAndExpression(AstBitAndExpression astBitAndExpression) {
@@ -963,11 +964,13 @@ public class AstVisitor {
             // 4 * (size + 1)
             IRWordLiteral eachSize = new IRWordLiteral(4);
             IRMul getRealSize = new IRMul(irAdd.res, eachSize, new IRTemporary());
+            resultInstructions.getLast().nextInstruction = getRealSize;
             resultInstructions.add(getRealSize);
 
             // add instruction to get heap memory
             IRMemoryAllocate irMemoryAllocate = new IRMemoryAllocate(getRealSize.res);
             ((IRTemporary) irMemoryAllocate.res).counter = 2;
+            resultInstructions.getLast().nextInstruction = irMemoryAllocate;
             resultInstructions.add(irMemoryAllocate);
 
             //store the size of the array to the memory.
@@ -978,8 +981,8 @@ public class AstVisitor {
             //calculate the address of the head of the array as the result of this expression.
             IRAdd irAddressAdd = new IRAdd(irMemoryAllocate.res, new IRWordLiteral(4), new IRTemporary());
             this.expressionResult.put(astCreationExpression, irAddressAdd.res);
-            resultInstructions.getLast().nextInstruction = irAdd;
-            resultInstructions.add(irAdd);
+            resultInstructions.getLast().nextInstruction = irAddressAdd;
+            resultInstructions.add(irAddressAdd);
         } else if (astCreationExpression.resultDim == 0) {
             // new a class.
             resultInstructions = new LinkedList<>();
@@ -1622,7 +1625,6 @@ public class AstVisitor {
                         lastInstruction.nextInstruction = initialExpressionInstructions.getFirst();
                     }
                 }
-                resultInstructions.addAll(initialExpressionInstructions);
                 IRData initialExpressionRes = this.expressionResult.get(astSingleVariableDeclaration.initializeExpression);
                 if (initialExpressionRes instanceof IRLocate) {
                     IRLoad irLoad = ((IRLocate) initialExpressionRes).load();
