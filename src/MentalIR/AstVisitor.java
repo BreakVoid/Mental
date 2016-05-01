@@ -709,25 +709,22 @@ public class AstVisitor {
 
         IRBinaryArithmetic thisInstruction;
         if (astPrefixExpression.op == AstPrefixExpression.PLUS_PLUS) {
-            thisInstruction = new IRAdd(childRes, new IRWordLiteral(1), childRes);
+            thisInstruction = new IRAdd(childRes, new IRWordLiteral(1), new IRTemporary());
         } else if (astPrefixExpression.op == AstPrefixExpression.MINUS_MINUS) {
-            thisInstruction = new IRSub(childRes, new IRWordLiteral(1), childRes);
+            thisInstruction = new IRSub(childRes, new IRWordLiteral(1), new IRTemporary());
         } else {
             throw new RuntimeException();
         }
+        ((IRTemporary) thisInstruction.res).counter = 2;
 
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = thisInstruction;
         }
         resultInstructions.add(thisInstruction);
 
-        if (originChildRes instanceof IRLocate) {
-            IRStore irStore = new IRStore(childRes, originChildRes);
-            if (resultInstructions.size() > 0) {
-                resultInstructions.getLast().nextInstruction = irStore;
-            }
-            resultInstructions.add(irStore);
-        }
+        IRStore irStore = new IRStore(thisInstruction.res, originChildRes);
+        resultInstructions.getLast().nextInstruction = irStore;
+        resultInstructions.add(irStore);
 
         this.expressionResult.put(astPrefixExpression, thisInstruction.res);
         return resultInstructions;
@@ -737,7 +734,7 @@ public class AstVisitor {
         LinkedList<IRInstruction> resultInstructions = astSuffixExpression.childExpression.visit(this);
         IRData childRes = this.expressionResult.get(astSuffixExpression.childExpression);
         IRData originChildRes = childRes;
-        IRData exprRes = new IRTemporary();
+        IRData exprRes;
 
         if (childRes instanceof IRLocate) {
             IRLoad irLoad = ((IRLocate) childRes).load();
@@ -750,21 +747,26 @@ public class AstVisitor {
 
         //-------------------------------------------------------
 
-        IRStore irStore;
-        irStore = new IRStore(childRes, exprRes);
-        if (resultInstructions.size() > 0) {
-            resultInstructions.getLast().nextInstruction = irStore;
+        if (childRes instanceof IRVariable) {
+            IRMove irMove = new IRMove(childRes);
+            exprRes = irMove.dest;
+            if (resultInstructions.size() > 0) {
+                resultInstructions.getLast().nextInstruction = irMove;
+            }
+            resultInstructions.add(irMove);
+        } else {
+            exprRes = childRes;
         }
-        resultInstructions.add(irStore);
+
         this.expressionResult.put(astSuffixExpression, exprRes);
 
         //-------------------------------------------------------
 
         IRBinaryArithmetic thisInstruction;
         if (astSuffixExpression.op == AstSuffixExpression.PLUS_PLUS) {
-            thisInstruction = new IRAdd(childRes, new IRWordLiteral(1), childRes);
+            thisInstruction = new IRAdd(childRes, new IRWordLiteral(1), new IRTemporary());
         } else if (astSuffixExpression.op == AstSuffixExpression.MINUS_MINUS) {
-            thisInstruction = new IRSub(childRes, new IRWordLiteral(1), childRes);
+            thisInstruction = new IRSub(childRes, new IRWordLiteral(1), new IRTemporary());
         } else {
             throw new RuntimeException();
         }
@@ -773,13 +775,11 @@ public class AstVisitor {
         }
         resultInstructions.add(thisInstruction);
 
-        if (originChildRes instanceof IRLocate) {
-            irStore = new IRStore(childRes, originChildRes);
-            if (resultInstructions.size() > 0) {
-                resultInstructions.getLast().nextInstruction = irStore;
-            }
-            resultInstructions.add(irStore);
+        IRStore irStore = new IRStore(thisInstruction.res, originChildRes);
+        if (resultInstructions.size() > 0) {
+            resultInstructions.getLast().nextInstruction = irStore;
         }
+        resultInstructions.add(irStore);
         return resultInstructions;
     }
 
@@ -1203,7 +1203,13 @@ public class AstVisitor {
     }
 
     public LinkedList<IRInstruction> visitExpressionStatement(AstExpressionStatement astExpressionStatement) {
-        return astExpressionStatement.expression.visit(this);
+        LinkedList<IRInstruction> resultInstruction = astExpressionStatement.expression.visit(this);
+        IRCleanMachine irCleanMachine = new IRCleanMachine();
+        if (resultInstruction.size() > 0) {
+            resultInstruction.getLast().nextInstruction = irCleanMachine;
+        }
+        resultInstruction.add(irCleanMachine);
+        return resultInstruction;
     }
 
     public LinkedList<IRInstruction> visitForStatement(AstForStatement astForStatement) {
@@ -1642,6 +1648,9 @@ public class AstVisitor {
                     resultInstructions.getLast().nextInstruction = irStore;
                 }
                 resultInstructions.add(irStore);
+                resultInstructions.getLast().nextInstruction = new IRCleanMachine();
+                resultInstructions.add(resultInstructions.getLast().nextInstruction);
+
                 if (resultInstructions.size() > 0) {
                     lastInstruction = resultInstructions.getLast();
                 }
