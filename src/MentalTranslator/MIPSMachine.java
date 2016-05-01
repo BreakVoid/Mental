@@ -1,10 +1,7 @@
 package MentalTranslator;
 
 import MentalCore.Main;
-import MentalIR.IRData;
-import MentalIR.IRStringLiteral;
-import MentalIR.IRTemporary;
-import MentalIR.IRVariable;
+import MentalIR.*;
 
 import java.util.LinkedList;
 import java.util.Random;
@@ -41,6 +38,11 @@ public class MIPSMachine {
         }
         if (this.registerData[i] instanceof IRStringLiteral) {
             if (((IRStringLiteral) this.registerData[i]).status == 2) {
+                return true;
+            }
+        }
+        if (this.registerData[i] instanceof IRLabelGlobalData) {
+            if (((IRLabelGlobalData) this.registerData[i]).status == 2) {
                 return true;
             }
         }
@@ -97,6 +99,9 @@ public class MIPSMachine {
             }
             if (this.registerData[registerName] instanceof IRStringLiteral) {
                 ((IRStringLiteral) this.registerData[registerName]).status = 0;
+            }
+            if (this.registerData[registerName] instanceof IRLabelGlobalData) {
+                ((IRLabelGlobalData) this.registerData[registerName]).status = 0;
             }
             this.registerData[registerName].inRegister = false;
             this.registerData[registerName].registerName = -1;

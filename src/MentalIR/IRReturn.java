@@ -45,9 +45,6 @@ public class IRReturn extends IRJumpLabel {
             if (!this.returnValue.inRegister) {
                 throw new RuntimeException();
             }
-            if (((IRTemporary) this.returnValue).valid) {
-                throw new RuntimeException();
-            }
             this.returnValue.consume();
             mipsInstructions.add(
                     String.format("\tmove $v0, %s", this.returnValue.toRegister())

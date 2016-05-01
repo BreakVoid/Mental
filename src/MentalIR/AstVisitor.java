@@ -1397,12 +1397,15 @@ public class AstVisitor {
                     }
                     expressionRes = irLoad.dest;
                     expressionInstructions.add(irLoad);
-                    resultInstructions.addAll(expressionInstructions);
                 }
+                resultInstructions.addAll(expressionInstructions);
             }
             irJumpLabel = new IRReturn(this.endFunction, expressionRes);
         } else {
             throw new RuntimeException();
+        }
+        if (resultInstructions.size() > 0) {
+            resultInstructions.getLast().nextInstruction = irJumpLabel;
         }
         resultInstructions.add(irJumpLabel);
         return resultInstructions;
