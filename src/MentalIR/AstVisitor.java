@@ -1097,6 +1097,10 @@ public class AstVisitor {
                 }
             }
         }
+        if (resultInstructions.size() > 0) {
+            resultInstructions.getLast().nextInstruction = irCall;
+        }
+        resultInstructions.add(irCall);
         this.expressionResult.put(astFunctionCall, irCall.res);
         return resultInstructions;
     }

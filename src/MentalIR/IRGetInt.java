@@ -16,4 +16,5 @@ public class IRGetInt extends IRSystemCall {
     public IRGetInt(IRData res) {
         this.res = res;
     }
+
 }
