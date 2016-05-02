@@ -4,7 +4,7 @@ package MentalIR;
  * Created by Songyu on 16/4/26.
  */
 public class IRUnaryArithmetic extends IRArithmetic {
-    public IRData child;
+    public IRDataValue child;
     public IRUnaryArithmetic() {
         super();
         this.child = null;

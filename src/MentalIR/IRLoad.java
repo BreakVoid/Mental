@@ -8,8 +8,8 @@ import java.util.LinkedList;
  * Created by Songyu on 16/4/25.
  */
 public class IRLoad extends IRInstruction {
-    public IRLocate src;
-    public IRTemporary dest;
+    public IRData src;
+    public IRDataValue dest;
     public int loadSize;
     public IRLoad() {
         this.src = null;

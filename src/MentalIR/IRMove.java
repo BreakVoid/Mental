@@ -8,8 +8,8 @@ import java.util.LinkedList;
  * Created by Songyu on 16/5/1.
  */
 public class IRMove extends IRInstruction {
-    public IRData src;
-    public IRData dest;
+    public IRDataValue src;
+    public IRDataValue dest;
     public IRMove() {
         this.src = null;
         this.dest = null;

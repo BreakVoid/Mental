@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * Created by Songyu on 16/4/25.
  */
 public class IRReturn extends IRJumpLabel {
-    public IRData returnValue;
+    public IRDataValue returnValue;
     public IRReturn() {
         this.returnValue = null;
     }

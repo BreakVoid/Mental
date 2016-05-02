@@ -11,7 +11,7 @@ public class IRAdd extends IRBinaryArithmetic {
     public IRAdd() {
         super();
     }
-    public IRAdd(IRData lhs, IRData rhs) {
+    public IRAdd(IRDataValue lhs, IRData rhs) {
         super(lhs, rhs);
     }
     public IRAdd(IRData lhs, IRData rhs, IRData res) {
