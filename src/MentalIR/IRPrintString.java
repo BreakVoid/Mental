@@ -75,7 +75,7 @@ public class IRPrintString extends IRSystemCall {
                         );
                     } else if (mipsMachine.registerData[i] instanceof IRStringLiteral) {
                         mipsInstructions.add(
-                                String.format("\tla $%d, %s", i, mipsMachine.registerData[i].toAddress())
+                                String.format("\tla $%d, %s", i, ((IRStringLiteral) mipsMachine.registerData[i]).label.toString())
                         );
                     }
                 }

@@ -51,7 +51,7 @@ public class IRCall extends IRInstruction {
                     );
                 } else if (thisParameter instanceof IRStringLiteral) {
                     mipsInstructions.add(
-                            String.format("\tla %s, %s", thisParameter.toRegister(), thisParameter.toAddress())
+                            String.format("\tla %s, %s", thisParameter.toRegister(), ((IRStringLiteral) thisParameter).label.toString())
                     );
                 } else if (thisParameter instanceof IRWordLiteral) {
                     mipsInstructions.add(
@@ -104,7 +104,7 @@ public class IRCall extends IRInstruction {
                         );
                     } else if (mipsMachine.registerData[i] instanceof IRStringLiteral) {
                         mipsInstructions.add(
-                                String.format("\tla $%d, %s", i, mipsMachine.registerData[i].toAddress())
+                                String.format("\tla $%d, %s", i, ((IRStringLiteral) mipsMachine.registerData[i]).label.toString())
                         );
                     }
                 }

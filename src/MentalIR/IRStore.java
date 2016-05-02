@@ -49,19 +49,20 @@ public class IRStore extends IRInstruction {
                     this.src.produce();
                 }
                 mipsMachine.use(this.src.registerName, this.src);
-                if (this.src instanceof IRStringLiteral) {
-                    mipsInstructions.add(
-                            String.format("\tla %s, %s", this.src.toRegister(), ((IRStringLiteral) this.src).label.toString())
-                    );
-                } else if (this.src instanceof IRWordLiteral) {
-                    mipsInstructions.add(
-                            String.format("\tli %s, %d", this.src.toRegister(), ((IRWordLiteral) this.src).context)
-                    );
-                } else if (this.src instanceof IRVariable) {
-                    mipsInstructions.add(
-                            String.format("\tlw %s, %s", this.src.toRegister(), this.src.toAddress())
-                    );
-                }
+            }
+
+            if (this.src instanceof IRStringLiteral) {
+                mipsInstructions.add(
+                        String.format("\tla %s, %s", this.src.toRegister(), ((IRStringLiteral) this.src).label.toString())
+                );
+            } else if (this.src instanceof IRWordLiteral) {
+                mipsInstructions.add(
+                        String.format("\tli %s, %d", this.src.toRegister(), ((IRWordLiteral) this.src).context)
+                );
+            } else if (this.src instanceof IRVariable) {
+                mipsInstructions.add(
+                        String.format("\tlw %s, %s", this.src.toRegister(), this.src.toAddress())
+                );
             }
 
             // process the real address to store.
