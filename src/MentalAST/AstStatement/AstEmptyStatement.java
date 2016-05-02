@@ -25,6 +25,6 @@ public class AstEmptyStatement extends AstStatement {
 
     @Override
     public LinkedList<IRInstruction> visit(AstVisitor visitor) {
-        return new LinkedList<>();
+        return visitor.visitEmptyStatement(this);
     }
 }

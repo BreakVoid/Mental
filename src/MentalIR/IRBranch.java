@@ -1,5 +1,7 @@
 package MentalIR;
 
+import MentalTranslator.MIPSMachine;
+
 /**
  * Created by Songyu on 16/4/27.
  */
@@ -10,5 +12,11 @@ public class IRBranch extends IRInstruction {
     }
     public IRBranch(IRLabel gotoLabel) {
         this.gotoLabel = gotoLabel;
+    }
+
+    @Override
+    public String toMips(MIPSMachine mipsMachine) {
+        // TODO
+        return "";
     }
 }

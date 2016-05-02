@@ -43,17 +43,12 @@ import MentalAST.AstExpression.AstSuffixExpression;
 import MentalAST.AstExpression.AstUnaryAdditiveExpression;
 import MentalAST.AstExpressionList;
 import MentalAST.AstProgram;
-import MentalAST.AstStatement.AstCompoundStatement;
-import MentalAST.AstStatement.AstExpressionStatement;
-import MentalAST.AstStatement.AstForStatement;
-import MentalAST.AstStatement.AstIfStatement;
-import MentalAST.AstStatement.AstJumpStatement;
-import MentalAST.AstStatement.AstVarStatement;
-import MentalAST.AstStatement.AstWhileStatement;
+import MentalAST.AstStatement.*;
 import MentalType.MentalClass;
 import MentalType.MentalInt;
 import MentalType.MentalString;
 import MentalType.MentalVoid;
+import sun.awt.image.ImageWatched;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -1324,6 +1319,12 @@ public class AstVisitor {
             conditionInstructions.add(irLoad);
             conditionRes = irLoad.dest;
         }
+
+        // append clean machine for the register allocation when translate to mips.
+        if (conditionInstructions.size() > 0) {
+            conditionInstructions.getLast().nextInstruction = new IRCleanMachine();
+            conditionInstructions.add(conditionInstructions.getLast().nextInstruction);
+        }
         resultInstructions = conditionInstructions;
 
         // set branch instruction.
@@ -1412,6 +1413,8 @@ public class AstVisitor {
             resultInstructions.getLast().nextInstruction = irJumpLabel;
         }
         resultInstructions.add(irJumpLabel);
+        resultInstructions.getLast().nextInstruction = new IRCleanMachine();
+        resultInstructions.add(resultInstructions.getLast().nextInstruction);
         return resultInstructions;
     }
 
@@ -1419,7 +1422,7 @@ public class AstVisitor {
         IRLabel endLoopBackup = this.endLoop;
         IRLabel continueLoopBackup = this.continueLoop;
         //--------------------------------------------------------------
-        IRLabel thisForCondition = new IRLabelBeginLoop();
+        IRLabel thisWhileCondition = new IRLabelBeginLoop();
         this.endLoop = new IRLabelEndLoop();
         this.continueLoop = new IRLabelContinueLoop();
 
@@ -1443,6 +1446,7 @@ public class AstVisitor {
         } else {
             LinkedList<IRInstruction> conditionExpressionInstructions = astWhileStatement.cond.visit(this);
             IRData conditionRes = this.expressionResult.get(astWhileStatement.cond);
+
             if (conditionRes instanceof IRLocate) {
                 IRLoad irLoad = ((IRLocate) conditionRes).load();
                 if (conditionExpressionInstructions.size() > 0) {
@@ -1451,20 +1455,43 @@ public class AstVisitor {
                 conditionExpressionInstructions.add(irLoad);
                 conditionRes = irLoad.dest;
             }
+
+            // add clean machine instruction for register allocate.
+            if (conditionExpressionInstructions.size() > 0) {
+                conditionExpressionInstructions.getLast().nextInstruction = new IRCleanMachine();
+                conditionExpressionInstructions.add(conditionExpressionInstructions.getLast().nextInstruction);
+            }
+
+            if (loopInstructions.size() > 0) {
+                if (conditionExpressionInstructions.size() > 0) {
+                    loopInstructions.getLast().nextInstruction = conditionExpressionInstructions.getFirst();
+                }
+            }
+
             loopInstructions.addAll(conditionExpressionInstructions);
             IRBranchEqualZero irBranchEqualZero = new IRBranchEqualZero(conditionRes, this.endLoop);
+
             if (loopInstructions.size() > 0) {
                 loopInstructions.getLast().nextInstruction = irBranchEqualZero;
             }
             loopInstructions.add(irBranchEqualZero);
         }
-        loopInstructions.addAll(astWhileStatement.loopBody.visit(this));
+
+        LinkedList<IRInstruction> loopBodyInstructions = astWhileStatement.loopBody.visit(this);
+
+        if (loopInstructions.size() > 0) {
+            if (loopBodyInstructions.size() > 0) {
+                loopInstructions.getLast().nextInstruction = loopBodyInstructions.getFirst();
+            }
+        }
+        loopInstructions.addAll(loopBodyInstructions);
+
         if (loopInstructions.size() > 0) {
             loopInstructions.getFirst().label = this.continueLoop;
         }
         resultInstructions.addAll(loopInstructions);
 
-        // translate the null operation.
+        // append the null operation.
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = endLoopInstructions;
         }
@@ -1660,6 +1687,7 @@ public class AstVisitor {
 
                 if (resultInstructions.size() > 0) {
                     lastInstruction = resultInstructions.getLast();
+                    lastInstruction = resultInstructions.getLast();
                 }
             }
         }
@@ -1668,5 +1696,11 @@ public class AstVisitor {
 
     public LinkedList<IRInstruction> visitAstVarStatement(AstVarStatement astVarStatement) {
         return astVarStatement.variableDeclaration.visit(this);
+    }
+
+    public LinkedList<IRInstruction> visitEmptyStatement(AstEmptyStatement astEmptyStatement) {
+        LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
+        resultInstructions.add(new IRCleanMachine());
+        return resultInstructions;
     }
 }
