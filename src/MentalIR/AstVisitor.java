@@ -67,9 +67,9 @@ public class AstVisitor {
     public LinkedList<IRStringLiteral> stringLiterals;
     public IRStringLiteral literalNewline;
 
-    public HashMap<Integer, IRVariable> variableMap;
+    public HashMap<Integer, IRDataValue> variableMap;
     public HashMap<Integer, IRLabelGlobalData> globalVariableMap;
-    public LinkedList<IRVariable> globalVariables;
+    public LinkedList<IRDataValue> globalVariables;
 
     public IRLabel endFunction;
     public IRLabel continueLoop;
@@ -121,22 +121,22 @@ public class AstVisitor {
     }
 
     public LinkedList<IRInstruction> visitIdentifier(AstIdentifier astIdentifier) {
-        IRVariable irVariable;
-        irVariable = this.variableMap.get(astIdentifier.variable.globalID);
-        if (irVariable == null) {
-            irVariable = new IRVariable();
-            irVariable.variableID = astIdentifier.variable.globalID;
-            irVariable.stackShift = astIdentifier.variable.localID;
-            irVariable.globalDataLabel = this.globalVariableMap.get(irVariable.variableID);
-            this.variableMap.put(astIdentifier.variable.globalID, irVariable);
+        IRDataValue variable;
+        variable = this.variableMap.get(astIdentifier.variable.globalID);
+        if (variable == null) {
+            variable = new IRDataValue();
+            variable.globalID = astIdentifier.variable.globalID;
+            variable.stackShift = astIdentifier.variable.localID;
+            variable.globalDataLabel = this.globalVariableMap.get(variable.globalID);
+            this.variableMap.put(astIdentifier.variable.globalID, variable);
         }
-        this.expressionResult.put(astIdentifier, irVariable);
+        this.expressionResult.put(astIdentifier, variable);
         return new LinkedList<>();
     }
 
     public LinkedList<IRInstruction> visitIntLiteral(AstIntLiteral astIntLiteral) {
-        IRWordLiteral irWordLiteral = new IRWordLiteral(astIntLiteral.literalContext);
-        this.expressionResult.put(astIntLiteral, irWordLiteral);
+        IRDataLiteral dataLiteral = new IRDataLiteral(astIntLiteral.literalContext);
+        this.expressionResult.put(astIntLiteral, dataLiteral);
         return new LinkedList<>();
     }
 
