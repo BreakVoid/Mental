@@ -2,6 +2,8 @@ package MentalIR;
 
 import MentalTranslator.MIPSMachine;
 
+import java.util.LinkedList;
+
 /**
  * Created by Songyu on 16/4/27.
  */
@@ -16,7 +18,20 @@ public class IRBranch extends IRInstruction {
 
     @Override
     public String toMips(MIPSMachine mipsMachine) {
-        // TODO
-        return "";
+        LinkedList<String> mipsInstructions = new LinkedList<>();
+
+        if (this.label != null) {
+            mipsInstructions.add(this.label.toString() + ":");
+        }
+
+        mipsInstructions.add(
+                String.format("\tb %s", this.gotoLabel.toString())
+        );
+
+        String str = "";
+        for (String statement : mipsInstructions) {
+            str += statement + "\n";
+        }
+        return str.substring(0, str.length() - 1);
     }
 }

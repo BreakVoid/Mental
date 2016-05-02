@@ -30,13 +30,7 @@ public class MIPSFunctions extends MIPSTranslator {
                 "\tsw $ra, 0($sp)"
         );
         for (; instruction != null; instruction = instruction.nextInstruction) {
-            if (instruction.label instanceof IRLabelEndFunction) {
-                if (instruction instanceof IRNullOperation) {
-                    mipsStatement.add(instruction.label.toString() + ":");
-                }
-            } else {
-                mipsStatement.add(instruction.toMips(machine));
-            }
+            mipsStatement.add(instruction.toMips(machine));
         }
         mipsStatement.add(
                 "\tlw $ra, 0($sp)"

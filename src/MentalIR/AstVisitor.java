@@ -44,10 +44,8 @@ import MentalAST.AstExpression.AstUnaryAdditiveExpression;
 import MentalAST.AstExpressionList;
 import MentalAST.AstProgram;
 import MentalAST.AstStatement.*;
-import MentalType.MentalClass;
-import MentalType.MentalInt;
-import MentalType.MentalString;
-import MentalType.MentalVoid;
+import MentalSymbols.SymbolTable;
+import MentalType.*;
 import sun.awt.image.ImageWatched;
 
 import java.util.HashMap;
@@ -1185,17 +1183,13 @@ public class AstVisitor {
 
     public LinkedList<IRInstruction> visitCompoundStatement(AstCompoundStatement astCompoundStatement) {
         LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
-        IRInstruction lastInstruction = null;
         for (AstBaseNode astBaseNode : astCompoundStatement.statements) {
             LinkedList<IRInstruction> instructions = astBaseNode.visit(this);
             if (instructions.size() > 0) {
-                if (lastInstruction != null) {
-                    lastInstruction.nextInstruction = instructions.getFirst();
+                if (resultInstructions.size() > 0) {
+                    resultInstructions.getLast().nextInstruction = instructions.getFirst();
                 }
                 resultInstructions.addAll(instructions);
-                if (resultInstructions.size() > 0) {
-                    lastInstruction = resultInstructions.getLast();
-                }
             }
         }
         return resultInstructions;
@@ -1225,8 +1219,14 @@ public class AstVisitor {
 
         // initial expression of a `for` statement.
         LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
+
         if (astForStatement.start != null) {
             LinkedList<IRInstruction> initializeExpressionInstructions = astForStatement.start.visit(this);
+            // append clean machine instructions.
+            if (initializeExpressionInstructions.size() > 0) {
+                initializeExpressionInstructions.getLast().nextInstruction = new IRCleanMachine();
+                initializeExpressionInstructions.add(initializeExpressionInstructions.getLast().nextInstruction);
+            }
             resultInstructions.addAll(initializeExpressionInstructions);
         }
 
@@ -1244,6 +1244,7 @@ public class AstVisitor {
         } else {
             LinkedList<IRInstruction> conditionExpressionInstructions = astForStatement.cond.visit(this);
             IRData conditionRes = this.expressionResult.get(astForStatement.cond);
+
             if (conditionRes instanceof IRLocate) {
                 IRLoad irLoad = ((IRLocate) conditionRes).load();
                 if (conditionExpressionInstructions.size() > 0) {
@@ -1252,6 +1253,12 @@ public class AstVisitor {
                 conditionExpressionInstructions.add(irLoad);
                 conditionRes = irLoad.dest;
             }
+            // append clean machine instructions.
+            if (conditionExpressionInstructions.size() > 0) {
+                conditionExpressionInstructions.getLast().nextInstruction = new IRCleanMachine();
+                conditionExpressionInstructions.add(conditionExpressionInstructions.getLast().nextInstruction);
+            }
+
             loopInstructions.addAll(conditionExpressionInstructions);
             IRBranchEqualZero irBranchEqualZero = new IRBranchEqualZero(conditionRes, this.endLoop);
             if (loopInstructions.size() > 0) {
@@ -1259,16 +1266,35 @@ public class AstVisitor {
             }
             loopInstructions.add(irBranchEqualZero);
         }
-        loopInstructions.addAll(astForStatement.loopBody.visit(this));
+
+        LinkedList<IRInstruction> loopBodyInstrucions = astForStatement.loopBody.visit(this);
+        if (loopInstructions.size() > 0){
+            if (loopBodyInstrucions.size() > 0) {
+                loopInstructions.getLast().nextInstruction = loopBodyInstrucions.getFirst();
+            }
+        }
+        loopInstructions.addAll(loopBodyInstrucions);
         if (loopInstructions.size() > 0) {
+            loopInstructions.getFirst().label = thisForCondition;
+        } else {
+            loopInstructions.add(new IRNullOperation());
             loopInstructions.getFirst().label = thisForCondition;
         }
 
+        if (resultInstructions.size() > 0) {
+            resultInstructions.getLast().nextInstruction = loopInstructions.getFirst();
+        }
         resultInstructions.addAll(loopInstructions);
+        // consider condition expression and loop statements as the loop body.
 
         // step expression for a `for` statement;
         if (astForStatement.loop != null) {
             LinkedList<IRInstruction> stepInstructions = astForStatement.loop.visit(this);
+            if (stepInstructions.size() > 0) {
+                stepInstructions.getLast().nextInstruction = new IRCleanMachine();
+                stepInstructions.add(stepInstructions.getLast().nextInstruction);
+            }
+
             IRJumpLabel irJumpLabel = new IRJumpLabel(thisForCondition);
             if (stepInstructions.size() > 0) {
                 stepInstructions.getLast().nextInstruction = irJumpLabel;
@@ -1277,9 +1303,7 @@ public class AstVisitor {
             stepInstructions.getFirst().label = this.continueLoop;
 
             if (resultInstructions.size() > 0) {
-                if (stepInstructions.size() > 0) {
-                    resultInstructions.getLast().nextInstruction = stepInstructions.getFirst();
-                }
+                resultInstructions.getLast().nextInstruction = stepInstructions.getFirst();
             }
             resultInstructions.addAll(stepInstructions);
         } else {
@@ -1392,7 +1416,7 @@ public class AstVisitor {
             irJumpLabel = new IRJumpLabel(this.endLoop);
         } else if (astJumpStatement.variant == AstJumpStatement.RETURN) {
             IRData expressionRes = null;
-            if (astJumpStatement.returnExpression != null) {
+            if (astJumpStatement.returnExpression != null && !astJumpStatement.returnExpression.returnType.equals(SymbolTable.mentalVoid)) {
                 LinkedList<IRInstruction> expressionInstructions = astJumpStatement.returnExpression.visit(this);
                 expressionRes = this.expressionResult.get(astJumpStatement.returnExpression);
                 if (expressionRes instanceof IRLocate) {
@@ -1488,6 +1512,11 @@ public class AstVisitor {
 
         if (loopInstructions.size() > 0) {
             loopInstructions.getFirst().label = this.continueLoop;
+        }
+        if (resultInstructions.size() > 0) {
+            if (loopInstructions.size() > 0) {
+                resultInstructions.getLast().nextInstruction = loopInstructions.getFirst();
+            }
         }
         resultInstructions.addAll(loopInstructions);
 

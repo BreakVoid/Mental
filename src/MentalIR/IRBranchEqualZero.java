@@ -1,10 +1,14 @@
 package MentalIR;
 
+import MentalTranslator.MIPSMachine;
+
+import java.util.LinkedList;
+
 /**
  * Created by Songyu on 16/4/27.
  */
-public class IRBranchEqualZero extends IRBranch {
-    public IRData condition;
+public class IRBranchEqualZero extends IRBranchWithContidtion {
+
     public IRBranchEqualZero() {
         this.gotoLabel = null;
         this.condition = null;
@@ -15,5 +19,10 @@ public class IRBranchEqualZero extends IRBranch {
         this.gotoLabel = gotoLabel;
         this.condition = condition;
         this.nextInstruction = null;
+    }
+
+    @Override
+    public String toMips(MIPSMachine mipsMachine) {
+        return this.toMips(mipsMachine, "beqz");
     }
 }

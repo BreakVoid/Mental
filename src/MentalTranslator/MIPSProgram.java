@@ -36,7 +36,9 @@ public class MIPSProgram {
             program += statement + "\n";
         }
         for (String statement : this.globalInitialize.mipsStatement) {
-            program += statement + "\n";
+            if (statement.length() > 0) {
+                program += statement + "\n";
+            }
         }
         for (String statement : this.endMainLabel) {
             program += statement + "\n";
@@ -44,7 +46,9 @@ public class MIPSProgram {
 
         for (MIPSFunctions function : this.functions) {
             for (String statement: function.mipsStatement) {
-                program += statement + "\n";
+                if (statement.length() > 0) {
+                    program += statement + "\n";
+                }
             }
             program += "\n";
         }

@@ -15,10 +15,7 @@ public class IRInstruction {
 
     public String toMips(MIPSMachine mipsMachine) {
         // would never be called.
-        throw new RuntimeException("an unknown instruction.");
+        throw new RuntimeException(this.toString());
     }
 
-    public String toString() {
-        return "unknown ir instruction.";
-    }
 }

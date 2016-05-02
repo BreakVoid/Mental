@@ -29,6 +29,7 @@ public class IRCall extends IRInstruction {
     public String toMips(MIPSMachine mipsMachine) {
         LinkedList<String> mipsInstructions = new LinkedList<>();
         LinkedList<Integer> storedRegister = new LinkedList<>();
+        LinkedList<String> reloadRegister = new LinkedList<>();
         if (this.label != null) {
             mipsInstructions.add(this.label + ":");
         }
@@ -67,9 +68,7 @@ public class IRCall extends IRInstruction {
 
         for (int i = 8; i < 26; ++i) {
             if (!mipsMachine.isEmpty(i)) {
-                if (mipsMachine.canBeRewrite(i)) {
-                    mipsMachine.erase(i);
-                } else {
+                if (!mipsMachine.canBeRewrite(i)) {
                     mipsInstructions.add(
                             String.format("\tsw $%d, %d($sp)", i, 4 * (31 - i))
                     );
@@ -82,16 +81,35 @@ public class IRCall extends IRInstruction {
                 String.format("jal %s", this.functionName.toString())
         );
 
-        this.res.registerName = mipsMachine.getEmptyRegister();
-        if (this.res.registerName == -1) {
-            throw new RuntimeException("no enough register.");
-        }
-        this.res.inRegister = true;
-        this.res.produce();
+        if (this.res != null) {
 
-        mipsInstructions.add(
-                String.format("\tmove %s, $v0", this.res.toRegister())
-        );
+            this.res.registerName = mipsMachine.getEmptyRegister();
+            if (this.res.registerName == -1) {
+                throw new RuntimeException("no enough register.");
+            }
+            this.res.inRegister = true;
+            this.res.produce();
+
+            mipsInstructions.add(
+                    String.format("\tmove %s, $v0", this.res.toRegister())
+            );
+        }
+
+        for (int i = 8; i < 26; ++i) {
+            if (!mipsMachine.isEmpty(i)) {
+                if (mipsMachine.canBeRewrite(i)) {
+                    if (mipsMachine.registerData[i] instanceof IRVariable) {
+                        mipsInstructions.add(
+                                String.format("\tlw $%d, %s", i, mipsMachine.registerData[i].toAddress())
+                        );
+                    } else if (mipsMachine.registerData[i] instanceof IRStringLiteral) {
+                        mipsInstructions.add(
+                                String.format("\tla $%d, %s", i, mipsMachine.registerData[i].toAddress())
+                        );
+                    }
+                }
+            }
+        }
 
         for (int i : storedRegister) {
             mipsInstructions.add(

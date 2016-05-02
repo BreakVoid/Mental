@@ -27,6 +27,20 @@ public class IRMemoryAllocate extends IRSystemCall {
     @Override
     public String toMips(MIPSMachine mipsMachine) {
         LinkedList<String> mipsInstructions = new LinkedList<>();
+        LinkedList<Integer> storedRegister = new LinkedList<>();
+        LinkedList<String> reloadRegister = new LinkedList<>();
+
+        for (int i = 8; i < 26; ++i) {
+            if (!mipsMachine.isEmpty(i)) {
+                if (!mipsMachine.canBeRewrite(i)) {
+                    mipsInstructions.add(
+                            String.format("\tsw $%d, %d($sp)", i, 4 * (31 - i))
+                    );
+                    storedRegister.add(i);
+                }
+            }
+        }
+
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
@@ -57,6 +71,29 @@ public class IRMemoryAllocate extends IRSystemCall {
         mipsInstructions.add(
                 "\tsyscall"
         );
+
+        for (int i = 8; i < 26; ++i) {
+            if (!mipsMachine.isEmpty(i)) {
+                if (mipsMachine.canBeRewrite(i)) {
+                    if (mipsMachine.registerData[i] instanceof IRVariable) {
+                        mipsInstructions.add(
+                                String.format("\tlw $%d, %s", i, mipsMachine.registerData[i].toAddress())
+                        );
+                    } else if (mipsMachine.registerData[i] instanceof IRStringLiteral) {
+                        mipsInstructions.add(
+                                String.format("\tla $%d, %s", i, mipsMachine.registerData[i].toAddress())
+                        );
+                    }
+                }
+            }
+        }
+
+        for (int i : storedRegister) {
+            mipsInstructions.add(
+                    String.format("\tlw $%d, %d($sp)", i, 4 * (31 - i))
+            );
+        }
+
         this.res.produce();
         this.res.registerName = mipsMachine.getEmptyRegister();
         if (this.res.registerName == -1) {
