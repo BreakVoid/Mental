@@ -52,6 +52,7 @@ import MentalIR.Data.*;
 import MentalIR.Label.*;
 import MentalSymbols.SymbolTable;
 import MentalType.*;
+import sun.awt.image.ImageWatched;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -1022,8 +1023,15 @@ public class AstVisitor {
                 }
                 resultInstructions.add(irCall);
             } else if (astMemberAccessExpression.memberExpression instanceof AstCallParseInt) {
-                // TODO
                 // call string.parseInt();
+                IRCall irCall = new IRCall(new IRLabelFunction("____built_in_parseInt"));
+                irCall.parameters.add((IRDataValue) primaryRes);
+                irCall.res.stackShift = this.currentStackSize++;
+                this.expressionResult.put(astMemberAccessExpression, irCall.res);
+                if (resultInstructions.size() > 0) {
+                    resultInstructions.getLast().nextInstruction = irCall;
+                }
+                resultInstructions.add(irCall);
             }
         }
         return resultInstructions;
@@ -1702,19 +1710,24 @@ public class AstVisitor {
     public LinkedList<IRInstruction> visitCallGetInt(AstCallGetInt astCallGetInt) {
         LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
         IRGetInt irGetInt = new IRGetInt();
+        irGetInt.res.stackShift = this.currentStackSize++;
         this.expressionResult.put(astCallGetInt, irGetInt.res);
         resultInstructions.add(irGetInt);
         return resultInstructions;
     }
 
     public LinkedList<IRInstruction> visitCallGetString(AstCallGetString astCallGetString) {
-        // TODO
-        throw new RuntimeException();
+        LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
+        IRCall irCall = new IRCall(new IRLabelFunction("____built_in_getString"));
+        irCall.res.stackShift = this.currentStackSize++;
+        this.expressionResult.put(astCallGetString, irCall.res);
+        resultInstructions.add(irCall);
+        return resultInstructions;
     }
 
     public LinkedList<IRInstruction> visitCallParseInt(AstCallParseInt astCallParseInt) {
-        // would never be called.
-        throw new RuntimeException();
+        // do nothing when called;
+        return new LinkedList<>();
     }
 
     public LinkedList<IRInstruction> visitCallPrint(AstCallPrint astCallPrint) {
@@ -1763,8 +1776,8 @@ public class AstVisitor {
     }
 
     public LinkedList<IRInstruction> visitCallSubString(AstCallSubString astCallSubString) {
-        // would never be called.
-        throw new RuntimeException();
+        // do nothing.
+        return new LinkedList<>();
     }
 
     public LinkedList<IRInstruction> visitCallToString(AstCallToString astCallToString) {
