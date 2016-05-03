@@ -28,26 +28,7 @@ public class MIPSMachine {
         if (this.isEmpty(i)) {
             return true;
         }
-        if (this.registerData[i] instanceof IRVariable) {
-            if (((IRVariable) this.registerData[i]).status == 2) {
-                return true;
-            }
-        }
-        if (this.registerData[i] instanceof IRStringLiteral) {
-            if (((IRStringLiteral) this.registerData[i]).status == 2) {
-                return true;
-            }
-        }
-        if (this.registerData[i] instanceof IRLabelGlobalData) {
-            if (((IRLabelGlobalData) this.registerData[i]).status == 2) {
-                return true;
-            }
-        }
-        if (this.registerData[i] instanceof IRTemporary) {
-            if (!((IRTemporary)this.registerData[i]).valid) {
-                return true;
-            }
-        }
+
         return false;
     }
     public IRData occupied(int i) {
@@ -91,17 +72,7 @@ public class MIPSMachine {
             throw new RuntimeException("the data will be used after. (register: " + Integer.toString(registerName) + ")");
         }
         if (this.registerData[registerName] != null) {
-            if (this.registerData[registerName] instanceof IRVariable) {
-                ((IRVariable) this.registerData[registerName]).status = 0;
-            }
-            if (this.registerData[registerName] instanceof IRStringLiteral) {
-                ((IRStringLiteral) this.registerData[registerName]).status = 0;
-            }
-            if (this.registerData[registerName] instanceof IRLabelGlobalData) {
-                ((IRLabelGlobalData) this.registerData[registerName]).status = 0;
-            }
-            this.registerData[registerName].inRegister = false;
-            this.registerData[registerName].registerName = -1;
+
         }
         this.registerEmpty[registerName] = true;
         this.registerData[registerName] = null;

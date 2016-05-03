@@ -1,6 +1,8 @@
 package MentalTranslator;
 
 import MentalIR.Data.IRData;
+import MentalIR.Data.IRDataStringLiteral;
+import MentalIR.Data.IRDataValue;
 
 import java.util.LinkedList;
 
@@ -14,18 +16,18 @@ public class MIPSStaticData {
         this.mipsStatements.add("\t.data");
     }
     public void translate(IRData data) {
-        if (data instanceof IRVariable) {
-            if (((IRVariable) data).globalDataLabel != null) {
+        if (data instanceof IRDataValue) {
+            if (((IRDataValue) data).globalDataLabel != null) {
 //                mipsStatements.add("\t.data");
 //                mipsStatements.add("\t.align 2");
-                mipsStatements.add(((IRVariable) data).globalDataLabel.toString() + ":");
+                mipsStatements.add(((IRDataValue) data).globalDataLabel.toString() + ":");
                 mipsStatements.add("\t.word 0");
             } else {
                 throw new RuntimeException("not a static variable, cannot put it to static area.");
             }
-        } else if (data instanceof IRStringLiteral) {
+        } else if (data instanceof IRDataStringLiteral) {
             // mipsStatements.add("\t.data");
-            String str = ((IRStringLiteral) data).context;
+            String str = ((IRDataStringLiteral) data).litertal;
             int realLength = str.length();
             for (int i = 0; i < str.length(); ++i) {
                 if (str.charAt(i) == '\\') {
@@ -43,8 +45,8 @@ public class MIPSStaticData {
                 }
             }
             mipsStatements.add(String.format("\t.word %d", realLength - 2));
-            mipsStatements.add(((IRStringLiteral) data).label.toString() + ":");
-            mipsStatements.add(String.format("\t.asciiz %s", ((IRStringLiteral) data).context));
+            mipsStatements.add(((IRDataStringLiteral) data).globalDataLabel.toString() + ":");
+            mipsStatements.add(String.format("\t.asciiz %s", ((IRDataStringLiteral) data).litertal));
             mipsStatements.add("\t.align 2");
         }
     }

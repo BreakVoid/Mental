@@ -7,6 +7,8 @@ package MentalCore;
 import MentalAST.AstProgram;
 import MentalAST.BuildTreeListener;
 import MentalIR.*;
+import MentalIR.Data.IRDataStringLiteral;
+import MentalIR.Data.IRDataValue;
 import MentalParser.*;
 import MentalTranslator.MIPSFunctions;
 import MentalTranslator.MIPSProgram;
@@ -25,7 +27,7 @@ public class Main {
         FileInputStream builtInFunction = null;
         FileInputStream builtInMips = null;
         try {
-            builtInFunction = new FileInputStream("src/built_in.mx");
+            builtInFunction = new FileInputStream("src/empty.mx");
             builtInMips = new FileInputStream("src/mips_built_in.s");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -58,11 +60,11 @@ public class Main {
         MIPSProgram mipsProgram = new MIPSProgram();
         MIPSStaticData mipsStaticData = mipsProgram.staticData;
 
-        for (IRStringLiteral irStringLiteral : visitor.stringLiterals) {
+        for (IRDataStringLiteral irStringLiteral : visitor.stringLiterals) {
             mipsStaticData.translate(irStringLiteral);
         }
 
-        for (IRVariable irVariable : visitor.globalVariables) {
+        for (IRDataValue irVariable : visitor.globalVariables) {
             mipsStaticData.translate(irVariable);
         }
 

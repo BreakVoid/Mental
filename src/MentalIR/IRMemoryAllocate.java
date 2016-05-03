@@ -1,6 +1,7 @@
 package MentalIR;
 
 import MentalIR.Data.IRData;
+import MentalIR.Data.IRDataIntLiteral;
 import MentalIR.Data.IRDataValue;
 import MentalTranslator.MIPSMachine;
 import MentalTranslator.MIPSRegister;
@@ -28,19 +29,6 @@ public class IRMemoryAllocate extends IRSystemCall {
     @Override
     public String toMips(MIPSMachine mipsMachine) {
         LinkedList<String> mipsInstructions = new LinkedList<>();
-        LinkedList<Integer> storedRegister = new LinkedList<>();
-        LinkedList<String> reloadRegister = new LinkedList<>();
-
-        for (int i = 8; i < 26; ++i) {
-            if (!mipsMachine.isEmpty(i)) {
-                if (!mipsMachine.canBeRewrite(i)) {
-                    mipsInstructions.add(
-                            String.format("\tsw $%d, %d($sp)", i, 4 * (31 - i))
-                    );
-                    storedRegister.add(i);
-                }
-            }
-        }
 
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
@@ -48,63 +36,22 @@ public class IRMemoryAllocate extends IRSystemCall {
         mipsInstructions.add(
                 "\tli $v0, 9"
         );
-        if (this.amount instanceof IRWordLiteral) {
+        if (this.amount instanceof IRDataIntLiteral) {
             mipsInstructions.add(
-                    String.format("\tli $a0, %d", ((IRWordLiteral) this.amount).context)
+                    String.format("\tli $a0, %d", ((IRDataIntLiteral) this.amount).literal)
             );
-        } else if (this.amount instanceof IRVariable) {
-            if (!this.amount.inRegister) {
-                mipsInstructions.add(
-                        String.format("\tlw $a0, %s", this.amount.toAddress())
-                );
-            } else {
-                mipsInstructions.add(
-                        String.format("\tmove $a0, %s", this.amount.toRegister())
-                );
-                this.amount.consume();
-            }
-        } else if (this.amount instanceof IRTemporary) {
+        } else {
             mipsInstructions.add(
-                    String.format("\tmove $a0, %s", this.amount.toRegister())
+                    String.format("\tlw $a0, %s", this.amount.toAddress())
             );
-            this.amount.consume();
         }
         mipsInstructions.add(
                 "\tsyscall"
         );
 
-        for (int i = 8; i < 26; ++i) {
-            if (!mipsMachine.isEmpty(i)) {
-                if (mipsMachine.canBeRewrite(i)) {
-                    if (mipsMachine.registerData[i] instanceof IRVariable) {
-                        mipsInstructions.add(
-                                String.format("\tlw $%d, %s", i, mipsMachine.registerData[i].toAddress())
-                        );
-                    } else if (mipsMachine.registerData[i] instanceof IRStringLiteral) {
-                        mipsInstructions.add(
-                                String.format("\tla $%d, %s", i, mipsMachine.registerData[i].toAddress())
-                        );
-                    }
-                }
-            }
-        }
-
-        for (int i : storedRegister) {
-            mipsInstructions.add(
-                    String.format("\tlw $%d, %d($sp)", i, 4 * (31 - i))
-            );
-        }
-
-        this.res.produce();
-        this.res.registerName = mipsMachine.getEmptyRegister();
-        if (this.res.registerName == -1) {
-            this.res.registerName = MIPSRegister.v0;
-        } else {
-            mipsMachine.use(this.res.registerName, this.res);
-            mipsInstructions.add(
-                    String.format("\tmove %s, $v0", this.res.toRegister())
-            );
-        }
+        mipsInstructions.add(
+                String.format("\tsw $v0, %s", this.res.toAddress())
+        );
 
         String str = "";
         for (String statement : mipsInstructions) {

@@ -13,4 +13,9 @@ public class IRDataStringLiteral extends IRDataAddress {
     public IRDataStringLiteral(String litertal) {
         this.litertal = litertal;
     }
+
+    @Override
+    public String toAddress() {
+        return this.globalDataLabel.toString();
+    }
 }

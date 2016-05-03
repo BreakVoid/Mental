@@ -1,6 +1,7 @@
 package MentalIR;
 
 import MentalIR.Data.IRData;
+import MentalIR.Data.IRDataValue;
 import MentalIR.Label.IRLabel;
 import MentalTranslator.MIPSMachine;
 
@@ -13,7 +14,7 @@ public class IRBranchNotEqualZero extends IRBranchWithContidtion {
         this.condition = null;
         this.nextInstruction = null;
     }
-    public IRBranchNotEqualZero(IRData condition, IRLabel gotoLabel) {
+    public IRBranchNotEqualZero(IRDataValue condition, IRLabel gotoLabel) {
         this.gotoLabel = gotoLabel;
         this.condition = condition;
         this.nextInstruction = null;

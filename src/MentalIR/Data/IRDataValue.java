@@ -13,7 +13,11 @@ public class IRDataValue extends IRData {
 
     public String toAddress() {
         if (this.globalDataLabel == null) {
-            return String.format("%d($fp)", -4 * this.stackShift);
+            if (this.stackShift != 2147483647 >> 1) {
+                return String.format("%d($fp)", -4 * this.stackShift);
+            } else {
+                throw new RuntimeException("invalid stack shift.");
+            }
         } else {
             return this.globalDataLabel.toString();
         }

@@ -17,11 +17,11 @@ public class MIPSProgram {
         this.functions = new LinkedList<>();
 
         this.beginMainLabel = new LinkedList<>();
-        beginMainLabel.add("\t.text");
-        beginMainLabel.add("main:");
+        this.beginMainLabel.add("\t.text");
+        this.beginMainLabel.add("main:");
+        this.beginMainLabel.add("\tadd $fp, $zero, $sp");
 
         this.endMainLabel = new LinkedList<>();
-        this.endMainLabel.add("\tadd $fp, $zero, $sp");
         this.endMainLabel.add("\tjal _func_main");
         this.endMainLabel.add("\tmove $a0, $v0");
         this.endMainLabel.add("\tli $v0, 17");

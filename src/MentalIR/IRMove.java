@@ -1,6 +1,7 @@
 package MentalIR;
 
 import MentalIR.Data.IRData;
+import MentalIR.Data.IRDataIntLiteral;
 import MentalIR.Data.IRDataValue;
 import MentalTranslator.MIPSMachine;
 
@@ -38,33 +39,19 @@ public class IRMove extends IRInstruction {
             mipsInstructions.add(this.label.toString() + ":");
         }
 
-        if (this.src instanceof IRVariable) {
-            if (!this.src.inRegister) {
-                this.src.registerName = mipsMachine.getEmptyRegister();
-                if (this.src.registerName == -1) {
-                    throw new RuntimeException("no enough register");
-                }
-                this.src.inRegister = true;
-                mipsMachine.use(this.src.registerName, this.src);
-                this.src.produce();
-                mipsInstructions.add(
-                        String.format("\tlw %s, %s", this.src.toRegister(), this.src.toAddress())
-                );
-            }
+        if (this.src instanceof IRDataIntLiteral) {
+            mipsInstructions.add(
+                    String.format("\tli $t0, %d", ((IRDataIntLiteral) this.src).literal)
+            );
+        } else {
+            mipsInstructions.add(
+                    String.format("\tlw $t0, %s", this.src.toAddress())
+            );
         }
-        this.dest.registerName = mipsMachine.getEmptyRegister();
-        if (this.dest.registerName == -1) {
-            throw new RuntimeException("no enough register");
-        }
-        this.dest.inRegister = true;
-        mipsMachine.use(this.dest.registerName, this.dest);
 
         mipsInstructions.add(
-                String.format("\tmove %s, %s", this.dest.toRegister(), this.src.toRegister())
+                String.format("\tsw $t0, %s", this.dest.toAddress())
         );
-
-        this.dest.produce();
-        this.src.consume();
 
         String str = "";
         for (String statement : mipsInstructions) {

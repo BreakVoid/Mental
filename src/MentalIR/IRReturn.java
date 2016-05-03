@@ -1,6 +1,7 @@
 package MentalIR;
 
 import MentalIR.Data.IRData;
+import MentalIR.Data.IRDataIntLiteral;
 import MentalIR.Data.IRDataValue;
 import MentalIR.Label.IRLabel;
 import MentalTranslator.MIPSMachine;
@@ -26,32 +27,16 @@ public class IRReturn extends IRJumpLabel {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
-        if (this.returnValue instanceof IRStringLiteral) {
-            mipsInstructions.add(
-                    String.format("\tla $v0, %s", ((IRStringLiteral) this.returnValue).label.toString())
-            );
-        } else if (this.returnValue instanceof IRVariable) {
-            if (this.returnValue.inRegister) {
+        if (this.returnValue != null) {
+            if (this.returnValue instanceof IRDataIntLiteral) {
                 mipsInstructions.add(
-                        String.format("\tmove $v0, %s", this.returnValue.toRegister())
+                        String.format("\tli $v0, %d", ((IRDataIntLiteral) this.returnValue).literal)
                 );
             } else {
                 mipsInstructions.add(
                         String.format("\tlw $v0, %s", this.returnValue.toAddress())
                 );
             }
-        } else if (this.returnValue instanceof IRWordLiteral) {
-            mipsInstructions.add(
-                    String.format("\tli $v0, %d", ((IRWordLiteral) this.returnValue).context)
-            );
-        } else if (this.returnValue instanceof IRTemporary) {
-            if (!this.returnValue.inRegister) {
-                throw new RuntimeException();
-            }
-            this.returnValue.consume();
-            mipsInstructions.add(
-                    String.format("\tmove $v0, %s", this.returnValue.toRegister())
-            );
         }
         if (this.nextInstruction != null) {
             if (this.nextInstruction.label != this.gotoLabel) {

@@ -89,6 +89,7 @@ public class AstVisitor {
         this.stringLiterals = new LinkedList<>();
         this.stringMap = new HashMap<>();
         this.literalNewline = new IRDataStringLiteral("\"\\n\"");
+        this.literalNewline.globalDataLabel = new IRLabelGlobalData();
         this.stringMap.put("\"\\n\"", this.literalNewline);
         this.stringLiterals.add(this.literalNewline);
 
@@ -173,6 +174,7 @@ public class AstVisitor {
         if (this.stringMap.get(astStringLiteral.literalContext) == null) {
             stringLiteral = new IRDataStringLiteral(astStringLiteral.literalContext);
             this.stringLiterals.add(stringLiteral);
+            stringLiteral.globalDataLabel = new IRLabelGlobalData();
             this.stringMap.put(astStringLiteral.literalContext, stringLiteral);
         } else {
             stringLiteral = this.stringMap.get(astStringLiteral.literalContext);
@@ -247,8 +249,8 @@ public class AstVisitor {
         resultInstructions.addAll(rhsInstructions);
         if (astAdditiveExpression.returnType instanceof MentalString) {
             IRCall irCall = new IRCall(new IRLabelFunction("____built_in_string_join"));
-            irCall.parameters.add(lhsRes);
-            irCall.parameters.add(rhsRes);
+            irCall.parameters.add((IRDataValue) lhsRes);
+            irCall.parameters.add((IRDataValue) rhsRes);
         } else if (astAdditiveExpression.returnType instanceof MentalInt) {
             if (astAdditiveExpression.op == AstAdditiveExpression.ADD) {
                 IRAdd irAdd = new IRAdd(lhsRes, rhsRes, new IRDataValue());
@@ -638,7 +640,7 @@ public class AstVisitor {
 
         resultInstructions = lhsInstructions;
         // if lhsRes == 0 then the right expression would not be evaluated.
-        IRBranchEqualZero irBranchEqualZero = new IRBranchEqualZero(finalRes, irLabelShortPathEvaluate);
+        IRBranchEqualZero irBranchEqualZero = new IRBranchEqualZero((IRDataValue) finalRes, irLabelShortPathEvaluate);
         resultInstructions.getLast().nextInstruction = irBranchEqualZero;
         resultInstructions.add(irBranchEqualZero);
 
@@ -660,7 +662,7 @@ public class AstVisitor {
         }
         resultInstructions.addAll(rhsInstructions);
 
-        IRBinaryArithmetic thisInstruction = new IRBitAnd(finalRes, rhsRes, finalRes);
+        IRBinaryArithmetic thisInstruction = new IRBitAnd(finalRes, rhsRes, (IRDataValue) finalRes);
         resultInstructions.getLast().nextInstruction = thisInstruction;
         resultInstructions.add(thisInstruction);
         resultInstructions.getLast().nextInstruction = irNullOperation;
@@ -701,7 +703,7 @@ public class AstVisitor {
 
         resultInstructions = lhsInstructions;
         // if lhsRes == 1 then the right expression would not be evaluated.
-        IRBranchNotEqualZero irBranchNotEqualZero = new IRBranchNotEqualZero(finalRes, irLabelShortPathEvaluate);
+        IRBranchNotEqualZero irBranchNotEqualZero = new IRBranchNotEqualZero((IRDataValue) finalRes, irLabelShortPathEvaluate);
         resultInstructions.getLast().nextInstruction = irBranchNotEqualZero;
         resultInstructions.add(irBranchNotEqualZero);
 
@@ -723,7 +725,7 @@ public class AstVisitor {
         }
         resultInstructions.addAll(rhsInstructions);
 
-        IRBinaryArithmetic thisInstruction = new IRBitAnd(finalRes, rhsRes, finalRes);
+        IRBinaryArithmetic thisInstruction = new IRBitAnd(finalRes, rhsRes, (IRDataValue) finalRes);
         resultInstructions.getLast().nextInstruction = thisInstruction;
         resultInstructions.add(thisInstruction);
         resultInstructions.getLast().nextInstruction = irNullOperation;
@@ -1007,9 +1009,9 @@ public class AstVisitor {
                 }
                 resultInstructions.addAll(rightBoundInstructions);
                 IRCall irCall = new IRCall(new IRLabelFunction("____built_in_substring"));
-                irCall.parameters.add(primaryRes);
-                irCall.parameters.add(leftBoundRes);
-                irCall.parameters.add(rightBoundRes);
+                irCall.parameters.add((IRDataValue) primaryRes);
+                irCall.parameters.add((IRDataValue) leftBoundRes);
+                irCall.parameters.add((IRDataValue) rightBoundRes);
                 irCall.res.stackShift = this.currentStackSize++;
                 this.expressionResult.put(astMemberAccessExpression, irCall.res);
                 if (resultInstructions.size() > 0) {
@@ -1148,12 +1150,12 @@ public class AstVisitor {
             IRCall irCall;
             if (astEqualityExpression.op == AstEqualityExpression.EQUAL) {
                 irCall = new IRCall(new IRLabelFunction("____built_in_string_equal"));
-                irCall.parameters.add(lhsRes);
-                irCall.parameters.add(rhsRes);
+                irCall.parameters.add((IRDataValue) lhsRes);
+                irCall.parameters.add((IRDataValue) rhsRes);
             } else if (astEqualityExpression.op == AstEqualityExpression.INEQUAL) {
                 irCall = new IRCall(new IRLabelFunction(("____built_in_string_inequal")));
-                irCall.parameters.add(lhsRes);
-                irCall.parameters.add(rhsRes);
+                irCall.parameters.add((IRDataValue) lhsRes);
+                irCall.parameters.add((IRDataValue) rhsRes);
             } else {
                 throw new RuntimeException();
             }
@@ -1205,7 +1207,7 @@ public class AstVisitor {
                     expressionInstructions.add(irLoad);
                     expressionRes = irLoad.dest;
                 }
-                irCall.parameters.add(expressionRes);
+                irCall.parameters.add((IRDataValue) expressionRes);
                 if (lastInstructions != null) {
                     if (expressionInstructions.size() > 0) {
                         lastInstructions.nextInstruction = expressionInstructions.getFirst();
@@ -1260,20 +1262,20 @@ public class AstVisitor {
             IRCall irCall;
             if (astRelationExpression.op == AstRelationExpression.LESS) {
                 irCall = new IRCall(new IRLabelFunction("____built_in_string_less"));
-                irCall.parameters.add(lhsRes);
-                irCall.parameters.add(rhsRes);
+                irCall.parameters.add((IRDataValue) lhsRes);
+                irCall.parameters.add((IRDataValue) rhsRes);
             } else if (astRelationExpression.op == AstRelationExpression.LESS_EQ) {
                 irCall = new IRCall(new IRLabelFunction(("____built_in_string_less_equal")));
-                irCall.parameters.add(lhsRes);
-                irCall.parameters.add(rhsRes);
+                irCall.parameters.add((IRDataValue) lhsRes);
+                irCall.parameters.add((IRDataValue) rhsRes);
             } else if (astRelationExpression.op == AstRelationExpression.GREATER) {
                 irCall = new IRCall(new IRLabelFunction(("____built_in_string_less")));
-                irCall.parameters.add(rhsRes);
-                irCall.parameters.add(lhsRes);
+                irCall.parameters.add((IRDataValue) rhsRes);
+                irCall.parameters.add((IRDataValue) lhsRes);
             } else if (astRelationExpression.op == AstRelationExpression.GREATER_EQ) {
                 irCall = new IRCall(new IRLabelFunction(("____built_in_string_less_equal")));
-                irCall.parameters.add(rhsRes);
-                irCall.parameters.add(lhsRes);
+                irCall.parameters.add((IRDataValue) rhsRes);
+                irCall.parameters.add((IRDataValue) lhsRes);
             } else {
                 throw new RuntimeException();
             }
@@ -1393,7 +1395,7 @@ public class AstVisitor {
             }
 
             loopInstructions.addAll(conditionExpressionInstructions);
-            IRBranchEqualZero irBranchEqualZero = new IRBranchEqualZero(conditionRes, this.endLoop);
+            IRBranchEqualZero irBranchEqualZero = new IRBranchEqualZero((IRDataValue) conditionRes, this.endLoop);
             if (loopInstructions.size() > 0) {
                 loopInstructions.getLast().nextInstruction = irBranchEqualZero;
             }
@@ -1486,7 +1488,7 @@ public class AstVisitor {
         resultInstructions = conditionInstructions;
 
         // set branch instruction.
-        IRBranchEqualZero irBranchEqualZero = new IRBranchEqualZero(conditionRes, irLabelElse);
+        IRBranchEqualZero irBranchEqualZero = new IRBranchEqualZero((IRDataValue) conditionRes, irLabelElse);
 
         // else statement.
         LinkedList<IRInstruction> elseInstructions;
@@ -1631,7 +1633,7 @@ public class AstVisitor {
             }
 
             loopInstructions.addAll(conditionExpressionInstructions);
-            IRBranchEqualZero irBranchEqualZero = new IRBranchEqualZero(conditionRes, this.endLoop);
+            IRBranchEqualZero irBranchEqualZero = new IRBranchEqualZero((IRDataValue) conditionRes, this.endLoop);
 
             if (loopInstructions.size() > 0) {
                 loopInstructions.getLast().nextInstruction = irBranchEqualZero;
@@ -1647,6 +1649,11 @@ public class AstVisitor {
             }
         }
         loopInstructions.addAll(loopBodyInstructions);
+        IRJumpLabel irJumpLabel = new IRJumpLabel(this.continueLoop);
+        if (loopInstructions.size() > 0) {
+            loopInstructions.getLast().nextInstruction = irJumpLabel;
+        }
+        loopInstructions.add(irJumpLabel);
 
         if (loopInstructions.size() > 0) {
             loopInstructions.getFirst().label = this.continueLoop;
@@ -1719,7 +1726,7 @@ public class AstVisitor {
             resultInstructions.add(irLoad);
             parameterRes = irLoad.dest;
         }
-        IRPrintString irPrintString = new IRPrintString(parameterRes);
+        IRPrintString irPrintString = new IRPrintString((IRDataValue) parameterRes);
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = irPrintString;
         }
@@ -1739,7 +1746,7 @@ public class AstVisitor {
             resultInstructions.add(irLoad);
             parameterRes = irLoad.dest;
         }
-        IRPrintString irPrintString = new IRPrintString(parameterRes);
+        IRPrintString irPrintString = new IRPrintString((IRDataValue) parameterRes);
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = irPrintString;
         }
@@ -1770,7 +1777,8 @@ public class AstVisitor {
             parameter = irLoad.dest;
         }
         IRCall irCall = new IRCall(new IRLabelFunction("____built_in_toString"));
-        irCall.parameters.add(parameter);
+        irCall.res.stackShift = this.currentStackSize++;
+        irCall.parameters.add((IRDataValue) parameter);
         this.expressionResult.put(astCallToString, irCall.res);
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = irCall;

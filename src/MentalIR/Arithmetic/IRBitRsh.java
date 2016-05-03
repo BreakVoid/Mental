@@ -1,6 +1,7 @@
 package MentalIR.Arithmetic;
 
 import MentalIR.Data.IRData;
+import MentalIR.Data.IRDataValue;
 import MentalTranslator.MIPSMachine;
 
 /**
@@ -10,9 +11,14 @@ public class IRBitRsh extends IRBinaryArithmetic {
     public IRBitRsh() {
         super();
     }
-    public IRBitRsh(IRData lhs, IRData rhs, IRData res) {
+    public IRBitRsh(IRDataValue lhs, IRDataValue rhs, IRDataValue res) {
         super(lhs, rhs, res);
     }
+
+    public IRBitRsh(IRData lhsRes, IRData rhsRes, IRDataValue res) {
+        super((IRDataValue) lhsRes, (IRDataValue) rhsRes, res);
+    }
+
     @Override
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "sra");

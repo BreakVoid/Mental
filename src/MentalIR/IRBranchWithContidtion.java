@@ -1,6 +1,7 @@
 package MentalIR;
 
 import MentalIR.Data.IRData;
+import MentalIR.Data.IRDataIntLiteral;
 import MentalIR.Data.IRDataValue;
 import MentalTranslator.MIPSMachine;
 
@@ -19,34 +20,18 @@ public class IRBranchWithContidtion extends IRBranch {
             mipsInstructions.add(this.label.toString() + ":");
         }
 
-        if (this.condition instanceof IRWordLiteral) {
-            if (((IRWordLiteral) this.condition).context == IRWordLiteral.TRUE_VALUE) {
-                mipsInstructions.add(
-                        String.format("\tb %s", this.gotoLabel.toString())
-                );
-            } else if (((IRWordLiteral) this.condition).context == IRWordLiteral.FALSE_VALUE) {
-                mipsInstructions.add("");
-            }
-        } else {
-            if (this.condition instanceof IRVariable) {
-                if (!this.condition.inRegister) {
-                    this.condition.registerName = mipsMachine.getEmptyRegister();
-                    if (this.condition.registerName == -1) {
-                        throw new RuntimeException("no enough register");
-                    }
-                    this.condition.inRegister = true;
-                    this.condition.produce();
-
-                    mipsInstructions.add(
-                            String.format("\tlw %s, %s", this.condition.toRegister(), this.condition.toAddress())
-                    );
-                }
-            }
+        if (this.condition instanceof IRDataIntLiteral) {
             mipsInstructions.add(
-                    String.format("\t%s %s, %s", operand, this.condition.toRegister(), this.gotoLabel.toString())
+                    String.format("\tli $t0, %d", ((IRDataIntLiteral) this.condition).literal)
             );
-            this.condition.consume();
+        } else {
+            mipsInstructions.add(
+                    String.format("\tlw $t0, %s", this.condition.toAddress())
+            );
         }
+        mipsInstructions.add(
+                String.format("\t%s $t0, %s", operand, this.gotoLabel.toString())
+        );
 
         String str = "";
         for (String statement : mipsInstructions) {
