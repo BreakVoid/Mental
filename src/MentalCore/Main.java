@@ -7,6 +7,8 @@ package MentalCore;
 import MentalAST.AstProgram;
 import MentalAST.BuildTreeListener;
 import MentalIR.*;
+import MentalIR.Data.IRDataStringLiteral;
+import MentalIR.Data.IRDataValue;
 import MentalParser.*;
 import MentalTranslator.MIPSFunctions;
 import MentalTranslator.MIPSProgram;
@@ -52,17 +54,20 @@ public class Main {
         if (listener.existError) {
             System.exit(1);
         }
+
+//        System.out.println(astProgram.toPrintString());
+//        System.exit(0);
         AstVisitor visitor = new AstVisitor();
         visitor.visitProgram(astProgram);
 
         MIPSProgram mipsProgram = new MIPSProgram();
         MIPSStaticData mipsStaticData = mipsProgram.staticData;
 
-        for (IRStringLiteral irStringLiteral : visitor.stringLiterals) {
+        for (IRDataStringLiteral irStringLiteral : visitor.stringLiterals) {
             mipsStaticData.translate(irStringLiteral);
         }
 
-        for (IRVariable irVariable : visitor.globalVariables) {
+        for (IRDataValue irVariable : visitor.globalVariables) {
             mipsStaticData.translate(irVariable);
         }
 

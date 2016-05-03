@@ -17,11 +17,22 @@ public class MIPSProgram {
         this.functions = new LinkedList<>();
 
         this.beginMainLabel = new LinkedList<>();
-        beginMainLabel.add("\t.text");
-        beginMainLabel.add("main:");
+        this.beginMainLabel.add("\t.data");
+        this.beginMainLabel.add("_buffer:");
+        this.beginMainLabel.add("\t.word 0");
+        this.beginMainLabel.add("\t.text");
+        this.beginMainLabel.add("_buffer_init:");
+        this.beginMainLabel.add("\tli $a0, 256");
+        this.beginMainLabel.add("\tli $v0, 9");
+        this.beginMainLabel.add("\tsyscall");
+        this.beginMainLabel.add("\tsw $v0, _buffer");
+        this.beginMainLabel.add("\tjr $ra");
+        this.beginMainLabel.add("\t.text");
+        this.beginMainLabel.add("main:");
+        this.beginMainLabel.add("\tjal _buffer_init");
+        this.beginMainLabel.add("\tadd $fp, $zero, $sp");
 
         this.endMainLabel = new LinkedList<>();
-        this.endMainLabel.add("\tadd $fp, $zero, $sp");
         this.endMainLabel.add("\tjal _func_main");
         this.endMainLabel.add("\tmove $a0, $v0");
         this.endMainLabel.add("\tli $v0, 17");
