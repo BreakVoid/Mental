@@ -44,9 +44,11 @@ import MentalAST.AstExpression.AstUnaryAdditiveExpression;
 import MentalAST.AstExpressionList;
 import MentalAST.AstProgram;
 import MentalAST.AstStatement.*;
+import MentalIR.Arithmetic.*;
+import MentalIR.Data.*;
+import MentalIR.Label.*;
 import MentalSymbols.SymbolTable;
 import MentalType.*;
-import sun.awt.image.ImageWatched;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -1508,6 +1510,11 @@ public class AstVisitor {
             }
         }
         loopInstructions.addAll(loopBodyInstructions);
+        IRJumpLabel irJumpLabel = new IRJumpLabel(this.continueLoop);
+        if (loopInstructions.size() > 0) {
+            loopInstructions.getLast().nextInstruction = irJumpLabel;
+        }
+        loopInstructions.add(irJumpLabel);
 
         if (loopInstructions.size() > 0) {
             loopInstructions.getFirst().label = this.continueLoop;

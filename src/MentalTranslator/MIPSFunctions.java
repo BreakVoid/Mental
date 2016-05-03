@@ -1,8 +1,6 @@
 package MentalTranslator;
 
 import MentalIR.IRInstruction;
-import MentalIR.IRLabelEndFunction;
-import MentalIR.IRNullOperation;
 
 /**
  * Created by Songyu on 16/4/30.

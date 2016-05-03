@@ -1,11 +1,10 @@
 package MentalIR;
 
+import MentalIR.Data.*;
+import MentalIR.Label.IRLabelFunction;
 import MentalTranslator.MIPSMachine;
-import MentalTranslator.MIPSRegister;
-import sun.security.pkcs11.wrapper.CK_ECDH1_DERIVE_PARAMS;
 
 import java.util.LinkedList;
-import java.util.Map;
 
 /**
  * Created by Songyu on 16/4/25.
