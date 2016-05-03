@@ -4,43 +4,7 @@ import MentalAST.AstBaseNode;
 import MentalAST.AstDeclaration.AstFunctionDefinition;
 import MentalAST.AstDeclaration.AstSingleVariableDeclaration;
 import MentalAST.AstDeclaration.AstVariableDeclaration;
-import MentalAST.AstExpression.AstAdditiveExpression;
-import MentalAST.AstExpression.AstArraySubscriptingExpression;
-import MentalAST.AstExpression.AstAssignExpression;
-import MentalAST.AstExpression.AstBitAndExpression;
-import MentalAST.AstExpression.AstBitNotExpression;
-import MentalAST.AstExpression.AstBitOrExpression;
-import MentalAST.AstExpression.AstBitShiftExpression;
-import MentalAST.AstExpression.AstBitXorExpression;
-import MentalAST.AstExpression.AstBoolConstant;
-import MentalAST.AstExpression.AstCallGetInt;
-import MentalAST.AstExpression.AstCallGetString;
-import MentalAST.AstExpression.AstCallLength;
-import MentalAST.AstExpression.AstCallOrd;
-import MentalAST.AstExpression.AstCallParseInt;
-import MentalAST.AstExpression.AstCallPrint;
-import MentalAST.AstExpression.AstCallPrintln;
-import MentalAST.AstExpression.AstCallSize;
-import MentalAST.AstExpression.AstCallSubString;
-import MentalAST.AstExpression.AstCallToString;
-import MentalAST.AstExpression.AstCreationExpression;
-import MentalAST.AstExpression.AstEqualityExpression;
-import MentalAST.AstExpression.AstExpression;
-import MentalAST.AstExpression.AstFunctionCall;
-import MentalAST.AstExpression.AstIdentifier;
-import MentalAST.AstExpression.AstIntLiteral;
-import MentalAST.AstExpression.AstLogicalAndExpression;
-import MentalAST.AstExpression.AstLogicalNotExpression;
-import MentalAST.AstExpression.AstLogicalOrExpression;
-import MentalAST.AstExpression.AstMemberAccessExpression;
-import MentalAST.AstExpression.AstMulDivExpression;
-import MentalAST.AstExpression.AstNullConstant;
-import MentalAST.AstExpression.AstPrefixExpression;
-import MentalAST.AstExpression.AstRelationExpression;
-import MentalAST.AstExpression.AstStringLiteral;
-import MentalAST.AstExpression.AstSubgroupExpression;
-import MentalAST.AstExpression.AstSuffixExpression;
-import MentalAST.AstExpression.AstUnaryAdditiveExpression;
+import MentalAST.AstExpression.*;
 import MentalAST.AstExpressionList;
 import MentalAST.AstProgram;
 import MentalAST.AstStatement.*;
@@ -1900,6 +1864,92 @@ public class AstVisitor {
 
     public LinkedList<IRInstruction> visitEmptyStatement(AstEmptyStatement astEmptyStatement) {
         LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
+        return resultInstructions;
+    }
+
+    public LinkedList<IRInstruction> visitSuperLogicalAndExpression(AstSuperLogicalAndExpression astSuperLogicalAndExpression) {
+        LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
+        IRLabelShortPathEvaluate irLabelShortPathEvaluate = new IRLabelShortPathEvaluate();
+        IRNullOperation irNullOperation = new IRNullOperation();
+        irNullOperation.label = irLabelShortPathEvaluate;
+        // final result
+        IRDataValue finalRes = new IRDataValue();
+        finalRes.stackShift = this.currentStackSize++;
+
+        for (AstExpression astExpression : astSuperLogicalAndExpression.expressions) {
+            LinkedList<IRInstruction> expressionInstructions = astExpression.visit(this);
+            IRData expressionRes = this.expressionResult.get(astExpression);
+            if (expressionRes instanceof IRDataAddress) {
+                IRLoad irLoad = new IRLoad((IRDataAddress) expressionRes);
+                irLoad.dest = finalRes;
+                if (expressionInstructions.size() > 0) {
+                    expressionInstructions.getLast().nextInstruction = irLoad;
+                }
+                expressionInstructions.add(irLoad);
+            } else {
+                IRMove irMove = new IRMove(expressionRes, finalRes);
+                if (expressionInstructions.size() > 0) {
+                    expressionInstructions.getLast().nextInstruction = irMove;
+                }
+                expressionInstructions.add(irMove);
+            }
+
+            if (resultInstructions.size() > 0) {
+                resultInstructions.getLast().nextInstruction = expressionInstructions.getFirst();
+            }
+            resultInstructions.addAll(expressionInstructions);
+
+            IRBranchEqualZero irBranchEqualZero = new IRBranchEqualZero(finalRes, irLabelShortPathEvaluate);
+            resultInstructions.getLast().nextInstruction = irBranchEqualZero;
+            resultInstructions.add(irBranchEqualZero);
+        }
+
+        resultInstructions.getLast().nextInstruction = irNullOperation;
+        resultInstructions.add(irNullOperation);
+        this.expressionResult.put(astSuperLogicalAndExpression, finalRes);
+        return resultInstructions;
+    }
+
+    public LinkedList<IRInstruction> visitSuperLogicalOrExpression(AstSuperLogicalOrExpression astSuperLogicalOrExpression) {
+        LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
+        IRLabelShortPathEvaluate irLabelShortPathEvaluate = new IRLabelShortPathEvaluate();
+        IRNullOperation irNullOperation = new IRNullOperation();
+        irNullOperation.label = irLabelShortPathEvaluate;
+        // final result
+        IRDataValue finalRes = new IRDataValue();
+        finalRes.stackShift = this.currentStackSize++;
+
+        for (AstExpression astExpression : astSuperLogicalOrExpression.expressions) {
+            LinkedList<IRInstruction> expressionInstructions = astExpression.visit(this);
+            IRData expressionRes = this.expressionResult.get(astExpression);
+            if (expressionRes instanceof IRDataAddress) {
+                IRLoad irLoad = new IRLoad((IRDataAddress) expressionRes);
+                irLoad.dest = finalRes;
+                if (expressionInstructions.size() > 0) {
+                    expressionInstructions.getLast().nextInstruction = irLoad;
+                }
+                expressionInstructions.add(irLoad);
+            } else {
+                IRMove irMove = new IRMove(expressionRes, finalRes);
+                if (expressionInstructions.size() > 0) {
+                    expressionInstructions.getLast().nextInstruction = irMove;
+                }
+                expressionInstructions.add(irMove);
+            }
+
+            if (resultInstructions.size() > 0) {
+                resultInstructions.getLast().nextInstruction = expressionInstructions.getFirst();
+            }
+            resultInstructions.addAll(expressionInstructions);
+
+            IRBranchNotEqualZero irBranchNotEqualZero = new IRBranchNotEqualZero(finalRes, irLabelShortPathEvaluate);
+            resultInstructions.getLast().nextInstruction = irBranchNotEqualZero;
+            resultInstructions.add(irBranchNotEqualZero);
+        }
+
+        resultInstructions.getLast().nextInstruction = irNullOperation;
+        resultInstructions.add(irNullOperation);
+        this.expressionResult.put(astSuperLogicalOrExpression, finalRes);
         return resultInstructions;
     }
 }

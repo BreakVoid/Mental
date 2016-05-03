@@ -1460,44 +1460,53 @@ public class BuildTreeListener extends MentalBaseListener {
      * x, y should be boolean.
 	 */
 	@Override public void enterLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx) {
-        AstLogicalAndExpression logicalAndExpression = new AstLogicalAndExpression();
-        this.tree.put(ctx, logicalAndExpression);
+        AstSuperLogicalAndExpression superLogicalAndExpression = new AstSuperLogicalAndExpression();
+        this.tree.put(ctx, superLogicalAndExpression);
     }
 	@Override public void exitLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx) {
-        AstLogicalAndExpression thisExpression = (AstLogicalAndExpression) this.tree.get(ctx);
-        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
-        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
-        thisExpression.leftExpression.parent = thisExpression;
-        thisExpression.rightExpression.parent = thisExpression;
-        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalBool)) {
-            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalBool)) {
+        AstSuperLogicalAndExpression thisExpression = (AstSuperLogicalAndExpression) this.tree.get(ctx);
+        if (ctx.expression(0) instanceof  MentalParser.LOGICAL_AND_EXPRESSIONContext) {
+            AstSuperLogicalAndExpression leftExpression = (AstSuperLogicalAndExpression) this.tree.get(ctx.expression(0));
+            thisExpression.expressions.addAll(leftExpression.expressions);
+        } else {
+            thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(0)));
+        }
+        thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(1)));
+
+        for (AstExpression astExpression : thisExpression.expressions) {
+            astExpression.parent = thisExpression;
+            if (!astExpression.returnType.equals(SymbolTable.mentalBool)) {
+                System.err.println("fatal: the types of logical-and expression cannot accept.\n\t" + ctx.getText());
+                this.existError = true;
                 return;
             }
         }
-        System.err.println("fatal: the types of logical-and expression cannot accept.\n\t" + ctx.getText());
-        this.existError = true;
     }
     /**
      * x || y
      * x, y should be boolean.
      */
     @Override public void enterLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx) {
-        AstLogicalOrExpression logicalOrExpression = new AstLogicalOrExpression();
-        this.tree.put(ctx, logicalOrExpression);
+        AstSuperLogicalOrExpression superLogicalOrExpression = new AstSuperLogicalOrExpression();
+        this.tree.put(ctx, superLogicalOrExpression);
     }
     @Override public void exitLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx) {
-        AstLogicalOrExpression thisExpression = (AstLogicalOrExpression) this.tree.get(ctx);
-        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
-        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
-        thisExpression.leftExpression.parent = thisExpression;
-        thisExpression.rightExpression.parent = thisExpression;
-        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalBool)) {
-            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalBool)) {
+        AstSuperLogicalOrExpression thisExpression = (AstSuperLogicalOrExpression) this.tree.get(ctx);
+        if (ctx.expression(0) instanceof  MentalParser.LOGICAL_OR_EXPRESSIONContext) {
+            AstSuperLogicalOrExpression leftExpression = (AstSuperLogicalOrExpression) this.tree.get(ctx.expression(0));
+            thisExpression.expressions.addAll(leftExpression.expressions);
+        } else {
+            thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(0)));
+        }
+        thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(1)));
+        for (AstExpression astExpression : thisExpression.expressions) {
+            astExpression.parent = thisExpression;
+            if (!astExpression.returnType.equals(SymbolTable.mentalBool)) {
+                System.err.println("fatal: the types of logical-or expression cannot accept.\n\t" + ctx.getText());
+                this.existError = true;
                 return;
             }
         }
-        System.err.println("fatal: the types of logical-or expression cannot accept.\n\t" + ctx.getText());
-        this.existError = true;
     }
 	/**
 	 * x[i]
