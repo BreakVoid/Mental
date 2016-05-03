@@ -54,6 +54,9 @@ public class Main {
         if (listener.existError) {
             System.exit(1);
         }
+
+//        System.out.println(astProgram.toPrintString());
+//        System.exit(0);
         AstVisitor visitor = new AstVisitor();
         visitor.visitProgram(astProgram);
 

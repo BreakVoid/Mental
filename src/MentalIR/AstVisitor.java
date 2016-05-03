@@ -735,7 +735,7 @@ public class AstVisitor {
         }
         resultInstructions.addAll(rhsInstructions);
 
-        IRBinaryArithmetic thisInstruction = new IRBitAnd(finalRes, rhsRes, (IRDataValue) finalRes);
+        IRBinaryArithmetic thisInstruction = new IRBitOr(finalRes, rhsRes, (IRDataValue) finalRes);
         resultInstructions.getLast().nextInstruction = thisInstruction;
         resultInstructions.add(thisInstruction);
         resultInstructions.getLast().nextInstruction = irNullOperation;
