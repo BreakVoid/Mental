@@ -795,7 +795,7 @@ public class AstVisitor {
             primaryInstructions.add(irLoad);
             primaryRes = irLoad.dest;
         }
-
+        resultInstructions = primaryInstructions;
         if (astMemberAccessExpression.memberExpression == null) {
             if (astMemberAccessExpression.primaryExpression.returnType instanceof MentalClass) {
                 MentalClass classDetail = (MentalClass) astMemberAccessExpression.primaryExpression.returnType;
@@ -808,7 +808,6 @@ public class AstVisitor {
                 throw new RuntimeException();
             }
         } else {
-            resultInstructions = primaryInstructions;
             if (resultInstructions.size() > 0) {
                 if (memberInstructions.size() > 0) {
                     resultInstructions.getLast().nextInstruction = memberInstructions.getFirst();
