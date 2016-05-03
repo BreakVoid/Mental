@@ -16,7 +16,6 @@ import MentalIR.Data.*;
 import MentalIR.Label.*;
 import MentalSymbols.SymbolTable;
 import MentalType.*;
-import sun.awt.image.ImageWatched;
 
 import java.util.HashMap;
 import java.util.LinkedList;
