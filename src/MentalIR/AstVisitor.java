@@ -252,9 +252,15 @@ public class AstVisitor {
         }
         resultInstructions.addAll(rhsInstructions);
         if (astAdditiveExpression.returnType instanceof MentalString) {
-            IRCall irCall = new IRCall(new IRLabelFunction("____built_in_string_join"));
+            IRCall irCall = new IRCall(new IRLabelFunction("____built_in_string_concatenate"));
+            irCall.res.stackShift = this.currentStackSize++;
             irCall.parameters.add((IRDataValue) lhsRes);
             irCall.parameters.add((IRDataValue) rhsRes);
+            this.expressionResult.put(astAdditiveExpression, irCall.res);
+            if (resultInstructions.size() > 0) {
+                resultInstructions.getLast().nextInstruction = irCall;
+            }
+            resultInstructions.add(irCall);
         } else if (astAdditiveExpression.returnType instanceof MentalInt) {
             if (astAdditiveExpression.op == AstAdditiveExpression.ADD) {
                 IRAdd irAdd = new IRAdd(lhsRes, rhsRes, new IRDataValue());

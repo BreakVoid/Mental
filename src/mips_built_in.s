@@ -166,3 +166,39 @@ _func_____built_in_parseInt:
 
 	_finish_parse_int:
 	jr $ra
+
+# string1 in $a0, string2 in $a1
+###### Checked ######
+# used $a0, $a1, $t0, $t1, $t2, $t3, $t4, $t5, $v0
+_func_____built_in_string_concatenate:
+	lw $a0, -4($sp)
+	lw $a1, -8($sp)
+	subu $sp, $sp, 4
+	sw $ra, 0($sp)
+
+	move $t2, $a0
+	move $t3, $a1
+
+	lw $t0, -4($a0)		# $t0 is the length of lhs
+	lw $t1, -4($a1)		# $t1 is the length of rhs
+	add $t5, $t0, $t1
+	add $a0, $t5, 5
+	li $v0, 9
+	syscall
+	sw $t5, 0($v0)
+	add $v0, $v0, 4
+	move $t4, $v0
+
+	move $a0, $t2
+	move $a1, $t4
+	jal _string_copy
+
+	move $a0, $t3
+	add $a1, $t4, $t0
+	# add $a1, $a1, 1
+	jal _string_copy
+
+	move $v0, $t4
+	lw $ra, 0($sp)
+	addu $sp, $sp, 4
+	jr $ra

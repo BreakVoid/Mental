@@ -46,9 +46,15 @@ public class IRLoad extends IRInstruction {
             mipsInstructions.add(
                     String.format("\tlw $t0, %s", this.src.address.toAddress())
             );
-            mipsInstructions.add(
-                    String.format("\tlw $t0, 0($t0)")
-            );
+            if (this.loadSize == 4) {
+                mipsInstructions.add(
+                        String.format("\tlw $t0, 0($t0)")
+                );
+            } else {
+                mipsInstructions.add(
+                        String.format("\tlb $t0, 0($t0)")
+                );
+            }
         }
         mipsInstructions.add(
                 String.format("\tsw $t0, %s", this.dest.toAddress())

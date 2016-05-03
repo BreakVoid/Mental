@@ -2,6 +2,7 @@ package MentalIR;
 
 import MentalIR.Data.IRData;
 import MentalIR.Data.IRDataIntLiteral;
+import MentalIR.Data.IRDataValue;
 import MentalTranslator.MIPSMachine;
 import MentalTranslator.MIPSRegister;
 
@@ -14,7 +15,7 @@ public class IRGetInt extends IRSystemCall {
     public IRData res;
     public IRGetInt() {
         this.variant = 5;
-        this.res = new IRDataIntLiteral();
+        this.res = new IRDataValue();
     }
     public IRGetInt(IRData res) {
         this.res = res;
