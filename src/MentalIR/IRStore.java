@@ -1,5 +1,7 @@
 package MentalIR;
 
+import MentalIR.Data.IRData;
+import MentalIR.Data.IRDataValue;
 import MentalTranslator.MIPSMachine;
 import MentalTranslator.MIPSRegister;
 
@@ -12,9 +14,10 @@ public class IRStore extends IRInstruction {
     public IRDataValue src;
     public IRData dest;
     public IRStore() {
-        this.src = this.dest = null;
+        this.src = null;
+        this.dest = null;
     }
-    public IRStore(IRData src, IRData dest) {
+    public IRStore(IRDataValue src, IRData dest) {
         this.src = src;
         this.dest = dest;
     }

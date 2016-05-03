@@ -1,10 +1,7 @@
 package MentalTranslator;
 
-import MentalCore.Main;
-import MentalIR.*;
-
-import java.util.LinkedList;
-import java.util.Random;
+import MentalIR.Data.IRData;
+import MentalIR.Label.IRLabelGlobalData;
 
 /**
  * Created by Songyu on 16/4/27.

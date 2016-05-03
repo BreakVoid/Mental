@@ -1,5 +1,8 @@
 package MentalIR;
 
+import MentalIR.Data.IRDataAddress;
+import MentalIR.Data.IRDataValue;
+import MentalIR.Label.IRLabelGlobalData;
 import MentalTranslator.MIPSMachine;
 
 import java.util.LinkedList;
@@ -8,7 +11,7 @@ import java.util.LinkedList;
  * Created by Songyu on 16/4/25.
  */
 public class IRLoad extends IRInstruction {
-    public IRData src;
+    public IRDataAddress src;
     public IRDataValue dest;
     public int loadSize;
     public IRLoad() {
@@ -16,14 +19,14 @@ public class IRLoad extends IRInstruction {
         this.dest = null;
         this.loadSize = 4;
     }
-    public IRLoad(IRLocate locate) {
+    public IRLoad(IRDataAddress src) {
         this.loadSize = 4;
-        this.src = locate;
-        this.dest = new IRTemporary();
+        this.src = src;
+        this.dest = new IRDataValue();
     }
-    public IRLoad(IRLocate locate, int loadSize) {
-        this.src = locate;
-        this.dest = new IRTemporary();
+    public IRLoad(IRDataAddress src, int loadSize) {
+        this.src = src;
+        this.dest = new IRDataValue();
         this.loadSize = loadSize;
     }
 

@@ -1,5 +1,7 @@
 package MentalIR;
 
+import MentalIR.Data.IRData;
+import MentalIR.Data.IRDataValue;
 import MentalTranslator.MIPSMachine;
 
 import java.util.LinkedList;
@@ -14,9 +16,19 @@ public class IRMove extends IRInstruction {
         this.src = null;
         this.dest = null;
     }
-    public IRMove(IRData src) {
+    public IRMove(IRDataValue src) {
         this.src = src;
-        this.dest = new IRTemporary();
+        this.dest = new IRDataValue();
+    }
+
+    public IRMove(IRDataValue src, IRDataValue dest) {
+        this.src = src;
+        this.dest = dest;
+    }
+
+    public IRMove(IRData src, IRData dest) {
+        this.src = (IRDataValue) src;
+        this.dest = (IRDataValue) dest;
     }
 
     @Override

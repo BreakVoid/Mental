@@ -1,5 +1,7 @@
 package MentalIR;
 
+import MentalIR.Data.IRData;
+import MentalIR.Data.IRDataValue;
 import MentalTranslator.MIPSMachine;
 
 import java.util.LinkedList;
@@ -8,7 +10,7 @@ import java.util.LinkedList;
  * Created by Songyu on 16/5/2.
  */
 public class IRBranchWithContidtion extends IRBranch {
-    public IRData condition;
+    public IRDataValue condition;
 
     public String toMips(MIPSMachine mipsMachine, String operand) {
         LinkedList<String> mipsInstructions = new LinkedList<>();

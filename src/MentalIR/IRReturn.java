@@ -1,5 +1,8 @@
 package MentalIR;
 
+import MentalIR.Data.IRData;
+import MentalIR.Data.IRDataValue;
+import MentalIR.Label.IRLabel;
 import MentalTranslator.MIPSMachine;
 
 import java.util.LinkedList;

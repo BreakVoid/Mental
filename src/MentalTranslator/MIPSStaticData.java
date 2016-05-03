@@ -1,7 +1,6 @@
 package MentalTranslator;
 
-import MentalIR.IRData;
-import MentalIR.IRStringLiteral;
+import MentalIR.Data.IRData;
 
 import java.util.LinkedList;
 

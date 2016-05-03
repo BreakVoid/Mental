@@ -1,5 +1,6 @@
 package MentalIR;
 
+import MentalIR.Data.IRData;
 import MentalTranslator.MIPSRegister;
 
 /**
