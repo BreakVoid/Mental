@@ -25,7 +25,7 @@ public class Main {
         FileInputStream builtInFunction = null;
         FileInputStream builtInMips = null;
         try {
-            builtInFunction = new FileInputStream("src/built_in.mx");
+            builtInFunction = new FileInputStream("src/empty.mx");
             builtInMips = new FileInputStream("src/mips_built_in.s");
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -71,3 +71,9 @@ bool ____built_in_string_greater_equal(string lhs, string rhs)
 {
     return ____built_in_string_less_equal(rhs, lhs);
 }
+
+void ____built_in_println(string str)
+{
+    print(str);
+    print("\n");
+}
