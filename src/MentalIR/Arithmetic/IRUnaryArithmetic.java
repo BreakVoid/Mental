@@ -1,4 +1,4 @@
-package MentalIR.Data;
+package MentalIR.Arithmetic;
 
 import MentalIR.Arithmetic.IRArithmetic;
 import MentalIR.Data.IRData;
@@ -13,7 +13,7 @@ public class IRUnaryArithmetic extends IRArithmetic {
         super();
         this.child = null;
     }
-    public IRUnaryArithmetic(IRData child, IRData res) {
+    public IRUnaryArithmetic(IRDataValue child, IRDataValue res) {
         this.child = child;
         this.res = res;
     }

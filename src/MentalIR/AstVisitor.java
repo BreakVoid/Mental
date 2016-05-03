@@ -318,7 +318,7 @@ public class AstVisitor {
             resultInstructions.add(irLoad);
             childRes = irLoad.dest;
         }
-        IRBitNot irBitNot = new IRBitNot(childRes, new IRDataValue());
+        IRBitNot irBitNot = new IRBitNot((IRDataValue) childRes, new IRDataValue());
         irBitNot.res.stackShift = this.currentStackSize++;
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = irBitNot;
@@ -1010,6 +1010,7 @@ public class AstVisitor {
                 irCall.parameters.add(primaryRes);
                 irCall.parameters.add(leftBoundRes);
                 irCall.parameters.add(rightBoundRes);
+                irCall.res.stackShift = this.currentStackSize++;
                 this.expressionResult.put(astMemberAccessExpression, irCall.res);
                 if (resultInstructions.size() > 0) {
                     resultInstructions.getLast().nextInstruction = irCall;
@@ -1046,45 +1047,49 @@ public class AstVisitor {
             LinkedList<IRInstruction> sizeInstructions = astCreationExpression.expressionList.get(0).visit(this);
             IRData sizeExprRes = this.expressionResult.get(astCreationExpression.expressionList.get(0));
 
-            if (sizeExprRes instanceof IRLocate) {
-                IRLoad irLoad = ((IRLocate) sizeExprRes).load();
+            if (sizeExprRes instanceof IRDataAddress) {
+                IRLoad irLoad = new IRLoad((IRDataAddress) sizeExprRes);
+                irLoad.dest.stackShift = this.currentStackSize++;
                 if (sizeInstructions.size() > 0) {
                     sizeInstructions.getLast().nextInstruction = irLoad;
                 }
                 sizeInstructions.add(irLoad);
                 sizeExprRes = irLoad.dest;
             }
-            if (sizeExprRes instanceof IRTemporary) {
-                ((IRTemporary) sizeExprRes).counter = 2;
-            }
+
             resultInstructions = sizeInstructions;
             // size + 1
-            IRWordLiteral one = new IRWordLiteral(1);
-            IRAdd irAdd = new IRAdd(sizeExprRes, one, new IRTemporary());
+
+            IRAdd irAdd = new IRAdd(sizeExprRes, new IRDataIntLiteral(1), new IRDataValue());
+            irAdd.res.stackShift = this.currentStackSize++;
             if (resultInstructions.size() > 0) {
                 resultInstructions.getLast().nextInstruction = irAdd;
             }
             resultInstructions.add(irAdd);
 
             // 4 * (size + 1)
-            IRWordLiteral eachSize = new IRWordLiteral(4);
-            IRMul getRealSize = new IRMul(irAdd.res, eachSize, new IRTemporary());
+            IRMul getRealSize = new IRMul(irAdd.res, new IRDataIntLiteral(4), new IRDataValue());
+            getRealSize.res.stackShift = this.currentStackSize++;
             resultInstructions.getLast().nextInstruction = getRealSize;
             resultInstructions.add(getRealSize);
 
             // add instruction to get heap memory
             IRMemoryAllocate irMemoryAllocate = new IRMemoryAllocate(getRealSize.res);
-            ((IRTemporary) irMemoryAllocate.res).counter = 2;
+            irMemoryAllocate.res.stackShift = this.currentStackSize++;
             resultInstructions.getLast().nextInstruction = irMemoryAllocate;
             resultInstructions.add(irMemoryAllocate);
 
+            IRDataAddress allocateRes = new IRDataAddress(irMemoryAllocate.res);
+
             //store the size of the array to the memory.
-            IRStore irStore = new IRStore(sizeExprRes, new IRLocate(irMemoryAllocate.res, new IRWordLiteral(0)));
+            IRStore irStore = new IRStore((IRDataValue) sizeExprRes, allocateRes);
             resultInstructions.getLast().nextInstruction = irStore;
             resultInstructions.add(irStore);
 
             //calculate the address of the head of the array as the result of this expression.
-            IRAdd irAddressAdd = new IRAdd(irMemoryAllocate.res, new IRWordLiteral(4), new IRTemporary());
+            IRAdd irAddressAdd = new IRAdd(irMemoryAllocate.res, new IRDataIntLiteral(4), new IRDataValue());
+            irAddressAdd.res.stackShift = this.currentStackSize++;
+
             this.expressionResult.put(astCreationExpression, irAddressAdd.res);
             resultInstructions.getLast().nextInstruction = irAddressAdd;
             resultInstructions.add(irAddressAdd);
@@ -1092,9 +1097,11 @@ public class AstVisitor {
             // new a class.
             resultInstructions = new LinkedList<>();
             // get size of class by the number of class members.
-            IRWordLiteral amount = new IRWordLiteral(((MentalClass) astCreationExpression.returnType).classSize * 4);
+            IRDataIntLiteral amount = new IRDataIntLiteral(((MentalClass) astCreationExpression.returnType).classSize * 4);
             // add instruction to get heap memory.
             IRMemoryAllocate irMemoryAllocate = new IRMemoryAllocate(amount);
+            irMemoryAllocate.res.stackShift = this.currentStackSize++;
+
             this.expressionResult.put(astCreationExpression, irMemoryAllocate.res);
             if (resultInstructions.size() > 0) {
                 resultInstructions.getLast().nextInstruction = irMemoryAllocate;
@@ -1112,16 +1119,18 @@ public class AstVisitor {
         LinkedList<IRInstruction> rhsInstructions = astEqualityExpression.rightExpression.visit(this);
         IRData lhsRes = this.expressionResult.get(astEqualityExpression.leftExpression);
         IRData rhsRes = this.expressionResult.get(astEqualityExpression.rightExpression);
-        if (lhsRes instanceof IRLocate) {
-            IRLoad irLoad = ((IRLocate) lhsRes).load();
+        if (lhsRes instanceof IRDataAddress) {
+            IRLoad irLoad = new IRLoad((IRDataAddress) lhsRes);
+            irLoad.dest.stackShift = this.currentStackSize++;
             if (lhsInstructions.size() > 0) {
                 lhsInstructions.getLast().nextInstruction = irLoad;
             }
             lhsInstructions.add(irLoad);
             lhsRes = irLoad.dest;
         }
-        if (rhsRes instanceof IRLocate) {
-            IRLoad irLoad = ((IRLocate) rhsRes).load();
+        if (rhsRes instanceof IRDataAddress) {
+            IRLoad irLoad = new IRLoad((IRDataAddress) rhsRes);
+            irLoad.dest.stackShift = this.currentStackSize++;
             if (rhsInstructions.size() > 0) {
                 rhsInstructions.getLast().nextInstruction = irLoad;
             }
@@ -1148,6 +1157,7 @@ public class AstVisitor {
             } else {
                 throw new RuntimeException();
             }
+            irCall.res.stackShift = this.currentStackSize++;
             if (resultInstructions.size() > 0) {
                 resultInstructions.getLast().nextInstruction = irCall;
             }
@@ -1156,12 +1166,14 @@ public class AstVisitor {
         } else {
             IRCompare irCompare;
             if (astEqualityExpression.op == AstEqualityExpression.EQUAL) {
-                irCompare = new IRCompareEqual(lhsRes, rhsRes);
+                irCompare = new IRCompareEqual((IRDataValue) lhsRes, (IRDataValue) rhsRes);
             } else if (astEqualityExpression.op == AstEqualityExpression.INEQUAL) {
-                irCompare = new IRCompareNotEqual(lhsRes, rhsRes);
+                irCompare = new IRCompareNotEqual((IRDataValue) lhsRes, (IRDataValue) rhsRes);
             } else {
                 throw new RuntimeException();
             }
+            irCompare.res.stackShift = this.currentStackSize++;
+
             if (resultInstructions.size() > 0) {
                 resultInstructions.getLast().nextInstruction = irCompare;
             }
@@ -1177,13 +1189,16 @@ public class AstVisitor {
         IRCall irCall = new IRCall(new IRLabelFunction(astFunctionCall.functionName));
         if (astFunctionCall.returnType instanceof MentalVoid) {
             irCall.res = null;
+        } else {
+            irCall.res.stackShift = this.currentStackSize++;
         }
         if (astFunctionCall.parameters.expressions != null) {
             for (AstExpression astExpression : astFunctionCall.parameters.expressions) {
                 LinkedList<IRInstruction> expressionInstructions = astExpression.visit(this);
                 IRData expressionRes = this.expressionResult.get(astExpression);
-                if (expressionRes instanceof IRLocate) {
-                    IRLoad irLoad = ((IRLocate) expressionRes).load();
+                if (expressionRes instanceof IRDataAddress) {
+                    IRLoad irLoad = new IRLoad((IRDataAddress) expressionRes);
+                    irLoad.dest.stackShift = this.currentStackSize++;
                     if (expressionInstructions.size() > 0) {
                         expressionInstructions.getLast().nextInstruction = irLoad;
                     }
@@ -1216,16 +1231,18 @@ public class AstVisitor {
         LinkedList<IRInstruction> rhsInstructions = astRelationExpression.rightExpression.visit(this);
         IRData lhsRes = this.expressionResult.get(astRelationExpression.leftExpression);
         IRData rhsRes = this.expressionResult.get(astRelationExpression.rightExpression);
-        if (lhsRes instanceof IRLocate) {
-            IRLoad irLoad = ((IRLocate) lhsRes).load();
+        if (lhsRes instanceof IRDataAddress) {
+            IRLoad irLoad = new IRLoad((IRDataAddress) lhsRes);
+            irLoad.dest.stackShift = this.currentStackSize++;
             if (lhsInstructions.size() > 0) {
                 lhsInstructions.getLast().nextInstruction = irLoad;
             }
             lhsInstructions.add(irLoad);
             lhsRes = irLoad.dest;
         }
-        if (rhsRes instanceof IRLocate) {
-            IRLoad irLoad = ((IRLocate) rhsRes).load();
+        if (rhsRes instanceof IRDataAddress) {
+            IRLoad irLoad = new IRLoad((IRDataAddress) rhsRes);
+            irLoad.dest.stackShift = this.currentStackSize++;
             if (rhsInstructions.size() > 0) {
                 rhsInstructions.getLast().nextInstruction = irLoad;
             }
@@ -1260,6 +1277,7 @@ public class AstVisitor {
             } else {
                 throw new RuntimeException();
             }
+            irCall.res.stackShift = this.currentStackSize++;
             if (resultInstructions.size() > 0) {
                 resultInstructions.getLast().nextInstruction = irCall;
             }
@@ -1268,16 +1286,17 @@ public class AstVisitor {
         } else {
             IRCompare irCompare;
             if (astRelationExpression.op == AstRelationExpression.LESS) {
-                irCompare = new IRCompareLess(lhsRes, rhsRes);
+                irCompare = new IRCompareLess((IRDataValue) lhsRes, (IRDataValue) rhsRes);
             } else if (astRelationExpression.op == AstRelationExpression.LESS_EQ) {
-                irCompare = new IRCompareLessEqual(lhsRes, rhsRes);
+                irCompare = new IRCompareLessEqual((IRDataValue) lhsRes, (IRDataValue) rhsRes);
             } else if (astRelationExpression.op == AstRelationExpression.GREATER) {
-                irCompare = new IRCompareGreater(lhsRes, rhsRes);
+                irCompare = new IRCompareGreater((IRDataValue) lhsRes, (IRDataValue) rhsRes);
             } else if (astRelationExpression.op == AstRelationExpression.GREATER_EQ) {
-                irCompare = new IRCompareGreaterEqual(lhsRes, rhsRes);
+                irCompare = new IRCompareGreaterEqual((IRDataValue) lhsRes, (IRDataValue) rhsRes);
             } else {
                 throw new RuntimeException();
             }
+            irCompare.res.stackShift = this.currentStackSize++;
             if (resultInstructions.size() > 0) {
                 resultInstructions.getLast().nextInstruction = irCompare;
             }
@@ -1309,11 +1328,12 @@ public class AstVisitor {
 
     public LinkedList<IRInstruction> visitExpressionStatement(AstExpressionStatement astExpressionStatement) {
         LinkedList<IRInstruction> resultInstruction = astExpressionStatement.expression.visit(this);
-        IRCleanMachine irCleanMachine = new IRCleanMachine();
+        IRData expressionRes = this.expressionResult.get(astExpressionStatement.expression);
+        IRFree irFree = new IRFree(expressionRes);
         if (resultInstruction.size() > 0) {
-            resultInstruction.getLast().nextInstruction = irCleanMachine;
+            resultInstruction.getLast().nextInstruction = irFree;
         }
-        resultInstruction.add(irCleanMachine);
+        resultInstruction.add(irFree);
         return resultInstruction;
     }
 
@@ -1336,7 +1356,7 @@ public class AstVisitor {
             LinkedList<IRInstruction> initializeExpressionInstructions = astForStatement.start.visit(this);
             // append clean machine instructions.
             if (initializeExpressionInstructions.size() > 0) {
-                initializeExpressionInstructions.getLast().nextInstruction = new IRCleanMachine();
+                initializeExpressionInstructions.getLast().nextInstruction = new IRFree(this.expressionResult.get(astForStatement.start));
                 initializeExpressionInstructions.add(initializeExpressionInstructions.getLast().nextInstruction);
             }
             resultInstructions.addAll(initializeExpressionInstructions);
@@ -1357,8 +1377,9 @@ public class AstVisitor {
             LinkedList<IRInstruction> conditionExpressionInstructions = astForStatement.cond.visit(this);
             IRData conditionRes = this.expressionResult.get(astForStatement.cond);
 
-            if (conditionRes instanceof IRLocate) {
-                IRLoad irLoad = ((IRLocate) conditionRes).load();
+            if (conditionRes instanceof IRDataAddress) {
+                IRLoad irLoad = new IRLoad((IRDataAddress) conditionRes);
+                irLoad.dest.stackShift = this.currentStackSize++;
                 if (conditionExpressionInstructions.size() > 0) {
                     conditionExpressionInstructions.getLast().nextInstruction = irLoad;
                 }
@@ -1367,7 +1388,7 @@ public class AstVisitor {
             }
             // append clean machine instructions.
             if (conditionExpressionInstructions.size() > 0) {
-                conditionExpressionInstructions.getLast().nextInstruction = new IRCleanMachine();
+                conditionExpressionInstructions.getLast().nextInstruction = new IRFree(conditionRes);
                 conditionExpressionInstructions.add(conditionExpressionInstructions.getLast().nextInstruction);
             }
 
@@ -1403,7 +1424,7 @@ public class AstVisitor {
         if (astForStatement.loop != null) {
             LinkedList<IRInstruction> stepInstructions = astForStatement.loop.visit(this);
             if (stepInstructions.size() > 0) {
-                stepInstructions.getLast().nextInstruction = new IRCleanMachine();
+                stepInstructions.getLast().nextInstruction = new IRFree(this.expressionResult.get(astForStatement.loop));
                 stepInstructions.add(stepInstructions.getLast().nextInstruction);
             }
 
@@ -1447,8 +1468,9 @@ public class AstVisitor {
         // condition expression instructions.
         LinkedList<IRInstruction> conditionInstructions = astIfStatement.condition.visit(this);
         IRData conditionRes = this.expressionResult.get(astIfStatement.condition);
-        if (conditionRes instanceof IRLocate) {
-            IRLoad irLoad = ((IRLocate) conditionRes).load();
+        if (conditionRes instanceof IRDataAddress) {
+            IRLoad irLoad = new IRLoad((IRDataAddress) conditionRes);
+            irLoad.dest.stackShift = this.currentStackSize++;
             if (conditionInstructions.size() > 0) {
                 conditionInstructions.getLast().nextInstruction = irLoad;
             }
@@ -1458,7 +1480,7 @@ public class AstVisitor {
 
         // append clean machine for the register allocation when translate to mips.
         if (conditionInstructions.size() > 0) {
-            conditionInstructions.getLast().nextInstruction = new IRCleanMachine();
+            conditionInstructions.getLast().nextInstruction = new IRFree(conditionRes);
             conditionInstructions.add(conditionInstructions.getLast().nextInstruction);
         }
         resultInstructions = conditionInstructions;
@@ -1521,6 +1543,7 @@ public class AstVisitor {
 
     public LinkedList<IRInstruction> visitJumpStatement(AstJumpStatement astJumpStatement) {
         LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
+        IRFree irFree = new IRFree();
         IRJumpLabel irJumpLabel;
         if (astJumpStatement.variant == AstJumpStatement.CONTINUE) {
             irJumpLabel = new IRJumpLabel(this.continueLoop);
@@ -1531,8 +1554,9 @@ public class AstVisitor {
             if (astJumpStatement.returnExpression != null && !astJumpStatement.returnExpression.returnType.equals(SymbolTable.mentalVoid)) {
                 LinkedList<IRInstruction> expressionInstructions = astJumpStatement.returnExpression.visit(this);
                 expressionRes = this.expressionResult.get(astJumpStatement.returnExpression);
-                if (expressionRes instanceof IRLocate) {
-                    IRLoad irLoad = ((IRLocate) expressionRes).load();
+                if (expressionRes instanceof IRDataAddress) {
+                    IRLoad irLoad = new IRLoad((IRDataAddress) expressionRes);
+                    irLoad.dest.stackShift = this.currentStackSize++;
                     if (expressionInstructions.size() > 0) {
                         expressionInstructions.getLast().nextInstruction = irLoad;
                     }
@@ -1540,8 +1564,9 @@ public class AstVisitor {
                     expressionInstructions.add(irLoad);
                 }
                 resultInstructions.addAll(expressionInstructions);
+                irFree.freeData = expressionRes;
             }
-            irJumpLabel = new IRReturn(this.endFunction, expressionRes);
+            irJumpLabel = new IRReturn(this.endFunction, (IRDataValue) expressionRes);
         } else {
             throw new RuntimeException();
         }
@@ -1549,8 +1574,8 @@ public class AstVisitor {
             resultInstructions.getLast().nextInstruction = irJumpLabel;
         }
         resultInstructions.add(irJumpLabel);
-        resultInstructions.getLast().nextInstruction = new IRCleanMachine();
-        resultInstructions.add(resultInstructions.getLast().nextInstruction);
+        resultInstructions.getLast().nextInstruction = irFree;
+        resultInstructions.add(irFree);
         return resultInstructions;
     }
 
@@ -1583,8 +1608,9 @@ public class AstVisitor {
             LinkedList<IRInstruction> conditionExpressionInstructions = astWhileStatement.cond.visit(this);
             IRData conditionRes = this.expressionResult.get(astWhileStatement.cond);
 
-            if (conditionRes instanceof IRLocate) {
-                IRLoad irLoad = ((IRLocate) conditionRes).load();
+            if (conditionRes instanceof IRDataAddress) {
+                IRLoad irLoad = new IRLoad((IRDataAddress) conditionRes);
+                irLoad.dest.stackShift = this.currentStackSize++;
                 if (conditionExpressionInstructions.size() > 0) {
                     conditionExpressionInstructions.getLast().nextInstruction = irLoad;
                 }
@@ -1594,7 +1620,7 @@ public class AstVisitor {
 
             // add clean machine instruction for register allocate.
             if (conditionExpressionInstructions.size() > 0) {
-                conditionExpressionInstructions.getLast().nextInstruction = new IRCleanMachine();
+                conditionExpressionInstructions.getLast().nextInstruction = new IRFree(conditionRes);
                 conditionExpressionInstructions.add(conditionExpressionInstructions.getLast().nextInstruction);
             }
 
@@ -1684,8 +1710,9 @@ public class AstVisitor {
     public LinkedList<IRInstruction> visitCallPrint(AstCallPrint astCallPrint) {
         LinkedList<IRInstruction> resultInstructions = astCallPrint.parameter.visit(this);
         IRData parameterRes = this.expressionResult.get(astCallPrint.parameter);
-        if (parameterRes instanceof IRLocate) {
-            IRLoad irLoad = ((IRLocate) parameterRes).load();
+        if (parameterRes instanceof IRDataAddress) {
+            IRLoad irLoad = new IRLoad((IRDataAddress) parameterRes);
+            irLoad.dest.stackShift = this.currentStackSize++;
             if (resultInstructions.size() > 0) {
                 resultInstructions.getLast().nextInstruction = irLoad;
             }
@@ -1703,8 +1730,9 @@ public class AstVisitor {
     public LinkedList<IRInstruction> visitCallPrintln(AstCallPrintln astCallPrintln) {
         LinkedList<IRInstruction> resultInstructions = astCallPrintln.parameter.visit(this);
         IRData parameterRes = this.expressionResult.get(astCallPrintln.parameter);
-        if (parameterRes instanceof IRLocate) {
-            IRLoad irLoad = ((IRLocate) parameterRes).load();
+        if (parameterRes instanceof IRDataAddress) {
+            IRLoad irLoad = new IRLoad((IRDataAddress) parameterRes);
+            irLoad.dest.stackShift = this.currentStackSize++;
             if (resultInstructions.size() > 0) {
                 resultInstructions.getLast().nextInstruction = irLoad;
             }
@@ -1732,8 +1760,9 @@ public class AstVisitor {
     public LinkedList<IRInstruction> visitCallToString(AstCallToString astCallToString) {
         LinkedList<IRInstruction> resultInstructions = astCallToString.childExpression.visit(this);
         IRData parameter = this.expressionResult.get(astCallToString.childExpression);
-        if (parameter instanceof IRLocate) {
-            IRLoad irLoad = ((IRLocate) parameter).load();
+        if (parameter instanceof IRDataAddress) {
+            IRLoad irLoad = new IRLoad((IRDataAddress) parameter);
+            irLoad.dest.stackShift = this.currentStackSize++;
             if (resultInstructions.size() > 0) {
                 resultInstructions.getLast().nextInstruction = irLoad;
             }
@@ -1784,18 +1813,18 @@ public class AstVisitor {
         LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
         IRInstruction lastInstruction = null;
         for (AstSingleVariableDeclaration astSingleVariableDeclaration : astVariableDeclaration.variables) {
-            IRVariable irVariable = this.variableMap.get(astSingleVariableDeclaration.variable.globalID);
+            IRDataValue irVariable = this.variableMap.get(astSingleVariableDeclaration.variable.globalID);
 
             if (irVariable == null) {
-                irVariable = new IRVariable();
-                irVariable.variableID = astSingleVariableDeclaration.variable.globalID;
+                irVariable = new IRDataValue();
+                irVariable.globalID = astSingleVariableDeclaration.variable.globalID;
                 irVariable.stackShift = astSingleVariableDeclaration.variable.localID;
                 this.variableMap.put(astSingleVariableDeclaration.variable.globalID, irVariable);
             }
 
             if (astSingleVariableDeclaration.parent.parent instanceof AstProgram) {
                 irVariable.globalDataLabel = new IRLabelGlobalData();
-                this.globalVariableMap.put(irVariable.variableID, irVariable.globalDataLabel);
+                this.globalVariableMap.put(irVariable.globalID, irVariable.globalDataLabel);
                 this.globalVariables.add(irVariable);
             }
 
@@ -1807,8 +1836,9 @@ public class AstVisitor {
                     }
                 }
                 IRData initialExpressionRes = this.expressionResult.get(astSingleVariableDeclaration.initializeExpression);
-                if (initialExpressionRes instanceof IRLocate) {
-                    IRLoad irLoad = ((IRLocate) initialExpressionRes).load();
+                if (initialExpressionRes instanceof IRDataAddress) {
+                    IRLoad irLoad = new IRLoad((IRDataAddress) initialExpressionRes);
+                    irLoad.dest.stackShift = this.currentStackSize++;
                     if (initialExpressionInstructions.size() > 0) {
                         initialExpressionInstructions.getLast().nextInstruction = irLoad;
                     }
@@ -1817,17 +1847,16 @@ public class AstVisitor {
                 }
                 resultInstructions.addAll(initialExpressionInstructions);
 
-                IRStore irStore = new IRStore(initialExpressionRes, irVariable);
+                IRStore irStore = new IRStore((IRDataValue) initialExpressionRes, irVariable);
 
                 if (resultInstructions.size() > 0) {
                     resultInstructions.getLast().nextInstruction = irStore;
                 }
                 resultInstructions.add(irStore);
-                resultInstructions.getLast().nextInstruction = new IRCleanMachine();
+                resultInstructions.getLast().nextInstruction = new IRFree(initialExpressionRes);
                 resultInstructions.add(resultInstructions.getLast().nextInstruction);
 
                 if (resultInstructions.size() > 0) {
-                    lastInstruction = resultInstructions.getLast();
                     lastInstruction = resultInstructions.getLast();
                 }
             }
@@ -1841,7 +1870,6 @@ public class AstVisitor {
 
     public LinkedList<IRInstruction> visitEmptyStatement(AstEmptyStatement astEmptyStatement) {
         LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
-        resultInstructions.add(new IRCleanMachine());
         return resultInstructions;
     }
 }

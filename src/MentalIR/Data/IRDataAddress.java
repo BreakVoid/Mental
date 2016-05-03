@@ -11,4 +11,7 @@ public class IRDataAddress extends IRData {
     public IRDataAddress(IRDataValue address) {
         this.address = address;
     }
+    public String toAddress() {
+        throw new RuntimeException("cannot apply toAddress on a address data.");
+    }
 }

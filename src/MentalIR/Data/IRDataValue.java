@@ -10,4 +10,12 @@ public class IRDataValue extends IRData {
         this.globalID = -1;
         this.registerName = -1;
     }
+
+    public String toAddress() {
+        if (this.globalDataLabel == null) {
+            return String.format("%d($fp)", -4 * this.stackShift);
+        } else {
+            return this.globalDataLabel.toString();
+        }
+    }
 }

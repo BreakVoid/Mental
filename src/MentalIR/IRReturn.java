@@ -15,7 +15,7 @@ public class IRReturn extends IRJumpLabel {
     public IRReturn() {
         this.returnValue = null;
     }
-    public IRReturn(IRLabel gotoLabel, IRData returnValue) {
+    public IRReturn(IRLabel gotoLabel, IRDataValue returnValue) {
         super(gotoLabel);
         this.returnValue = returnValue;
     }
