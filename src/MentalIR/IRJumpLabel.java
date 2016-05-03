@@ -1,7 +1,5 @@
 package MentalIR;
 
-import MentalIR.Label.IRLabel;
-
 /**
  * Created by Songyu on 16/4/25.
  */

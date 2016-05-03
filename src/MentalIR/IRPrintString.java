@@ -1,9 +1,5 @@
 package MentalIR;
 
-import MentalIR.Data.IRData;
-import MentalIR.Data.IRStringLiteral;
-import MentalIR.Data.IRTemporary;
-import MentalIR.Data.IRVariable;
 import MentalTranslator.MIPSMachine;
 import MentalTranslator.MIPSRegister;
 

@@ -7,8 +7,6 @@ package MentalCore;
 import MentalAST.AstProgram;
 import MentalAST.BuildTreeListener;
 import MentalIR.*;
-import MentalIR.Data.IRStringLiteral;
-import MentalIR.Data.IRVariable;
 import MentalParser.*;
 import MentalTranslator.MIPSFunctions;
 import MentalTranslator.MIPSProgram;
