@@ -1,4 +1,4 @@
-package MentalIR;
+package MentalIR.Branch;
 
 import MentalIR.Label.IRLabel;
 

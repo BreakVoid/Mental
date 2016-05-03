@@ -1,5 +1,6 @@
-package MentalIR;
+package MentalIR.Branch;
 
+import MentalIR.IRInstruction;
 import MentalIR.Label.IRLabel;
 import MentalTranslator.MIPSMachine;
 

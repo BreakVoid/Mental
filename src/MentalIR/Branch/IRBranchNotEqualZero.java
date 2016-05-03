@@ -1,22 +1,19 @@
-package MentalIR;
+package MentalIR.Branch;
 
-import MentalIR.Data.IRData;
 import MentalIR.Data.IRDataValue;
 import MentalIR.Label.IRLabel;
 import MentalTranslator.MIPSMachine;
 
 /**
- * Created by Songyu on 16/4/27.
+ * Created by Songyu on 16/4/25.
  */
-public class IRBranchEqualZero extends IRBranchWithContidtion {
-
-    public IRBranchEqualZero() {
+public class IRBranchNotEqualZero extends IRBranchWithContidtion {
+    public IRBranchNotEqualZero() {
         this.gotoLabel = null;
         this.condition = null;
         this.nextInstruction = null;
     }
-
-    public IRBranchEqualZero(IRDataValue condition, IRLabel gotoLabel) {
+    public IRBranchNotEqualZero(IRDataValue condition, IRLabel gotoLabel) {
         this.gotoLabel = gotoLabel;
         this.condition = condition;
         this.nextInstruction = null;
@@ -24,6 +21,6 @@ public class IRBranchEqualZero extends IRBranchWithContidtion {
 
     @Override
     public String toMips(MIPSMachine mipsMachine) {
-        return this.toMips(mipsMachine, "beqz");
+        return this.toMips(mipsMachine, "bnez");
     }
 }

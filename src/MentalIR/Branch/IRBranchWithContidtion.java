@@ -1,6 +1,5 @@
-package MentalIR;
+package MentalIR.Branch;
 
-import MentalIR.Data.IRData;
 import MentalIR.Data.IRDataIntLiteral;
 import MentalIR.Data.IRDataValue;
 import MentalTranslator.MIPSMachine;

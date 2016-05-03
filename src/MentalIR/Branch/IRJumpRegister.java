@@ -1,4 +1,6 @@
-package MentalIR;
+package MentalIR.Branch;
+
+import MentalIR.IRInstruction;
 
 /**
  * Created by Songyu on 16/4/29.

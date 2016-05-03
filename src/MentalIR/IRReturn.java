@@ -1,6 +1,6 @@
 package MentalIR;
 
-import MentalIR.Data.IRData;
+import MentalIR.Branch.IRJumpLabel;
 import MentalIR.Data.IRDataIntLiteral;
 import MentalIR.Data.IRDataValue;
 import MentalIR.Label.IRLabel;
