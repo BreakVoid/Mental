@@ -13,7 +13,7 @@ all:
 	$(JVC) MentalIR/Label/*.java
 	$(JVC) MentalParser/*.java
 	$(JVC) MentalSymbols/*.java
-	$(JVC) MentalIR/Translator/*.java
+	$(JVC) MentalTranslator/*.java
 	$(JVC) MentalType/*.java
 
 clean:
@@ -29,5 +29,5 @@ clean:
 	-rm -f MentalIR/Label/*.class
 	-rm -f MentalParser/*.class
 	-rm -f MentalSymbols/*.class
-	-rm -f MentalIR/Translator/*.class
+	-rm -f MentalTranslator/*.class
 	-rm -f MentalType/*.class
