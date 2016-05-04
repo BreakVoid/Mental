@@ -33,7 +33,7 @@ public class CorrectTest {
 
     @Test
     public void testPass() throws Exception {
-        System.out.print(mxFile);
+        System.out.println(mxFile);
 
         String sFile = mxFile.replace("mx/", "s/").replace(".mx", ".s");
         String inFile = mxFile.replace("mx/", "in/").replace(".mx", ".in");
@@ -80,7 +80,6 @@ public class CorrectTest {
                 if (line.startsWith("[Statistics]\t")) {
                     line = line.replace("[Statistics]\tAll:\t", "").replaceAll("\t", "\n");
                     all = Integer.parseInt(line.substring(0, line.indexOf("\n")));
-                    System.out.println("\t" + all);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -105,7 +104,9 @@ public class CorrectTest {
         } catch (FileNotFoundException e) {
             System.err.println("No answer file!");
         }
-
+        System.out.println(
+                String.format("Runtime Instruction: %d, limited with %d", all, limit)
+        );
         if (all > limit) {
             fail("Limit exceeded!");
         }
