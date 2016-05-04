@@ -1,6 +1,8 @@
 package MentalTranslator;
 
 import MentalIR.Data.IRData;
+import MentalIR.Data.IRDataIntLiteral;
+import MentalIR.Data.IRDataStringLiteral;
 import MentalIR.Label.IRLabelGlobalData;
 
 import java.util.LinkedList;
@@ -38,9 +40,11 @@ public class MIPSMachine {
     public String storeFirstLoadRegister() {
         int reg = getFirstLoadRegister();
         if (this.loadTime[reg] == -1) {
+//            return "#store nothing";
             return "";
         }
         if (this.loadTime[reg] == this.updateTime[reg]) {
+//            return "#store nothing";
             return "";
         }
         return String.format("\tsw $%d, %s", reg, this.registerData[reg].toAddress());
@@ -52,31 +56,54 @@ public class MIPSMachine {
             this.registerData[reg] = newData;
             newData.registerName = reg;
         }
-        this.loadTime[reg] = 0;
+        this.loadTime[reg] = this.globalTime++;
         this.updateTime[reg] = this.globalTime++;
     }
 
     public String replaceFirstLoadRegisterWithLoad(IRData newData) {
         int reg = getFirstLoadRegister();
-        if (this.registerData[reg] == null) {
-            this.registerData[reg] = newData;
-            newData.registerName = reg;
+
+        if (this.registerData[reg] != null) {
+            this.registerData[reg].registerName = -1;
+            this.registerData[reg] = null;
         }
+
+        this.registerData[reg] = newData;
+        newData.registerName = reg;
+
         this.loadTime[reg] = this.globalTime++;
         this.updateTime[reg] = this.loadTime[reg];
-        return String.format("\tlw $%d, %s", reg, this.registerData[reg].toAddress());
+        if (newData instanceof IRDataIntLiteral) {
+            return String.format("\tli $%d, %s", reg, ((IRDataIntLiteral) newData).literal);
+        } else if (newData instanceof IRDataStringLiteral) {
+            return String.format("\tla $%d, %s", reg, newData.toAddress());
+        } else {
+            return String.format("\tlw $%d, %s", reg, newData.toAddress());
+        }
+    }
+
+    public void updateRegister(int registerName) {
+        this.updateTime[registerName] = this.globalTime++;
     }
 
     public String storeAndCleanMachine() {
         LinkedList<String> storeInstructions = new LinkedList<>();
         for (int i = MIPSRegister.t0; i < MIPSRegister.t9; ++i) {
-            if (this.updateTime[i] > this.loadTime[i]) {
-                storeInstructions.add(
-                        String.format("\tsw $%d, %s", i, this.registerData[i].toAddress())
-                );
+            if (this.registerData[i] != null) {
+                if (this.registerData[i] instanceof IRDataStringLiteral) {
+                    continue;
+                }
+                if (this.registerData[i] instanceof IRDataIntLiteral) {
+                    continue;
+                }
+                if (this.updateTime[i] > this.loadTime[i]) {
+                    storeInstructions.add(
+                            String.format("\tsw $%d, %s", i, this.registerData[i].toAddress())
+                    );
+                }
+                this.registerData[i].registerName = -1;
+                this.registerData[i] = null;
             }
-            this.registerData[i].registerName = -1;
-            this.registerData[i] = null;
             this.loadTime[i] = -1;
             this.updateTime[i] = -1;
         }

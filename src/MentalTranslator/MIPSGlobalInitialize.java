@@ -10,4 +10,12 @@ public class MIPSGlobalInitialize extends MIPSTranslator {
     public MIPSGlobalInitialize() {
         super();
     }
+    public void translate(IRInstruction instruction) {
+        BasicBlockSpliter basicBlockSpliter = new BasicBlockSpliter(instruction);
+        for (BasicBlock basicBlock : basicBlockSpliter.basicBlocks) {
+            BasicBlockTranslator basicBlockTranslator = new BasicBlockTranslator();
+            basicBlockTranslator.translate(basicBlock.instruction);
+            mipsStatement.addAll(basicBlockTranslator.mipsStatement);
+        }
+    }
 }

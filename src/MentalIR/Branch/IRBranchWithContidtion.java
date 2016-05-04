@@ -19,22 +19,21 @@ public class IRBranchWithContidtion extends IRBranch {
             mipsInstructions.add(this.label.toString() + ":");
         }
 
-        if (this.condition instanceof IRDataIntLiteral) {
-            mipsInstructions.add(
-                    String.format("\tli $t0, %d", ((IRDataIntLiteral) this.condition).literal)
-            );
-        } else {
-            mipsInstructions.add(
-                    String.format("\tlw $t0, %s", this.condition.toAddress())
-            );
+        if (this.condition.registerName == -1) {
+            mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+            mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.condition));
         }
+        int registerName = this.condition.registerName;
+        mipsInstructions.add(mipsMachine.storeAndCleanMachine());
         mipsInstructions.add(
-                String.format("\t%s $t0, %s", operand, this.gotoLabel.toString())
+                String.format("\t%s $%d, %s", operand, registerName, this.gotoLabel.toString())
         );
 
         String str = "";
         for (String statement : mipsInstructions) {
-            str += statement + "\n";
+            if (statement.length() > 0) {
+                str += statement + "\n";
+            }
         }
         if (str.length() == 0) {
             str = " ";

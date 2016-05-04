@@ -38,35 +38,55 @@ public class IRLoad extends IRInstruction {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
+
+
         if (this.src instanceof IRDataStringLiteral) {
+            if (((IRDataStringLiteral) this.src).registerName == -1) {
+                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src));
+            }
+            if (this.dest.registerName == -1) {
+                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                mipsMachine.rewriteFirstLoadRegister(this.dest);
+            } else {
+                mipsMachine.updateRegister(this.dest.registerName);
+            }
             mipsInstructions.add(
-                    String.format("\tla $t0, %s", this.src.toAddress())
+                    String.format("\tmove %s, %s", this.dest.toRegister(), this.src.toRegister())
             );
+            ((IRDataStringLiteral) this.src).registerName = -1;
         } else {
-            mipsInstructions.add(
-                    String.format("\tlw $t0, %s", this.src.address.toAddress())
-            );
+            if (this.src.address.registerName == -1) {
+                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src.address));
+            }
+            if (this.dest.registerName == -1) {
+                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                mipsMachine.rewriteFirstLoadRegister(this.dest);
+            } else {
+                mipsMachine.updateRegister(this.dest.registerName);
+            }
             if (this.loadSize == 4) {
                 mipsInstructions.add(
-                        String.format("\tlw $t0, 0($t0)")
+                        String.format("\tlw %s, 0(%s)", this.dest.toRegister(), this.src.address.toRegister())
                 );
             } else {
                 mipsInstructions.add(
-                        String.format("\tlb $t0, 0($t0)")
+                        String.format("\tlb %s, 0(%s)", this.dest.toRegister(), this.src.address.toRegister())
                 );
             }
         }
-        mipsInstructions.add(
-                String.format("\tsw $t0, %s", this.dest.toAddress())
-        );
 
         String str = "";
         for (String statement : mipsInstructions) {
-            str += statement + "\n";
+            if (statement.length() > 0) {
+                str += statement + "\n";
+            }
         }
         return str.substring(0, str.length() - 1);
     }
 
+    // for cisc code generation.
     @Override
     public String toMips() {
         LinkedList<String> mipsInstructions = new LinkedList<>();
@@ -98,7 +118,9 @@ public class IRLoad extends IRInstruction {
 
         String str = "";
         for (String statement : mipsInstructions) {
-            str += statement + "\n";
+            if (statement.length() > 0) {
+                str += statement + "\n";
+            }
         }
         return str.substring(0, str.length() - 1);
     }

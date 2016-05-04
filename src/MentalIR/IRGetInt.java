@@ -29,6 +29,7 @@ public class IRGetInt extends IRSystemCall {
             mipsInstructions.add(this.label.toString() + ":");
         }
 
+        mipsInstructions.add(mipsMachine.storeAndCleanMachine());
         mipsInstructions.add("\tli $v0, 5");
         mipsInstructions.add("\tsyscall");
         mipsInstructions.add(
@@ -36,7 +37,9 @@ public class IRGetInt extends IRSystemCall {
         );
         String str = "";
         for (String statement : mipsInstructions) {
-            str += statement + "\n";
+            if (statement.length() > 0) {
+                str += statement + "\n";
+            }
         }
         return str.substring(0, str.length() - 1);
     }

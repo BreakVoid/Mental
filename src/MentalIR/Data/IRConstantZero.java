@@ -10,6 +10,8 @@ import MentalTranslator.MIPSRegister;
 public class IRConstantZero extends IRDataIntLiteral {
     public IRConstantZero() {
         this.registerName = MIPSRegister.zero;
+        this.stackShift = 2147483647 >> 1;
+        this.literal = 0;
     }
 
     @Override

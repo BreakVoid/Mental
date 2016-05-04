@@ -16,20 +16,7 @@ public class IRNullOperation extends IRInstruction {
 
     @Override
     public String toMips(MIPSMachine mipsMachine) {
-        LinkedList<String> mipsInstructions = new LinkedList<>();
-        if (this.label != null) {
-            mipsInstructions.add(this.label.toString() + ":");
-        }
-        mipsInstructions.add("\tnop");
-
-        String str = "";
-        for (String statement : mipsInstructions) {
-            str += statement + "\n";
-        }
-        if (str.length() == 0) {
-            str = " ";
-        }
-        return str.substring(0, str.length() - 1);
+        return this.toMips();
     }
 
     @Override
@@ -42,7 +29,9 @@ public class IRNullOperation extends IRInstruction {
 
         String str = "";
         for (String statement : mipsInstructions) {
-            str += statement + "\n";
+            if (statement.length() > 0) {
+                str += statement + "\n";
+            }
         }
         if (str.length() == 0) {
             str = " ";

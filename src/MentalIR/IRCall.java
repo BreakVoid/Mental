@@ -38,21 +38,16 @@ public class IRCall extends IRInstruction {
         for (int i = 0, count = this.parameters.size(); i < count; ++i) {
             IRDataValue thisParameter = this.parameters.get(i);
 
-            if (thisParameter instanceof IRDataIntLiteral) {
-                mipsInstructions.add(
-                        String.format("\tli $t0, %d", ((IRDataIntLiteral) thisParameter).literal)
-                );
-            } else {
-                mipsInstructions.add(
-                        String.format("\tlw $t0, %s", thisParameter.toAddress())
-                );
+            if (thisParameter.registerName == -1) {
+                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(thisParameter));
             }
 
             mipsInstructions.add(
-                    String.format("\tsw $t0, %d($sp)", -4 * (i + 1))
+                    String.format("\tsw %s, %d($sp)", thisParameter.toRegister(), -4 * (i + 1))
             );
         }
-
+        mipsInstructions.add(mipsMachine.storeAndCleanMachine());
         mipsInstructions.add(
                 String.format("jal %s", this.functionName.toString())
         );

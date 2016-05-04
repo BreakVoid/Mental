@@ -30,16 +30,16 @@ public class IRPrintString extends IRSystemCall {
             mipsInstructions.add(this.label.toString() + ":");
         }
 
-        mipsInstructions.add("\tli $v0, 4");
-        if (this.stringLocation instanceof IRDataStringLiteral) {
-            mipsInstructions.add(
-                    String.format("\tla $a0, %s", this.stringLocation.globalDataLabel.toString())
-            );
-        } else {
-            mipsInstructions.add(
-                    String.format("\tlw $a0, %s", this.stringLocation.toAddress())
-            );
+        if (this.stringLocation.registerName == -1) {
+            mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+            mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.stringLocation));
         }
+
+        mipsInstructions.add("\tli $v0, 4");
+        mipsInstructions.add(
+                String.format("\tmove $a0, %s", this.stringLocation.toRegister())
+        );
+        mipsInstructions.add(mipsMachine.storeAndCleanMachine());
         mipsInstructions.add("\tsyscall");
 
         String str = "";
@@ -49,6 +49,7 @@ public class IRPrintString extends IRSystemCall {
         return str.substring(0, str.length() - 1);
     }
 
+    // for cisc code generation.
     @Override
     public String toMips() {
         LinkedList<String> mipsInstructions = new LinkedList<>();
@@ -71,7 +72,9 @@ public class IRPrintString extends IRSystemCall {
 
         String str = "";
         for (String statement : mipsInstructions) {
-            str += statement + "\n";
+            if (statement.length() > 0) {
+                str += statement + "\n";
+            }
         }
         return str.substring(0, str.length() - 1);
     }

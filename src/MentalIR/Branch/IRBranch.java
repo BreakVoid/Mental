@@ -25,6 +25,27 @@ public class IRBranch extends IRInstruction {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
+        mipsInstructions.add(mipsMachine.storeAndCleanMachine());
+        mipsInstructions.add(
+                String.format("\tb %s", this.gotoLabel.toString())
+        );
+
+        String str = "";
+        for (String statement : mipsInstructions) {
+            if (statement.length() > 0) {
+                str += statement + "\n";
+            }
+        }
+        return str.substring(0, str.length() - 1);
+    }
+
+    @Override
+    public String toMips() {
+        LinkedList<String> mipsInstructions = new LinkedList<>();
+
+        if (this.label != null) {
+            mipsInstructions.add(this.label.toString() + ":");
+        }
 
         mipsInstructions.add(
                 String.format("\tb %s", this.gotoLabel.toString())

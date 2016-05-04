@@ -17,7 +17,7 @@ public class MIPSTranslator {
 
     public void translate(IRInstruction instruction) {
         for (; instruction != null; instruction = instruction.nextInstruction) {
-            this.mipsStatement.add(instruction.toMips(this.machine));
+            this.mipsStatement.add(instruction.toMips());
         }
     }
 }

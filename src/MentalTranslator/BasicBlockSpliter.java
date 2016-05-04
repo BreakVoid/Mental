@@ -23,31 +23,35 @@ public class BasicBlockSpliter {
         }
         while (instruction != null) {
             if (instruction.nextInstruction != null) {
-                if (instruction.nextInstruction.label != null) {
+                if (instruction instanceof IRBranch) {
                     this.basicBlocks.getLast().nextBlock = new BasicBlock();
                     this.basicBlocks.add(this.basicBlocks.getLast().nextBlock);
                     this.basicBlocks.getLast().instruction = instruction.nextInstruction;
                     instruction.nextInstruction = null;
                     instruction = this.basicBlocks.getLast().instruction;
-                } else if (instruction.nextInstruction instanceof IRBranch) {
+                } else if (instruction instanceof IRCall) {
                     this.basicBlocks.getLast().nextBlock = new BasicBlock();
                     this.basicBlocks.add(this.basicBlocks.getLast().nextBlock);
                     this.basicBlocks.getLast().instruction = instruction.nextInstruction;
                     instruction.nextInstruction = null;
                     instruction = this.basicBlocks.getLast().instruction;
-                } else if (instruction.nextInstruction instanceof IRCall) {
+                } else if (instruction instanceof IRSystemCall) {
                     this.basicBlocks.getLast().nextBlock = new BasicBlock();
                     this.basicBlocks.add(this.basicBlocks.getLast().nextBlock);
                     this.basicBlocks.getLast().instruction = instruction.nextInstruction;
                     instruction.nextInstruction = null;
                     instruction = this.basicBlocks.getLast().instruction;
-                } else if (instruction.nextInstruction instanceof IRSystemCall) {
+                } if (instruction.nextInstruction.label != null) {
                     this.basicBlocks.getLast().nextBlock = new BasicBlock();
                     this.basicBlocks.add(this.basicBlocks.getLast().nextBlock);
                     this.basicBlocks.getLast().instruction = instruction.nextInstruction;
                     instruction.nextInstruction = null;
                     instruction = this.basicBlocks.getLast().instruction;
+                } else {
+                    instruction = instruction.nextInstruction;
                 }
+            } else {
+                break;
             }
         }
     }

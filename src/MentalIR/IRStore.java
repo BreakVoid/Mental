@@ -35,37 +35,39 @@ public class IRStore extends IRInstruction {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
-
-        if (this.src instanceof IRDataIntLiteral) {
-            mipsInstructions.add(
-                    String.format("\tli $t0, %s", ((IRDataIntLiteral) this.src).literal)
-            );
-        } else {
-            mipsInstructions.add(
-                    String.format("\tlw $t0, %s", this.src.toAddress())
-            );
+        if (this.src.registerName == -1) {
+            mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+            mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src));
         }
 
         if (this.dest instanceof IRDataAddress) {
+            if (((IRDataAddress) this.dest).address.registerName == -1) {
+                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(((IRDataAddress) this.dest).address));
+            }
             mipsInstructions.add(
-                    String.format("\tlw $t1, %s", ((IRDataAddress) this.dest).address.toAddress())
-            );
-            mipsInstructions.add(
-                    String.format("\tsw $t0, 0($t1)")
+                    String.format("\tsw %s, 0(%s)", this.src.toRegister(), ((IRDataAddress) this.dest).address.toRegister())
             );
         } else {
+            if (this.dest.registerName == -1) {
+                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                mipsMachine.rewriteFirstLoadRegister(this.dest);
+            }
             mipsInstructions.add(
-                    String.format("\tsw $t0, %s", this.dest.toAddress())
+                    String.format("\tmove %s, %s", this.dest.toRegister(), this.src.toRegister())
             );
         }
 
-        String resultString = "";
-        for (String line : mipsInstructions) {
-            resultString += line + "\n";
+        String str = "";
+        for (String statement : mipsInstructions) {
+            if (statement.length() > 0) {
+                str += statement + "\n";
+            }
         }
-        return resultString.substring(0, resultString.length() - 1);
+        return str.substring(0, str.length() - 1);
     }
 
+    // for cisc code generation.
     @Override
     public String toMips() {
         LinkedList<String> mipsInstructions = new LinkedList<>();

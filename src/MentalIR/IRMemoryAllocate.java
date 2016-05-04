@@ -33,18 +33,19 @@ public class IRMemoryAllocate extends IRSystemCall {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
+
+        if (this.amount.registerName == -1) {
+            mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+            mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.amount));
+        }
+
         mipsInstructions.add(
                 "\tli $v0, 9"
         );
-        if (this.amount instanceof IRDataIntLiteral) {
-            mipsInstructions.add(
-                    String.format("\tli $a0, %d", ((IRDataIntLiteral) this.amount).literal)
-            );
-        } else {
-            mipsInstructions.add(
-                    String.format("\tlw $a0, %s", this.amount.toAddress())
-            );
-        }
+        mipsInstructions.add(
+                String.format("\tmove $a0, %s", this.amount.toRegister())
+        );
+        mipsInstructions.add(mipsMachine.storeAndCleanMachine());
         mipsInstructions.add(
                 "\tsyscall"
         );
@@ -89,7 +90,9 @@ public class IRMemoryAllocate extends IRSystemCall {
 
         String str = "";
         for (String statement : mipsInstructions) {
-            str += statement + "\n";
+            if (statement.length() > 0) {
+                str += statement + "\n";
+            }
         }
         return str.substring(0, str.length() - 1);
     }

@@ -10,6 +10,7 @@ import MentalIR.*;
 import MentalIR.Data.IRDataStringLiteral;
 import MentalIR.Data.IRDataValue;
 import MentalParser.*;
+import MentalTranslator.BasicBlockSpliter;
 import MentalTranslator.MIPSFunctions;
 import MentalTranslator.MIPSProgram;
 import MentalTranslator.MIPSStaticData;
@@ -74,12 +75,11 @@ public class Main {
         for (IRInstruction instruction : visitor.globalVariableInitialize) {
             mipsProgram.globalInitialize.translate(instruction);
         }
-        mipsProgram.globalInitialize.machine.clear();
 
         for (int i = 0, count = visitor.functionInstructionLists.size(); i < count; ++i) {
             mipsProgram.functions.add(new MIPSFunctions());
-            mipsProgram.functions.getLast().translate(visitor.functionStackSize.get(i), visitor.functionInstructionLists.get(i));
-            mipsProgram.functions.getLast().machine.clear();
+            BasicBlockSpliter basicBlockSpliter = new BasicBlockSpliter(visitor.functionInstructionLists.get(i));
+            mipsProgram.functions.getLast().translate(visitor.functionStackSize.get(i), basicBlockSpliter);
         }
         System.out.println(mipsProgram);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(builtInMips));

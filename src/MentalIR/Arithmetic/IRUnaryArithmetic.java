@@ -28,29 +28,34 @@ public class IRUnaryArithmetic extends IRArithmetic {
             mipsInstructions.add(this.label.toString() + ":");
         }
 
-        if (this.child instanceof IRDataIntLiteral) {
-            mipsInstructions.add(
-                    String.format("\tli $t0, %d", ((IRDataIntLiteral) this.child).literal)
-            );
-        } else {
-            mipsInstructions.add(
-                    String.format("\tlw $t0, %s", this.child.toAddress())
-            );
+        if (this.child.registerName == -1) {
+            mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+            mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.child));
         }
+
+        if (this.res.registerName == -1) {
+            mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+            mipsMachine.rewriteFirstLoadRegister(this.res);
+        } else {
+            mipsMachine.updateRegister(this.res.registerName);
+        }
+
         mipsInstructions.add(
-                String.format("\t%s $t0, $t0", operand)
-        );
-        mipsInstructions.add(
-                String.format("\tsw $t0, %s", this.res.toAddress())
+                String.format("\t%s %s, %s", operand, this.res.toRegister(), this.child.toRegister())
         );
 
         String str = "";
         for (String statement : mipsInstructions) {
-            str += statement + "\n";
+            if (statement.length() > 0) {
+                str += statement + "\n";
+            }
+        }
+        if (str.length() == 0) {
+            str = " ";
         }
         return str.substring(0, str.length() - 1);
     }
-
+    // for cisc code generation.
     public String toMips(String operand) {
         LinkedList<String> mipsInstructions = new LinkedList<>();
         if (this.label != null) {

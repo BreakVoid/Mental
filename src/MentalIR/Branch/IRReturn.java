@@ -28,22 +28,26 @@ public class IRReturn extends IRJumpLabel {
             mipsInstructions.add(this.label.toString() + ":");
         }
         if (this.returnValue != null) {
-            if (this.returnValue instanceof IRDataIntLiteral) {
-                mipsInstructions.add(
-                        String.format("\tli $v0, %d", ((IRDataIntLiteral) this.returnValue).literal)
-                );
-            } else {
-                mipsInstructions.add(
-                        String.format("\tlw $v0, %s", this.returnValue.toAddress())
-                );
+            if (this.returnValue.registerName == -1) {
+                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.returnValue));
             }
+            mipsInstructions.add(
+                    String.format("\tmove $v0, %s", this.returnValue.toRegister())
+            );
         }
+        mipsInstructions.add(mipsMachine.storeAndCleanMachine());
         mipsInstructions.add(
                 String.format("\tb %s", this.gotoLabel.toString())
         );
         String str = "";
         for (String statement : mipsInstructions) {
-            str += statement + "\n";
+            if (str.length() > 0) {
+                str += statement + "\n";
+            }
+        }
+        if (str.length() == 0) {
+            str = " ";
         }
         return str.substring(0, str.length() - 1);
     }
