@@ -1,6 +1,7 @@
 package MentalTranslator;
 
 import MentalIR.Branch.IRBranch;
+import MentalIR.Branch.IRReturn;
 import MentalIR.IRCall;
 import MentalIR.IRInstruction;
 import MentalIR.IRSystemCall;
@@ -23,33 +24,18 @@ public class BasicBlockSpliter {
         }
         while (instruction != null) {
             if (instruction.nextInstruction != null) {
-                if (instruction instanceof IRBranch) {
-                    this.basicBlocks.getLast().nextBlock = new BasicBlock();
-                    this.basicBlocks.add(this.basicBlocks.getLast().nextBlock);
-                    this.basicBlocks.getLast().instruction = instruction.nextInstruction;
+                IRInstruction nextInstruction = instruction.nextInstruction;
+                if (instruction instanceof IRBranch
+                        || instruction instanceof IRCall
+                        || instruction instanceof IRSystemCall
+                        || instruction.nextInstruction.label != null) {
+
+                    BasicBlock newBasicBlock = new BasicBlock();
+                    newBasicBlock.instruction = nextInstruction;
                     instruction.nextInstruction = null;
-                    instruction = this.basicBlocks.getLast().instruction;
-                } else if (instruction instanceof IRCall) {
-                    this.basicBlocks.getLast().nextBlock = new BasicBlock();
-                    this.basicBlocks.add(this.basicBlocks.getLast().nextBlock);
-                    this.basicBlocks.getLast().instruction = instruction.nextInstruction;
-                    instruction.nextInstruction = null;
-                    instruction = this.basicBlocks.getLast().instruction;
-                } else if (instruction instanceof IRSystemCall) {
-                    this.basicBlocks.getLast().nextBlock = new BasicBlock();
-                    this.basicBlocks.add(this.basicBlocks.getLast().nextBlock);
-                    this.basicBlocks.getLast().instruction = instruction.nextInstruction;
-                    instruction.nextInstruction = null;
-                    instruction = this.basicBlocks.getLast().instruction;
-                } if (instruction.nextInstruction.label != null) {
-                    this.basicBlocks.getLast().nextBlock = new BasicBlock();
-                    this.basicBlocks.add(this.basicBlocks.getLast().nextBlock);
-                    this.basicBlocks.getLast().instruction = instruction.nextInstruction;
-                    instruction.nextInstruction = null;
-                    instruction = this.basicBlocks.getLast().instruction;
-                } else {
-                    instruction = instruction.nextInstruction;
+                    basicBlocks.add(newBasicBlock);
                 }
+                instruction = nextInstruction;
             } else {
                 break;
             }

@@ -9,10 +9,7 @@ import MentalAST.AstExpressionList;
 import MentalAST.AstProgram;
 import MentalAST.AstStatement.*;
 import MentalIR.Arithmetic.*;
-import MentalIR.Branch.IRBranchEqualZero;
-import MentalIR.Branch.IRBranchNotEqualZero;
-import MentalIR.Branch.IRJumpLabel;
-import MentalIR.Branch.IRReturn;
+import MentalIR.Branch.*;
 import MentalIR.Data.*;
 import MentalIR.Label.*;
 import MentalSymbols.SymbolTable;
@@ -1527,7 +1524,7 @@ public class AstVisitor {
     public LinkedList<IRInstruction> visitJumpStatement(AstJumpStatement astJumpStatement) {
         LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
         IRFree irFree = new IRFree();
-        IRJumpLabel irJumpLabel;
+        IRBranch irJumpLabel;
         if (astJumpStatement.variant == AstJumpStatement.CONTINUE) {
             irJumpLabel = new IRJumpLabel(this.continueLoop);
         } else if (astJumpStatement.variant == AstJumpStatement.BREAK) {

@@ -11,7 +11,7 @@ import java.util.LinkedList;
 /**
  * Created by Songyu on 16/4/25.
  */
-public class IRReturn extends IRJumpLabel {
+public class IRReturn extends IRBranch {
     public IRDataValue returnValue;
     public IRReturn() {
         this.returnValue = null;
@@ -42,7 +42,7 @@ public class IRReturn extends IRJumpLabel {
         );
         String str = "";
         for (String statement : mipsInstructions) {
-            if (str.length() > 0) {
+            if (statement.length() > 0) {
                 str += statement + "\n";
             }
         }
