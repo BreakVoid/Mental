@@ -66,9 +66,6 @@ public class IRBinaryArithmetic extends IRArithmetic {
                 mipsMachine.updateRegister(this.res.registerName);
             }
             mipsInstructions.add(
-                    String.format("\tlw %s, %s", this.rhs.toRegister(), this.rhs.toAddress())
-            );
-            mipsInstructions.add(
                     String.format("\t%s %s, %s, %s", operand, this.res.toRegister(), this.lhs.toRegister(), this.rhs.toRegister())
             );
         }
