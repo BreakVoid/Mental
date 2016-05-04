@@ -87,4 +87,60 @@ public class Main {
             System.out.println(line);
         }
     }
+
+    public static void compile(InputStream source, OutputStream assemble) throws IOException {
+        FileInputStream builtInFunction = null;
+        FileInputStream builtInMips = null;
+        try {
+            builtInFunction = new FileInputStream("built_in.mx");
+            builtInMips = new FileInputStream("mips_built_in.s");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        TokenStream tokens = null;
+
+        InputStream seqStream = new SequenceInputStream(builtInFunction, source);
+        tokens = new CommonTokenStream(new MentalLexer(new ANTLRInputStream(seqStream)));
+        MentalParser parser = new MentalParser(tokens);
+        ParseTreeWalker walker = new ParseTreeWalker();
+        MentalParser.ProgramContext programContext = parser.program();
+        BuildTreeListener listener = new BuildTreeListener();
+        walker.walk(listener, programContext);
+        AstProgram astProgram = (AstProgram) listener.tree.get(programContext);
+        if (listener.existError) {
+            System.exit(1);
+        }
+
+//        System.out.println(astProgram.toPrintString());
+//        System.exit(0);
+        AstVisitor visitor = new AstVisitor();
+        visitor.visitProgram(astProgram);
+
+        MIPSProgram mipsProgram = new MIPSProgram();
+        MIPSStaticData mipsStaticData = mipsProgram.staticData;
+
+        for (IRDataStringLiteral irStringLiteral : visitor.stringLiterals) {
+            mipsStaticData.translate(irStringLiteral);
+        }
+
+        for (IRDataValue irVariable : visitor.globalVariables) {
+            mipsStaticData.translate(irVariable);
+        }
+
+        for (IRInstruction instruction : visitor.globalVariableInitialize) {
+            mipsProgram.globalInitialize.translate(instruction);
+        }
+
+        for (int i = 0, count = visitor.functionInstructionLists.size(); i < count; ++i) {
+            mipsProgram.functions.add(new MIPSFunctions());
+            BasicBlockSpliter basicBlockSpliter = new BasicBlockSpliter(visitor.functionInstructionLists.get(i));
+            mipsProgram.functions.getLast().translate(visitor.functionStackSize.get(i), basicBlockSpliter);
+        }
+        String result = mipsProgram.toString();
+        assemble.write(result.getBytes());
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(builtInMips));
+        for (String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
+            assemble.write((line + "\n").getBytes());
+        }
+    }
 }
