@@ -21,7 +21,7 @@ all:
 	cp src/MentalAST/AstStatement/*.class bin/MentalAST/AstStatement/
 	cp src/MentalCore/*.class bin/MentalCore/
 	cp src/MentalIR/*.class bin/MentalIR/
-	cp src/MentalIR/Arithmetic*.class bin/MentalIR/Arithmetic
+	cp src/MentalIR/Arithmetic/*.class bin/MentalIR/Arithmetic/
 	cp src/MentalIR/Branch/*.class bin/MentalIR/Branch/
 	cp src/MentalIR/Data/*.class bin/MentalIR/Data/
 	cp src/MentalIR/Label/*.class bin/MentalIR/Label/
