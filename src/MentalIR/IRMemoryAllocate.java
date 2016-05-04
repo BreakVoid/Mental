@@ -23,7 +23,7 @@ public class IRMemoryAllocate extends IRSystemCall {
         this.variant = 9;
         this.amount = amount;
         this.res = new IRDataValue();
-        this.res.registerName = MIPSRegister.v0;
+        this.res.registerName = -1;
     }
 
     @Override
@@ -37,6 +37,8 @@ public class IRMemoryAllocate extends IRSystemCall {
         if (this.amount.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.amount));
+        } else {
+            mipsMachine.refreshRegister(this.amount.registerName);
         }
 
         mipsInstructions.add(

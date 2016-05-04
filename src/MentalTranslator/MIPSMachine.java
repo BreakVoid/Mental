@@ -29,7 +29,7 @@ public class MIPSMachine {
 
     public int getFirstLoadRegister() {
         int res = MIPSRegister.t0;
-        for (int i = MIPSRegister.t0; i < MIPSRegister.t9; ++i) {
+        for (int i = MIPSRegister.t1; i <= MIPSRegister.t9; ++i) {
             if (this.loadTime[i] < this.loadTime[res]) {
                 res = i;
             }
@@ -52,10 +52,12 @@ public class MIPSMachine {
 
     public void rewriteFirstLoadRegister(IRData newData) {
         int reg = getFirstLoadRegister();
-        if (this.registerData[reg] == null) {
-            this.registerData[reg] = newData;
-            newData.registerName = reg;
+        if (this.registerData[reg] != null) {
+            this.registerData[reg].registerName = -1;
+            this.registerData[reg] = null;
         }
+        this.registerData[reg] = newData;
+        newData.registerName = reg;
         this.loadTime[reg] = this.globalTime++;
         this.updateTime[reg] = this.globalTime++;
     }
@@ -83,29 +85,48 @@ public class MIPSMachine {
     }
 
     public void updateRegister(int registerName) {
+        if (registerName == 0) {
+            return;
+        }
+        if (this.registerData[registerName] == null) {
+            throw new RuntimeException("cannot update an empty register.");
+        }
         this.updateTime[registerName] = this.globalTime++;
+    }
+    public void refreshRegister(int registerName) {
+        if (registerName == 0) {
+            return;
+        }
+        if (this.registerData[registerName] == null) {
+            throw new RuntimeException("cannot refresh an empty register.");
+        }
+        this.loadTime[registerName] = this.globalTime++;
     }
 
     public String storeAndCleanMachine() {
         LinkedList<String> storeInstructions = new LinkedList<>();
-        for (int i = MIPSRegister.t0; i < MIPSRegister.t9; ++i) {
+        for (int i = MIPSRegister.t0; i <= MIPSRegister.t9; ++i) {
             if (this.registerData[i] != null) {
                 if (this.registerData[i] instanceof IRDataStringLiteral) {
+                    this.registerData[i].registerName = -1;
+                    this.registerData[i] = null;
                     continue;
                 }
                 if (this.registerData[i] instanceof IRDataIntLiteral) {
+                    this.registerData[i].registerName = -1;
+                    this.registerData[i] = null;
                     continue;
                 }
-                if (this.updateTime[i] > this.loadTime[i]) {
+                if (this.updateTime[i] != this.loadTime[i]) {
                     storeInstructions.add(
                             String.format("\tsw $%d, %s", i, this.registerData[i].toAddress())
                     );
                 }
                 this.registerData[i].registerName = -1;
                 this.registerData[i] = null;
+                this.loadTime[i] = -1;
+                this.updateTime[i] = -1;
             }
-            this.loadTime[i] = -1;
-            this.updateTime[i] = -1;
         }
         String str = "";
         for (String statement : storeInstructions) {

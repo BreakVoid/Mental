@@ -32,18 +32,23 @@ public class IRStore extends IRInstruction {
     @Override
     public String toMips(MIPSMachine mipsMachine) {
         LinkedList<String> mipsInstructions = new LinkedList<>();
+
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
         if (this.src.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src));
+        } else {
+            mipsMachine.refreshRegister(this.src.registerName);
         }
 
         if (this.dest instanceof IRDataAddress) {
             if (((IRDataAddress) this.dest).address.registerName == -1) {
                 mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
                 mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(((IRDataAddress) this.dest).address));
+            } else {
+                mipsMachine.refreshRegister(((IRDataAddress) this.dest).address.registerName);
             }
             mipsInstructions.add(
                     String.format("\tsw %s, 0(%s)", this.src.toRegister(), ((IRDataAddress) this.dest).address.toRegister())
@@ -52,7 +57,10 @@ public class IRStore extends IRInstruction {
             if (this.dest.registerName == -1) {
                 mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
                 mipsMachine.rewriteFirstLoadRegister(this.dest);
+            } else {
+                mipsMachine.updateRegister(this.dest.registerName);
             }
+
             mipsInstructions.add(
                     String.format("\tmove %s, %s", this.dest.toRegister(), this.src.toRegister())
             );

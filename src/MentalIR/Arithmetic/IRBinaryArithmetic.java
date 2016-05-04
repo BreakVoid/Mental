@@ -42,6 +42,8 @@ public class IRBinaryArithmetic extends IRArithmetic {
         if (this.lhs.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.lhs));
+        } else {
+            mipsMachine.refreshRegister(this.lhs.registerName);
         }
 
         if (this.rhs instanceof IRDataIntLiteral) {
@@ -58,6 +60,8 @@ public class IRBinaryArithmetic extends IRArithmetic {
             if (this.rhs.registerName == -1) {
                 mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
                 mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.rhs));
+            } else {
+                mipsMachine.refreshRegister(this.rhs.registerName);
             }
             if (this.res.registerName == -1) {
                 mipsInstructions.add(mipsMachine.storeFirstLoadRegister());

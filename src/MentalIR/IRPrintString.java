@@ -33,6 +33,8 @@ public class IRPrintString extends IRSystemCall {
         if (this.stringLocation.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.stringLocation));
+        } else {
+            mipsMachine.refreshRegister(this.stringLocation.registerName);
         }
 
         mipsInstructions.add("\tli $v0, 4");

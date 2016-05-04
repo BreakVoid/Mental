@@ -22,6 +22,8 @@ public class IRBranchWithContidtion extends IRBranch {
         if (this.condition.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.condition));
+        } else {
+            mipsMachine.refreshRegister(this.condition.registerName);
         }
         int registerName = this.condition.registerName;
         mipsInstructions.add(mipsMachine.storeAndCleanMachine());

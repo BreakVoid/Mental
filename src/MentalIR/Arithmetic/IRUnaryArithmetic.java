@@ -31,6 +31,8 @@ public class IRUnaryArithmetic extends IRArithmetic {
         if (this.child.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.child));
+        } else {
+            mipsMachine.refreshRegister(this.child.registerName);
         }
 
         if (this.res.registerName == -1) {

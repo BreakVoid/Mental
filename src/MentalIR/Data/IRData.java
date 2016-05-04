@@ -18,6 +18,9 @@ public abstract class IRData {
     }
 
     public String toRegister() {
+        if (this.registerName == -1) {
+            throw new RuntimeException("error register name.");
+        }
         return "$" + Integer.toString(this.registerName);
     }
     public String toAddress() {
