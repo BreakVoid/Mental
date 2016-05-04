@@ -109,6 +109,6 @@ public class CorrectTest {
         if (all > limit) {
             fail("Limit exceeded!");
         }
-        
+
     }
 }
