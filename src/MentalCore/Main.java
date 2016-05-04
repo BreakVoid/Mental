@@ -88,7 +88,7 @@ public class Main {
         }
     }
 
-    public static void compile(InputStream source, OutputStream assemble) throws IOException {
+    public void compile(InputStream source, OutputStream assemble) throws IOException {
         FileInputStream builtInFunction = null;
         FileInputStream builtInMips = null;
         try {
