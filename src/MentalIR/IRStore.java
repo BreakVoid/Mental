@@ -65,4 +65,41 @@ public class IRStore extends IRInstruction {
         }
         return resultString.substring(0, resultString.length() - 1);
     }
+
+    @Override
+    public String toMips() {
+        LinkedList<String> mipsInstructions = new LinkedList<>();
+        if (this.label != null) {
+            mipsInstructions.add(this.label.toString() + ":");
+        }
+
+        if (this.src instanceof IRDataIntLiteral) {
+            mipsInstructions.add(
+                    String.format("\tli $t0, %s", ((IRDataIntLiteral) this.src).literal)
+            );
+        } else {
+            mipsInstructions.add(
+                    String.format("\tlw $t0, %s", this.src.toAddress())
+            );
+        }
+
+        if (this.dest instanceof IRDataAddress) {
+            mipsInstructions.add(
+                    String.format("\tlw $t1, %s", ((IRDataAddress) this.dest).address.toAddress())
+            );
+            mipsInstructions.add(
+                    String.format("\tsw $t0, 0($t1)")
+            );
+        } else {
+            mipsInstructions.add(
+                    String.format("\tsw $t0, %s", this.dest.toAddress())
+            );
+        }
+
+        String resultString = "";
+        for (String line : mipsInstructions) {
+            resultString += line + "\n";
+        }
+        return resultString.substring(0, resultString.length() - 1);
+    }
 }

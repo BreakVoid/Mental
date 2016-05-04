@@ -20,4 +20,9 @@ public class IRFree extends IRInstruction {
     public String toMips(MIPSMachine mipsMachine) {
         return "";
     }
+
+    @Override
+    public String toMips() {
+        return "";
+    }
 }

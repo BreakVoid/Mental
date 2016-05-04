@@ -20,4 +20,8 @@ public class IRCompareLess extends IRCompare {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "slt");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("slt");
+    }
 }

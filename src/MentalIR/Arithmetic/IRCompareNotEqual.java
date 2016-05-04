@@ -20,4 +20,8 @@ public class IRCompareNotEqual extends IRCompare {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "sne");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("sne");
+    }
 }

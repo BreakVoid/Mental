@@ -21,4 +21,8 @@ public class IRCompareGreater extends IRCompare {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "sgt");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("sgt");
+    }
 }

@@ -19,4 +19,8 @@ public class IRDiv extends IRBinaryArithmetic {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "div");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("div");
+    }
 }

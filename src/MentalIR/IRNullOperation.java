@@ -31,4 +31,22 @@ public class IRNullOperation extends IRInstruction {
         }
         return str.substring(0, str.length() - 1);
     }
+
+    @Override
+    public String toMips() {
+        LinkedList<String> mipsInstructions = new LinkedList<>();
+        if (this.label != null) {
+            mipsInstructions.add(this.label.toString() + ":");
+        }
+        mipsInstructions.add("\tnop");
+
+        String str = "";
+        for (String statement : mipsInstructions) {
+            str += statement + "\n";
+        }
+        if (str.length() == 0) {
+            str = " ";
+        }
+        return str.substring(0, str.length() - 1);
+    }
 }

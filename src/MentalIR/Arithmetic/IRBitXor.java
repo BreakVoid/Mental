@@ -23,4 +23,8 @@ public class IRBitXor extends IRBinaryArithmetic {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "xor");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("xor");
+    }
 }

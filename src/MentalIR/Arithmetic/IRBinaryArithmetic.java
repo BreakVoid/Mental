@@ -74,4 +74,46 @@ public class IRBinaryArithmetic extends IRArithmetic {
         }
         return str.substring(0, str.length() - 1);
     }
+
+    public String toMips(String operand) {
+
+        LinkedList<String> mipsInstructions = new LinkedList<>();
+        if (this.label != null) {
+            mipsInstructions.add(this.label.toString() + ":");
+        }
+
+        if (this.lhs instanceof IRDataIntLiteral) {
+            mipsInstructions.add(
+                    String.format("\tli $%d, %d", MIPSRegister.t0, ((IRDataIntLiteral) this.lhs).literal)
+            );
+        } else {
+            mipsInstructions.add(
+                    String.format("\tlw $%d, %s", MIPSRegister.t0, this.lhs.toAddress())
+            );
+        }
+
+        if (this.rhs instanceof IRDataIntLiteral) {
+            mipsInstructions.add(
+                    String.format("\t%s $t0, $t0, %d", operand, ((IRDataIntLiteral) this.rhs).literal)
+            );
+            mipsInstructions.add(
+                    String.format("\tsw $t0, %s", this.res.toAddress())
+            );
+        } else {
+            mipsInstructions.add(
+                    String.format("\tlw $t1, %s", this.rhs.toAddress())
+            );
+            mipsInstructions.add(
+                    String.format("\t%s $t0, $t0, $t1", operand)
+            );
+            mipsInstructions.add(
+                    String.format("\tsw $t0, %s", this.res.toAddress())
+            );
+        }
+        String str = "";
+        for (String statement : mipsInstructions) {
+            str += statement + "\n";
+        }
+        return str.substring(0, str.length() - 1);
+    }
 }

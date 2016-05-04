@@ -50,4 +50,33 @@ public class IRUnaryArithmetic extends IRArithmetic {
         }
         return str.substring(0, str.length() - 1);
     }
+
+    public String toMips(String operand) {
+        LinkedList<String> mipsInstructions = new LinkedList<>();
+        if (this.label != null) {
+            mipsInstructions.add(this.label.toString() + ":");
+        }
+
+        if (this.child instanceof IRDataIntLiteral) {
+            mipsInstructions.add(
+                    String.format("\tli $t0, %d", ((IRDataIntLiteral) this.child).literal)
+            );
+        } else {
+            mipsInstructions.add(
+                    String.format("\tlw $t0, %s", this.child.toAddress())
+            );
+        }
+        mipsInstructions.add(
+                String.format("\t%s $t0, $t0", operand)
+        );
+        mipsInstructions.add(
+                String.format("\tsw $t0, %s", this.res.toAddress())
+        );
+
+        String str = "";
+        for (String statement : mipsInstructions) {
+            str += statement + "\n";
+        }
+        return str.substring(0, str.length() - 1);
+    }
 }

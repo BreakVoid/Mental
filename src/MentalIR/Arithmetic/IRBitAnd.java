@@ -23,4 +23,8 @@ public class IRBitAnd extends IRBinaryArithmetic {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "and");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("and");
+    }
 }

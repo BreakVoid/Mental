@@ -66,4 +66,40 @@ public class IRLoad extends IRInstruction {
         }
         return str.substring(0, str.length() - 1);
     }
+
+    @Override
+    public String toMips() {
+        LinkedList<String> mipsInstructions = new LinkedList<>();
+
+        if (this.label != null) {
+            mipsInstructions.add(this.label.toString() + ":");
+        }
+        if (this.src instanceof IRDataStringLiteral) {
+            mipsInstructions.add(
+                    String.format("\tla $t0, %s", this.src.toAddress())
+            );
+        } else {
+            mipsInstructions.add(
+                    String.format("\tlw $t0, %s", this.src.address.toAddress())
+            );
+            if (this.loadSize == 4) {
+                mipsInstructions.add(
+                        String.format("\tlw $t0, 0($t0)")
+                );
+            } else {
+                mipsInstructions.add(
+                        String.format("\tlb $t0, 0($t0)")
+                );
+            }
+        }
+        mipsInstructions.add(
+                String.format("\tsw $t0, %s", this.dest.toAddress())
+        );
+
+        String str = "";
+        for (String statement : mipsInstructions) {
+            str += statement + "\n";
+        }
+        return str.substring(0, str.length() - 1);
+    }
 }

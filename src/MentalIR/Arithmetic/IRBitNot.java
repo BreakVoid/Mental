@@ -22,4 +22,8 @@ public class IRBitNot extends IRUnaryArithmetic {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "not");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("not");
+    }
 }

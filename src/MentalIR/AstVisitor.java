@@ -12,6 +12,7 @@ import MentalIR.Arithmetic.*;
 import MentalIR.Branch.IRBranchEqualZero;
 import MentalIR.Branch.IRBranchNotEqualZero;
 import MentalIR.Branch.IRJumpLabel;
+import MentalIR.Branch.IRReturn;
 import MentalIR.Data.*;
 import MentalIR.Label.*;
 import MentalSymbols.SymbolTable;

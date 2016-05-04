@@ -19,4 +19,8 @@ public class IRInstruction {
         throw new RuntimeException(this.toString());
     }
 
+    public String toMips() {
+        // would never be called.
+        throw new RuntimeException(this.toString());
+    }
 }

@@ -19,4 +19,8 @@ public class IRMod extends IRBinaryArithmetic {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "rem");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("rem");
+    }
 }

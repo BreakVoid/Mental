@@ -1,4 +1,4 @@
-package MentalIR;
+package MentalIR.Branch;
 
 import MentalIR.Branch.IRJumpLabel;
 import MentalIR.Data.IRDataIntLiteral;

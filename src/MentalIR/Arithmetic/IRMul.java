@@ -19,4 +19,8 @@ public class IRMul extends IRBinaryArithmetic {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "mul");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("mul");
+    }
 }

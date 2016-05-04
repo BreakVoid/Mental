@@ -23,4 +23,8 @@ public class IRBitOr extends IRBinaryArithmetic {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "or");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("or");
+    }
 }

@@ -59,4 +59,32 @@ public class IRMove extends IRInstruction {
         }
         return str.substring(0, str.length() - 1);
     }
+
+    @Override
+    public String toMips() {
+        LinkedList<String> mipsInstructions = new LinkedList<>();
+        if (this.label != null) {
+            mipsInstructions.add(this.label.toString() + ":");
+        }
+
+        if (this.src instanceof IRDataIntLiteral) {
+            mipsInstructions.add(
+                    String.format("\tli $t0, %d", ((IRDataIntLiteral) this.src).literal)
+            );
+        } else {
+            mipsInstructions.add(
+                    String.format("\tlw $t0, %s", this.src.toAddress())
+            );
+        }
+
+        mipsInstructions.add(
+                String.format("\tsw $t0, %s", this.dest.toAddress())
+        );
+
+        String str = "";
+        for (String statement : mipsInstructions) {
+            str += statement + "\n";
+        }
+        return str.substring(0, str.length() - 1);
+    }
 }

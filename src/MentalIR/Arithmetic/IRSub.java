@@ -19,4 +19,8 @@ public class IRSub extends IRBinaryArithmetic {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "sub");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("sub");
+    }
 }

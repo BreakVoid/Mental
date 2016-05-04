@@ -25,4 +25,8 @@ public class IRAdd extends IRBinaryArithmetic {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "add");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("add");
+    }
 }

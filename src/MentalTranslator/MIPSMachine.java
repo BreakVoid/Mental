@@ -3,99 +3,92 @@ package MentalTranslator;
 import MentalIR.Data.IRData;
 import MentalIR.Label.IRLabelGlobalData;
 
+import java.util.LinkedList;
+
 /**
  * Created by Songyu on 16/4/27.
  */
 public class MIPSMachine {
-    public boolean[] registerEmpty;
     public IRData[] registerData;
-    public int[] useTime;
+    public int[] loadTime;
+    public int[] updateTime;
     public int globalTime;
     public MIPSMachine() {
-        this.useTime = new int [32];
-        this.globalTime = 0;
-        this.registerEmpty = new boolean[32];
+        this.loadTime = new int [32];
+        this.updateTime = new int [32];
         this.registerData = new IRData[32];
+        this.globalTime = 1;
         for (int i = 0; i < 32; ++i) {
-            this.registerEmpty[i] = true;
             this.registerData[i] = null;
+            this.loadTime[i] = -1;
+            this.updateTime[i] = -1;
         }
     }
-    public boolean isEmpty(int i) {
-        return this.registerEmpty[i];
-    }
-    public boolean canBeRewrite(int i) {
-        if (this.isEmpty(i)) {
-            return true;
-        }
 
-        return false;
-    }
-    public IRData occupied(int i) {
-        return this.registerData[i];
-    }
-
-    public int getEmptyRegister() {
-        int registerName = -1;
-        for (int i = MIPSRegister.t0; i <= MIPSRegister.t9; ++i) {
-            if (this.isEmpty(i)) {
-                return i;
-            } else if (this.canBeRewrite(i)) {
-                if (registerName == -1) {
-                    registerName = i;
-                } else {
-                    if (this.useTime[i] < this.useTime[registerName]) {
-                        registerName = i;
-                    }
-                }
+    public int getFirstLoadRegister() {
+        int res = MIPSRegister.t0;
+        for (int i = MIPSRegister.t0; i < MIPSRegister.t9; ++i) {
+            if (this.loadTime[i] < this.loadTime[res]) {
+                res = i;
             }
         }
-        return registerName;
+        return res;
     }
 
-    public void use(int registerName, IRData data) {
-        if (data != null) {
-            if (this.registerData[registerName] != null) {
-                this.erase(registerName);
+    public String storeFirstLoadRegister() {
+        int reg = getFirstLoadRegister();
+        if (this.loadTime[reg] == -1) {
+            return "";
+        }
+        if (this.loadTime[reg] == this.updateTime[reg]) {
+            return "";
+        }
+        return String.format("\tsw $%d, %s", reg, this.registerData[reg].toAddress());
+    }
+
+    public void rewriteFirstLoadRegister(IRData newData) {
+        int reg = getFirstLoadRegister();
+        if (this.registerData[reg] == null) {
+            this.registerData[reg] = newData;
+            newData.registerName = reg;
+        }
+        this.loadTime[reg] = 0;
+        this.updateTime[reg] = this.globalTime++;
+    }
+
+    public String replaceFirstLoadRegisterWithLoad(IRData newData) {
+        int reg = getFirstLoadRegister();
+        if (this.registerData[reg] == null) {
+            this.registerData[reg] = newData;
+            newData.registerName = reg;
+        }
+        this.loadTime[reg] = this.globalTime++;
+        this.updateTime[reg] = this.loadTime[reg];
+        return String.format("\tlw $%d, %s", reg, this.registerData[reg].toAddress());
+    }
+
+    public String storeAndCleanMachine() {
+        LinkedList<String> storeInstructions = new LinkedList<>();
+        for (int i = MIPSRegister.t0; i < MIPSRegister.t9; ++i) {
+            if (this.updateTime[i] > this.loadTime[i]) {
+                storeInstructions.add(
+                        String.format("\tsw $%d, %s", i, this.registerData[i].toAddress())
+                );
             }
-            this.registerEmpty[registerName] = false;
-            this.registerData[registerName] = data;
-            this.useTime[registerName] = this.globalTime++;
-        } else {
-            throw new RuntimeException("use the register with null data.");
+            this.registerData[i].registerName = -1;
+            this.registerData[i] = null;
+            this.loadTime[i] = -1;
+            this.updateTime[i] = -1;
         }
-    }
-
-    public void erase(int registerName) {
-        if (!this.canBeRewrite(registerName)) {
-            System.err.println(this.registerData[registerName]);
-            throw new RuntimeException("the data will be used after. (register: " + Integer.toString(registerName) + ")");
-        }
-        if (this.registerData[registerName] != null) {
-
-        }
-        this.registerEmpty[registerName] = true;
-        this.registerData[registerName] = null;
-        this.useTime[registerName] = 0;
-    }
-
-    public String registerUse() {
-        String s = "";
-        for (int i = 0; i < 32; ++i) {
-            if (this.isEmpty(i)) {
-                s += "-";
-            } else if (this.canBeRewrite(i)) {
-                s += "A";
-            } else {
-                s += "U";
+        String str = "";
+        for (String statement : storeInstructions) {
+            if (statement.length() > 0) {
+                str += statement + "\n";
             }
         }
-        return s;
-    }
-
-    public void clear() {
-        for (int i = 0; i < 32; ++i) {
-            this.erase(i);
+        if (str.length() == 0) {
+            str = " ";
         }
+        return str.substring(0, str.length() - 1);
     }
 }

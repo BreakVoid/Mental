@@ -23,4 +23,8 @@ public class IRBitRsh extends IRBinaryArithmetic {
     public String toMips(MIPSMachine mipsMachine) {
         return this.toMips(mipsMachine, "sra");
     }
+    @Override
+    public String toMips() {
+        return this.toMips("sra");
+    }
 }

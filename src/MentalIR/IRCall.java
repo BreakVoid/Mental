@@ -69,4 +69,47 @@ public class IRCall extends IRInstruction {
         }
         return str.substring(0, str.length() - 1);
     }
+
+    @Override
+    public String toMips() {
+        LinkedList<String> mipsInstructions = new LinkedList<>();
+
+        if (this.label != null) {
+            mipsInstructions.add(this.label + ":");
+        }
+
+        for (int i = 0, count = this.parameters.size(); i < count; ++i) {
+            IRDataValue thisParameter = this.parameters.get(i);
+
+            if (thisParameter instanceof IRDataIntLiteral) {
+                mipsInstructions.add(
+                        String.format("\tli $t0, %d", ((IRDataIntLiteral) thisParameter).literal)
+                );
+            } else {
+                mipsInstructions.add(
+                        String.format("\tlw $t0, %s", thisParameter.toAddress())
+                );
+            }
+
+            mipsInstructions.add(
+                    String.format("\tsw $t0, %d($sp)", -4 * (i + 1))
+            );
+        }
+
+        mipsInstructions.add(
+                String.format("jal %s", this.functionName.toString())
+        );
+
+        if (this.res != null) {
+            mipsInstructions.add(
+                    String.format("\tsw $v0, %s", this.res.toAddress())
+            );
+        }
+
+        String str = "";
+        for (String statement : mipsInstructions) {
+            str += statement + '\n';
+        }
+        return str.substring(0, str.length() - 1);
+    }
 }

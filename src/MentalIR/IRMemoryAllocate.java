@@ -59,4 +59,38 @@ public class IRMemoryAllocate extends IRSystemCall {
         }
         return str.substring(0, str.length() - 1);
     }
+
+    @Override
+    public String toMips() {
+        LinkedList<String> mipsInstructions = new LinkedList<>();
+
+        if (this.label != null) {
+            mipsInstructions.add(this.label.toString() + ":");
+        }
+        mipsInstructions.add(
+                "\tli $v0, 9"
+        );
+        if (this.amount instanceof IRDataIntLiteral) {
+            mipsInstructions.add(
+                    String.format("\tli $a0, %d", ((IRDataIntLiteral) this.amount).literal)
+            );
+        } else {
+            mipsInstructions.add(
+                    String.format("\tlw $a0, %s", this.amount.toAddress())
+            );
+        }
+        mipsInstructions.add(
+                "\tsyscall"
+        );
+
+        mipsInstructions.add(
+                String.format("\tsw $v0, %s", this.res.toAddress())
+        );
+
+        String str = "";
+        for (String statement : mipsInstructions) {
+            str += statement + "\n";
+        }
+        return str.substring(0, str.length() - 1);
+    }
 }
