@@ -28,8 +28,8 @@ public class Main {
         FileInputStream builtInFunction = null;
         FileInputStream builtInMips = null;
         try {
-            builtInFunction = new FileInputStream("src/built_in.mx");
-            builtInMips = new FileInputStream("src/mips_built_in.s");
+            builtInFunction = new FileInputStream("./built_in.mx");
+            builtInMips = new FileInputStream("./mips_built_in.s");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

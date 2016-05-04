@@ -30,6 +30,8 @@ all:
 	cp src/MentalType/*.class bin/MentalType/
 	cp src/MentalTranslator/*.class bin/MentalTranslator/
 	cp src/antlr-4.5.3-complete.jar bin/
+	cp mips_built_in.s bin/
+	cp built_in.mx bin/
 	$(MAKE) -C src clean
 clean:
 	$(MAKE) -C src clean
