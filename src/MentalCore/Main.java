@@ -70,12 +70,12 @@ public class Main {
         }
 
         for (IRInstruction instruction : visitor.globalVariableInitialize) {
-            mipsProgram.globalInitialize.translate(instruction);
+            mipsProgram.globalInitialize.translate(BranchCompressor.compress(instruction));
         }
 
         for (int i = 0, count = visitor.functionInstructionLists.size(); i < count; ++i) {
             mipsProgram.functions.add(new MIPSFunctions());
-            BasicBlockSpliter basicBlockSpliter = new BasicBlockSpliter(visitor.functionInstructionLists.get(i));
+            BasicBlockSpliter basicBlockSpliter = new BasicBlockSpliter(BranchCompressor.compress(visitor.functionInstructionLists.get(i)));
             mipsProgram.functions.getLast().translate(visitor.functionStackSize.get(i), basicBlockSpliter);
         }
         System.out.println(mipsProgram);
@@ -125,12 +125,12 @@ public class Main {
         }
 
         for (IRInstruction instruction : visitor.globalVariableInitialize) {
-            mipsProgram.globalInitialize.translate(instruction);
+            mipsProgram.globalInitialize.translate(BranchCompressor.compress(instruction));
         }
 
         for (int i = 0, count = visitor.functionInstructionLists.size(); i < count; ++i) {
             mipsProgram.functions.add(new MIPSFunctions());
-            BasicBlockSpliter basicBlockSpliter = new BasicBlockSpliter(visitor.functionInstructionLists.get(i));
+            BasicBlockSpliter basicBlockSpliter = new BasicBlockSpliter(BranchCompressor.compress(visitor.functionInstructionLists.get(i)));
             mipsProgram.functions.getLast().translate(visitor.functionStackSize.get(i), basicBlockSpliter);
         }
         String result = mipsProgram.toString();

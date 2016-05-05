@@ -9,7 +9,7 @@ import java.util.LinkedList;
 /**
  * Created by Songyu on 16/5/2.
  */
-public class IRBranchWithContidtion extends IRBranch {
+public class IRBranchWithCondition extends IRBranch {
     public IRDataValue condition;
 
     public String toMips(MIPSMachine mipsMachine, String operand) {

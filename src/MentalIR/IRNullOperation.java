@@ -25,9 +25,10 @@ public class IRNullOperation extends IRInstruction {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
-        if (this.nextInstruction == null) {
-            mipsInstructions.add("\tnop");
-        }
+
+//        if (this.nextInstruction == null) {
+//            mipsInstructions.add("\tnop");
+//        }
 
         String str = "";
         for (String statement : mipsInstructions) {

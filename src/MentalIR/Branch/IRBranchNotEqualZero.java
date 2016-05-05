@@ -7,7 +7,7 @@ import MentalTranslator.MIPSMachine;
 /**
  * Created by Songyu on 16/4/25.
  */
-public class IRBranchNotEqualZero extends IRBranchWithContidtion {
+public class IRBranchNotEqualZero extends IRBranchWithCondition {
     public IRBranchNotEqualZero() {
         this.gotoLabel = null;
         this.condition = null;

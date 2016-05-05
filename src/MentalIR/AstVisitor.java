@@ -1324,11 +1324,6 @@ public class AstVisitor {
     public LinkedList<IRInstruction> visitExpressionStatement(AstExpressionStatement astExpressionStatement) {
         LinkedList<IRInstruction> resultInstruction = astExpressionStatement.expression.visit(this);
         IRData expressionRes = this.expressionResult.get(astExpressionStatement.expression);
-        IRFree irFree = new IRFree(expressionRes);
-        if (resultInstruction.size() > 0) {
-            resultInstruction.getLast().nextInstruction = irFree;
-        }
-        resultInstruction.add(irFree);
         return resultInstruction;
     }
 
@@ -1349,11 +1344,6 @@ public class AstVisitor {
 
         if (astForStatement.start != null) {
             LinkedList<IRInstruction> initializeExpressionInstructions = astForStatement.start.visit(this);
-            // append clean machine instructions.
-            if (initializeExpressionInstructions.size() > 0) {
-                initializeExpressionInstructions.getLast().nextInstruction = new IRFree(this.expressionResult.get(astForStatement.start));
-                initializeExpressionInstructions.add(initializeExpressionInstructions.getLast().nextInstruction);
-            }
             resultInstructions.addAll(initializeExpressionInstructions);
         }
 
@@ -1380,11 +1370,6 @@ public class AstVisitor {
                 }
                 conditionExpressionInstructions.add(irLoad);
                 conditionRes = irLoad.dest;
-            }
-            // append clean machine instructions.
-            if (conditionExpressionInstructions.size() > 0) {
-                conditionExpressionInstructions.getLast().nextInstruction = new IRFree(conditionRes);
-                conditionExpressionInstructions.add(conditionExpressionInstructions.getLast().nextInstruction);
             }
 
             loopInstructions.addAll(conditionExpressionInstructions);
@@ -1418,10 +1403,6 @@ public class AstVisitor {
         // step expression for a `for` statement;
         if (astForStatement.loop != null) {
             LinkedList<IRInstruction> stepInstructions = astForStatement.loop.visit(this);
-            if (stepInstructions.size() > 0) {
-                stepInstructions.getLast().nextInstruction = new IRFree(this.expressionResult.get(astForStatement.loop));
-                stepInstructions.add(stepInstructions.getLast().nextInstruction);
-            }
 
             IRJumpLabel irJumpLabel = new IRJumpLabel(thisForCondition);
             if (stepInstructions.size() > 0) {
@@ -1473,11 +1454,6 @@ public class AstVisitor {
             conditionRes = irLoad.dest;
         }
 
-        // append clean machine for the register allocation when translate to mips.
-        if (conditionInstructions.size() > 0) {
-            conditionInstructions.getLast().nextInstruction = new IRFree(conditionRes);
-            conditionInstructions.add(conditionInstructions.getLast().nextInstruction);
-        }
         resultInstructions = conditionInstructions;
 
         // set branch instruction.
@@ -1538,7 +1514,6 @@ public class AstVisitor {
 
     public LinkedList<IRInstruction> visitJumpStatement(AstJumpStatement astJumpStatement) {
         LinkedList<IRInstruction> resultInstructions = new LinkedList<>();
-        IRFree irFree = new IRFree();
         IRBranch irJumpLabel;
         if (astJumpStatement.variant == AstJumpStatement.CONTINUE) {
             irJumpLabel = new IRJumpLabel(this.continueLoop);
@@ -1559,7 +1534,6 @@ public class AstVisitor {
                     expressionInstructions.add(irLoad);
                 }
                 resultInstructions.addAll(expressionInstructions);
-                irFree.freeData = expressionRes;
             }
             irJumpLabel = new IRReturn(this.endFunction, (IRDataValue) expressionRes);
         } else {
@@ -1569,8 +1543,6 @@ public class AstVisitor {
             resultInstructions.getLast().nextInstruction = irJumpLabel;
         }
         resultInstructions.add(irJumpLabel);
-        resultInstructions.getLast().nextInstruction = irFree;
-        resultInstructions.add(irFree);
         return resultInstructions;
     }
 
@@ -1611,12 +1583,6 @@ public class AstVisitor {
                 }
                 conditionExpressionInstructions.add(irLoad);
                 conditionRes = irLoad.dest;
-            }
-
-            // add clean machine instruction for register allocate.
-            if (conditionExpressionInstructions.size() > 0) {
-                conditionExpressionInstructions.getLast().nextInstruction = new IRFree(conditionRes);
-                conditionExpressionInstructions.add(conditionExpressionInstructions.getLast().nextInstruction);
             }
 
             if (loopInstructions.size() > 0) {
@@ -1860,8 +1826,6 @@ public class AstVisitor {
                     resultInstructions.getLast().nextInstruction = irStore;
                 }
                 resultInstructions.add(irStore);
-                resultInstructions.getLast().nextInstruction = new IRFree(initialExpressionRes);
-                resultInstructions.add(resultInstructions.getLast().nextInstruction);
 
                 if (resultInstructions.size() > 0) {
                     lastInstruction = resultInstructions.getLast();

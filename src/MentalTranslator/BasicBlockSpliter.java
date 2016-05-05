@@ -1,8 +1,6 @@
 package MentalTranslator;
 
 import MentalIR.Branch.IRBranch;
-import MentalIR.Branch.IRBranchWithContidtion;
-import MentalIR.Branch.IRReturn;
 import MentalIR.IRCall;
 import MentalIR.IRInstruction;
 import MentalIR.IRSystemCall;
