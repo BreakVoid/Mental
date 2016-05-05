@@ -42,9 +42,8 @@ public class CorrectTest {
         String limFile = mxFile.replace("mx/", "lim/").replace(".mx", ".lim");
 
         new Main().compile(new FileInputStream(mxFile), new FileOutputStream(sFile));
-
+        System.out.println("compile completed.");
         Process process = Runtime.getRuntime().exec(String.format("lib/usr/bin/spim -stat -file %s", sFile));
-
         try {
             BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(inFile)));
             PrintStream output = new PrintStream(process.getOutputStream());

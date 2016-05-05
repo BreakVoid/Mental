@@ -41,15 +41,19 @@ public class IRMove extends IRInstruction {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
-
+        this.src.refCount--;
         if (this.src.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src));
+        } else {
+            mipsMachine.refreshRegister(this.src.registerName);
         }
 
         if (this.dest.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsMachine.rewriteFirstLoadRegister(this.dest);
+        } else {
+            mipsMachine.updateRegister(this.dest.registerName);
         }
 
         mipsInstructions.add(

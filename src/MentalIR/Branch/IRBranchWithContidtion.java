@@ -18,7 +18,7 @@ public class IRBranchWithContidtion extends IRBranch {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
-
+        this.condition.refCount--;
         if (this.condition.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.condition));

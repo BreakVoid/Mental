@@ -62,6 +62,7 @@ public class IRLoad extends IRInstruction {
             );
             ((IRDataStringLiteral) this.src).registerName = -1;
         } else {
+            this.src.address.refCount--;
             if (this.src.address.registerName == -1) {
                 mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
                 mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src.address));

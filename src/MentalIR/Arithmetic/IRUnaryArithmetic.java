@@ -28,7 +28,7 @@ public class IRUnaryArithmetic extends IRArithmetic {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
-
+        this.child.refCount--;
         if (this.child.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.child));
@@ -46,7 +46,6 @@ public class IRUnaryArithmetic extends IRArithmetic {
         mipsInstructions.add(
                 String.format("\t%s %s, %s", operand, this.res.toRegister(), this.child.toRegister())
         );
-
         String str = "";
         for (String statement : mipsInstructions) {
             if (statement.length() > 0) {

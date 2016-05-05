@@ -44,7 +44,8 @@ public class IRBinaryArithmetic extends IRArithmetic {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
-
+        this.lhs.refCount--;
+        this.rhs.refCount--;
         if (this.lhs.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.lhs));

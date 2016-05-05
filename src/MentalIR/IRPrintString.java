@@ -35,7 +35,9 @@ public class IRPrintString extends IRSystemCall {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
-
+        if (this.stringLocation instanceof IRDataValue) {
+            this.stringLocation.refCount--;
+        }
         if (this.stringLocation.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.stringLocation));

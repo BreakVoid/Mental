@@ -19,6 +19,9 @@ public class IRReturn extends IRBranch {
     public IRReturn(IRLabel gotoLabel, IRDataValue returnValue) {
         super(gotoLabel);
         this.returnValue = returnValue;
+        if (this.returnValue != null) {
+            this.returnValue.refCount++;
+        }
     }
 
     @Override

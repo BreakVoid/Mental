@@ -37,6 +37,7 @@ public class IRStore extends IRInstruction {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
+        this.src.refCount--;
         if (this.src.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src));

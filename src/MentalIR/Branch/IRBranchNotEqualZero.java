@@ -16,6 +16,7 @@ public class IRBranchNotEqualZero extends IRBranchWithContidtion {
     public IRBranchNotEqualZero(IRDataValue condition, IRLabel gotoLabel) {
         this.gotoLabel = gotoLabel;
         this.condition = condition;
+        this.condition.refCount++;
         this.nextInstruction = null;
     }
 

@@ -37,7 +37,7 @@ public class IRMemoryAllocate extends IRSystemCall {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
-
+        this.amount.refCount--;
         if (this.amount.registerName == -1) {
             mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
             mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.amount));

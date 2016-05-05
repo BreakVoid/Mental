@@ -40,7 +40,7 @@ public class IRCall extends IRInstruction {
 
         for (int i = 0, count = this.parameters.size(); i < count; ++i) {
             IRDataValue thisParameter = this.parameters.get(i);
-
+            thisParameter.refCount--;
             if (thisParameter.registerName == -1) {
                 mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
                 mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(thisParameter));

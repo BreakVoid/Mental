@@ -50,6 +50,13 @@ public class MIPSMachine {
 //            return "#store nothing";
             return "";
         }
+        if (this.registerData[reg] == null) {
+            return "";
+        } else {
+            if (this.registerData[reg].globalID == -1 && this.registerData[reg].refCount == 0) {
+                return "";
+            }
+        }
         this.storeTime[reg] = this.globalTime++;
         return String.format("\tsw $%d, %s", reg, this.registerData[reg].toAddress());
     }
@@ -124,9 +131,11 @@ public class MIPSMachine {
                     continue;
                 }
                 if (this.updateTime[i] > this.storeTime[i]) {
-                    storeInstructions.add(
-                            String.format("\tsw $%d, %s", i, this.registerData[i].toAddress())
-                    );
+                    if (this.registerData[i].globalID != -1 || this.registerData[i].refCount > 0) {
+                        storeInstructions.add(
+                                String.format("\tsw $%d, %s", i, this.registerData[i].toAddress())
+                        );
+                    }
                 }
                 this.registerData[i].registerName = -1;
                 this.registerData[i] = null;
