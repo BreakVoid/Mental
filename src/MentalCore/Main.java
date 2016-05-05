@@ -10,10 +10,7 @@ import MentalIR.*;
 import MentalIR.Data.IRDataStringLiteral;
 import MentalIR.Data.IRDataValue;
 import MentalParser.*;
-import MentalTranslator.BasicBlockSpliter;
-import MentalTranslator.MIPSFunctions;
-import MentalTranslator.MIPSProgram;
-import MentalTranslator.MIPSStaticData;
+import MentalTranslator.*;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStream;
@@ -73,10 +70,12 @@ public class Main {
         }
 
         for (IRInstruction instruction : visitor.globalVariableInitialize) {
+            DeadCodeKiller.kill(instruction);
             mipsProgram.globalInitialize.translate(instruction);
         }
 
         for (int i = 0, count = visitor.functionInstructionLists.size(); i < count; ++i) {
+            DeadCodeKiller.kill(visitor.functionInstructionLists.get(i));
             mipsProgram.functions.add(new MIPSFunctions());
             BasicBlockSpliter basicBlockSpliter = new BasicBlockSpliter(visitor.functionInstructionLists.get(i));
             mipsProgram.functions.getLast().translate(visitor.functionStackSize.get(i), basicBlockSpliter);
@@ -128,10 +127,12 @@ public class Main {
         }
 
         for (IRInstruction instruction : visitor.globalVariableInitialize) {
+            DeadCodeKiller.kill(instruction);
             mipsProgram.globalInitialize.translate(instruction);
         }
 
         for (int i = 0, count = visitor.functionInstructionLists.size(); i < count; ++i) {
+            DeadCodeKiller.kill(visitor.functionInstructionLists.get(i));
             mipsProgram.functions.add(new MIPSFunctions());
             BasicBlockSpliter basicBlockSpliter = new BasicBlockSpliter(visitor.functionInstructionLists.get(i));
             mipsProgram.functions.getLast().translate(visitor.functionStackSize.get(i), basicBlockSpliter);

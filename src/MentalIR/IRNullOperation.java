@@ -12,6 +12,7 @@ public class IRNullOperation extends IRInstruction {
     public IRNullOperation() {
         this.nextInstruction = null;
         this.label = null;
+        this.beTranslate = true;
     }
 
     @Override
@@ -25,7 +26,9 @@ public class IRNullOperation extends IRInstruction {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
-        mipsInstructions.add("\tnop");
+        if (this.nextInstruction == null) {
+            mipsInstructions.add("\tnop");
+        }
 
         String str = "";
         for (String statement : mipsInstructions) {

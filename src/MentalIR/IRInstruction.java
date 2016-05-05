@@ -9,9 +9,11 @@ import MentalTranslator.MIPSMachine;
 public class IRInstruction {
     public IRInstruction nextInstruction = null;
     public IRLabel label = null;
+    public boolean beTranslate;
     public IRInstruction() {
         this.nextInstruction = null;
         this.label = null;
+        this.beTranslate = true;
     }
 
     public String toMips(MIPSMachine mipsMachine) {

@@ -18,11 +18,13 @@ public class IRStore extends IRInstruction {
     public IRStore() {
         this.src = null;
         this.dest = null;
+        this.beTranslate = true;
     }
     public IRStore(IRDataValue src, IRData dest) {
         this.src = src;
         this.src.refCount++;
         this.dest = dest;
+        this.beTranslate = true;
     }
 
     @Override

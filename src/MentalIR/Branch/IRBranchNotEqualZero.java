@@ -12,12 +12,14 @@ public class IRBranchNotEqualZero extends IRBranchWithContidtion {
         this.gotoLabel = null;
         this.condition = null;
         this.nextInstruction = null;
+        this.beTranslate = true;
     }
     public IRBranchNotEqualZero(IRDataValue condition, IRLabel gotoLabel) {
         this.gotoLabel = gotoLabel;
         this.condition = condition;
         this.condition.refCount++;
         this.nextInstruction = null;
+        this.beTranslate = true;
     }
 
     @Override

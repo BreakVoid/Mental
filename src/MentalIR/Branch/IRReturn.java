@@ -22,6 +22,7 @@ public class IRReturn extends IRBranch {
         if (this.returnValue != null) {
             this.returnValue.refCount++;
         }
+        this.beTranslate = true;
     }
 
     @Override

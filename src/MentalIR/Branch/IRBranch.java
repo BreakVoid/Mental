@@ -13,9 +13,11 @@ public class IRBranch extends IRInstruction {
     public IRLabel gotoLabel;
     public IRBranch() {
         this.gotoLabel = null;
+        this.beTranslate = true;
     }
     public IRBranch(IRLabel gotoLabel) {
         this.gotoLabel = gotoLabel;
+        this.beTranslate = true;
     }
 
     @Override

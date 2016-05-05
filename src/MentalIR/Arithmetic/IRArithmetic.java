@@ -9,6 +9,7 @@ import MentalIR.IRInstruction;
 public class IRArithmetic extends IRInstruction {
     public IRDataValue res;
     public IRArithmetic() {
+        this.beTranslate = true;
         this.res = null;
     }
 }

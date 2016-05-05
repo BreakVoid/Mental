@@ -16,9 +16,11 @@ public class IRGetInt extends IRSystemCall {
     public IRGetInt() {
         this.variant = 5;
         this.res = new IRDataValue();
+        this.beTranslate = true;
     }
     public IRGetInt(IRData res) {
         this.res = res;
+        this.beTranslate = true;
     }
 
     @Override

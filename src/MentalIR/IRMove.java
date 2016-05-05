@@ -21,18 +21,21 @@ public class IRMove extends IRInstruction {
         this.src = src;
         this.src.refCount++;
         this.dest = new IRDataValue();
+        this.beTranslate = true;
     }
 
     public IRMove(IRDataValue src, IRDataValue dest) {
         this.src = src;
         this.src.refCount++;
         this.dest = dest;
+        this.beTranslate = true;
     }
 
     public IRMove(IRData src, IRData dest) {
         this.src = (IRDataValue) src;
         this.src.refCount++;
         this.dest = (IRDataValue) dest;
+        this.beTranslate = true;
     }
 
     @Override

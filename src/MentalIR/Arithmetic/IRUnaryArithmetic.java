@@ -21,6 +21,7 @@ public class IRUnaryArithmetic extends IRArithmetic {
         this.child = child;
         this.child.refCount++;
         this.res = res;
+        this.beTranslate = true;
     }
 
     public String toMips(MIPSMachine mipsMachine, String operand) {

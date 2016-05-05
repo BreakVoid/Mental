@@ -22,6 +22,7 @@ public class IRBinaryArithmetic extends IRArithmetic {
         this.rhs = rhs;
         this.rhs.refCount++;
         this.res = new IRDataValue();
+        this.beTranslate = true;
     }
     public IRBinaryArithmetic(IRDataValue lhs, IRDataValue rhs, IRDataValue res) {
         this.lhs = lhs;
@@ -29,6 +30,7 @@ public class IRBinaryArithmetic extends IRArithmetic {
         this.rhs = rhs;
         this.rhs.refCount++;
         this.res = res;
+        this.beTranslate = true;
     }
 
     public IRBinaryArithmetic(IRData lhs, IRData rhs, IRDataValue res) {
@@ -37,6 +39,7 @@ public class IRBinaryArithmetic extends IRArithmetic {
         this.rhs = (IRDataValue) rhs;
         this.rhs.refCount++;
         this.res = res;
+        this.beTranslate = true;
     }
 
     public String toMips(MIPSMachine mipsMachine, String operand) {
