@@ -9,6 +9,7 @@ public class IRDataValue extends IRData {
         this.globalDataLabel = null;
         this.globalID = -1;
         this.registerName = -1;
+        this.refCount = 0;
     }
 
     public String toAddress() {

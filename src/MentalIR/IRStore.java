@@ -21,6 +21,7 @@ public class IRStore extends IRInstruction {
     }
     public IRStore(IRDataValue src, IRData dest) {
         this.src = src;
+        this.src.refCount++;
         this.dest = dest;
     }
 

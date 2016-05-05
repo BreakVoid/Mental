@@ -18,18 +18,24 @@ public class IRBinaryArithmetic extends IRArithmetic {
     }
     public IRBinaryArithmetic(IRDataValue lhs, IRDataValue rhs) {
         this.lhs = lhs;
+        this.lhs.refCount++;
         this.rhs = rhs;
+        this.rhs.refCount++;
         this.res = new IRDataValue();
     }
     public IRBinaryArithmetic(IRDataValue lhs, IRDataValue rhs, IRDataValue res) {
         this.lhs = lhs;
+        this.lhs.refCount++;
         this.rhs = rhs;
+        this.rhs.refCount++;
         this.res = res;
     }
 
     public IRBinaryArithmetic(IRData lhs, IRData rhs, IRDataValue res) {
         this.lhs = (IRDataValue) lhs;
+        this.lhs.refCount++;
         this.rhs = (IRDataValue) rhs;
+        this.rhs.refCount++;
         this.res = res;
     }
 

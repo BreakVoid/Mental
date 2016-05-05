@@ -19,6 +19,7 @@ public class IRUnaryArithmetic extends IRArithmetic {
     }
     public IRUnaryArithmetic(IRDataValue child, IRDataValue res) {
         this.child = child;
+        this.child.refCount++;
         this.res = res;
     }
 

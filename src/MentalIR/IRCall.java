@@ -29,6 +29,9 @@ public class IRCall extends IRInstruction {
 
     @Override
     public String toMips(MIPSMachine mipsMachine) {
+        if (this.nextInstruction != null) {
+            throw new RuntimeException("basic block split error");
+        }
         LinkedList<String> mipsInstructions = new LinkedList<>();
 
         if (this.label != null) {

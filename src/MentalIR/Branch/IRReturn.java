@@ -23,6 +23,9 @@ public class IRReturn extends IRBranch {
 
     @Override
     public String toMips(MIPSMachine mipsMachine) {
+        if (this.nextInstruction != null) {
+            throw new RuntimeException("basic block split error");
+        }
         LinkedList<String> mipsInstructions = new LinkedList<>();
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");

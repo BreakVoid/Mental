@@ -20,10 +20,16 @@ public class IRPrintString extends IRSystemCall {
     public IRPrintString(IRData stringLocation) {
         this.variant = 4;
         this.stringLocation = stringLocation;
+        if (this.stringLocation instanceof IRDataValue) {
+            this.stringLocation.refCount++;
+        }
     }
 
     @Override
     public String toMips(MIPSMachine mipsMachine) {
+        if (this.nextInstruction != null) {
+            throw new RuntimeException("basic block split error");
+        }
         LinkedList<String> mipsInstructions = new LinkedList<>();
 
         if (this.label != null) {

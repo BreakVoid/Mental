@@ -214,6 +214,8 @@ public class AstVisitor {
         resultInstructions.addAll(rhsInstructions);
         if (astAdditiveExpression.returnType instanceof MentalString) {
             IRCall irCall = new IRCall(new IRLabelFunction("____built_in_string_concatenate"));
+            lhsRes.refCount++;
+            rhsRes.refCount++;
             irCall.res.stackShift = this.currentStackSize++;
             irCall.parameters.add((IRDataValue) lhsRes);
             irCall.parameters.add((IRDataValue) rhsRes);
@@ -727,6 +729,8 @@ public class AstVisitor {
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = irLogicalNot;
         }
+        resultInstructions.add(irLogicalNot);
+
         this.expressionResult.put(astLogicalNotExpression, irLogicalNot.res);
         return resultInstructions;
     }
@@ -981,8 +985,11 @@ public class AstVisitor {
                 resultInstructions.addAll(rightBoundInstructions);
                 IRCall irCall = new IRCall(new IRLabelFunction("____built_in_substring"));
                 irCall.parameters.add((IRDataValue) primaryRes);
+                primaryRes.refCount++;
                 irCall.parameters.add((IRDataValue) leftBoundRes);
+                leftBoundRes.refCount++;
                 irCall.parameters.add((IRDataValue) rightBoundRes);
+                rightBoundRes.refCount++;
                 irCall.res.stackShift = this.currentStackSize++;
                 this.expressionResult.put(astMemberAccessExpression, irCall.res);
                 if (resultInstructions.size() > 0) {
@@ -993,6 +1000,7 @@ public class AstVisitor {
                 // call string.parseInt();
                 IRCall irCall = new IRCall(new IRLabelFunction("____built_in_parseInt"));
                 irCall.parameters.add((IRDataValue) primaryRes);
+                primaryRes.refCount++;
                 irCall.res.stackShift = this.currentStackSize++;
                 this.expressionResult.put(astMemberAccessExpression, irCall.res);
                 if (resultInstructions.size() > 0) {
@@ -1129,11 +1137,15 @@ public class AstVisitor {
             if (astEqualityExpression.op == AstEqualityExpression.EQUAL) {
                 irCall = new IRCall(new IRLabelFunction("____built_in_string_equal"));
                 irCall.parameters.add((IRDataValue) lhsRes);
+                lhsRes.refCount++;
                 irCall.parameters.add((IRDataValue) rhsRes);
+                rhsRes.refCount++;
             } else if (astEqualityExpression.op == AstEqualityExpression.INEQUAL) {
                 irCall = new IRCall(new IRLabelFunction(("____built_in_string_inequal")));
                 irCall.parameters.add((IRDataValue) lhsRes);
+                lhsRes.refCount++;
                 irCall.parameters.add((IRDataValue) rhsRes);
+                rhsRes.refCount++;
             } else {
                 throw new RuntimeException();
             }
@@ -1186,6 +1198,7 @@ public class AstVisitor {
                     expressionRes = irLoad.dest;
                 }
                 irCall.parameters.add((IRDataValue) expressionRes);
+                expressionRes.refCount++;
                 if (lastInstructions != null) {
                     if (expressionInstructions.size() > 0) {
                         lastInstructions.nextInstruction = expressionInstructions.getFirst();
@@ -1238,6 +1251,8 @@ public class AstVisitor {
         resultInstructions.addAll(rhsInstructions);
         if (astRelationExpression.leftExpression.returnType instanceof MentalString) {
             IRCall irCall;
+            lhsRes.refCount++;
+            rhsRes.refCount++;
             if (astRelationExpression.op == AstRelationExpression.LESS) {
                 irCall = new IRCall(new IRLabelFunction("____built_in_string_less"));
                 irCall.parameters.add((IRDataValue) lhsRes);
@@ -1762,6 +1777,7 @@ public class AstVisitor {
         IRCall irCall = new IRCall(new IRLabelFunction("____built_in_toString"));
         irCall.res.stackShift = this.currentStackSize++;
         irCall.parameters.add((IRDataValue) parameter);
+        parameter.refCount++;
         this.expressionResult.put(astCallToString, irCall.res);
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = irCall;

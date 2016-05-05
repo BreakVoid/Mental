@@ -23,10 +23,16 @@ public class IRLoad extends IRInstruction {
     public IRLoad(IRDataAddress src) {
         this.loadSize = 4;
         this.src = src;
+        if (!(this.src instanceof IRDataStringLiteral)) {
+            this.src.address.refCount++;
+        }
         this.dest = new IRDataValue();
     }
     public IRLoad(IRDataAddress src, int loadSize) {
         this.src = src;
+        if (!(this.src instanceof IRDataStringLiteral)) {
+            this.src.address.refCount++;
+        }
         this.dest = new IRDataValue();
         this.loadSize = loadSize;
     }
@@ -59,6 +65,8 @@ public class IRLoad extends IRInstruction {
             if (this.src.address.registerName == -1) {
                 mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
                 mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src.address));
+            } else {
+                mipsMachine.refreshRegister(this.src.address.registerName);
             }
             if (this.dest.registerName == -1) {
                 mipsInstructions.add(mipsMachine.storeFirstLoadRegister());

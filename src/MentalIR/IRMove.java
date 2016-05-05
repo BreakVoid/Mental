@@ -19,16 +19,19 @@ public class IRMove extends IRInstruction {
     }
     public IRMove(IRDataValue src) {
         this.src = src;
+        this.src.refCount++;
         this.dest = new IRDataValue();
     }
 
     public IRMove(IRDataValue src, IRDataValue dest) {
         this.src = src;
+        this.src.refCount++;
         this.dest = dest;
     }
 
     public IRMove(IRData src, IRData dest) {
         this.src = (IRDataValue) src;
+        this.src.refCount++;
         this.dest = (IRDataValue) dest;
     }
 

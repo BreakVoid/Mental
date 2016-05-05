@@ -22,12 +22,16 @@ public class IRMemoryAllocate extends IRSystemCall {
     public IRMemoryAllocate(IRDataValue amount) {
         this.variant = 9;
         this.amount = amount;
+        this.amount.refCount++;
         this.res = new IRDataValue();
         this.res.registerName = -1;
     }
 
     @Override
     public String toMips(MIPSMachine mipsMachine) {
+        if (this.nextInstruction != null) {
+            throw new RuntimeException("basic block split error");
+        }
         LinkedList<String> mipsInstructions = new LinkedList<>();
 
         if (this.label != null) {
