@@ -39,7 +39,7 @@ public class CorrectTest {
         String inFile = mxFile.replace("mx/", "in/").replace(".mx", ".in");
         String outFile = mxFile.replace("mx/", "out/").replace(".mx", ".out");
         String ansFile = mxFile.replace("mx/", "ans/").replace(".mx", ".ans");
-        String limFile = mxFile.replace("mx/", "lim/").replace(".mx", ".lim");
+        String limFile = mxFile.replace("mx/", "limit/").replace(".mx", ".limit");
 
         new Main().compile(new FileInputStream(mxFile), new FileOutputStream(sFile));
         System.out.println("compile completed.");
