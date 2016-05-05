@@ -79,6 +79,28 @@ public class MIPSMachine {
         this.storeTime[reg] = -1;
     }
 
+    public void clearSpecifiedRegister(int reg) {
+        if (this.registerData[reg] != null) {
+            this.registerData[reg].registerName = -1;
+            this.registerData[reg] = null;
+        }
+        this.loadTime[reg] = -1;
+        this.updateTime[reg] = -1;
+        this.storeTime[reg] = -1;
+    }
+
+    public void rewriteSpecifiedRegister(int reg, IRData newData) {
+        if (this.registerData[reg] != null) {
+            this.registerData[reg].registerName = -1;
+            this.registerData[reg] = null;
+        }
+        this.registerData[reg] = newData;
+        newData.registerName = reg;
+        this.loadTime[reg] = this.globalTime++;
+        this.updateTime[reg] = this.loadTime[reg];
+        this.storeTime[reg] = -1;
+    }
+
     public String replaceFirstLoadRegisterWithLoad(IRData newData) {
         int reg = getFirstLoadRegister();
 

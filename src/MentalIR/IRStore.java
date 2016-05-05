@@ -58,20 +58,32 @@ public class IRStore extends IRInstruction {
                     String.format("\tsw %s, 0(%s)", this.src.toRegister(), ((IRDataAddress) this.dest).address.toRegister())
             );
         } else {
-            if (this.dest.registerName == -1) {
-                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
-                mipsMachine.rewriteFirstLoadRegister(this.dest);
+            if (!(this.src instanceof IRDataIntLiteral)
+                    && ((this.src.globalID == -1 && this.src.refCount <= 0)
+                            || (mipsMachine.storeTime[this.src.registerName] >= mipsMachine.updateTime[this.src.registerName]))
+                    ) {
+                if (this.dest.registerName == -1) {
+                    mipsMachine.rewriteSpecifiedRegister(this.src.registerName, this.dest);
+                } else {
+                    mipsMachine.clearSpecifiedRegister(this.dest.registerName);
+                    mipsMachine.rewriteSpecifiedRegister(this.src.registerName, this.dest);
+                }
             } else {
-                mipsMachine.updateRegister(this.dest.registerName);
-            }
-            if (this.src instanceof IRDataIntLiteral) {
-                mipsInstructions.add(
-                        String.format("\tli %s, %d", this.dest.toRegister(), ((IRDataIntLiteral) this.src).literal)
-                );
-            } else {
-                mipsInstructions.add(
-                        String.format("\tmove %s, %s", this.dest.toRegister(), this.src.toRegister())
-                );
+                if (this.dest.registerName == -1) {
+                    mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                    mipsMachine.rewriteFirstLoadRegister(this.dest);
+                } else {
+                    mipsMachine.updateRegister(this.dest.registerName);
+                }
+                if (this.src instanceof IRDataIntLiteral) {
+                    mipsInstructions.add(
+                            String.format("\tli %s, %d", this.dest.toRegister(), ((IRDataIntLiteral) this.src).literal)
+                    );
+                } else {
+                    mipsInstructions.add(
+                            String.format("\tmove %s, %s", this.dest.toRegister(), this.src.toRegister())
+                    );
+                }
             }
         }
 
@@ -80,6 +92,9 @@ public class IRStore extends IRInstruction {
             if (statement.length() > 0) {
                 str += statement + "\n";
             }
+        }
+        if (str.length() == 0) {
+            return "";
         }
         return str.substring(0, str.length() - 1);
     }

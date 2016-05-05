@@ -1679,47 +1679,73 @@ public class AstVisitor {
     }
 
     public LinkedList<IRInstruction> visitCallPrint(AstCallPrint astCallPrint) {
-        LinkedList<IRInstruction> resultInstructions = astCallPrint.parameter.visit(this);
-        IRData parameterRes = this.expressionResult.get(astCallPrint.parameter);
-        if (parameterRes instanceof IRDataAddress) {
-            IRLoad irLoad = new IRLoad((IRDataAddress) parameterRes);
-            irLoad.dest.stackShift = this.currentStackSize++;
-            if (resultInstructions.size() > 0) {
-                resultInstructions.getLast().nextInstruction = irLoad;
+        LinkedList<IRInstruction> resultInstructions;
+        if (astCallPrint.parameter instanceof AstAdditiveExpression) {
+            resultInstructions = new LinkedList<>();
+            AstCallPrint printLeft = new AstCallPrint();
+            printLeft.parameter = ((AstAdditiveExpression) astCallPrint.parameter).leftExpression;
+            resultInstructions.addAll(printLeft.visit(this));
+            AstCallPrint printRight = new AstCallPrint();
+            printRight.parameter = ((AstAdditiveExpression) astCallPrint.parameter).rightExpression;
+            LinkedList<IRInstruction> printRightInstructions = printRight.visit(this);
+            resultInstructions.getLast().nextInstruction = printRightInstructions.getFirst();
+            resultInstructions.addAll(printRightInstructions);
+        } else {
+            resultInstructions = astCallPrint.parameter.visit(this);
+            IRData parameterRes = this.expressionResult.get(astCallPrint.parameter);
+            if (parameterRes instanceof IRDataAddress) {
+                IRLoad irLoad = new IRLoad((IRDataAddress) parameterRes);
+                irLoad.dest.stackShift = this.currentStackSize++;
+                if (resultInstructions.size() > 0) {
+                    resultInstructions.getLast().nextInstruction = irLoad;
+                }
+                resultInstructions.add(irLoad);
+                parameterRes = irLoad.dest;
             }
-            resultInstructions.add(irLoad);
-            parameterRes = irLoad.dest;
+            IRPrintString irPrintString = new IRPrintString((IRDataValue) parameterRes);
+            if (resultInstructions.size() > 0) {
+                resultInstructions.getLast().nextInstruction = irPrintString;
+            }
+            resultInstructions.add(irPrintString);
         }
-        IRPrintString irPrintString = new IRPrintString((IRDataValue) parameterRes);
-        if (resultInstructions.size() > 0) {
-            resultInstructions.getLast().nextInstruction = irPrintString;
-        }
-        resultInstructions.add(irPrintString);
         return resultInstructions;
     }
 
     public LinkedList<IRInstruction> visitCallPrintln(AstCallPrintln astCallPrintln) {
-        LinkedList<IRInstruction> resultInstructions = astCallPrintln.parameter.visit(this);
-        IRData parameterRes = this.expressionResult.get(astCallPrintln.parameter);
-        if (parameterRes instanceof IRDataAddress) {
-            IRLoad irLoad = new IRLoad((IRDataAddress) parameterRes);
-            irLoad.dest.stackShift = this.currentStackSize++;
-            if (resultInstructions.size() > 0) {
-                resultInstructions.getLast().nextInstruction = irLoad;
+        LinkedList<IRInstruction> resultInstructions;
+        if (astCallPrintln.parameter instanceof AstAdditiveExpression) {
+            resultInstructions = new LinkedList<>();
+            AstCallPrint printLeft = new AstCallPrint();
+            printLeft.parameter = ((AstAdditiveExpression) astCallPrintln.parameter).leftExpression;
+            resultInstructions.addAll(printLeft.visit(this));
+            AstCallPrintln printRight = new AstCallPrintln();
+            printRight.parameter = ((AstAdditiveExpression) astCallPrintln.parameter).rightExpression;
+            LinkedList<IRInstruction> printRightInstructions = printRight.visit(this);
+            resultInstructions.getLast().nextInstruction = printRightInstructions.getFirst();
+            resultInstructions.addAll(printRightInstructions);
+        } else {
+            resultInstructions = astCallPrintln.parameter.visit(this);
+            IRData parameterRes = this.expressionResult.get(astCallPrintln.parameter);
+            if (parameterRes instanceof IRDataAddress) {
+                IRLoad irLoad = new IRLoad((IRDataAddress) parameterRes);
+                irLoad.dest.stackShift = this.currentStackSize++;
+                if (resultInstructions.size() > 0) {
+                    resultInstructions.getLast().nextInstruction = irLoad;
+                }
+                resultInstructions.add(irLoad);
+                parameterRes = irLoad.dest;
             }
-            resultInstructions.add(irLoad);
-            parameterRes = irLoad.dest;
+            IRPrintString irPrintString = new IRPrintString((IRDataValue) parameterRes);
+            if (resultInstructions.size() > 0) {
+                resultInstructions.getLast().nextInstruction = irPrintString;
+            }
+            resultInstructions.add(irPrintString);
+            IRPrintString irPrintNewLine = new IRPrintString(this.literalNewline);
+            if (resultInstructions.size() > 0) {
+                resultInstructions.getLast().nextInstruction = irPrintNewLine;
+            }
+            resultInstructions.add(irPrintNewLine);
         }
-        IRPrintString irPrintString = new IRPrintString((IRDataValue) parameterRes);
-        if (resultInstructions.size() > 0) {
-            resultInstructions.getLast().nextInstruction = irPrintString;
-        }
-        resultInstructions.add(irPrintString);
-        IRPrintString irPrintNewLine = new IRPrintString(this.literalNewline);
-        if (resultInstructions.size() > 0) {
-            resultInstructions.getLast().nextInstruction = irPrintNewLine;
-        }
-        resultInstructions.add(irPrintNewLine);
         return resultInstructions;
     }
 
