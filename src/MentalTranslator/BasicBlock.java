@@ -8,8 +8,10 @@ import MentalIR.IRInstruction;
 public class BasicBlock {
     public IRInstruction instruction;
     public BasicBlock nextBlock;
+    public boolean allowAppend;
     public BasicBlock() {
         this.instruction = null;
         this.nextBlock = null;
+        this.allowAppend = true;
     }
 }

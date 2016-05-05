@@ -28,7 +28,10 @@ public class BasicBlockSpliter {
                         || instruction instanceof IRCall
                         || instruction instanceof IRSystemCall
                         || instruction.nextInstruction.label != null) {
-
+                    if (instruction instanceof IRCall
+                            || instruction instanceof IRSystemCall) {
+                        basicBlocks.getLast().allowAppend = false;
+                    }
                     BasicBlock newBasicBlock = new BasicBlock();
                     newBasicBlock.instruction = nextInstruction;
                     instruction.nextInstruction = null;

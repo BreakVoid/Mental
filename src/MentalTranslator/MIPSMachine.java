@@ -16,12 +16,17 @@ public class MIPSMachine {
     public int[] updateTime;
     public int[] storeTime;
     public int globalTime;
+    public int regLeft;
+    public int regRight;
+    public int useCount;
     public MIPSMachine() {
         this.loadTime = new int [32];
         this.updateTime = new int [32];
         this.storeTime = new int [32];
         this.registerData = new IRData[32];
         this.globalTime = 1;
+        this.regLeft = MIPSRegister.t0;
+        this.regRight = MIPSRegister.t9;
         for (int i = 0; i < 32; ++i) {
             this.registerData[i] = null;
             this.loadTime[i] = -1;
@@ -31,8 +36,8 @@ public class MIPSMachine {
     }
 
     public int getFirstLoadRegister() {
-        int res = MIPSRegister.t0;
-        for (int i = MIPSRegister.t1; i <= MIPSRegister.t9; ++i) {
+        int res = this.regLeft;
+        for (int i = this.regLeft + 1; i <= regRight; ++i) {
             if (this.loadTime[i] < this.loadTime[res]) {
                 res = i;
             }
@@ -119,7 +124,7 @@ public class MIPSMachine {
 
     public String storeAndCleanMachine() {
         LinkedList<String> storeInstructions = new LinkedList<>();
-        for (int i = MIPSRegister.t0; i <= MIPSRegister.t9; ++i) {
+        for (int i = this.regLeft; i <= this.regRight; ++i) {
             if (this.registerData[i] != null) {
                 if ((this.registerData[i] instanceof IRDataStringLiteral)
                         || (this.registerData[i] instanceof IRDataIntLiteral)) {
