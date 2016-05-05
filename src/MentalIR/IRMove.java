@@ -21,21 +21,18 @@ public class IRMove extends IRInstruction {
         this.src = src;
         this.src.refCount++;
         this.dest = new IRDataValue();
-        this.beTranslate = true;
     }
 
     public IRMove(IRDataValue src, IRDataValue dest) {
         this.src = src;
         this.src.refCount++;
         this.dest = dest;
-        this.beTranslate = true;
     }
 
     public IRMove(IRData src, IRData dest) {
         this.src = (IRDataValue) src;
         this.src.refCount++;
         this.dest = (IRDataValue) dest;
-        this.beTranslate = true;
     }
 
     @Override
@@ -45,11 +42,13 @@ public class IRMove extends IRInstruction {
             mipsInstructions.add(this.label.toString() + ":");
         }
         this.src.refCount--;
-        if (this.src.registerName == -1) {
-            mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
-            mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src));
-        } else {
-            mipsMachine.refreshRegister(this.src.registerName);
+        if (!(this.src instanceof IRDataIntLiteral)) {
+            if (this.src.registerName == -1) {
+                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src));
+            } else {
+                mipsMachine.refreshRegister(this.src.registerName);
+            }
         }
 
         if (this.dest.registerName == -1) {
@@ -58,10 +57,15 @@ public class IRMove extends IRInstruction {
         } else {
             mipsMachine.updateRegister(this.dest.registerName);
         }
-
-        mipsInstructions.add(
-                String.format("\tmove %s, %s", this.dest.toRegister(), this.src.toRegister())
-        );
+        if (this.src instanceof IRDataIntLiteral) {
+            mipsInstructions.add(
+                    String.format("\tli %s, %d", this.dest.toRegister(), ((IRDataIntLiteral) this.src).literal)
+            );
+        } else {
+            mipsInstructions.add(
+                    String.format("\tmove %s, %s", this.dest.toRegister(), this.src.toRegister())
+            );
+        }
 
         String str = "";
         for (String statement : mipsInstructions) {

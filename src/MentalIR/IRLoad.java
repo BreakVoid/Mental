@@ -27,7 +27,6 @@ public class IRLoad extends IRInstruction {
             this.src.address.refCount++;
         }
         this.dest = new IRDataValue();
-        this.beTranslate = true;
     }
     public IRLoad(IRDataAddress src, int loadSize) {
         this.src = src;
@@ -36,7 +35,6 @@ public class IRLoad extends IRInstruction {
         }
         this.dest = new IRDataValue();
         this.loadSize = loadSize;
-        this.beTranslate = true;
     }
 
     @Override

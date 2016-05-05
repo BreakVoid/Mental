@@ -12,7 +12,6 @@ public class IRNullOperation extends IRInstruction {
     public IRNullOperation() {
         this.nextInstruction = null;
         this.label = null;
-        this.beTranslate = true;
     }
 
     @Override

@@ -16,7 +16,6 @@ public class IRPrintString extends IRSystemCall {
     public IRPrintString() {
         this.variant = 4;
         this.stringLocation = null;
-        this.beTranslate = true;
     }
     public IRPrintString(IRData stringLocation) {
         this.variant = 4;
@@ -24,7 +23,6 @@ public class IRPrintString extends IRSystemCall {
         if (this.stringLocation instanceof IRDataValue) {
             this.stringLocation.refCount++;
         }
-        this.beTranslate = true;
     }
 
     @Override

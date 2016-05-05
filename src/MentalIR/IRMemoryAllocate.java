@@ -18,7 +18,6 @@ public class IRMemoryAllocate extends IRSystemCall {
         this.variant = 9;
         this.amount = null;
         this.res = null;
-        this.beTranslate = true;
     }
     public IRMemoryAllocate(IRDataValue amount) {
         this.variant = 9;
@@ -26,7 +25,6 @@ public class IRMemoryAllocate extends IRSystemCall {
         this.amount.refCount++;
         this.res = new IRDataValue();
         this.res.registerName = -1;
-        this.beTranslate = true;
     }
 
     @Override

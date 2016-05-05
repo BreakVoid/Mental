@@ -18,13 +18,11 @@ public class IRStore extends IRInstruction {
     public IRStore() {
         this.src = null;
         this.dest = null;
-        this.beTranslate = true;
     }
     public IRStore(IRDataValue src, IRData dest) {
         this.src = src;
         this.src.refCount++;
         this.dest = dest;
-        this.beTranslate = true;
     }
 
     @Override
@@ -40,11 +38,13 @@ public class IRStore extends IRInstruction {
             mipsInstructions.add(this.label.toString() + ":");
         }
         this.src.refCount--;
-        if (this.src.registerName == -1) {
-            mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
-            mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src));
-        } else {
-            mipsMachine.refreshRegister(this.src.registerName);
+        if (!(this.src instanceof IRDataIntLiteral) || this.dest instanceof IRDataAddress) {
+            if (this.src.registerName == -1) {
+                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src));
+            } else {
+                mipsMachine.refreshRegister(this.src.registerName);
+            }
         }
 
         if (this.dest instanceof IRDataAddress) {
@@ -64,10 +64,15 @@ public class IRStore extends IRInstruction {
             } else {
                 mipsMachine.updateRegister(this.dest.registerName);
             }
-
-            mipsInstructions.add(
-                    String.format("\tmove %s, %s", this.dest.toRegister(), this.src.toRegister())
-            );
+            if (this.src instanceof IRDataIntLiteral) {
+                mipsInstructions.add(
+                        String.format("\tli %s, %d", this.dest.toRegister(), ((IRDataIntLiteral) this.src).literal)
+                );
+            } else {
+                mipsInstructions.add(
+                        String.format("\tmove %s, %s", this.dest.toRegister(), this.src.toRegister())
+                );
+            }
         }
 
         String str = "";

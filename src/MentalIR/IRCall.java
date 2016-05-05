@@ -20,13 +20,11 @@ public class IRCall extends IRInstruction {
         this.parameters = new LinkedList<>();
         this.functionName = null;
         this.res = null;
-        this.beTranslate = true;
     }
     public IRCall(IRLabelFunction functionName) {
         this.parameters = new LinkedList<>();
         this.functionName = functionName;
         this.res = new IRDataValue();
-        this.beTranslate = true;
     }
 
     @Override

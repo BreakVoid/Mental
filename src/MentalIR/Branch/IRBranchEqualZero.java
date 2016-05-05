@@ -13,7 +13,6 @@ public class IRBranchEqualZero extends IRBranchWithContidtion {
         this.gotoLabel = null;
         this.condition = null;
         this.nextInstruction = null;
-        this.beTranslate = true;
     }
 
     public IRBranchEqualZero(IRDataValue condition, IRLabel gotoLabel) {
@@ -21,7 +20,6 @@ public class IRBranchEqualZero extends IRBranchWithContidtion {
         this.condition = condition;
         this.condition.refCount++;
         this.nextInstruction = null;
-        this.beTranslate = true;
     }
 
     @Override

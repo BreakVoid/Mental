@@ -70,12 +70,10 @@ public class Main {
         }
 
         for (IRInstruction instruction : visitor.globalVariableInitialize) {
-            DeadCodeKiller.kill(instruction);
             mipsProgram.globalInitialize.translate(instruction);
         }
 
         for (int i = 0, count = visitor.functionInstructionLists.size(); i < count; ++i) {
-            DeadCodeKiller.kill(visitor.functionInstructionLists.get(i));
             mipsProgram.functions.add(new MIPSFunctions());
             BasicBlockSpliter basicBlockSpliter = new BasicBlockSpliter(visitor.functionInstructionLists.get(i));
             mipsProgram.functions.getLast().translate(visitor.functionStackSize.get(i), basicBlockSpliter);
@@ -127,12 +125,10 @@ public class Main {
         }
 
         for (IRInstruction instruction : visitor.globalVariableInitialize) {
-            DeadCodeKiller.kill(instruction);
             mipsProgram.globalInitialize.translate(instruction);
         }
 
         for (int i = 0, count = visitor.functionInstructionLists.size(); i < count; ++i) {
-            DeadCodeKiller.kill(visitor.functionInstructionLists.get(i));
             mipsProgram.functions.add(new MIPSFunctions());
             BasicBlockSpliter basicBlockSpliter = new BasicBlockSpliter(visitor.functionInstructionLists.get(i));
             mipsProgram.functions.getLast().translate(visitor.functionStackSize.get(i), basicBlockSpliter);
