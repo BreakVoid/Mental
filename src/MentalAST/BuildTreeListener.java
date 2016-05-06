@@ -1550,8 +1550,7 @@ public class BuildTreeListener extends MentalBaseListener {
 	@Override public void exitSUBGROUP_EXPRESSION(MentalParser.SUBGROUP_EXPRESSIONContext ctx) {
         AstSubgroupExpression thisExpression = (AstSubgroupExpression) this.tree.get(ctx);
         thisExpression.childExpression = (AstExpression) this.tree.get(ctx.expression());
-        thisExpression.childExpression.parent = thisExpression;
-        thisExpression.returnType = thisExpression.childExpression.returnType;
+        this.tree.replace(ctx, thisExpression.childExpression);
     }
     /**
      * int literal

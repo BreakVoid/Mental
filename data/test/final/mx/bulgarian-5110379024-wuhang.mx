@@ -46,9 +46,8 @@ bool win()
 	int j;
 	int[] b = new int[100];
 	int temp;
-
-	if (now != h)
-    	return false;
+    if (now != h)
+		return false;
     for (j = 0; j < now; ++j)
         b[j] = a[j];
     for (i = 0;i < now - 1; ++i)
@@ -60,7 +59,7 @@ bool win()
             }
     for (i = 0; i < now; ++i)
         if (b[i] != i + 1)
-            return false;
+			return false;
     return true;
 }
 void merge()
@@ -118,7 +117,7 @@ int main() {
     show();
     merge();
     while (!win()) {
-        println("step :" + toString(++count));
+        println("step " + toString(++count) + ":");
         move();
         merge();
         show();
