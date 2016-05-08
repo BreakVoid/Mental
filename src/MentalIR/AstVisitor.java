@@ -1906,6 +1906,7 @@ public class AstVisitor {
             resultInstructions.getLast().nextInstruction = irBranchEqualZero;
             resultInstructions.add(irBranchEqualZero);
         }
+        resultInstructions.removeLast();
 
         resultInstructions.getLast().nextInstruction = irNullOperation;
         resultInstructions.add(irNullOperation);
@@ -1949,7 +1950,7 @@ public class AstVisitor {
             resultInstructions.getLast().nextInstruction = irBranchNotEqualZero;
             resultInstructions.add(irBranchNotEqualZero);
         }
-
+        resultInstructions.removeLast();
         resultInstructions.getLast().nextInstruction = irNullOperation;
         resultInstructions.add(irNullOperation);
         this.expressionResult.put(astSuperLogicalOrExpression, finalRes);
