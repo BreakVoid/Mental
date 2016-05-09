@@ -19,7 +19,7 @@ public class BranchCompressor {
                     IRBranchWithCondition branch = (IRBranchWithCondition) instruction.nextInstruction.nextInstruction;
 
                     // whether the result of compare is the condition of the branch
-                    if (compare.res == branch.condition) {
+                    if (compare.res == branch.condition && compare.res.refCount == 1) {
                         // process the new branch instruction.
                         IRBranchCompare newBranch;
 
