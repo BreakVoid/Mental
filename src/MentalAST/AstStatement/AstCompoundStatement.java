@@ -1,6 +1,8 @@
 package MentalAST.AstStatement;
 
 import MentalAST.AstBaseNode;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +29,17 @@ public class AstCompoundStatement extends AstStatement {
         return ret;
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        String ret = "{\n";
+        if (this.statements.size() > 0) {
+            for (AstBaseNode statement : this.statements) {
+                ret += statement.toPrettyPrint(indent) + '\n';
+            }
+        }
+        ret += addIndent(indent - 1) + "}";
+        return ret;
+    }
+    @Override
     public String toString() {
         if (this.statements == null) {
             return "<empty component loopBody>";
@@ -47,5 +60,10 @@ public class AstCompoundStatement extends AstStatement {
             }
         }
         return false;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitCompoundStatement(this);
     }
 }

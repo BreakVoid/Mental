@@ -1,6 +1,12 @@
 package MentalAST.AstStatement;
 
 import MentalAST.AstDeclaration.AstVariableDeclaration;
+import MentalAST.AstExpression.AstAssignExpression;
+import MentalAST.AstExpression.AstIdentifier;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/3/31.
@@ -13,6 +19,10 @@ public class AstVarStatement extends AstStatement {
     @Override
     public String toPrintString(int indent) {
         return this.variableDeclaration.toPrintString(indent);
+    }
+    @Override
+    public String toPrettyPrint(int indent) {
+        return this.variableDeclaration.toPrettyPrint(indent);
     }
     @Override
     public String toString() {
@@ -28,5 +38,10 @@ public class AstVarStatement extends AstStatement {
             }
         }
         return false;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitAstVarStatement(this);
     }
 }

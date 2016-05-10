@@ -1,8 +1,11 @@
 package MentalAST.AstExpression;
 
-import MentalAST.AstBaseNode;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalParser.MentalParser;
 import MentalSymbols.SymbolTable;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/4/2.
@@ -19,7 +22,7 @@ public class AstRelationExpression extends AstBinaryExpression {
     }
     @Override
     public String toPrintString(int indent) {
-        String ret = AstBaseNode.addIndent(indent) + "<relation expression";
+        String ret = addIndent(indent) + "<relation expression";
         if (this.op == LESS) {
             ret += "(<)>:bool\n";
         } else if (this.op == LESS_EQ) {
@@ -32,5 +35,26 @@ public class AstRelationExpression extends AstBinaryExpression {
         ret += this.leftExpression.toPrintString(indent + 1) + '\n';
         ret += this.rightExpression.toPrintString(indent + 1);
         return ret;
+    }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent);
+        ret += this.leftExpression.toPrettyPrint();
+        if (this.op == LESS) {
+            ret += " < ";
+        } else if (this.op == LESS_EQ) {
+            ret += " <= ";
+        } else if (this.op == GREATER) {
+            ret += " > ";
+        } else {
+            ret += " >= ";
+        }
+        ret += this.rightExpression.toPrettyPrint();
+        return ret;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitRelationExpression(this);
     }
 }

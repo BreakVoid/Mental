@@ -4,60 +4,11 @@ import MentalAST.AstDeclaration.AstClassDeclaration;
 import MentalAST.AstDeclaration.AstFunctionDefinition;
 import MentalAST.AstDeclaration.AstSingleVariableDeclaration;
 import MentalAST.AstDeclaration.AstVariableDeclaration;
-import MentalAST.AstExpression.AstAdditiveExpression;
-import MentalAST.AstExpression.AstArraySubscriptingExpression;
-import MentalAST.AstExpression.AstAssignExpression;
-import MentalAST.AstExpression.AstBitAndExpression;
-import MentalAST.AstExpression.AstBitNotExpression;
-import MentalAST.AstExpression.AstBitOrExpression;
-import MentalAST.AstExpression.AstBitShiftExpression;
-import MentalAST.AstExpression.AstBitXorExpression;
-import MentalAST.AstExpression.AstBoolConstant;
-import MentalAST.AstExpression.AstCallGetInt;
-import MentalAST.AstExpression.AstCallGetString;
-import MentalAST.AstExpression.AstCallLength;
-import MentalAST.AstExpression.AstCallOrd;
-import MentalAST.AstExpression.AstCallParseInt;
-import MentalAST.AstExpression.AstCallPrint;
-import MentalAST.AstExpression.AstCallPrintln;
-import MentalAST.AstExpression.AstCallSize;
-import MentalAST.AstExpression.AstCallSubString;
-import MentalAST.AstExpression.AstCallToString;
-import MentalAST.AstExpression.AstCreationExpression;
-import MentalAST.AstExpression.AstEqualityExpression;
-import MentalAST.AstExpression.AstExpression;
-import MentalAST.AstExpression.AstFunctionCall;
-import MentalAST.AstExpression.AstIdentifier;
-import MentalAST.AstExpression.AstIntLiteral;
-import MentalAST.AstExpression.AstLogicalAndExpression;
-import MentalAST.AstExpression.AstLogicalNotExpression;
-import MentalAST.AstExpression.AstLogicalOrExpression;
-import MentalAST.AstExpression.AstMemberAccessExpression;
-import MentalAST.AstExpression.AstMulDivExpression;
-import MentalAST.AstExpression.AstNullConstant;
-import MentalAST.AstExpression.AstPrefixExpression;
-import MentalAST.AstExpression.AstRelationExpression;
-import MentalAST.AstExpression.AstStringLiteral;
-import MentalAST.AstExpression.AstSubgroupExpression;
-import MentalAST.AstExpression.AstSuffixExpression;
-import MentalAST.AstExpression.AstUnaryAdditiveExpression;
-import MentalAST.AstStatement.AstCompoundStatement;
-import MentalAST.AstStatement.AstEmptyStatement;
-import MentalAST.AstStatement.AstExpressionStatement;
-import MentalAST.AstStatement.AstForStatement;
-import MentalAST.AstStatement.AstIfStatement;
-import MentalAST.AstStatement.AstJumpStatement;
-import MentalAST.AstStatement.AstStatement;
-import MentalAST.AstStatement.AstVarStatement;
-import MentalAST.AstStatement.AstWhileStatement;
-import MentalParser.MentalParser;
+import MentalAST.AstExpression.*;
+import MentalAST.AstStatement.*;
 import MentalParser.MentalBaseListener;
-import MentalSymbols.SymbolBase;
-import MentalSymbols.SymbolFunction;
-import MentalSymbols.SymbolTable;
-import MentalSymbols.SymbolType;
-import MentalSymbols.SymbolVariable;
-import MentalSymbols.SymbolVariableList;
+import MentalParser.MentalParser;
+import MentalSymbols.*;
 import MentalType.MentalArray;
 import MentalType.MentalClass;
 import MentalType.MentalFunction;
@@ -79,6 +30,8 @@ public class BuildTreeListener extends MentalBaseListener {
 	public HashMap<ParseTree, AstBaseNode> tree;                    // a K-V map used in building my abstract syntax tree.
 	public SymbolTable curSymbolTable;                              // the symbol table in current scope.
 	public LinkedList<SymbolTable> symbolTableList;                 // list of different stack scope
+    public int variableCounter;
+    public int globalVariableCounter;
 
 	public BuildTreeListener() {
         this.existError = false;
@@ -86,6 +39,8 @@ public class BuildTreeListener extends MentalBaseListener {
 		this.symbolTableList = new LinkedList<>();
 		this.symbolTableList.add(new SymbolTable());
 		this.curSymbolTable = this.symbolTableList.getLast();
+        this.variableCounter = 0;
+        this.globalVariableCounter = 0;
 	}
     public boolean checkMain() {
         if (this.curSymbolTable.getSymbol("main") == null) {
@@ -120,6 +75,9 @@ public class BuildTreeListener extends MentalBaseListener {
 		this.symbolTableList.removeLast();
 		this.curSymbolTable = this.symbolTableList.getLast();
 	}
+    public int newVariableID() {
+        return this.variableCounter++;
+    }
     @Override public void enterEveryRule(ParserRuleContext ctx) {
         if (this.existError) {
             System.exit(1);
@@ -284,7 +242,7 @@ public class BuildTreeListener extends MentalBaseListener {
     @Override public void enterSingleVariable(MentalParser.SingleVariableContext ctx) {
         AstSingleVariableDeclaration singleVariableDeclaration = new AstSingleVariableDeclaration();
         this.tree.put(ctx, singleVariableDeclaration);
-        AstVariableDeclaration variableDeclaration = null;
+        AstVariableDeclaration variableDeclaration;
         if (ctx.parent != null && ctx.parent.parent instanceof MentalParser.ClassDeclarationContext) {
             // the parent of this definition is a class declaration, so the message of this statement is useless
             return ;
@@ -295,9 +253,21 @@ public class BuildTreeListener extends MentalBaseListener {
         } else {
             System.err.println("unknown exception.");
             this.existError = true;
+            return;
         }
         // new a node.
         singleVariableDeclaration.variable = new AstVariable();
+        singleVariableDeclaration.variable.globalID = this.newVariableID();
+        if ((ctx.parent.parent.parent instanceof MentalParser.ProgramContext)) {
+            singleVariableDeclaration.variable.localID = this.globalVariableCounter++;
+        } else {
+            ParserRuleContext pCtx = (ParserRuleContext) ctx.parent.parent;
+            while (pCtx != null && !(pCtx instanceof MentalParser.FunctionDefinitionContext)) {
+                pCtx = (ParserRuleContext) pCtx.parent;
+            }
+            AstFunctionDefinition functionDefinition = (AstFunctionDefinition) this.tree.get(pCtx);
+            singleVariableDeclaration.variable.localID = singleVariableDeclaration.variable.globalID - functionDefinition.firstVariableID;
+        }
         // get the name of the variable.
         singleVariableDeclaration.variable.variableName = ctx.Identifier().getText();
         // set the type of the variable.
@@ -314,6 +284,11 @@ public class BuildTreeListener extends MentalBaseListener {
         if (ctx.expression() != null) {
             singleVariableDeclaration.initializeExpression = (AstExpression) this.tree.get(ctx.expression());
         }
+        singleVariableDeclaration.parent = this.tree.get(ctx.parent);
+        SymbolVariable var = new SymbolVariable();
+        var.variable = singleVariableDeclaration.variable;
+        var.stackLayer = this.curSymbolTable.stackLayer;
+        this.curSymbolTable.add(var.variable.variableName, var);
         if (singleVariableDeclaration.initializeExpression == null) {
             return;
         }
@@ -324,7 +299,6 @@ public class BuildTreeListener extends MentalBaseListener {
             );
             this.existError = true;
         }
-        singleVariableDeclaration.parent = this.tree.get(ctx.parent);
     }
     /**
 	 * process a sentence of variable definition, which may define several variable.
@@ -333,10 +307,7 @@ public class BuildTreeListener extends MentalBaseListener {
         if (ctx.parent instanceof MentalParser.ClassDeclarationContext) {
             return ;
         }
-		SymbolVariableList variableList = new SymbolVariableList(this.curSymbolTable, ctx);
-		for (SymbolVariable var : variableList.variables) {
-			this.curSymbolTable.add(var.variableName, var);
-		}
+        SymbolVariableList variableList = new SymbolVariableList(this.curSymbolTable, ctx);
         AstVariableDeclaration variableDeclaration = new AstVariableDeclaration();
         variableDeclaration.variables = new LinkedList<>();
         variableDeclaration.variableType = variableList.variableType;
@@ -366,14 +337,18 @@ public class BuildTreeListener extends MentalBaseListener {
         functionDefinition.functionHead.stackLayer = SymbolTable.maxLayer;
         // add the parameters to the scope.
         this.tree.put(ctx, functionDefinition);
+        functionDefinition.firstVariableID = variableCounter;
         for (int i = 0, count = functionDefinition.functionHead.parameterName.size(); i < count; ++i) {
+            SymbolVariable thisParameter = new SymbolVariable(
+                    this.curSymbolTable,
+                    functionDefinition.functionHead.parameterType.get(i),
+                    functionDefinition.functionHead.parameterName.get(i),
+                    this.variableCounter++
+            );
+            thisParameter.variable.localID = thisParameter.variable.globalID - functionDefinition.firstVariableID;
             this.curSymbolTable.add(
                     functionDefinition.functionHead.parameterName.get(i),
-                    new SymbolVariable(
-                            this.curSymbolTable,
-                            functionDefinition.functionHead.parameterType.get(i),
-                            functionDefinition.functionHead.parameterName.get(i)
-                    )
+                    thisParameter
             );
         }
 	}
@@ -389,6 +364,7 @@ public class BuildTreeListener extends MentalBaseListener {
         functionDefinition.functionBody = (AstCompoundStatement) this.tree.get(ctx.compoundStatement());
         functionDefinition.parent = this.tree.get(ctx.parent);
         functionDefinition.functionBody.parent = functionDefinition;
+        functionDefinition.lastVariableID = this.variableCounter - 1;
     }
 	/**
 	 * just a C-style union of statements
@@ -668,6 +644,11 @@ public class BuildTreeListener extends MentalBaseListener {
             System.err.println("fatal: try to apply logical-not-operator on a no-boolean item.\n\t" + ctx.getText());
             this.existError = true;
         }
+        if (thisExpression.childExpression instanceof AstBoolConstant) {
+            AstBoolConstant replaceNode = new AstBoolConstant();
+            replaceNode.boolConstant = !((AstBoolConstant) thisExpression.childExpression).boolConstant;
+            this.tree.replace(ctx, replaceNode);
+        }
     }
 	/**
 	 * a.b 
@@ -783,7 +764,7 @@ public class BuildTreeListener extends MentalBaseListener {
                 MentalClass thisClass = (MentalClass) thisExpression.primaryExpression.returnType;
                 if (thisClass.classComponents.get(thisExpression.memberName) != null) {
                     thisExpression.leftValue = thisExpression.primaryExpression.leftValue;
-                    thisExpression.returnType = thisClass.classComponents.get(thisExpression.memberName);
+                    thisExpression.returnType = thisClass.classComponents.get(thisExpression.memberName).memberType;
                 } else {
                     System.err.println("fatal: the class `" + thisClass.className
                             + "` does not have the member `" + thisExpression.memberName + "`."
@@ -1096,6 +1077,17 @@ public class BuildTreeListener extends MentalBaseListener {
                     newIntLiteral.literalContext = -((AstIntLiteral) childExpression).literalContext;
                     this.tree.replace(ctx, newIntLiteral);
                 }
+            } else if (childExpression instanceof AstUnaryAdditiveExpression) {
+                if (((AstUnaryAdditiveExpression) childExpression).op == AstUnaryAdditiveExpression.ADD) {
+                    thisExpression.childExpression = ((AstUnaryAdditiveExpression) childExpression).childExpression;
+                } else if (((AstUnaryAdditiveExpression) childExpression).op == AstUnaryAdditiveExpression.SUB) {
+                    thisExpression.childExpression = ((AstUnaryAdditiveExpression) childExpression).childExpression;
+                    if (thisExpression.op == AstUnaryAdditiveExpression.SUB) {
+                        thisExpression.op = AstUnaryAdditiveExpression.ADD;
+                    } else {
+                        thisExpression.op = AstUnaryAdditiveExpression.SUB;
+                    }
+                }
             }
         }
     }
@@ -1119,6 +1111,15 @@ public class BuildTreeListener extends MentalBaseListener {
                     if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalString)) {
                         // string + string
                         thisExpression.returnType = SymbolTable.mentalString;
+                        if (thisExpression.leftExpression instanceof AstStringLiteral) {
+                            if (thisExpression.rightExpression instanceof AstStringLiteral) {
+                                AstStringLiteral replaceNode = new AstStringLiteral();
+                                replaceNode.literalContext =
+                                        ((AstStringLiteral) thisExpression.leftExpression).literalContext.substring(0, ((AstStringLiteral) thisExpression.leftExpression).literalContext.length() - 1)
+                                                + ((AstStringLiteral) thisExpression.rightExpression).literalContext.substring(1, ((AstStringLiteral) thisExpression.rightExpression).literalContext.length());
+                                this.tree.replace(ctx, replaceNode);
+                            }
+                        }
                         return;
                     }
                 } else {
@@ -1126,6 +1127,15 @@ public class BuildTreeListener extends MentalBaseListener {
                         if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
                             // int + int
                             thisExpression.returnType = SymbolTable.mentalInt;
+                            if (thisExpression.leftExpression instanceof AstIntLiteral) {
+                                if (thisExpression.rightExpression instanceof AstIntLiteral) {
+                                    AstIntLiteral replaceNode = new AstIntLiteral();
+                                    replaceNode.literalContext =
+                                            ((AstIntLiteral) thisExpression.leftExpression).literalContext
+                                                    + ((AstIntLiteral) thisExpression.rightExpression).literalContext;
+                                    this.tree.replace(ctx, replaceNode);
+                                }
+                            }
                             return;
                         }
                     }
@@ -1135,6 +1145,15 @@ public class BuildTreeListener extends MentalBaseListener {
                     if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
                         // int - int
                         thisExpression.returnType = SymbolTable.mentalInt;
+                        if (thisExpression.leftExpression instanceof AstIntLiteral) {
+                            if (thisExpression.rightExpression instanceof AstIntLiteral) {
+                                AstIntLiteral replaceNode = new AstIntLiteral();
+                                replaceNode.literalContext =
+                                        ((AstIntLiteral) thisExpression.leftExpression).literalContext
+                                                - ((AstIntLiteral) thisExpression.rightExpression).literalContext;
+                                this.tree.replace(ctx, replaceNode);
+                            }
+                        }
                         return;
                     }
                 }
@@ -1159,6 +1178,25 @@ public class BuildTreeListener extends MentalBaseListener {
         thisExpression.leftExpression.parent = thisExpression.rightExpression.parent = thisExpression;
         if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
             if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                if (thisExpression.leftExpression instanceof AstIntLiteral) {
+                    if (thisExpression.rightExpression instanceof AstIntLiteral) {
+                        AstIntLiteral replaceNode = new AstIntLiteral();
+                        if (thisExpression.op == AstMulDivExpression.MUL) {
+                            replaceNode.literalContext =
+                                    ((AstIntLiteral) thisExpression.leftExpression).literalContext
+                                            * ((AstIntLiteral) thisExpression.rightExpression).literalContext;
+                        } else if (thisExpression.op == AstMulDivExpression.DIV) {
+                            replaceNode.literalContext =
+                                    ((AstIntLiteral) thisExpression.leftExpression).literalContext
+                                            / ((AstIntLiteral) thisExpression.rightExpression).literalContext;
+                        } else if (thisExpression.op == AstMulDivExpression.MOD) {
+                            replaceNode.literalContext =
+                                    ((AstIntLiteral) thisExpression.leftExpression).literalContext
+                                            % ((AstIntLiteral) thisExpression.rightExpression).literalContext;
+                        }
+                        this.tree.replace(ctx, replaceNode);
+                    }
+                }
                 return;
             }
         }
@@ -1182,6 +1220,21 @@ public class BuildTreeListener extends MentalBaseListener {
         thisExpression.rightExpression.parent = thisExpression;
         if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
             if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                if (thisExpression.leftExpression instanceof AstIntLiteral) {
+                    if (thisExpression.rightExpression instanceof AstIntLiteral) {
+                        AstIntLiteral replaceNode = new AstIntLiteral();
+                        if (thisExpression.op == AstBitShiftExpression.LEFT_SHIFT) {
+                            replaceNode.literalContext =
+                                    ((AstIntLiteral) thisExpression.leftExpression).literalContext
+                                            << ((AstIntLiteral) thisExpression.rightExpression).literalContext;
+                        } else {
+                            replaceNode.literalContext =
+                                    ((AstIntLiteral) thisExpression.leftExpression).literalContext
+                                            >> ((AstIntLiteral) thisExpression.rightExpression).literalContext;
+                        }
+                        this.tree.replace(ctx, replaceNode);
+                    }
+                }
                 return;
             }
         }
@@ -1204,6 +1257,15 @@ public class BuildTreeListener extends MentalBaseListener {
         thisExpression.rightExpression.parent = thisExpression;
         if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
             if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                if (thisExpression.leftExpression instanceof AstIntLiteral) {
+                    if (thisExpression.rightExpression instanceof AstIntLiteral) {
+                        AstIntLiteral replaceNode = new AstIntLiteral();
+                        replaceNode.literalContext =
+                                ((AstIntLiteral) thisExpression.leftExpression).literalContext
+                                        & ((AstIntLiteral) thisExpression.rightExpression).literalContext;
+                        this.tree.replace(ctx, replaceNode);
+                    }
+                }
                 return ;
             }
         }
@@ -1226,6 +1288,15 @@ public class BuildTreeListener extends MentalBaseListener {
         thisExpression.rightExpression.parent = thisExpression;
         if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
             if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                if (thisExpression.leftExpression instanceof AstIntLiteral) {
+                    if (thisExpression.rightExpression instanceof AstIntLiteral) {
+                        AstIntLiteral replaceNode = new AstIntLiteral();
+                        replaceNode.literalContext =
+                                ((AstIntLiteral) thisExpression.leftExpression).literalContext
+                                        | ((AstIntLiteral) thisExpression.rightExpression).literalContext;
+                        this.tree.replace(ctx, replaceNode);
+                    }
+                }
                 return;
             }
         }
@@ -1248,6 +1319,15 @@ public class BuildTreeListener extends MentalBaseListener {
         thisExpression.rightExpression.parent = thisExpression;
         if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalInt)) {
             if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalInt)) {
+                if (thisExpression.leftExpression instanceof AstIntLiteral) {
+                    if (thisExpression.rightExpression instanceof AstIntLiteral) {
+                        AstIntLiteral replaceNode = new AstIntLiteral();
+                        replaceNode.literalContext =
+                                ((AstIntLiteral) thisExpression.leftExpression).literalContext
+                                        ^ ((AstIntLiteral) thisExpression.rightExpression).literalContext;
+                        this.tree.replace(ctx, replaceNode);
+                    }
+                }
                 return;
             }
         }
@@ -1274,6 +1354,12 @@ public class BuildTreeListener extends MentalBaseListener {
         if (!thisExpression.childExpression.returnType.equals(SymbolTable.mentalInt)) {
             System.err.println("fatal: try to apply bit-not-operator on a no-integer item.\n\t" + ctx.getText());
             this.existError = true;
+            return ;
+        }
+        if (thisExpression.childExpression instanceof AstIntLiteral) {
+            AstIntLiteral replaceNode = new AstIntLiteral();
+            replaceNode.literalContext = ~((AstIntLiteral) thisExpression.childExpression).literalContext;
+            this.tree.replace(ctx, replaceNode);
         }
     }
 	/**
@@ -1346,7 +1432,7 @@ public class BuildTreeListener extends MentalBaseListener {
         } else {
             SymbolBase base = this.curSymbolTable.getSymbol(identifier.name);
             if (base instanceof SymbolVariable) {
-                identifier.returnType = ((SymbolVariable) base).variableType;
+                identifier.returnType = ((SymbolVariable) base).variable.variableType;
                 identifier.leftValue = true;
             } else if (base instanceof SymbolFunction) {
                 identifier.returnType = new MentalFunction();
@@ -1358,7 +1444,10 @@ public class BuildTreeListener extends MentalBaseListener {
         }
         this.tree.put(ctx, identifier);
     }
-	@Override public void exitIDENTIFIER(MentalParser.IDENTIFIERContext ctx) { }
+	@Override public void exitIDENTIFIER(MentalParser.IDENTIFIERContext ctx) {
+        AstIdentifier identifier = (AstIdentifier) this.tree.get(ctx);
+        identifier.variable = ((SymbolVariable) this.curSymbolTable.getSymbol(identifier.name)).variable;
+    }
 	/**
 	 * null
 	 */
@@ -1371,44 +1460,63 @@ public class BuildTreeListener extends MentalBaseListener {
      * x, y should be boolean.
 	 */
 	@Override public void enterLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx) {
-        AstLogicalAndExpression logicalAndExpression = new AstLogicalAndExpression();
-        this.tree.put(ctx, logicalAndExpression);
+        AstSuperLogicalAndExpression superLogicalAndExpression = new AstSuperLogicalAndExpression();
+        this.tree.put(ctx, superLogicalAndExpression);
     }
 	@Override public void exitLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx) {
-        AstLogicalAndExpression thisExpression = (AstLogicalAndExpression) this.tree.get(ctx);
-        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
-        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
-        thisExpression.leftExpression.parent = thisExpression;
-        thisExpression.rightExpression.parent = thisExpression;
-        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalBool)) {
-            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalBool)) {
+        AstSuperLogicalAndExpression thisExpression = (AstSuperLogicalAndExpression) this.tree.get(ctx);
+        if (ctx.expression(0) instanceof MentalParser.LOGICAL_AND_EXPRESSIONContext) {
+            AstSuperLogicalAndExpression leftExpression = (AstSuperLogicalAndExpression) this.tree.get(ctx.expression(0));
+            thisExpression.expressions.addAll(leftExpression.expressions);
+        } else {
+            thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(0)));
+        }
+        if (ctx.expression(1) instanceof MentalParser.LOGICAL_AND_EXPRESSIONContext) {
+            AstSuperLogicalAndExpression rightExpression = (AstSuperLogicalAndExpression) this.tree.get(ctx.expression(1));
+            thisExpression.expressions.addAll(rightExpression.expressions);
+        } else {
+            thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(1)));
+        }
+
+        for (AstExpression astExpression : thisExpression.expressions) {
+            astExpression.parent = thisExpression;
+            if (!astExpression.returnType.equals(SymbolTable.mentalBool)) {
+                System.err.println("fatal: the types of logical-and expression cannot accept.\n\t" + ctx.getText());
+                this.existError = true;
                 return;
             }
         }
-        System.err.println("fatal: the types of logical-and expression cannot accept.\n\t" + ctx.getText());
-        this.existError = true;
     }
     /**
      * x || y
      * x, y should be boolean.
      */
     @Override public void enterLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx) {
-        AstLogicalOrExpression logicalOrExpression = new AstLogicalOrExpression();
-        this.tree.put(ctx, logicalOrExpression);
+        AstSuperLogicalOrExpression superLogicalOrExpression = new AstSuperLogicalOrExpression();
+        this.tree.put(ctx, superLogicalOrExpression);
     }
     @Override public void exitLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx) {
-        AstLogicalOrExpression thisExpression = (AstLogicalOrExpression) this.tree.get(ctx);
-        thisExpression.leftExpression = (AstExpression) this.tree.get(ctx.expression(0));
-        thisExpression.rightExpression = (AstExpression) this.tree.get(ctx.expression(1));
-        thisExpression.leftExpression.parent = thisExpression;
-        thisExpression.rightExpression.parent = thisExpression;
-        if (thisExpression.leftExpression.returnType.equals(SymbolTable.mentalBool)) {
-            if (thisExpression.rightExpression.returnType.equals(SymbolTable.mentalBool)) {
+        AstSuperLogicalOrExpression thisExpression = (AstSuperLogicalOrExpression) this.tree.get(ctx);
+        if (ctx.expression(0) instanceof MentalParser.LOGICAL_OR_EXPRESSIONContext) {
+            AstSuperLogicalOrExpression leftExpression = (AstSuperLogicalOrExpression) this.tree.get(ctx.expression(0));
+            thisExpression.expressions.addAll(leftExpression.expressions);
+        } else {
+            thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(0)));
+        }
+        if (ctx.expression(1) instanceof MentalParser.LOGICAL_OR_EXPRESSIONContext) {
+            AstSuperLogicalOrExpression rightExpression = (AstSuperLogicalOrExpression) this.tree.get(ctx.expression(1));
+            thisExpression.expressions.addAll(rightExpression.expressions);
+        } else {
+            thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(1)));
+        }
+        for (AstExpression astExpression : thisExpression.expressions) {
+            astExpression.parent = thisExpression;
+            if (!astExpression.returnType.equals(SymbolTable.mentalBool)) {
+                System.err.println("fatal: the types of logical-or expression cannot accept.\n\t" + ctx.getText());
+                this.existError = true;
                 return;
             }
         }
-        System.err.println("fatal: the types of logical-or expression cannot accept.\n\t" + ctx.getText());
-        this.existError = true;
     }
 	/**
 	 * x[i]
@@ -1452,8 +1560,7 @@ public class BuildTreeListener extends MentalBaseListener {
 	@Override public void exitSUBGROUP_EXPRESSION(MentalParser.SUBGROUP_EXPRESSIONContext ctx) {
         AstSubgroupExpression thisExpression = (AstSubgroupExpression) this.tree.get(ctx);
         thisExpression.childExpression = (AstExpression) this.tree.get(ctx.expression());
-        thisExpression.childExpression.parent = thisExpression;
-        thisExpression.returnType = thisExpression.childExpression.returnType;
+        this.tree.replace(ctx, thisExpression.childExpression);
     }
     /**
      * int literal

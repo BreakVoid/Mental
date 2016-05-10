@@ -1,3 +1,4 @@
+
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -17,3 +18,7 @@ test.mx
 .idea
 bonus/.texpadtmp
 data/test/final/s
+test2.mx
+Songyu.xml
+data/test/final/s
+bonus/.texpadtmp

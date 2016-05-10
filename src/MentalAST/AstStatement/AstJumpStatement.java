@@ -1,8 +1,11 @@
 package MentalAST.AstStatement;
 
-import MentalAST.AstBaseNode;
 import MentalAST.AstExpression.AstExpression;
-import MentalParser.MentalParser;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
+import MentalSymbols.SymbolTable;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/3/31.
@@ -28,5 +31,27 @@ public class AstJumpStatement extends AstStatement {
             ret += addIndent(indent) + "<jump statement>@break";
         }
         return ret;
+    }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = "";
+        if (this.variant == RETURN) {
+            ret += addIndent(indent) + "return";
+            if (this.returnExpression.returnType.equals(SymbolTable.mentalVoid)) {
+                ret += ";";
+            } else {
+                ret += " " + this.returnExpression.toPrettyPrint() + ";";
+            }
+        } else if (this.variant == CONTINUE) {
+            ret += addIndent(indent) + "continue;";
+        } else {
+            ret += addIndent(indent) + "break;";
+        }
+        return ret;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitJumpStatement(this);
     }
 }

@@ -1,6 +1,8 @@
 package MentalAST.AstDeclaration;
 
 import MentalAST.AstBaseNode;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalParser.MentalParser;
 import MentalType.MentalType;
 
@@ -13,6 +15,17 @@ import java.util.List;
 public class AstVariableDeclaration extends AstBaseNode {
     public MentalType variableType;
     public List<AstSingleVariableDeclaration> variables;
+    public AstVariableDeclaration() {
+        this.variables = new LinkedList<>();
+        this.variableType = null;
+    }
+    public AstVariableDeclaration(MentalType type, MentalParser.VariableDefinitionContext ctx) {
+        this.variables = new LinkedList<>();
+
+        for (MentalParser.SingleVariableContext varCtx : ctx.singleVariable()) {
+            this.variables.add(new AstSingleVariableDeclaration(type, varCtx));
+        }
+    }
     @Override
     public String toPrintString(int indent) {
         if (this.variables.size() == 0) {
@@ -26,16 +39,17 @@ public class AstVariableDeclaration extends AstBaseNode {
             return ret;
         }
     }
-    public AstVariableDeclaration() {
-        this.variables = null;
-        this.variableType = null;
-    }
-    public AstVariableDeclaration(MentalType type, MentalParser.VariableDefinitionContext ctx) {
-        this.variables = new LinkedList<>();
-
-        for (MentalParser.SingleVariableContext varCtx : ctx.singleVariable()) {
-            this.variables.add(new AstSingleVariableDeclaration(type, varCtx));
+    @Override
+    public String toPrettyPrint(int indent) {
+        if (this.variables.size() > 0) {
+            String ret = addIndent(indent) + this.variableType.toString() + " ";
+            ret += this.variables.get(0).toPrettyPrint();
+            for (int i = 1, count = this.variables.size(); i < count; ++i) {
+                ret += ", " + this.variables.get(i).toPrettyPrint();
+            }
+            return ret + ";";
         }
+        return ";";
     }
     @Override
     public String toString() {
@@ -61,4 +75,8 @@ public class AstVariableDeclaration extends AstBaseNode {
         return false;
     }
 
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitVariableDeclaration(this);
+    }
 }

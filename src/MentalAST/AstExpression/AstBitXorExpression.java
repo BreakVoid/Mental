@@ -1,6 +1,10 @@
 package MentalAST.AstExpression;
 
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalSymbols.SymbolTable;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/4/2.
@@ -17,5 +21,16 @@ public class AstBitXorExpression extends AstBinaryExpression {
         ret += this.rightExpression.toPrintString(indent + 1);
         return ret;
     }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent);
+        ret += this.leftExpression.toPrettyPrint() + " ^ ";
+        ret += this.rightExpression.toPrettyPrint();
+        return ret;
+    }
 
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitBitXorExpression(this);
+    }
 }

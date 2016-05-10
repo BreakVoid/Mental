@@ -1,6 +1,10 @@
 package MentalAST.AstExpression;
 
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalSymbols.SymbolTable;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/3/31.
@@ -16,6 +20,10 @@ public class AstIntLiteral extends AstExpression {
         return addIndent(indent) + "<int-literal>:" + Integer.toString(literalContext);
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        return addIndent(indent) + Integer.toString(literalContext);
+    }
+    @Override
     public boolean equals(Object other) {
         if (this == other) {
             return true;
@@ -28,5 +36,10 @@ public class AstIntLiteral extends AstExpression {
             }
         }
         return false;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitIntLiteral(this);
     }
 }

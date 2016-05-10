@@ -1,5 +1,7 @@
 package MentalAST.AstExpression;
 
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalType.MentalType;
 
 import java.util.LinkedList;
@@ -36,5 +38,27 @@ public class AstCreationExpression extends AstExpression {
             }
             return ret;
         }
+    }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent) + "new " + this.returnType.toString();
+        if (this.expressionList == null || this.expressionList.size() == 0) {
+            return ret;
+        } else {
+            ret += " ["
+                    + this.expressionList.get(0).toPrettyPrint() + "]";
+            for (int i = 1, count = this.expressionList.size(); i < count; ++i) {
+                ret += "[" + this.expressionList.get(i).toPrettyPrint() + "]";
+            }
+            for (int i = this.determinedDim; i < this.resultDim; ++i) {
+                ret += "[]";
+            }
+            return ret;
+        }
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitCreationExpression(this);
     }
 }

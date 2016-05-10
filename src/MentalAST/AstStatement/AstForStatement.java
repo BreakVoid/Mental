@@ -1,7 +1,10 @@
 package MentalAST.AstStatement;
 
 import MentalAST.AstExpression.AstExpression;
-import MentalSymbols.SymbolTable;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/3/30.
@@ -33,6 +36,27 @@ public class AstForStatement extends AstStatement {
         return ret;
     }
     @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent) + "for (";
+        if (this.start == null) {
+            ret += "; ";
+        } else {
+            ret += this.start.toPrettyPrint() + "; ";
+        }
+        ret += this.cond.toPrettyPrint() + "; ";
+        if (this.loop == null) {
+            ret += ") ";
+        } else {
+            ret += this.loop.toPrettyPrint() + ") ";
+        }
+        if (this.loopBody instanceof AstCompoundStatement) {
+            ret += this.loopBody.toPrettyPrint(indent + 1);
+        } else {
+            ret += "\n" + this.loopBody.toPrettyPrint(indent + 1);
+        }
+        return ret;
+    }
+    @Override
     public String toString() {
         return "<for loopBody>";
     }
@@ -55,5 +79,10 @@ public class AstForStatement extends AstStatement {
             }
         }
         return false;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitForStatement(this);
     }
 }

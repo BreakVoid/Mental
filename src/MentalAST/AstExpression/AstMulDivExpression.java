@@ -1,8 +1,11 @@
 package MentalAST.AstExpression;
 
-import MentalAST.AstBaseNode;
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
 import MentalParser.MentalParser;
 import MentalSymbols.SymbolTable;
+
+import java.util.LinkedList;
 
 /**
  * Created by Songyu on 16/4/1.
@@ -17,7 +20,7 @@ public class AstMulDivExpression extends AstBinaryExpression {
     }
     @Override
     public String toPrintString(int indent) {
-        String ret = AstBaseNode.addIndent(indent) + "<multiply expression";
+        String ret = addIndent(indent) + "<multiply expression";
         if (op == MUL) {
             ret += "(*)";
         } else if (op == DIV) {
@@ -29,5 +32,24 @@ public class AstMulDivExpression extends AstBinaryExpression {
         ret += leftExpression.toPrintString(indent + 1) + '\n';
         ret += rightExpression.toPrintString(indent + 1);
         return ret;
+    }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent);
+        ret += leftExpression.toPrettyPrint();
+        if (op == MUL) {
+            ret += " * ";
+        } else if (op == DIV) {
+            ret += " / ";
+        } else {
+            ret += " % ";
+        }
+        ret += rightExpression.toPrettyPrint();
+        return ret;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitMulDivExpression(this);
     }
 }

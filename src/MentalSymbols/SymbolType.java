@@ -1,7 +1,10 @@
 package MentalSymbols;
 
 import MentalParser.MentalParser;
-import MentalType.*;
+import MentalType.MentalArray;
+import MentalType.MentalClass;
+import MentalType.MentalType;
+import MentalType.MentalClassMember;
 
 import java.util.HashMap;
 
@@ -21,9 +24,10 @@ public class SymbolType extends SymbolBase {
         this.type = type;
     }
     public boolean setType(SymbolTable scope, MentalParser.ClassDeclarationContext classDeclCtx) {
+        int classMemberCount = 0;
         boolean existError = false;
         this.stackLayer = SymbolTable.maxLayer;
-        HashMap<String, MentalType> classComponents = new HashMap<String, MentalType>();
+        HashMap<String, MentalClassMember> classComponents = new HashMap<>();
         ((MentalClass) this.type).setClassComponents(classComponents);
         // Get className
         ((MentalClass) this.type).className = classDeclCtx.className().getText();
@@ -71,7 +75,7 @@ public class SymbolType extends SymbolBase {
             for (int j = 0, idCount = varDefCtx.singleVariable().size(); j < idCount; ++j) {
                 String id = varDefCtx.singleVariable(j).Identifier().getText();
                 if (classComponents.get(id) == null) {
-                    classComponents.put(id, type);
+                    classComponents.put(id, new MentalClassMember(classMemberCount++, type));
                 } else {
                     // exit if redefinition occurs.
                     System.err.println("fatal: redefine a member " + id + " in class " + ((MentalClass) this.type).className);
@@ -79,6 +83,7 @@ public class SymbolType extends SymbolBase {
                 }
             }
         }
+        ((MentalClass) type).classSize = classMemberCount;
         return existError;
     }
     @Override

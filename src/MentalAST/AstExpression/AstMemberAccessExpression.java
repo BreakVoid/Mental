@@ -1,5 +1,10 @@
 package MentalAST.AstExpression;
 
+import MentalIR.AstVisitor;
+import MentalIR.IRInstruction;
+
+import java.util.LinkedList;
+
 /**
  * Created by Songyu on 16/4/2.
  */
@@ -12,6 +17,7 @@ public class AstMemberAccessExpression extends AstExpression {
         this.memberExpression = null;
         this.memberName = null;
     }
+    @Override
     public String toPrintString(int indent) {
         String ret = addIndent(indent) + "<member access expression>:" + this.returnType + "\n";
         ret += addIndent(indent + 1) + "<primary expression>\n" + this.primaryExpression.toPrintString(indent + 2) + "\n";
@@ -22,5 +28,21 @@ public class AstMemberAccessExpression extends AstExpression {
             ret += addIndent(indent + 2) + "<member>" + this.memberName;
         }
         return ret;
+    }
+    @Override
+    public String toPrettyPrint(int indent) {
+        String ret = addIndent(indent);
+        ret += this.primaryExpression.toPrettyPrint() + ".";
+        if (this.memberName == null) {
+            ret += this.memberExpression.toPrettyPrint();
+        } else {
+            ret += this.memberName;
+        }
+        return ret;
+    }
+
+    @Override
+    public LinkedList<IRInstruction> visit(AstVisitor visitor) {
+        return visitor.visitMemberAccessExpression(this);
     }
 }
