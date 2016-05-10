@@ -14,3 +14,6 @@ hs_err_pid*
 out/
 workspace.xml
 test.mx
+.idea
+bonus/.texpadtmp
+data/test/final/s
