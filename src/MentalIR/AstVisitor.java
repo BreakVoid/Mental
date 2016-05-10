@@ -109,33 +109,37 @@ public class AstVisitor {
     }
 
     public LinkedList<IRInstruction> visitIntLiteral(AstIntLiteral astIntLiteral) {
-        IRDataIntLiteral dataIntLiteral = new IRDataIntLiteral(astIntLiteral.literalContext);
-        dataIntLiteral.stackShift = this.currentStackSize++;
+        IRDataIntLiteral dataIntLiteral;
+        if (astIntLiteral.literalContext == 0) {
+            dataIntLiteral = new IRConstantZero();
+        } else {
+            dataIntLiteral = new IRDataIntLiteral(astIntLiteral.literalContext);
+            dataIntLiteral.stackShift = this.currentStackSize++;
+        }
         this.expressionResult.put(astIntLiteral, dataIntLiteral);
         return new LinkedList<>();
     }
 
     public LinkedList<IRInstruction> visitNullConstant(AstNullConstant astNullConstant) {
-        IRDataIntLiteral irDataIntLiteral = new IRDataIntLiteral();
+        IRDataIntLiteral irDataIntLiteral = new IRConstantZero();
         this.expressionResult.put(astNullConstant, irDataIntLiteral);
-        irDataIntLiteral.literal = IRDataIntLiteral.NULL;
-        irDataIntLiteral.stackShift = this.currentStackSize++;
         return new LinkedList<>();
     }
 
     public LinkedList<IRInstruction> visitBoolConstant(AstBoolConstant astBoolConstant) {
-        IRDataIntLiteral irDataIntLiteral = new IRDataIntLiteral();
-        this.expressionResult.put(astBoolConstant, irDataIntLiteral);
+        IRDataIntLiteral irDataIntLiteral;
         if (astBoolConstant.boolConstant) {
+            irDataIntLiteral = new IRDataIntLiteral();
             irDataIntLiteral.literal = IRDataIntLiteral.TRUE;
         } else {
-            irDataIntLiteral.literal = IRDataIntLiteral.FALSE;
+            irDataIntLiteral = new IRConstantZero();
         }
+        this.expressionResult.put(astBoolConstant, irDataIntLiteral);
         return new LinkedList<>();
     }
 
     public LinkedList<IRInstruction> visitStringLiteral(AstStringLiteral astStringLiteral) {
-        IRDataStringLiteral stringLiteral = null;
+        IRDataStringLiteral stringLiteral;
         if (this.stringMap.get(astStringLiteral.literalContext) == null) {
             stringLiteral = new IRDataStringLiteral(astStringLiteral.literalContext);
             this.stringLiterals.add(stringLiteral);
