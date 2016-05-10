@@ -41,30 +41,33 @@ public class IRMove extends IRInstruction {
         if (this.label != null) {
             mipsInstructions.add(this.label.toString() + ":");
         }
-        this.src.refCount--;
-        if (!(this.src instanceof IRDataIntLiteral)) {
-            if (this.src.registerName == -1) {
-                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
-                mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src));
-            } else {
-                mipsMachine.refreshRegister(this.src.registerName);
-            }
-        }
 
-        if (this.dest.registerName == -1) {
-            mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
-            mipsMachine.rewriteFirstLoadRegister(this.dest);
-        } else {
-            mipsMachine.updateRegister(this.dest.registerName);
-        }
-        if (this.src instanceof IRDataIntLiteral) {
-            mipsInstructions.add(
-                    String.format("\tli %s, %d", this.dest.toRegister(), ((IRDataIntLiteral) this.src).literal)
-            );
-        } else {
-            mipsInstructions.add(
-                    String.format("\tmove %s, %s", this.dest.toRegister(), this.src.toRegister())
-            );
+        if (this.dest.refCount != 0 || this.dest.globalID != -1) {
+            this.src.refCount--;
+            if (!(this.src instanceof IRDataIntLiteral)) {
+                if (this.src.registerName == -1) {
+                    mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                    mipsInstructions.add(mipsMachine.replaceFirstLoadRegisterWithLoad(this.src));
+                } else {
+                    mipsMachine.refreshRegister(this.src.registerName);
+                }
+            }
+
+            if (this.dest.registerName == -1) {
+                mipsInstructions.add(mipsMachine.storeFirstLoadRegister());
+                mipsMachine.rewriteFirstLoadRegister(this.dest);
+            } else {
+                mipsMachine.updateRegister(this.dest.registerName);
+            }
+            if (this.src instanceof IRDataIntLiteral) {
+                mipsInstructions.add(
+                        String.format("\tli %s, %d", this.dest.toRegister(), ((IRDataIntLiteral) this.src).literal)
+                );
+            } else {
+                mipsInstructions.add(
+                        String.format("\tmove %s, %s", this.dest.toRegister(), this.src.toRegister())
+                );
+            }
         }
 
         String str = "";
@@ -72,6 +75,9 @@ public class IRMove extends IRInstruction {
             if (statement.length() > 0) {
                 str += statement + "\n";
             }
+        }
+        if (str.length() == 0) {
+            return "";
         }
         return str.substring(0, str.length() - 1);
     }
