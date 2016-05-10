@@ -1,0 +1,21 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage[margin=1in]{geometry}
+
+\title{Mental特性和优化汇总}
+\author{柯嵩宇}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\newpage
+\section{visitor模式：from AST to linear IR}
+	以visitor模式完全手写了AST到IR的visitor。（ANTLR生成CST，用ANTLR的CST生成我的AST，然后用我写的visitor生成IR）
+\section{逻辑表达式短路求值}
+\subsection{naive的短路求值}
+	对于二元运算的逻辑与或，可以先计算左边的元素，如果左侧表达式的结果可以决定整个表达式的值，那么就保存结果同时跳过右侧表达式的计算。
+\subsection{修改逻辑与或运算的结合性}
+	在superloop中，出现了一个巨大的逻辑与运算，如果按照上面的方法短路求值，那么在执行过程中会出现大量的跳转。一个比较机智的优化就是修改逻辑与或运算的结合性
+
+\end{document}
