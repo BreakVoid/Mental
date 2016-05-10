@@ -1465,13 +1465,18 @@ public class BuildTreeListener extends MentalBaseListener {
     }
 	@Override public void exitLOGICAL_AND_EXPRESSION(MentalParser.LOGICAL_AND_EXPRESSIONContext ctx) {
         AstSuperLogicalAndExpression thisExpression = (AstSuperLogicalAndExpression) this.tree.get(ctx);
-        if (ctx.expression(0) instanceof  MentalParser.LOGICAL_AND_EXPRESSIONContext) {
+        if (ctx.expression(0) instanceof MentalParser.LOGICAL_AND_EXPRESSIONContext) {
             AstSuperLogicalAndExpression leftExpression = (AstSuperLogicalAndExpression) this.tree.get(ctx.expression(0));
             thisExpression.expressions.addAll(leftExpression.expressions);
         } else {
             thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(0)));
         }
-        thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(1)));
+        if (ctx.expression(1) instanceof MentalParser.LOGICAL_AND_EXPRESSIONContext) {
+            AstSuperLogicalAndExpression rightExpression = (AstSuperLogicalAndExpression) this.tree.get(ctx.expression(1));
+            thisExpression.expressions.addAll(rightExpression.expressions);
+        } else {
+            thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(1)));
+        }
 
         for (AstExpression astExpression : thisExpression.expressions) {
             astExpression.parent = thisExpression;
@@ -1492,13 +1497,18 @@ public class BuildTreeListener extends MentalBaseListener {
     }
     @Override public void exitLOGICAL_OR_EXPRESSION(MentalParser.LOGICAL_OR_EXPRESSIONContext ctx) {
         AstSuperLogicalOrExpression thisExpression = (AstSuperLogicalOrExpression) this.tree.get(ctx);
-        if (ctx.expression(0) instanceof  MentalParser.LOGICAL_OR_EXPRESSIONContext) {
+        if (ctx.expression(0) instanceof MentalParser.LOGICAL_OR_EXPRESSIONContext) {
             AstSuperLogicalOrExpression leftExpression = (AstSuperLogicalOrExpression) this.tree.get(ctx.expression(0));
             thisExpression.expressions.addAll(leftExpression.expressions);
         } else {
             thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(0)));
         }
-        thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(1)));
+        if (ctx.expression(1) instanceof MentalParser.LOGICAL_OR_EXPRESSIONContext) {
+            AstSuperLogicalOrExpression rightExpression = (AstSuperLogicalOrExpression) this.tree.get(ctx.expression(1));
+            thisExpression.expressions.addAll(rightExpression.expressions);
+        } else {
+            thisExpression.expressions.add((AstExpression) this.tree.get(ctx.expression(1)));
+        }
         for (AstExpression astExpression : thisExpression.expressions) {
             astExpression.parent = thisExpression;
             if (!astExpression.returnType.equals(SymbolTable.mentalBool)) {
