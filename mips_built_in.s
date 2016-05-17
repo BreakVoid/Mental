@@ -1,47 +1,74 @@
 	.text
-_func_____built_in_toString:     # t0 head of buffer
+_func_____built_in_toString:
+	# subu $sp, $sp, 4
+	# sw $ra, 0($sp)
+	# first count the #digits
+	lw $a0, -4($sp)
+	li $t0, 0			# $t0 = 0 if the number is a negnum
+	bgez $a0, _skip_set_less_than_zero
+	li $t0, 1			# now $t0 must be 1
+	neg $a0, $a0
+	_skip_set_less_than_zero:
+	beqz $a0, _set_zero
+
+	li $t1, 0			# the #digits is in $t1
+	move $t2, $a0
+	move $t3, $a0
+	li $t5, 10
+
+	_begin_count_digit:
+	div $t2, $t5
+	mflo $v0			# get the quotient
+	mfhi $v1			# get the remainder
+	bgtz $v0 _not_yet
+	bgtz $v1 _not_yet
+	j _yet
+	_not_yet:
+	add $t1, $t1, 1
+	move $t2, $v0
+	j _begin_count_digit
+
+	_yet:
+	beqz $t0, _skip_reserve_neg
+	add $t1, $t1, 1
+	_skip_reserve_neg:
+	add $a0, $t1, 5
 	li $v0, 9
-	li $a0, 32
 	syscall
-	move $t0, $v0
-	lw $t1, -4($sp)               # t1 the number need to convert
-	slt $t2, $t1, $zero          # t2 the sign of the number
-	bnez $t2, toString_int_less_than_zero
-toString_neg_parameter:
-	add $t3, $t0, 30
-	li $t5, 0
-	sb $t5, 1($t3)               # set last char as 0
-	li $t6, 0
-again:
-	rem $t4, $t1, 10             # t1 mod 10
-	add $t4, $t4, 48             # convert to ascii
-	sb $t4, 0($t3)               # save to pointer
-	div $t1, $t1, 10             # t1 = t1 / 10
-	sub $t3, $t3, 1              # pointer--
-	add $t6, $t6, 1
-	bnez $t1, again
-	bnez $t2, toString_append_minus
-	add $t3, $t3, 1
-	beqz $t2, toString_convert_end
-toString_append_minus:
-	li $t5, 45
-	sb $t5, 0($t3)
-toString_convert_end:
-	sw $t6, 0($t0)
-	add $t0, $t0, 4
-	move $v0, $t0
-toString_copy_data:
-	lb $t8, 0($t3)
-	beqz $t8, toString_copy_over
-	sb $t8, 0($t0)
-	add $t0, $t0, 1
-	add $t3, $t3, 1
-	b toString_copy_data
-toString_copy_over:
+	sw $t1, 0($v0)
+	add $v0, $v0, 4
+	add $t1, $t1, $v0
+	sb $zero, 0($t1)
+	sub $t1, $t1, 1
+
+	_continue_toString:
+	div $t3, $t5
+	mfhi $v1
+	add $v1, $v1, 48	# in ascii 48 = '0'
+	sb $v1, 0($t1)
+	sub $t1, $t1, 1
+	mflo $t3
+	# bge $t1, $v0, _continue_toString
+	bnez $t3, _continue_toString
+
+	beqz $t0, _skip_place_neg
+	li $v1, 45
+	sb $v1, 0($t1)
+	_skip_place_neg:
+	# lw $ra, 0($sp)
+	# addu $sp, $sp, 4
 	jr $ra
-toString_int_less_than_zero:
-	neg $t1, $t1
-	b toString_neg_parameter
+
+	_set_zero:
+	li $a0, 6
+	li $v0, 9
+	syscall
+	li $a0, 1
+	sw $a0, 0($v0)
+	add $v0, $v0, 4
+	li $a0, 48
+	sb $a0, 0($v0)
+	jr $ra
 
 _string_copy:
 	_begin_string_copy:

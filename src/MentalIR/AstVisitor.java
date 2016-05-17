@@ -299,6 +299,7 @@ public class AstVisitor {
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = irBitNot;
         }
+        resultInstructions.add(irBitNot);
         this.expressionResult.put(astBitNotExpression, irBitNot.res);
         return resultInstructions;
     }
@@ -730,6 +731,7 @@ public class AstVisitor {
         if (resultInstructions.size() > 0) {
             resultInstructions.getLast().nextInstruction = irLogicalNot;
         }
+        resultInstructions.add(irLogicalNot);
         this.expressionResult.put(astLogicalNotExpression, irLogicalNot.res);
         return resultInstructions;
     }
