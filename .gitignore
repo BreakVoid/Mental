@@ -14,8 +14,7 @@ hs_err_pid*
 
 out/
 workspace.xml
-test.mx
-test2.mx
+cn/edu/sjtu/songyuke/mental/test/mx
 Songyu.xml
-data/test/final/s
+data/cn/edu/sjtu/songyuke/mental/test/final/s
 bonus/.texpadtmp

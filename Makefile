@@ -1,34 +1,41 @@
+BASE_PATH = cn/edu/sjtu/songyuke/mental
+
 all:
 	$(MAKE) -C src all
 	if [ ! -d bin ]; then mkdir bin; fi
-	if [ ! -d bin/MentalAST ]; then mkdir bin/MentalAST; fi
-	if [ ! -d bin/MentalAST/AstDeclaration ]; then mkdir bin/MentalAST/AstDeclaration; fi
-	if [ ! -d bin/MentalAST/AstExpression ]; then mkdir bin/MentalAST/AstExpression; fi
-	if [ ! -d bin/MentalAST/AstStatement ]; then mkdir bin/MentalAST/AstStatement; fi
-	if [ ! -d bin/MentalCore ]; then mkdir bin/MentalCore; fi
-	if [ ! -d bin/MentalIR ]; then mkdir bin/MentalIR; fi
-	if [ ! -d bin/MentalIR/Arithmetic ]; then mkdir bin/MentalIR/Arithmetic; fi
-	if [ ! -d bin/MentalIR/Branch ]; then mkdir bin/MentalIR/Branch; fi
-	if [ ! -d bin/MentalIR/Data ]; then mkdir bin/MentalIR/Data; fi
-	if [ ! -d bin/MentalIR/Label ]; then mkdir bin/MentalIR/Label; fi
-	if [ ! -d bin/MentalParser ]; then mkdir bin/MentalParser; fi
-	if [ ! -d bin/MentalSymbols ]; then mkdir bin/MentalSymbols; fi
-	if [ ! -d bin/MentalTranslator ]; then mkdir bin/MentalTranslator; fi
-	if [ ! -d bin/MentalType ]; then mkdir bin/MentalType; fi
-	cp src/MentalAST/*.class bin/MentalAST/
-	cp src/MentalAST/AstDeclaration/*.class bin/MentalAST/AstDeclaration/
-	cp src/MentalAST/AstExpression/*.class bin/MentalAST/AstExpression/
-	cp src/MentalAST/AstStatement/*.class bin/MentalAST/AstStatement/
-	cp src/MentalCore/*.class bin/MentalCore/
-	cp src/MentalIR/*.class bin/MentalIR/
-	cp src/MentalIR/Arithmetic/*.class bin/MentalIR/Arithmetic/
-	cp src/MentalIR/Branch/*.class bin/MentalIR/Branch/
-	cp src/MentalIR/Data/*.class bin/MentalIR/Data/
-	cp src/MentalIR/Label/*.class bin/MentalIR/Label/
-	cp src/MentalParser/*.class bin/MentalParser/
-	cp src/MentalSymbols/*.class bin/MentalSymbols/
-	cp src/MentalType/*.class bin/MentalType/
-	cp src/MentalTranslator/*.class bin/MentalTranslator/
+	if [ ! -d bin/cn ]; then mkdir bin/cn; fi
+	if [ ! -d bin/cn/edu ]; then mkdir bin/cn/edu; fi
+	if [ ! -d bin/cn/edu/sjtu ]; then mkdir bin/cn/edu/sjtu; fi
+	if [ ! -d bin/cn/edu/sjtu/songyuke ]; then mkdir bin/cn/edu/sjtu/songyuke; fi
+	if [ ! -d bin/cn/edu/sjtu/songyuke/mental ]; then mkdir bin/cn/edu/sjtu/songyuke/mental; fi
+	if [ ! -d bin/$(BASE_PATH)/ast ]; then mkdir bin/$(BASE_PATH)/ast; fi
+	if [ ! -d bin/$(BASE_PATH)/ast/declarations ]; then mkdir bin/$(BASE_PATH)/ast/declarations; fi
+	if [ ! -d bin/$(BASE_PATH)/ast/expressions ]; then mkdir bin/$(BASE_PATH)/ast/expressions; fi
+	if [ ! -d bin/$(BASE_PATH)/ast/statements ]; then mkdir bin/$(BASE_PATH)/ast/statements; fi
+	if [ ! -d bin/$(BASE_PATH)/core ]; then mkdir bin/$(BASE_PATH)/core; fi
+	if [ ! -d bin/$(BASE_PATH)/ir ]; then mkdir bin/$(BASE_PATH)/ir; fi
+	if [ ! -d bin/$(BASE_PATH)/ir/Arithmetic ]; then mkdir bin/$(BASE_PATH)/ir/Arithmetic; fi
+	if [ ! -d bin/$(BASE_PATH)/ir/Branch ]; then mkdir bin/$(BASE_PATH)/ir/Branch; fi
+	if [ ! -d bin/$(BASE_PATH)/ir/Data ]; then mkdir bin/$(BASE_PATH)/ir/Data; fi
+	if [ ! -d bin/$(BASE_PATH)/ir/Label ]; then mkdir bin/$(BASE_PATH)/ir/Label; fi
+	if [ ! -d bin/$(BASE_PATH)/parser ]; then mkdir bin/$(BASE_PATH)/parser; fi
+	if [ ! -d bin/$(BASE_PATH)/symbols ]; then mkdir bin/$(BASE_PATH)/symbols; fi
+	if [ ! -d bin/$(BASE_PATH)/translator ]; then mkdir bin/$(BASE_PATH)/translator; fi
+	if [ ! -d bin/$(BASE_PATH)/type ]; then mkdir bin/$(BASE_PATH)/type; fi
+	cp src/$(BASE_PATH)/ast/*.class bin/$(BASE_PATH)/ast/
+	cp src/$(BASE_PATH)/ast/declarations/*.class bin/$(BASE_PATH)/ast/declarations/
+	cp src/$(BASE_PATH)/ast/expressions/*.class bin/$(BASE_PATH)/ast/expressions/
+	cp src/$(BASE_PATH)/ast/statements/*.class bin/$(BASE_PATH)/ast/statements/
+	cp src/$(BASE_PATH)/core/*.class bin/$(BASE_PATH)/core/
+	cp src/$(BASE_PATH)/ir/*.class bin/$(BASE_PATH)/ir/
+	cp src/$(BASE_PATH)/ir/Arithmetic/*.class bin/$(BASE_PATH)/ir/Arithmetic/
+	cp src/$(BASE_PATH)/ir/Branch/*.class bin/$(BASE_PATH)/ir/Branch/
+	cp src/$(BASE_PATH)/ir/Data/*.class bin/$(BASE_PATH)/ir/Data/
+	cp src/$(BASE_PATH)/ir/Label/*.class bin/$(BASE_PATH)/ir/Label/
+	cp src/$(BASE_PATH)/parser/*.class bin/$(BASE_PATH)/parser/
+	cp src/$(BASE_PATH)/symbols/*.class bin/$(BASE_PATH)/symbols/
+	cp src/$(BASE_PATH)/type/*.class bin/$(BASE_PATH)/type/
+	cp src/$(BASE_PATH)/translator/*.class bin/$(BASE_PATH)/translator/
 	cp src/antlr-4.5.3-complete.jar bin/
 	cp mips_built_in.s bin/
 	cp built_in.mx bin/

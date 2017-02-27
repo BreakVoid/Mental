@@ -29,13 +29,13 @@ A source file of Mx* language. The source file should be redirect to **stdin**.
 ### Output
 SPIM assemble code in **stdout**.
 ## Mental
-### MentalAST
+### cn.edu.sjtu.songyuke.mental.ast
 Abstract Syntax Tree for Mx* language.
-### MentalCore
+### cn.edu.sjtu.songyuke.mental.core
 The main class of the whole project.
-### MentalIR
+### cn.edu.sjtu.songyuke.mental.ir
 Intermedia Representation for Mx* language.
-### MentalTranslator
-A translator from MentalIR to SPIM assemble code.
+### cn.edu.sjtu.songyuke.mental.translator
+A cn.edu.sjtu.songyuke.mental.translator from cn.edu.sjtu.songyuke.mental.ir to SPIM assemble code.
 
 
